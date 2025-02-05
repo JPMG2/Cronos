@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class State extends Model
+{
+    use HasFactory;
+    protected $fillable=['state_name'];
+
+    protected function stateName(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => str(str(str($value)->squish())->lower())->title(),
+        );
+    }
+}

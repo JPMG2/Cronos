@@ -1,0 +1,141 @@
+<?php
+
+namespace App\Livewire\Registro;
+
+use App\Http\Controllers\PDFController;
+use App\Livewire\Forms\Registro\BranchForm;
+use App\Models\Branch;
+use App\Traits\CompanyWatcher;
+use App\Traits\HandlesActionPolicy;
+use App\Traits\ProvinceCity;
+use App\Traits\UtilityForm;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+
+class ReBranch extends Component
+{
+    use CompanyWatcher, HandlesActionPolicy, ProvinceCity, UtilityForm;
+
+    public BranchForm $form;
+
+    protected $commonQuerys;
+
+    #[Title(' - Sucursal')]
+    public function render()
+    {
+
+        $this->commonQuerys = app('commonquery');
+
+        $this->breadcrumbs = exploBreadcrum($this->getBreadcrumbs('Sucursales'));
+
+        if (! $this->anyCompany($this->commonQuerys) || $this->companyOnPause($this->commonQuerys)) {
+            $this->isdisabled = 'disabled';
+        }
+
+        return view('livewire.registro.re-branch', [
+            'listCompanies' => $this->commonQuerys::companyQuery([1]),
+            'listState' => $this->commonQuerys::stateQuery([1, 2]),
+
+        ]);
+    }
+
+    public function queryBranch()
+    {
+        $this->setIdPronvinceCity();
+
+        if (! $this->isupdate) {
+            $result = app()->call([$this->form, 'branchStore']);
+
+        } else {
+            $result = app()->call([$this->form, 'branchUpdate']);
+        }
+
+        $this->dispatch('show-toast', $result);
+
+        $this->dispatch('clearColorOpcionMenu');
+
+        $this->clearForm();
+    }
+
+    public function setIdPronvinceCity()
+    {
+
+        $this->form->databranch['province_id'] = $this->getProvinceId();
+         $this->form->databranch['city_id'] = $this->getCityId();
+    }
+
+    public function clearForm()
+    {
+        $this->form->reset();
+        $this->resetAllProvince();
+        $this->cleanFormValues();
+        $this->isdisabled = '';
+        $this->isupdate = false;
+        $this->dispatch('showOptionsForms', show: false);
+    }
+
+    public function getBranchsProperty()
+    {
+        return Branch::countBranch();
+    }
+
+    // events that is fire from user options bar to Show branch
+    public function branchShow()
+    {
+        $this->dispatch('showModal', show: true);
+    }
+
+    // events that is fire from user options bar to Edit branch
+    public function branchEdit()
+    {
+        $this->isdisabled = '';
+        $this->isupdate = true;
+    }
+
+    // events that is fire from user options bar to Reload form
+    public function branchNew()
+    {
+        $this->redirect('re_sucursal');
+    }
+
+    public function branchPrint()
+    {
+        $idBranch = $this->form->databranch['id'];
+
+        $encryptedId = encryptString($idBranch);
+
+        $className = 'BranchPdf';
+
+        $urlpdf = action([PDFController::class, 'pdfById'], ['id' => $encryptedId, 'class' => $className]);
+
+        $this->dispatch('openWindow', ['url' => $urlpdf]);
+
+    }
+
+    // events that is fire from user options bar to show History branch
+    public function branchHistory()
+    {
+
+        $this->dispatch('showModalHistory', ['model' => 'Branch', 'id' => $this->form->databranch['id']]);
+    }
+
+    #[On('dataBranch')]
+    public function loadBranch($branchId)
+    {
+        app()->call([$this->form, 'infoBranc'], ['branchId' => $branchId]);
+
+        $this->setValuesPronvinceCity();
+
+        $this->isdisabled = 'disabled';
+
+        $this->dispatch('showOptionsForms', show: true);
+    }
+
+    public function setValuesPronvinceCity()
+    {
+        $this->setProvinceCity($this->form->getProvinceId(), $this->form->getCityId());
+
+        $this->setnameProvinceCity($this->form->getProvinceName(), $this->form->getCityName());
+    }
+}
