@@ -7,6 +7,7 @@ return [
     'branch' => 'sucursal',
     'user' => 'usuario',
     'name' => 'nombre',
+    'apellido' => 'apellido',
     'telefono' => 'teléfono',
     'correo' => 'correo',
     'email' => 'correo',
@@ -22,5 +23,10 @@ return [
     'person_email' => 'correo de contacto',
     'siglas' => 'siglas',
     'tipo' => 'tipo',
-
+    'dni' => 'dni',
+    'status' => 'estatus',
+    'matricula' => 'matricula',
+    'especialist' => 'especialidad',
+    'titulo' => 'titulo',
+    'codigomedico' => 'núm matricula',
 ];

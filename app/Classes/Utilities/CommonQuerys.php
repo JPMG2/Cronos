@@ -3,6 +3,9 @@
 namespace App\Classes\Utilities;
 
 use App\Models\Company;
+use App\Models\Credential;
+use App\Models\Degree;
+use App\Models\Specialty;
 use App\Models\State;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -49,5 +52,20 @@ class CommonQuerys extends Model
     public static function CompanyOnPause()
     {
         return Company::where('state_id', 2)->first();
+    }
+
+    public static function listSpecialties()
+    {
+        return Specialty::orderBy('specialty_name')->get();
+    }
+
+    public static function listDegrees()
+    {
+        return Degree::orderBy('degree_name')->get();
+    }
+
+    public static function listCredentials()
+    {
+        return Credential::orderBy('credential_name')->get();
     }
 }

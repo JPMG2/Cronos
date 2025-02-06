@@ -35,14 +35,23 @@
                                 required="yes"
                             >
                                 <x-inputs.selectinput
-                                    wire:model.defer="form.databranch.state_id"
+                                    wire:model.defer="formesp.dataespecialist.degree_id"
                                     id="esp_titulo"
                                     isdisabled="{{$isdisabled}}"
                                 >
+                                    @foreach ($listDegree as $degree)
+                                        <option value="{{ $degree->id }}">
+                                            {{ $degree->degree_code }}
+                                        </option>
+                                    @endforeach
                                 </x-inputs.selectinput>
                             </x-inputs.selectgroup>
                         </div>
-                        <x-inputs.error-validate></x-inputs.error-validate>
+                        @error("degree_id")
+                        <x-inputs.error-validate>
+                            {{ $message }}
+                        </x-inputs.error-validate>
+                        @enderror
                     </div>
                     <div class="relative w-full sm:col-span-4">
                         <div class="relative">
@@ -52,17 +61,17 @@
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="form.databranch.branch_name"
+                                    wire:model="formesp.dataespecialist.medical_name"
                                     id="esp_name"
                                     autocomplete="off"
                                     maxlength="200"
                                     placeholder=" "
                                     isdisabled="{{$isdisabled}}"
-                                    :error="$errors->first('branch_name')"
+                                    :error="$errors->first('medical_name')"
                                 ></x-inputs.textinput>
                             </x-inputs.textgroup>
                         </div>
-                        @error("branch_phone")
+                        @error("medical_name")
                         <x-inputs.error-validate>
                             {{ $message }}
                         </x-inputs.error-validate>
@@ -77,17 +86,17 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="form.databranch.branch_name"
+                                wire:model="formesp.dataespecialist.medical_lastname"
                                 id="esp_apellido"
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
                                 isdisabled="{{$isdisabled}}"
-                                :error="$errors->first('branch_name')"
+                                :error="$errors->first('medical_lastname')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
                     </div>
-                    @error("branch_name")
+                    @error("medical_lastname")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
@@ -101,18 +110,18 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="form.databranch.branch_phone"
+                                wire:model="formesp.dataespecialist.medical_dni"
                                 x-mask="99999999999999999999"
                                 id="esp_dni"
                                 autocomplete="off"
                                 maxlength="20"
                                 placeholder=" "
                                 isdisabled="{{$isdisabled}}"
-                                :error="$errors->first('branch_phone')"
+                                :error="$errors->first('medical_dni')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
                     </div>
-                    @error("branch_name")
+                    @error("medical_dni")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
@@ -127,14 +136,23 @@
                                 required="yes"
                             >
                                 <x-inputs.selectinput
-                                    wire:model.defer="form.databranch.state_id"
+                                    wire:model.defer="formesp.dataespecialist.credential_id"
                                     id="esp_matri"
                                     isdisabled="{{$isdisabled}}"
                                 >
+                                    @foreach ($listCredential as $credential)
+                                        <option value="{{ $credential->id }}">
+                                            {{ $credential->credential_code }}
+                                        </option>
+                                    @endforeach
                                 </x-inputs.selectinput>
                             </x-inputs.selectgroup>
                         </div>
-                        <x-inputs.error-validate></x-inputs.error-validate>
+                        @error("credential_id")
+                        <x-inputs.error-validate>
+                            {{ $message }}
+                        </x-inputs.error-validate>
+                        @enderror
                     </div>
                     <div class="relative w-3/5 sm:col-span-2">
                         <div class="relative">
@@ -144,18 +162,18 @@
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="form.databranch.branch_phone"
+                                    wire:model="formesp.dataespecialist.medical_codenumber"
                                     x-mask="99999999999999999999"
                                     id="esp_nummatri"
                                     autocomplete="off"
                                     maxlength="20"
                                     placeholder=" "
                                     isdisabled="{{$isdisabled}}"
-                                    :error="$errors->first('branch_phone')"
+                                    :error="$errors->first('medical_codenumber')"
                                 ></x-inputs.textinput>
                             </x-inputs.textgroup>
                         </div>
-                        @error("branch_phone")
+                        @error("medical_codenumber")
                         <x-inputs.error-validate>
                             {{ $message }}
                         </x-inputs.error-validate>
@@ -166,18 +184,23 @@
                     <div class="relative">
                         <x-inputs.selectgroup
                             label="Especialidad"
-                            for="esp_medica"
+                            for="esp_especialis"
                             required="yes"
                         >
                             <x-inputs.selectinput
-                                wire:model.defer="form.databranch.state_id"
-                                id="esp_medica"
+                                wire:model.defer="formesp.dataespecialist.specialty_id"
+                                id="esp_especialis"
                                 isdisabled="{{$isdisabled}}"
                             >
+                                @foreach ($listSpecialties as $specialist)
+                                    <option value="{{ $specialist->id }}">
+                                        {{ $specialist->specialty_name }}
+                                    </option>
+                                @endforeach
                             </x-inputs.selectinput>
                         </x-inputs.selectgroup>
                     </div>
-                    @error("branch_name")
+                    @error("specialty_id")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
@@ -191,14 +214,93 @@
                             required="yes"
                         >
                             <x-inputs.selectinput
-                                wire:model.defer="form.databranch.state_id"
+                                wire:model.defer="formesp.dataespecialist.state_id"
                                 id="esp_estatus"
                                 isdisabled="{{$isdisabled}}"
                             >
+                                @foreach ($listState as $state)
+                                    <option value="{{ $state->id }}">
+                                        {{ $state->state_name }}
+                                    </option>
+                                @endforeach
                             </x-inputs.selectinput>
+
                         </x-inputs.selectgroup>
                     </div>
-                    @error("branch_name")
+                    @error("state_id")
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
+                    @enderror
+                </div>
+                <div class="relative sm:col-span-3">
+                    <div class="relative">
+                        <x-inputs.textgroup
+                            label="Correo"
+                            for="esp_email"
+                            required="yes"
+                        >
+                            <x-inputs.textinput
+                                wire:model="formesp.dataespecialist.medical_email"
+                                id="esp_email"
+                                autocomplete="off"
+                                maxlength="150"
+                                placeholder=" "
+                                isdisabled="{{$isdisabled}}"
+                                :error="$errors->first('medical_email')"
+                            ></x-inputs.textinput>
+                        </x-inputs.textgroup>
+                    </div>
+                    @error("medical_email")
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
+                    @enderror
+                </div>
+                <div class="relative  sm:col-span-2">
+                    <div class="relative">
+                        <x-inputs.textgroup
+                            label="Teléfono"
+                            for="esp_phone"
+                            required="yes"
+                        >
+                            <x-inputs.textinput
+                                wire:model="formesp.dataespecialist.medical_phone"
+                                x-mask="99999999999999999999"
+                                id="esp_phone"
+                                autocomplete="off"
+                                maxlength="20"
+                                placeholder=" "
+                                isdisabled="{{$isdisabled}}"
+                                :error="$errors->first('medical_phone')"
+                            ></x-inputs.textinput>
+                        </x-inputs.textgroup>
+                    </div>
+                    @error("medical_phone")
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
+                    @enderror
+                </div>
+                <div class="relative w-full sm:col-span-4">
+                    <div class="relative">
+                        <x-inputs.textgroup
+                            label="Dirección"
+                            for="esp_addres"
+                            required="yes"
+                        >
+                            <x-inputs.textinput
+                                wire:model="formesp.dataespecialist.medical_address"
+                                id="esp_addres"
+                                autocomplete="off"
+                                maxlength="150"
+                                placeholder=" "
+                                isdisabled="{{$isdisabled}}"
+                                :error="$errors->first('medical_address')"
+                            ></x-inputs.textinput>
+                        </x-inputs.textgroup>
+                    </div>
+                    @error("medical_address")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
@@ -220,8 +322,8 @@
                     ></x-buttons.cancel>
                     @can("created", $this->actions)
                         <x-buttons.save
-                            wire:submit.prevent=""
-                            wire:click.prevent=""
+                            wire:submit.prevent="getEspecialis"
+                            wire:click.prevent="getEspecialis"
                             namefucion=""
                             label="Guardar"
                             isdisabled="{{$isdisabled}}"
