@@ -1,31 +1,15 @@
 <div>
-    <x-headerform.breadcrum-header>
-        @foreach ($breadcrumbs as $breacdata)
-            <x-headerform.breadcrum-li>
-                {{ $breacdata }}
-            </x-headerform.breadcrum-li>
-        @endforeach
-    </x-headerform.breadcrum-header>
+    <x-breadcrum breadcrumbs="Sucursales"></x-breadcrum>
 
-    @if (session("status"))
-        <x-headerform.banner type="{{session('status.1')}}">
-            {{ session("status.0") }}
-            @if (session("status.1") === "error")
-                <a
-                    href="{{ route("re_company") }}"
-                    class="text-white-600 underline"
-                >
-                    Ir a registro.
-                </a>
-            @endif
-        </x-headerform.banner>
-    @endif
+    <x-company-watcher></x-company-watcher>
 
     <div
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
     >
-        @if ($this->branchs > 0)
-            @livewire("utility.opcion-menu", ["namecomponent" => "branch"])
+        @if(!session("isdisabled"))
+            @if ($this->branchs > 0)
+                @livewire("utility.opcion-menu", ["namecomponent" => "branch"])
+            @endif
         @endif
 
         <x-headerform.borderheader></x-headerform.borderheader>
@@ -71,9 +55,9 @@
                         </x-inputs.selectgroup>
                     </div>
                     @error("company_id")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-4">
@@ -95,9 +79,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_name")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-2">
@@ -119,9 +103,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_code")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="flex gap-x-1 sm:col-span-3">
@@ -167,9 +151,9 @@
                             </x-inputs.textgroup>
                         </div>
                         @error("branch_phone")
-                            <x-inputs.error-validate>
-                                {{ $message }}
-                            </x-inputs.error-validate>
+                        <x-inputs.error-validate>
+                            {{ $message }}
+                        </x-inputs.error-validate>
                         @enderror
                     </div>
                 </div>
@@ -192,9 +176,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_email")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -212,9 +196,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_web")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
             </div>
@@ -254,9 +238,9 @@
                         </div>
                     </x-inputs.containautocomplete>
                     @error("province_id")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
 
@@ -320,9 +304,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_address")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -344,9 +328,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_zipcode")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
             </div>
@@ -375,9 +359,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_person_contact")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -400,9 +384,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_person_phone")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -424,35 +408,37 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("branch_person_email")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
             </div>
-            <form
-                id="sucursal"
-                wire:submit.prevent="submit"
-                x-init="$refs.ini.focus()"
-            >
-                @csrf
-                <x-headerform.button-group>
-                    <x-buttons.cancel
-                        wire:click="clearForm"
-                        label="Cancelar"
-                    ></x-buttons.cancel>
-                    @can("created", $this->actions)
-                        <x-buttons.save
-                            wire:submit.prevent="queryBranch"
-                            wire:click.prevent="queryBranch"
-                            namefucion="queryBranch"
-                            label="Guardar"
-                            isdisabled="{{$isdisabled}}"
-                            :error="count($errors)"
-                        ></x-buttons.save>
-                    @endcan
-                </x-headerform.button-group>
-            </form>
+            @if(!session("isdisabled"))
+                <form
+                    id="sucursal"
+                    wire:submit.prevent="submit"
+                    x-init="$refs.ini.focus()"
+                >
+                    @csrf
+                    <x-headerform.button-group>
+                        <x-buttons.cancel
+                            wire:click="clearForm"
+                            label="Cancelar"
+                        ></x-buttons.cancel>
+                        @can("created", $this->actions)
+                            <x-buttons.save
+                                wire:submit.prevent="queryBranch"
+                                wire:click.prevent="queryBranch"
+                                namefucion="queryBranch"
+                                label="Guardar"
+                                isdisabled="{{$isdisabled}}"
+                                :error="count($errors)"
+                            ></x-buttons.save>
+                        @endcan
+                    </x-headerform.button-group>
+                </form>
+            @endif
         </div>
     </div>
     @livewire("registro.list-branch", ["show" => false])

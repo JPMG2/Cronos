@@ -1,14 +1,14 @@
 <div>
-    <x-headerform.breadcrum-header>
-        @foreach ($breadcrumbs as $breacdata)
-            <x-headerform.breadcrum-li>
-                {{ $breacdata }}
-            </x-headerform.breadcrum-li>
-        @endforeach
-    </x-headerform.breadcrum-header>
+    <x-breadcrum breadcrumbs="Especialistas"></x-breadcrum>
+    <x-company-watcher></x-company-watcher>
     <div
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
     >
+        @if(!session("isdisabled"))
+            @if ($this->medicals > 0)
+                @livewire("utility.opcion-menu", ["namecomponent" => "especialist"])
+            @endif
+        @endif
         <x-headerform.borderheader></x-headerform.borderheader>
         <div>
             <div class="flex items-center">
@@ -20,7 +20,7 @@
                 <div
                     class="ml-2"
                     wire:loading
-                    wire:target=""
+                    wire:target="getEspecialis"
                 >
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
@@ -36,9 +36,12 @@
                             >
                                 <x-inputs.selectinput
                                     wire:model.defer="formesp.dataespecialist.degree_id"
+                                    x-ref="ini"
                                     id="esp_titulo"
                                     isdisabled="{{$isdisabled}}"
+                                    :error="$errors->first('degree_id')"
                                 >
+                                    <option label=" "></option>
                                     @foreach ($listDegree as $degree)
                                         <option value="{{ $degree->id }}">
                                             {{ $degree->degree_code }}
@@ -64,7 +67,7 @@
                                     wire:model="formesp.dataespecialist.medical_name"
                                     id="esp_name"
                                     autocomplete="off"
-                                    maxlength="200"
+                                    maxlength="170"
                                     placeholder=" "
                                     isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('medical_name')"
@@ -89,7 +92,7 @@
                                 wire:model="formesp.dataespecialist.medical_lastname"
                                 id="esp_apellido"
                                 autocomplete="off"
-                                maxlength="200"
+                                maxlength="170"
                                 placeholder=" "
                                 isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('medical_lastname')"
@@ -139,7 +142,9 @@
                                     wire:model.defer="formesp.dataespecialist.credential_id"
                                     id="esp_matri"
                                     isdisabled="{{$isdisabled}}"
+                                    :error="$errors->first('credential_id')"
                                 >
+                                    <option label=" "></option>
                                     @foreach ($listCredential as $credential)
                                         <option value="{{ $credential->id }}">
                                             {{ $credential->credential_code }}
@@ -163,7 +168,6 @@
                             >
                                 <x-inputs.textinput
                                     wire:model="formesp.dataespecialist.medical_codenumber"
-                                    x-mask="99999999999999999999"
                                     id="esp_nummatri"
                                     autocomplete="off"
                                     maxlength="20"
@@ -192,6 +196,7 @@
                                 id="esp_especialis"
                                 isdisabled="{{$isdisabled}}"
                             >
+                                <option label=" "></option>
                                 @foreach ($listSpecialties as $specialist)
                                     <option value="{{ $specialist->id }}">
                                         {{ $specialist->specialty_name }}
@@ -308,30 +313,31 @@
                 </div>
             </div>
 
-
-            <form
-                id="sucursal"
-                wire:submit.prevent="submit"
-                x-init="$refs.ini.focus()"
-            >
-                @csrf
-                <x-headerform.button-group>
-                    <x-buttons.cancel
-                        wire:click="clearForm"
-                        label="Cancelar"
-                    ></x-buttons.cancel>
-                    @can("created", $this->actions)
-                        <x-buttons.save
-                            wire:submit.prevent="getEspecialis"
-                            wire:click.prevent="getEspecialis"
-                            namefucion=""
-                            label="Guardar"
-                            isdisabled="{{$isdisabled}}"
-                            :error="count($errors)"
-                        ></x-buttons.save>
-                    @endcan
-                </x-headerform.button-group>
-            </form>
+            @if(!session("isdisabled"))
+                <form
+                    id="especialista"
+                    wire:submit.prevent="submit"
+                    x-init="$refs.ini.focus()"
+                >
+                    @csrf
+                    <x-headerform.button-group>
+                        <x-buttons.cancel
+                            wire:click="clearForm"
+                            label="Cancelar"
+                        ></x-buttons.cancel>
+                        @can("created", $this->actions)
+                            <x-buttons.save
+                                wire:submit.prevent="getEspecialis"
+                                wire:click.prevent="getEspecialis"
+                                namefucion=""
+                                label="Guardar"
+                                isdisabled="{{$isdisabled}}"
+                                :error="count($errors)"
+                            ></x-buttons.save>
+                        @endcan
+                    </x-headerform.button-group>
+                </form>
+            @endif
         </div>
     </div>
 </div>

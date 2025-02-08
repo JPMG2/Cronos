@@ -1,11 +1,5 @@
 <div>
-    <x-headerform.breadcrum-header>
-        @foreach ($breadcrumbs as $breacdata)
-            <x-headerform.breadcrum-li>
-                {{ $breacdata }}
-            </x-headerform.breadcrum-li>
-        @endforeach
-    </x-headerform.breadcrum-header>
+    <x-breadcrum breadcrumbs="Registro"></x-breadcrum>
 
     <div
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
@@ -102,9 +96,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_name")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div class="relative sm:col-span-2">
@@ -126,9 +120,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_acronym")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div
@@ -198,9 +192,9 @@
                                             </x-inputs.ul-select>
                                         </div>
                                         @error("insurance_type_id")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                 </div>
@@ -226,9 +220,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_code")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div class="relative sm:col-span-3">
@@ -251,9 +245,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_cuit")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div class="relative sm:col-span-3">
@@ -280,9 +274,9 @@
                                             </x-inputs.selectgroup>
                                         </div>
                                         @error("state_id")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                 </div>
@@ -325,9 +319,9 @@
                                             </x-inputs.containligroup>
                                         </div>
                                         @error("province_id")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div class="relative sm:col-span-3">
@@ -364,9 +358,9 @@
                                             </x-inputs.containligroup>
                                         </div>
                                         @error("city_id")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div class="relative sm:col-span-2">
@@ -388,9 +382,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_zipcode")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                 </div>
@@ -416,9 +410,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_address")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div class="relative sm:col-span-3">
@@ -441,9 +435,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_phone")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                 </div>
@@ -469,9 +463,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_web")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                     <div class="relative sm:col-span-4">
@@ -493,9 +487,9 @@
                                             </x-inputs.textgroup>
                                         </div>
                                         @error("insurance_email")
-                                            <x-inputs.error-validate>
-                                                {{ $message }}
-                                            </x-inputs.error-validate>
+                                        <x-inputs.error-validate>
+                                            {{ $message }}
+                                        </x-inputs.error-validate>
                                         @enderror
                                     </div>
                                 </div>

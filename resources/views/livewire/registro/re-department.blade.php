@@ -1,12 +1,6 @@
 <div>
-    <x-headerform.breadcrum-header>
-        @foreach ($breadcrumbs as $breacdata)
-            <x-headerform.breadcrum-li>
-                {{ $breacdata }}
-            </x-headerform.breadcrum-li>
-        @endforeach
-    </x-headerform.breadcrum-header>
-
+    <x-breadcrum breadcrumbs="Departamentos"></x-breadcrum>
+    <x-company-watcher></x-company-watcher>
     <div
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
     >
@@ -32,97 +26,97 @@
                             class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                         >
                             <thead class="bg-gray-50 dark:bg-gray-800">
-                                <tr>
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                    >
-                                        ID
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                    >
-                                        Departamento
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                    >
-                                        Código
-                                    </th>
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                    >
-                                        Creado
-                                    </th>
+                            <tr>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                >
+                                    ID
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                >
+                                    Departamento
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                >
+                                    Código
+                                </th>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                >
+                                    Creado
+                                </th>
 
-                                    <th
-                                        scope="col"
-                                        class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                    >
-                                        Opción
-                                    </th>
-                                </tr>
+                                <th
+                                    scope="col"
+                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                >
+                                    Opción
+                                </th>
+                            </tr>
                             </thead>
                             <tbody
                                 class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900"
                             >
-                                @foreach ($this->departments as $depa)
-                                    <tr class="even:bg-gray-100">
-                                        <td
-                                            class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200"
+                            @foreach ($this->departments as $depa)
+                                <tr class="even:bg-gray-100">
+                                    <td
+                                        class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200"
+                                    >
+                                        <div
+                                            class="inline-flex items-center gap-x-3"
                                         >
-                                            <div
-                                                class="inline-flex items-center gap-x-3"
-                                            >
                                                 <span>
                                                     {{ $loop->iteration }}
                                                 </span>
-                                            </div>
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700"
+                                        </div>
+                                    </td>
+                                    <td
+                                        class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700"
+                                    >
+                                        {{ $depa->department_name }}
+                                    </td>
+                                    <td
+                                        class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                    >
+                                        {{ $depa->department_code }}
+                                    </td>
+                                    <td
+                                        class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                    >
+                                        {{ \Carbon\Carbon::parse($depa->created_at)->format("d/m/Y") }}
+                                    </td>
+                                    <td
+                                        class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                    >
+                                        <div
+                                            class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
                                         >
-                                            {{ $depa->department_name }}
-                                        </td>
-                                        <td
-                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                            <x-table.accionopcion
+                                                wire:key="{{ $depa->id }}"
+                                                wire:click.prevent="editDepartment({{ $depa }})"
+                                                wire:target="editDepartment"
+                                                iconname="edit"
+                                            ></x-table.accionopcion>
+                                        </div>
+                                        <div
+                                            class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
                                         >
-                                            {{ $depa->department_code }}
-                                        </td>
-                                        <td
-                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
-                                        >
-                                            {{ \Carbon\Carbon::parse($depa->created_at)->format("d/m/Y") }}
-                                        </td>
-                                        <td
-                                            class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
-                                        >
-                                            <div
-                                                class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
-                                            >
-                                                <x-table.accionopcion
-                                                    wire:key="{{ $depa->id }}"
-                                                    wire:click.prevent="editDepartment({{ $depa }})"
-                                                    wire:target="editDepartment"
-                                                    iconname="edit"
-                                                ></x-table.accionopcion>
-                                            </div>
-                                            <div
-                                                class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
-                                            >
-                                                <x-table.accionopcion
-                                                    wire:key="{{ $depa->id }}"
-                                                    wire:click.prevent="deleteDepartment({{ $depa }})"
-                                                    wire:target="deleteDepartment"
-                                                    iconname="delete"
-                                                ></x-table.accionopcion>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                            <x-table.accionopcion
+                                                wire:key="{{ $depa->id }}"
+                                                wire:click.prevent="deleteDepartment({{ $depa }})"
+                                                wire:target="deleteDepartment"
+                                                iconname="delete"
+                                            ></x-table.accionopcion>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -162,9 +156,9 @@
                                 </x-inputs.textgroup>
                             </div>
                             @error("department_name")
-                                <x-inputs.error-validate>
-                                    {{ $message }}
-                                </x-inputs.error-validate>
+                            <x-inputs.error-validate>
+                                {{ $message }}
+                            </x-inputs.error-validate>
                             @enderror
                         </div>
                         <div class="relative sm:col-span-1">
@@ -186,34 +180,36 @@
                                 </x-inputs.textgroup>
                             </div>
                             @error("department_code")
-                                <x-inputs.error-validate>
-                                    {{ $message }}
-                                </x-inputs.error-validate>
+                            <x-inputs.error-validate>
+                                {{ $message }}
+                            </x-inputs.error-validate>
                             @enderror
                         </div>
                     </div>
-                    <form id="departamento" wire:submit.prevent="submit">
-                        @csrf
-                        <div class="absolute bottom-6 right-4">
-                            <x-headerform.button-group>
-                                <x-buttons.close wire:click="clearForm">
-                                    {{ __("Cerrar") }}
-                                </x-buttons.close>
-                                <x-buttons.cancel
-                                    wire:click="clearForm"
-                                    label="Cancelar"
-                                ></x-buttons.cancel>
-                                <x-buttons.save
-                                    wire:submit.prevent="queryDeparmente"
-                                    wire:click.prevent="queryDeparmente"
-                                    namefucion="queryDeparmente"
-                                    label="Guardar"
-                                    isdisabled="{{$isdisabled}}"
-                                    :error="count($errors)"
-                                ></x-buttons.save>
-                            </x-headerform.button-group>
-                        </div>
-                    </form>
+                    @if(!session("isdisabled"))
+                        <form id="departamento" wire:submit.prevent="submit">
+                            @csrf
+                            <div class="absolute bottom-6 right-4">
+                                <x-headerform.button-group>
+                                    <x-buttons.close wire:click="clearForm">
+                                        {{ __("Cerrar") }}
+                                    </x-buttons.close>
+                                    <x-buttons.cancel
+                                        wire:click="clearForm"
+                                        label="Cancelar"
+                                    ></x-buttons.cancel>
+                                    <x-buttons.save
+                                        wire:submit.prevent="queryDeparmente"
+                                        wire:click.prevent="queryDeparmente"
+                                        namefucion="queryDeparmente"
+                                        label="Guardar"
+                                        isdisabled="{{$isdisabled}}"
+                                        :error="count($errors)"
+                                    ></x-buttons.save>
+                                </x-headerform.button-group>
+                            </div>
+                        </form>
+                    @endif
                 </x-rightmodal>
             </div>
             <!-- End Modal -->

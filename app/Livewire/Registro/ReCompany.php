@@ -4,13 +4,10 @@ namespace App\Livewire\Registro;
 
 use App\Classes\Registro\CompanyObj;
 use App\Livewire\Forms\Registro\CompanyForm;
-use App\Models\Company;
 use App\Traits\ProvinceCity;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use Barryvdh\DomPDF\Facade\Pdf;
-
 
 class ReCompany extends Component
 {
@@ -72,8 +69,6 @@ class ReCompany extends Component
     #[Title('- Empresa')]
     public function render()
     {
-
-        $this->breadcrumbs = exploBreadcrum($this->getBreadcrumbs('Empresa'));
 
         $this->commonQuerys = app('commonquery');
 

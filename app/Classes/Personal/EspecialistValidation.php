@@ -19,12 +19,14 @@ class EspecialistValidation
                 'medical_lastname' => AttributeValidator::stringValid(true, 3),
                 'medical_dni' => AttributeValidator::uniqueIdNameLength(5, 'medicals', 'medical_dni', null),
                 'credential_id' => 'required',
-                'medical_codenumber' => AttributeValidator::uniqueIdNameLength(4, 'medicals', 'medical_codenumber', null),
-                'specialty_id' => 'required',
+                'medical_codenumber' => ['bail', 'required',
+                    AttributeValidator::medicalCredential((int) $especialsit['credential_id'], $especialsit['medical_codenumber']),
+                ],
+                'specialty_id' => 'sometimes',
                 'state_id' => 'required',
                 'medical_email' => AttributeValidator::emailValid(false),
                 'medical_phone' => AttributeValidator::digitValid(5, false),
-                'medical_address' => AttributeValidator::stringValid(true, 5),
+                'medical_address' => AttributeValidator::stringValid(false, 5),
             ],
             [
 
@@ -70,7 +72,7 @@ class EspecialistValidation
         ];
     }
 
-    public function onBranchUpdate(array $branch)
+    public function onEspecialistUpdate(array $branch)
     {
 
         return Validator::make(
@@ -94,9 +96,7 @@ class EspecialistValidation
                 'branch_person_email' => AttributeValidator::uniqueEmail('branches', 'branch_person_email', $branch['id']),
             ],
             [
-                'province_id.gt' => config('nicename.campo_obligado'),
-                'city_id.gt' => config('nicename.campo_obligado'),
-                'state_id.gt' => config('nicename.campo_obligado'),
+
             ],
             $this->niceNames()
 

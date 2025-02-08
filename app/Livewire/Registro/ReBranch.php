@@ -5,7 +5,6 @@ namespace App\Livewire\Registro;
 use App\Http\Controllers\PDFController;
 use App\Livewire\Forms\Registro\BranchForm;
 use App\Models\Branch;
-use App\Traits\CompanyWatcher;
 use App\Traits\HandlesActionPolicy;
 use App\Traits\ProvinceCity;
 use App\Traits\UtilityForm;
@@ -15,7 +14,7 @@ use Livewire\Component;
 
 class ReBranch extends Component
 {
-    use CompanyWatcher, HandlesActionPolicy, ProvinceCity, UtilityForm;
+    use HandlesActionPolicy, ProvinceCity, UtilityForm;
 
     public BranchForm $form;
 
@@ -26,12 +25,6 @@ class ReBranch extends Component
     {
 
         $this->commonQuerys = app('commonquery');
-
-        $this->breadcrumbs = exploBreadcrum($this->getBreadcrumbs('Sucursales'));
-
-        if (! $this->anyCompany($this->commonQuerys) || $this->companyOnPause($this->commonQuerys)) {
-            $this->isdisabled = 'disabled';
-        }
 
         return view('livewire.registro.re-branch', [
             'listCompanies' => $this->commonQuerys::companyQuery([1]),
@@ -50,7 +43,11 @@ class ReBranch extends Component
         } else {
             $result = app()->call([$this->form, 'branchUpdate']);
         }
+        $this->endForm($result);
+    }
 
+    public function endForm($result)
+    {
         $this->dispatch('show-toast', $result);
 
         $this->dispatch('clearColorOpcionMenu');
@@ -62,7 +59,7 @@ class ReBranch extends Component
     {
 
         $this->form->databranch['province_id'] = $this->getProvinceId();
-         $this->form->databranch['city_id'] = $this->getCityId();
+        $this->form->databranch['city_id'] = $this->getCityId();
     }
 
     public function clearForm()

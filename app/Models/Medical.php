@@ -11,6 +11,7 @@ class Medical extends Model
 {
     /** @use HasFactory<MedicalFactory> */
     use HasFactory;
+
     protected $fillable = [
         'state_id',
         'credential_id',
@@ -33,6 +34,7 @@ class Medical extends Model
             'degree_id' => 'integer',
         ];
     }
+
     protected function medicalName(): Attribute
     {
         return Attribute::make(
@@ -64,6 +66,16 @@ class Medical extends Model
         );
     }
 
+    public function setSpecialtyIdAttribute($value)
+    {
+        $this->attributes['specialty_id'] = $value ?: null;
+    }
+
+    public function setDegreeIdAttribute($value)
+    {
+        $this->attributes['degree_id'] = $value ?: null;
+    }
+
     protected function medicalEmail(): Attribute
     {
         return Attribute::make(
@@ -76,5 +88,16 @@ class Medical extends Model
         return Attribute::make(
             set: fn ($value) => trim($value),
         );
+    }
+
+    public function certificates()
+    {
+        return $this->belongsToMany(Credential::class)
+            ->withPivot('credential_number');
+    }
+
+    public static function countMedicals()
+    {
+        return self::count();
     }
 }

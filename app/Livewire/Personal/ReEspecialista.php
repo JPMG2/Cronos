@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Personal;
 
-use App\Classes\Personal\EspecialistValidation;
 use App\Livewire\Forms\Personal\EspecialistaForm;
+use App\Models\Medical;
 use App\Traits\HandlesActionPolicy;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\Title;
@@ -20,8 +20,6 @@ class ReEspecialista extends Component
     {
         $this->commonQuerys = app('commonquery');
 
-        $this->breadcrumbs = exploBreadcrum($this->getBreadcrumbs('Especialistas'));
-
         return view('livewire.personal.re-especialista', [
             'listState' => $this->commonQuerys::stateQuery([1, 2]),
             'listSpecialties' => $this->commonQuerys::listSpecialties(),
@@ -32,7 +30,26 @@ class ReEspecialista extends Component
 
     public function getEspecialis()
     {
-        $validacion = new EspecialistValidation;
-        $validacion->onEspecialistCreate($this->formesp->dataespecialist);
+        if (! $this->isupdate) {
+            $result = app()->call([$this->formesp, 'especialistStore']);
+        }
+        $this->endEspeciales($result);
+    }
+
+    public function endEspeciales($result)
+    {
+        $this->dispatch('show-toast', $result);
+        $this->clearForm();
+    }
+
+    public function getMedicalsProperty()
+    {
+        return Medical::countMedicals();
+    }
+
+    public function clearForm()
+    {
+        $this->formesp->reset();
+        $this->cleanFormValues();
     }
 }

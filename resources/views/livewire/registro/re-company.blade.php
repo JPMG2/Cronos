@@ -1,11 +1,5 @@
 <div>
-    <x-headerform.breadcrum-header>
-        @foreach ($breadcrumbs as $breacdata)
-            <x-headerform.breadcrum-li>
-                {{ $breacdata }}
-            </x-headerform.breadcrum-li>
-        @endforeach
-    </x-headerform.breadcrum-header>
+    <x-breadcrum breadcrumbs="Empresa"></x-breadcrum>
 
     <div
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
@@ -46,9 +40,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_name")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -71,9 +65,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_cuit")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-2">
@@ -118,9 +112,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_phone")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -141,9 +135,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_email")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-4">
@@ -160,9 +154,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_web")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
             </div>
@@ -202,9 +196,9 @@
                         </div>
                     </x-inputs.containautocomplete>
                     @error("province_id")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
 
@@ -241,9 +235,9 @@
                         </div>
                     </x-inputs.containautocomplete>
                     @error("city_id")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
             </div>
@@ -266,9 +260,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_address")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-2">
@@ -289,9 +283,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_zipcode")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
             </div>
@@ -319,9 +313,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_person_contact")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -343,9 +337,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_person_phone")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
                 <div class="relative sm:col-span-3">
@@ -366,9 +360,9 @@
                         </x-inputs.textgroup>
                     </div>
                     @error("company_person_email")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
                     @enderror
                 </div>
             </div>

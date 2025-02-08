@@ -23,8 +23,6 @@ class ObraSocailRegistro extends Component
     #[Title(' - Obra social')]
     public function render()
     {
-        $this->breadcrumbs = exploBreadcrum($this->getBreadcrumbs('Registro'));
-
         $this->commonQuerys = app('commonquery');
 
         return view('livewire.gestion.obra-socail-registro', [

@@ -17,6 +17,19 @@ class Credential extends Model
         'credential_code',
     ];
 
+    public static function credentialExist($idcredential, $credentialnumbre)
+    {
+        return self::whereHas('medicals', static function ($query) use ($credentialnumbre) {
+            $query->where('credential_number', $credentialnumbre);
+        })->where('id', $idcredential)->exists();
+    }
+
+    public function medicals()
+    {
+        return $this->belongsToMany(Medical::class)
+            ->withPivot('credential_number');
+    }
+
     protected function credentialName(): Attribute
     {
         return Attribute::make(

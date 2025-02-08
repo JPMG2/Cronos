@@ -25,7 +25,6 @@ class ReDepartment extends Component
     #[Title(' - Departamentos')]
     public function render()
     {
-        $this->breadcrumbs = exploBreadcrum($this->getBreadcrumbs('Departamentos'));
         $this->commonQuerys = app('commonquery');
 
         return view('livewire.registro.re-department', [
