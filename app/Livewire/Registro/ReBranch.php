@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Registro;
 
-use App\Http\Controllers\PDFController;
 use App\Livewire\Forms\Registro\BranchForm;
 use App\Models\Branch;
 use App\Traits\HandlesActionPolicy;
@@ -80,7 +79,7 @@ class ReBranch extends Component
     // events that is fire from user options bar to Show branch
     public function branchShow()
     {
-        $this->dispatch('showModal', show: true);
+        $this->dispatch('main-listener-form', 'showModalBranch', true);
     }
 
     // events that is fire from user options bar to Edit branch
@@ -91,22 +90,18 @@ class ReBranch extends Component
     }
 
     // events that is fire from user options bar to Reload form
-    public function branchNew()
+    public function branchNew(): void
     {
-        $this->redirect('re_sucursal');
+        $this->dispatch('new-form', 're_sucursal');
     }
 
-    public function branchPrint()
+    public function branchPrint(): void
     {
         $idBranch = $this->form->databranch['id'];
 
-        $encryptedId = encryptString($idBranch);
-
         $className = 'BranchPdf';
 
-        $urlpdf = action([PDFController::class, 'pdfById'], ['id' => $encryptedId, 'class' => $className]);
-
-        $this->dispatch('openWindow', ['url' => $urlpdf]);
+        $this->dispatch('printByID', ['idmodel' => $idBranch, 'className' => $className]);
 
     }
 

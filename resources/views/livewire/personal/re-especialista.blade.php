@@ -20,7 +20,7 @@
                 <div
                     class="ml-2"
                     wire:loading
-                    wire:target="getEspecialis"
+                    wire:target="getEspecialis,especialistShow"
                 >
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
@@ -340,4 +340,5 @@
             @endif
         </div>
     </div>
+    @livewire("personal.list-especialista", ["show" => false])
 </div>

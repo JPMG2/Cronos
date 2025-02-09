@@ -52,4 +52,10 @@ class ReEspecialista extends Component
         $this->formesp->reset();
         $this->cleanFormValues();
     }
+
+    public function especialistShow()
+    {
+        $this->dispatch('main-listener-form', 'showModalEspecialist', true);
+
+    }
 }

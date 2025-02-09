@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Database\Factories\MedicalFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Medical extends Model
 {
@@ -66,6 +69,11 @@ class Medical extends Model
         );
     }
 
+    public function setCredentialIdAttribute($value)
+    {
+        $this->attributes['credential_id'] = $value ?: null;
+    }
+
     public function setSpecialtyIdAttribute($value)
     {
         $this->attributes['specialty_id'] = $value ?: null;
@@ -90,7 +98,7 @@ class Medical extends Model
         );
     }
 
-    public function certificates()
+    public function credentials(): BelongsToMany
     {
         return $this->belongsToMany(Credential::class)
             ->withPivot('credential_number');
@@ -99,5 +107,31 @@ class Medical extends Model
     public static function countMedicals()
     {
         return self::count();
+    }
+
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function degree(): BelongsTo
+    {
+        return $this->belongsTo(Degree::class);
+    }
+
+    public function specialty(): BelongsTo
+    {
+        return $this->belongsTo(Specialty::class);
+    }
+
+    public function scopeListMedicals(Builder $query): Builder
+    {
+        return $query->with('specialty', 'degree', 'credentials', 'state')
+            ->orderBy('medical_name');
+    }
+
+    public function getFirstCredentialNumberAttribute(): ?string
+    {
+        return $this->credentials()->first()?->pivot->credential_number;
     }
 }

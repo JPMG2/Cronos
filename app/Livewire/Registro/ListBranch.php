@@ -5,9 +5,12 @@ namespace App\Livewire\Registro;
 use App\Classes\Utilities\CommonQuerys;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ListBranch extends Component
 {
+    use WithPagination;
+
     public $show = false;
 
     public $listCompanyBranch;
@@ -25,7 +28,7 @@ class ListBranch extends Component
         ]);
     }
 
-    #[On('showModal')]
+    #[On('showModalBranch')]
     public function updateShow($show)
     {
         $this->show = $show;
