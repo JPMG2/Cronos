@@ -29,4 +29,10 @@ trait UtilityForm
         return App::make($model)->getFillable();
 
     }
+
+    public function editActivate()
+    {
+        $this->isdisabled = '';
+        $this->isupdate = true;
+    }
 }

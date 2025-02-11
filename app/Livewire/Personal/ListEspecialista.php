@@ -31,4 +31,10 @@ class ListEspecialista extends Component
     {
         $this->show = $show;
     }
+
+    public function dataMedic($medicId)
+    {
+        $this->dispatch('dataMedical', $medicId);
+        $this->show = false;
+    }
 }

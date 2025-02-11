@@ -79,14 +79,13 @@ class ReBranch extends Component
     // events that is fire from user options bar to Show branch
     public function branchShow()
     {
-        $this->dispatch('main-listener-form', 'showModalBranch', true);
+        $this->dispatch('showOptionForm', 'showModalBranch', true);
     }
 
     // events that is fire from user options bar to Edit branch
     public function branchEdit()
     {
-        $this->isdisabled = '';
-        $this->isupdate = true;
+        $this->editActivate();
     }
 
     // events that is fire from user options bar to Reload form

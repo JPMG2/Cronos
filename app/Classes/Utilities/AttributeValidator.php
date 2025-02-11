@@ -42,6 +42,11 @@ class AttributeValidator
         return 'sometimes|email|regex:/^([^<>]*)$/';
     }
 
+    public static function emailValidById($id, $model, $uniqueField)
+    {
+        return 'sometimes|unique:'.$model.','.$uniqueField.','.$id.'|email|regex:/^([^<>]*)$/';
+    }
+
     public static function stringValid($required, $length)
     {
         if ($required) {
@@ -65,9 +70,9 @@ class AttributeValidator
         return 'gt:0';
     }
 
-    public static function medicalCredential(int $idcredential, $credential)
+    public static function medicalCredential(int $idcredential, $credential, $id = null)
     {
 
-        return new MedicalCredential($idcredential, $credential);
+        return new MedicalCredential($idcredential, $credential, $id);
     }
 }

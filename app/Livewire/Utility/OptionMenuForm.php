@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class OptionMenuForm extends Component
 {
-    #[On('main-listener-form')]
+    #[On('showOptionForm')]
     public function onShow($eventname, $atribute)
     {
         $this->dispatch($eventname, show: $atribute);

@@ -20,7 +20,7 @@ class EspecialistValidation
                 'medical_dni' => AttributeValidator::uniqueIdNameLength(5, 'medicals', 'medical_dni', null),
                 'credential_id' => 'required',
                 'medical_codenumber' => ['bail', 'required',
-                    AttributeValidator::medicalCredential((int) $especialsit['credential_id'], $especialsit['medical_codenumber']),
+                    AttributeValidator::medicalCredential((int) $especialsit['credential_id'], $especialsit['medical_codenumber'], null),
                 ],
                 'specialty_id' => 'sometimes',
                 'state_id' => 'required',
@@ -72,28 +72,26 @@ class EspecialistValidation
         ];
     }
 
-    public function onEspecialistUpdate(array $branch)
+    public function onEspecialistUpdate(array $especialsit)
     {
 
         return Validator::make(
 
-            $this->inicialiciteAtributes($branch),
+            $this->inicialiciteAtributes($especialsit),
             [
-
-                'company_id' => 'required',
-                'province_id' => AttributeValidator::mayorValid(),
-                'city_id' => AttributeValidator::mayorValid(),
-                'state_id' => AttributeValidator::mayorValid(),
-                'branch_name' => AttributeValidator::uniqueIdNameLength(3, 'branches', 'branch_name', $branch['id']),
-                'branch_code' => AttributeValidator::uniqueIdNameLength(3, 'branches', 'branch_code', $branch['id']),
-                'branch_address' => AttributeValidator::stringValid(true, 5),
-                'branch_phone' => AttributeValidator::digitValid(5, true),
-                'branch_zipcode' => AttributeValidator::stringValid(true, 3),
-                'branch_email' => AttributeValidator::uniqueEmail('branches', 'branch_email', $branch['id']),
-                'branch_web' => AttributeValidator::webValid(false),
-                'branch_person_contact' => AttributeValidator::stringValid(true, 5),
-                'branch_person_phone' => AttributeValidator::digitValid(5, true),
-                'branch_person_email' => AttributeValidator::uniqueEmail('branches', 'branch_person_email', $branch['id']),
+                'degree_id' => 'required',
+                'medical_name' => AttributeValidator::stringValid(true, 3),
+                'medical_lastname' => AttributeValidator::stringValid(true, 3),
+                'medical_dni' => AttributeValidator::uniqueIdNameLength(5, 'medicals', 'medical_dni', (int) $especialsit['id']),
+                'credential_id' => 'required',
+                'medical_codenumber' => ['bail', 'required',
+                    AttributeValidator::medicalCredential((int) $especialsit['credential_id'], $especialsit['medical_codenumber'], (int) $especialsit['id']),
+                ],
+                'specialty_id' => 'sometimes',
+                'state_id' => 'required',
+                'medical_email' => AttributeValidator::emailValidById((int) $especialsit['id'], 'medicals', 'medical_email'),
+                'medical_phone' => AttributeValidator::digitValid(5, false),
+                'medical_address' => AttributeValidator::stringValid(false, 5),
             ],
             [
 

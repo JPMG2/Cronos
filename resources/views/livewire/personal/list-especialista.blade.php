@@ -24,22 +24,7 @@
                         class="flex size-7 items-center justify-center rounded-full border border-transparent text-sm font-semibold text-gray-800 hover:bg-gray-100 disabled:pointer-events-none disabled:opacity-50 dark:text-white dark:hover:bg-neutral-700"
                         data-hs-overlay="#hs-basic-modal"
                     >
-                        <span class="sr-only">Close</span>
-                        <svg
-                            class="size-4 flex-shrink-0"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        >
-                            <path d="M18 6 6 18"></path>
-                            <path d="m6 6 12 12"></path>
-                        </svg>
+                        <x-close-modal></x-close-modal>
                     </button>
                 </div>
                 <div class="overflow-y-auto p-4">
@@ -104,6 +89,16 @@
                                                 >
                                                     {{ $medical->state->state_name }}
                                                 </x-statescolor>
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                                <div
+                                                    class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                                >
+                                                    <x-headerform.eyeoption
+                                                        wire:key="{{ $medical->id }}"
+                                                        wire:click.prevent="dataMedic({{ $medical->id }})"
+                                                    ></x-headerform.eyeoption>
+                                                </div>
                                             </x-table.tdtable>
                                         </tr>
                                     @endforeach

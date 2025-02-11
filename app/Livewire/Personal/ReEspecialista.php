@@ -6,6 +6,7 @@ use App\Livewire\Forms\Personal\EspecialistaForm;
 use App\Models\Medical;
 use App\Traits\HandlesActionPolicy;
 use App\Traits\UtilityForm;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -32,6 +33,8 @@ class ReEspecialista extends Component
     {
         if (! $this->isupdate) {
             $result = app()->call([$this->formesp, 'especialistStore']);
+        } else {
+            $result = app()->call([$this->formesp, 'especialistUpdate']);
         }
         $this->endEspeciales($result);
     }
@@ -51,11 +54,24 @@ class ReEspecialista extends Component
     {
         $this->formesp->reset();
         $this->cleanFormValues();
+        $this->dispatch('showOptionsForms', show: false);
     }
 
     public function especialistShow()
     {
-        $this->dispatch('main-listener-form', 'showModalEspecialist', true);
+        $this->dispatch('showOptionForm', 'showModalEspecialist', true);
+    }
 
+    public function especialistEdit()
+    {
+        $this->editActivate();
+    }
+
+    #[On('dataMedical')]
+    public function medicalLoadData($medicalId)
+    {
+        app()->call([$this->formesp, 'infoMedic'], ['medicalId' => $medicalId]);
+        $this->dispatch('showOptionsForms', show: true);
+        $this->isdisabled = 'disabled';
     }
 }

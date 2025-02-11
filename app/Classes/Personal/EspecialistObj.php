@@ -20,9 +20,26 @@ class EspecialistObj
         $credentials = Credential::find($arrayEspecialist['credential_id']);
 
         if ($credentials) {
-            $medical->certificates()->attach($credentials->id, ['credential_number' => $arrayEspecialist['medical_codenumber']]);
+            $medical->credentials()->attach($credentials->id, ['credential_number' => $arrayEspecialist['medical_codenumber']]);
         }
 
         return $medical;
+    }
+
+    public function update(array $arrayEspeciaist, int $spcialistId): Medical
+    {
+        $medical = Medical::find($spcialistId);
+
+        $medical->update($this->getValuesModel($arrayEspeciaist, $this->modelName));
+
+        $medical->credentials()->updateExistingPivot($arrayEspeciaist['credential_id'], ['credential_number' => $arrayEspeciaist['medical_codenumber']]);
+
+        return $medical;
+    }
+
+    public function show($medicalId)
+    {
+        return Medical::listMedicals()->find($medicalId);
+
     }
 }

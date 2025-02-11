@@ -17,8 +17,16 @@ class Credential extends Model
         'credential_code',
     ];
 
-    public static function credentialExist($idcredential, $credentialnumbre)
+    public static function credentialExist($idcredential, $credentialnumbre, $credentialModelId = null): bool
     {
+        if ($credentialModelId) {
+
+            dd(self::whereHas('medicals', static function ($query) use ($credentialnumbre, $credentialModelId) {
+                $query->where('credential_number', $credentialnumbre)
+                    ->where('medical_id', '!=', $credentialModelId);
+            })->where('id', $idcredential)->exists());
+        }
+
         return self::whereHas('medicals', static function ($query) use ($credentialnumbre) {
             $query->where('credential_number', $credentialnumbre);
         })->where('id', $idcredential)->exists();
