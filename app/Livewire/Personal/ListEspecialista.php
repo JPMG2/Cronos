@@ -3,13 +3,14 @@
 namespace App\Livewire\Personal;
 
 use App\Models\Medical;
+use App\Traits\TableSorting;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ListEspecialista extends Component
 {
-    use WithPagination;
+    use TableSorting, WithPagination;
 
     public $show = false;
 
@@ -21,8 +22,12 @@ class ListEspecialista extends Component
 
     public function render()
     {
+        $query = Medical::listMedicals();
+        $query = $this->makeQuery($query);
+
         return view('livewire.personal.list-especialista', [
-            'listMedical' => Medical::listMedicals()->paginate(15),
+            'listMedical' => $query->paginate(10),
+            'listFilterValues' => Medical::getFilterableAttributes(),
         ]);
     }
 
@@ -30,6 +35,8 @@ class ListEspecialista extends Component
     public function updateShow($show)
     {
         $this->show = $show;
+        $this->resetPage();
+        $this->resetOrdersValues();
     }
 
     public function dataMedic($medicId)

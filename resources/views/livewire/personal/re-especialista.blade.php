@@ -25,6 +25,7 @@
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
             </div>
+           
             <div class="mt-3 grid grid-cols-1 gap-x-2  gap-y-2 sm:grid-cols-9">
                 <div class="flex gap-x-1 sm:col-span-3">
                     <div class="relative w-2/5 sm:col-span-3">

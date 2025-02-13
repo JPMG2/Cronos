@@ -6,7 +6,7 @@
         x-transition:enter.duration.100ms
         x-transition:leave.duration.300ms
         x-cloak
-        class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70"
+        class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70 overflow-auto"
     >
         <div class="m-3 mx-auto mt-11 size-4/5">
             <div

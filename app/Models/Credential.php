@@ -21,10 +21,10 @@ class Credential extends Model
     {
         if ($credentialModelId) {
 
-            dd(self::whereHas('medicals', static function ($query) use ($credentialnumbre, $credentialModelId) {
+            return self::whereHas('medicals', static function ($query) use ($credentialnumbre, $credentialModelId) {
                 $query->where('credential_number', $credentialnumbre)
                     ->where('medical_id', '!=', $credentialModelId);
-            })->where('id', $idcredential)->exists());
+            })->where('id', $idcredential)->exists();
         }
 
         return self::whereHas('medicals', static function ($query) use ($credentialnumbre) {

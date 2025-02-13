@@ -28,6 +28,18 @@ class Medical extends Model
         'medical_dni',
     ];
 
+    public static function getFilterableAttributes(): array
+    {
+        return [
+            'medical_name' => 'Nombre',
+            'medical_lastname' => 'Apellido',
+            'credential_id' => 'Matricula',
+            'specialty_id' => 'Espacialidad',
+            'state_id' => 'Estatus',
+            // Add other attributes as needed
+        ];
+    }
+
     protected function casts(): array
     {
         return [
@@ -126,8 +138,7 @@ class Medical extends Model
 
     public function scopeListMedicals(Builder $query): Builder
     {
-        return $query->with('specialty', 'degree', 'credentials', 'state')
-            ->orderBy('medical_name');
+        return $query->with('specialty', 'degree', 'credentials', 'state');
     }
 
     public function getFirstCredentialNumberAttribute(): ?string

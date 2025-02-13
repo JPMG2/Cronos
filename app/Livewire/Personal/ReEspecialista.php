@@ -34,6 +34,7 @@ class ReEspecialista extends Component
         if (! $this->isupdate) {
             $result = app()->call([$this->formesp, 'especialistStore']);
         } else {
+
             $result = app()->call([$this->formesp, 'especialistUpdate']);
         }
         $this->endEspeciales($result);
@@ -52,6 +53,7 @@ class ReEspecialista extends Component
 
     public function clearForm()
     {
+        $this->isupdate = false;
         $this->formesp->reset();
         $this->cleanFormValues();
         $this->dispatch('showOptionsForms', show: false);
@@ -65,6 +67,7 @@ class ReEspecialista extends Component
     public function especialistEdit()
     {
         $this->editActivate();
+
     }
 
     #[On('dataMedical')]

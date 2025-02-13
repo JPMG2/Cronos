@@ -6,7 +6,7 @@
         x-transition:enter.duration.100ms
         x-transition:leave.duration.300ms
         x-cloak
-        class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70"
+        class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70 overflow-auto"
     >
         <div class="m-3 mx-auto mt-11 size-4/5">
             <div
@@ -28,11 +28,56 @@
                     </button>
                 </div>
                 <div class="overflow-y-auto p-4">
+                    <div class="mt-0.5 mb-0.5">
+                        <div class="flex gap-x-1 sm:col-span-3">
+                            <div class="relative w-2/5 sm:col-span-3">
+                                <div class="relative">
+                                    <x-inputs.selectgroup
+                                        label="Filtro"
+                                        for="filteropcion"
+                                        required="yes"
+                                    >
+                                        <x-inputs.selectinput
+                                            wire:model.defer="filtervalue"
+                                            id="filteropcion"
+                                        >
+                                            @foreach ($listFilterValues as $key=>$filterValues)
+                                                <option value="{{ $key }}">
+                                                    {{ $filterValues}}
+                                                </option>
+                                            @endforeach
+                                        </x-inputs.selectinput>
+                                    </x-inputs.selectgroup>
+                                </div>
 
+                            </div>
+                            <div class="relative w-full sm:col-span-4">
+                                <div class="relative">
+                                    <x-inputs.textgroup
+                                        label="Buscar.."
+                                        for="sortfield"
+                                        required="yes"
+                                    >
+                                        <x-inputs.textinput
+                                            wire:model.live.debounce.300ms="sortField"
+                                            id="sortfield"
+                                            autocomplete="off"
+                                            maxlength="170"
+                                            placeholder=" "
+
+                                        ></x-inputs.textinput>
+                                    </x-inputs.textgroup>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                     @if(count($listMedical) > 0)
+
                         <div
                             class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
                         >
+
                             <table
                                 class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                             >
@@ -41,11 +86,21 @@
                                         <x-table.th>
                                             ID
                                         </x-table.th>
-                                        <x-table.th>
-                                            Nombre
+                                        <x-table.th
+                                            wire:click="orderColumBy('medical_name')"
+                                        >
+                                            <x-table.sortcolumn currentColumn="medical_name" :$columName
+                                                                :$sortDirection>
+                                                <div>Nombre</div>
+                                            </x-table.sortcolumn>
                                         </x-table.th>
-                                        <x-table.th>
-                                            Apellido
+                                        <x-table.th
+                                            wire:click="orderColumBy('medical_lastname')"
+                                        >
+                                            <x-table.sortcolumn currentColumn="medical_lastname" :$columName
+                                                                :$sortDirection>
+                                                <div>Apellido</div>
+                                            </x-table.sortcolumn>
                                         </x-table.th>
                                         <x-table.th>
                                             Matrícula
@@ -104,6 +159,9 @@
                                     @endforeach
                                 </x-table.tablebody>
                             </table>
+                            <div class="mt-2 mb-2 justify-end mx-2">
+                                {{ $listMedical->links() }}
+                            </div>
                             @else
                                 <x-alert windowtype="error">
                                     No existen especialistas registrados.
