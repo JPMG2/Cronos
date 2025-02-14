@@ -15,6 +15,8 @@ class Medical extends Model
     /** @use HasFactory<MedicalFactory> */
     use HasFactory;
 
+    public static string $startFilterBay = 'medical_name';
+
     protected $fillable = [
         'state_id',
         'credential_id',
@@ -36,7 +38,7 @@ class Medical extends Model
             'credential_id' => 'Matricula',
             'specialty_id' => 'Espacialidad',
             'state_id' => 'Estatus',
-            // Add other attributes as needed
+
         ];
     }
 
@@ -136,9 +138,11 @@ class Medical extends Model
         return $this->belongsTo(Specialty::class);
     }
 
-    public function scopeListMedicals(Builder $query): Builder
+    public function scopeListMedicals(Builder $query, $stringSearc = null): Builder
     {
+
         return $query->with('specialty', 'degree', 'credentials', 'state');
+
     }
 
     public function getFirstCredentialNumberAttribute(): ?string

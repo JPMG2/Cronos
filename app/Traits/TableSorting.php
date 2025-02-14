@@ -20,33 +20,52 @@ trait TableSorting
             $this->sortDirection = true;
         }
         $this->columName = $columValue;
+    }
+
+    public function makeQueryByColumn($query)
+    {
+        return $this->getQueryValues() === null ? $query : $this->buildQuery($query);
 
     }
 
-    protected function getQueryValues()
+    protected function getQueryValues(): ?string
     {
         if (empty($this->columName)) {
-            return;
+            return null;
         }
 
         return $this->columName;
 
     }
 
-    public function makeQuery($query)
+    public function buildQuery($query)
     {
-        return $this->getQueryValues() === null ? $query :
-            $query->orderBy($this->getQueryValues(), $this->sortDirection ? 'asc' : 'desc');
+
+        return $query->orderBy($this->getQueryValues(), $this->sortDirection ? 'asc' : 'desc');
+
+    }
+
+    public function makeQueryBySearch($stringvalue, $query)
+    {
+        $stringvalue = ucfirst(strtolower($stringvalue));
+
+        return $query->where($this->filtervalue, 'like', '%'.$stringvalue.'%')
+            ->orderBy($this->filtervalue, $this->sortDirection ? 'asc' : 'desc');
+    }
+
+    public function inicializteTableSorting($modelName)
+    {
+        $model = 'App\\Models\\'.$modelName;
+
+        $this->resetPage();
+        $this->resetOrdersValues();
+        $this->filtervalue = $model::$startFilterBay;
     }
 
     private function resetOrdersValues()
     {
         $this->columName = null;
         $this->sortDirection = false;
-    }
-
-    public function updatedSortField()
-    {
-        dd($this->filtervalue);
+        $this->sortField = null;
     }
 }

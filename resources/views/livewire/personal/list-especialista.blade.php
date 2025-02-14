@@ -29,7 +29,9 @@
                 </div>
                 <div class="overflow-y-auto p-4">
                     <div class="mt-0.5 mb-0.5">
-                        <div class="flex gap-x-1 sm:col-span-3">
+                        <div class="flex gap-x-1 sm:col-span-3"
+                             x-data=""
+                        >
                             <div class="relative w-2/5 sm:col-span-3">
                                 <div class="relative">
                                     <x-inputs.selectgroup
@@ -40,6 +42,7 @@
                                         <x-inputs.selectinput
                                             wire:model.defer="filtervalue"
                                             id="filteropcion"
+                                            x-on:change="$refs.sortfield.value = ''"
                                         >
                                             @foreach ($listFilterValues as $key=>$filterValues)
                                                 <option value="{{ $key }}">
@@ -64,7 +67,7 @@
                                             autocomplete="off"
                                             maxlength="170"
                                             placeholder=" "
-
+                                            x-ref="sortfield"
                                         ></x-inputs.textinput>
                                     </x-inputs.textgroup>
                                 </div>
@@ -169,15 +172,16 @@
                             @endif
                         </div>
 
-                </div>
-                <div
-                    class="flex items-center justify-end gap-x-2 border-t px-4 py-3 dark:border-neutral-700"
-                >
-                    <x-buttons.close
-                        wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
-                    >
-                        {{ __("Cerrar") }}
-                    </x-buttons.close>
+
+                        <div
+                            class="flex items-center justify-end gap-x-2 border-t px-4 py-2 dark:border-neutral-700"
+                        >
+                            <x-buttons.close
+                                wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
+                            >
+                                {{ __("Cerrar") }}
+                            </x-buttons.close>
+                        </div>
                 </div>
             </div>
         </div>

@@ -22,8 +22,13 @@ class ListEspecialista extends Component
 
     public function render()
     {
-        $query = Medical::listMedicals();
-        $query = $this->makeQuery($query);
+        $queryIncial = Medical::listMedicals();
+
+        $query = $this->makeQueryByColumn($queryIncial);
+
+        if (! empty($this->sortField)) {
+            $query = $this->makeQueryBySearch($this->sortField, $query);
+        }
 
         return view('livewire.personal.list-especialista', [
             'listMedical' => $query->paginate(10),
@@ -35,8 +40,8 @@ class ListEspecialista extends Component
     public function updateShow($show)
     {
         $this->show = $show;
-        $this->resetPage();
-        $this->resetOrdersValues();
+        $this->inicializteTableSorting('Medical');
+
     }
 
     public function dataMedic($medicId)
