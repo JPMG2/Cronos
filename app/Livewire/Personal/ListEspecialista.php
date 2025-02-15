@@ -24,9 +24,10 @@ class ListEspecialista extends Component
     {
         $queryIncial = Medical::listMedicals();
 
-        $query = $this->makeQueryByColumn($queryIncial);
+        $query = $this->makeQueryByColumn($queryIncial)->orderBy('medical_name');
 
         if (! empty($this->sortField)) {
+            $this->nameRelashion = 'listMedicals';
             $query = $this->makeQueryBySearch($this->sortField, $query);
         }
 

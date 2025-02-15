@@ -1,7 +1,21 @@
 <?php
 
+/**
+ * Trait TableSorting
+ *
+ * Provides utility methods to handle table sorting and query building functionality
+ * for database interactions within a Laravel application, including ordering and
+ * searching capabilities by specific columns.
+ */
+
 namespace App\Traits;
 
+use Illuminate\Support\Str;
+
+/**
+ * Trait TableSorting
+ * Provides functionalities to handle table sorting and filtering in a structured manner.
+ */
 trait TableSorting
 {
     public $sortField;
@@ -12,7 +26,9 @@ trait TableSorting
 
     public $sortDirection = false;
 
-    public function orderColumBy($columValue)
+    public $nameRelashion;
+
+    public function orderColumBy(string $columValue): void
     {
         if ($this->columName === $columValue) {
             $this->sortDirection = ! $this->sortDirection;
@@ -40,29 +56,34 @@ trait TableSorting
 
     public function buildQuery($query)
     {
-
         return $query->orderBy($this->getQueryValues(), $this->sortDirection ? 'asc' : 'desc');
-
     }
 
-    public function makeQueryBySearch($stringvalue, $query)
+    public function makeQueryBySearch(string $stringvalue, $query)
     {
         $stringvalue = ucfirst(strtolower($stringvalue));
 
+        if (Str::contains($this->filtervalue, '_id')) {
+
+            return $query->{$this->nameRelashion}($stringvalue, $this->filtervalue);
+
+        }
+
         return $query->where($this->filtervalue, 'like', '%'.$stringvalue.'%')
             ->orderBy($this->filtervalue, $this->sortDirection ? 'asc' : 'desc');
+
     }
 
-    public function inicializteTableSorting($modelName)
+    public function inicializteTableSorting($modelName): void
     {
-        $model = 'App\\Models\\'.$modelName;
+        $model = "\\App\\Models\\$modelName";
 
         $this->resetPage();
         $this->resetOrdersValues();
         $this->filtervalue = $model::$startFilterBay;
     }
 
-    private function resetOrdersValues()
+    private function resetOrdersValues(): void
     {
         $this->columName = null;
         $this->sortDirection = false;
