@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\DbTraits\TableFilter;
+use App\Traits\RecordActivity;
 use Database\Factories\MedicalFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,7 +16,7 @@ use Illuminate\Support\Arr;
 class Medical extends Model
 {
     /** @use HasFactory<MedicalFactory> */
-    use HasFactory, TableFilter;
+    use HasFactory, RecordActivity, TableFilter;
 
     public static string $startFilterBay = 'medical_name';
 
@@ -85,7 +86,7 @@ class Medical extends Model
 
             $relationName = $this->getRelashionName($relashion);
             if (method_exists($this, $relashion)) {
-                return $this->{$relashion}($query, $relationName, $stringsearch);
+                return $this->{$relashion}($query, $relationName, $stringsearch, ['specialty', 'degree', 'credentials', 'state']);
             }
 
             return $query;

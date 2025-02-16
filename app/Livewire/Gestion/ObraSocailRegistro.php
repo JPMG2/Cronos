@@ -4,6 +4,7 @@ namespace App\Livewire\Gestion;
 
 use App\Livewire\Forms\Gestion\ObraSocialForm;
 use App\Models\InsuranceType;
+use App\Traits\HandlesActionPolicy;
 use App\Traits\ProvinceCity;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\On;
@@ -12,7 +13,7 @@ use Livewire\Component;
 
 class ObraSocailRegistro extends Component
 {
-    use ProvinceCity, UtilityForm;
+    use HandlesActionPolicy, ProvinceCity, UtilityForm;
 
     public ObraSocialForm $form;
 

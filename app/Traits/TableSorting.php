@@ -10,6 +10,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 /**
@@ -28,6 +29,15 @@ trait TableSorting
 
     public $nameRelashion;
 
+    /**
+     * Orders the query results by the specified column.
+     *
+     * This method toggles the sort direction if the column is already being sorted,
+     * otherwise, it sets the sort direction to ascending. It then sets the column name
+     * to be used for ordering the query results.
+     *
+     * @param  string  $columValue  The name of the column to order by.
+     */
     public function orderColumBy(string $columValue): void
     {
         if ($this->columName === $columValue) {
@@ -44,6 +54,14 @@ trait TableSorting
 
     }
 
+    /**
+     * Retrieves the current column name used for sorting.
+     *
+     * This method returns the column name that is currently set for sorting.
+     * If the column name is not set, it returns null.
+     *
+     * @return string|null The column name used for sorting, or null if not set.
+     */
     protected function getQueryValues(): ?string
     {
         if (empty($this->columName)) {
@@ -51,14 +69,33 @@ trait TableSorting
         }
 
         return $this->columName;
-
     }
 
+    /**
+     * Builds the query with ordering based on the current column and sort direction.
+     *
+     * This method orders the query results by the column name retrieved from `getQueryValues()`
+     * and the current sort direction. The sort direction is determined by the `sortDirection` property.
+     *
+     * @param  Builder  $query  The query builder instance.
+     * @return Builder The modified query builder instance.
+     */
     public function buildQuery($query)
     {
         return $query->orderBy($this->getQueryValues(), $this->sortDirection ? 'asc' : 'desc');
     }
 
+    /**
+     * Filters the query results based on the provided search value.
+     *
+     * This method modifies the query to filter results based on the specified search value.
+     * If the filter value contains '_id', it calls a relationship method to handle the query.
+     * Otherwise, it applies a 'like' filter to the query and orders the results.
+     *
+     * @param  string  $stringvalue  The value to search for.
+     * @param  Builder  $query  The query builder instance.
+     * @return Builder The modified query builder instance.
+     */
     public function makeQueryBySearch(string $stringvalue, $query)
     {
         $stringvalue = ucfirst(strtolower($stringvalue));
@@ -74,7 +111,15 @@ trait TableSorting
 
     }
 
-    public function inicializteTableSorting($modelName): void
+    /**
+     * Initializes table sorting for the specified model.
+     *
+     * This method sets up the initial state for table sorting by resetting the page,
+     * resetting order values, and setting the filter value based on the model's starting filter.
+     *
+     * @param  string  $modelName  The name of the model to initialize table sorting for.
+     */
+    public function inicializteTableSorting(string $modelName): void
     {
         $model = "\\App\\Models\\$modelName";
 
@@ -83,6 +128,12 @@ trait TableSorting
         $this->filtervalue = $model::$startFilterBay;
     }
 
+    /**
+     * Resets the order values to their default state.
+     *
+     * This method sets the column name, sort direction, and sort field to their default values.
+     * It is typically used to clear any existing sorting configurations.
+     */
     private function resetOrdersValues(): void
     {
         $this->columName = null;

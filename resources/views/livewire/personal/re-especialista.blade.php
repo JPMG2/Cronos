@@ -12,20 +12,12 @@
         <x-headerform.borderheader></x-headerform.borderheader>
         <div>
             <div class="flex items-center">
-                <div>
-                    <h4 class="font-titles text-xl text-blue-950">
-                        Datos de especialista
-                    </h4>
-                </div>
-                <div
-                    class="ml-2"
+                <x-formcomponent.titleform>Datos de especialista</x-formcomponent.titleform>
+                <x-formcomponent.titleindicator
                     wire:loading
-                    wire:target="getEspecialis,especialistShow"
-                >
-                    <span class="loading loading-bars loading-xs"></span>
-                </div>
+                    wire:target="getEspecialis,especialistShow"></x-formcomponent.titleindicator>
             </div>
-           
+
             <div class="mt-3 grid grid-cols-1 gap-x-2  gap-y-2 sm:grid-cols-9">
                 <div class="flex gap-x-1 sm:col-span-3">
                     <div class="relative w-2/5 sm:col-span-3">

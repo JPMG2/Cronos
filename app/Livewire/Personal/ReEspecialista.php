@@ -70,6 +70,16 @@ class ReEspecialista extends Component
 
     }
 
+    public function especialistPrint(): void
+    {
+        $idEspecialist = $this->formesp->dataespecialist['id'];
+
+        $className = 'MedicPdf';
+
+        $this->dispatch('printByID', ['idmodel' => $idEspecialist, 'className' => $className]);
+
+    }
+
     #[On('dataMedical')]
     public function medicalLoadData($medicalId)
     {

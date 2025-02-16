@@ -3,24 +3,22 @@
 namespace App\Classes\PdfGenerator;
 
 use App\Interfaces\ModelPdfGenerator;
-use App\Models\Branch;
 use App\Models\Company;
+use App\Models\Medical;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class BranchPdf implements ModelPdfGenerator
+class MedicPdf implements ModelPdfGenerator
 {
     public function generatePdfById($id)
     {
-
         $data = [
-            'title' => 'Sucursal',
-            'content' => Branch::find($id),
+            'title' => 'Especialista',
+            'content' => Medical::find($id),
             'company' => Company::first(),
         ];
 
-        return Pdf::loadView('pdfs.branchdata', $data)
-            ->stream('sucursal.pdf');
-
+        return Pdf::loadView('pdfs.medicdata', $data)
+            ->stream('especialista.pdf');
     }
 
     public function generatePdfByValues() {}

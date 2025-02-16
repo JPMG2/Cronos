@@ -28,7 +28,7 @@ class ListEspecialista extends Component
 
         if (! empty($this->sortField)) {
             $this->nameRelashion = 'listMedicals';
-            $query = $this->makeQueryBySearch($this->sortField, $query);
+            $query = $this->makeQueryBySearch($this->sortField, $queryIncial);
         }
 
         return view('livewire.personal.list-especialista', [

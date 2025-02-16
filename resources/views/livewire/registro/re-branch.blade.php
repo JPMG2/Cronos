@@ -17,18 +17,10 @@
         <!-- start:: Multiple Columns -->
         <div>
             <div class="flex items-center">
-                <div>
-                    <h4 class="font-titles text-xl text-blue-950">
-                        Datos de sucursal
-                    </h4>
-                </div>
-                <div
-                    class="ml-2"
+                <x-formcomponent.titleform>Datos de sucursal</x-formcomponent.titleform>
+                <x-formcomponent.titleindicator
                     wire:loading
-                    wire:target="queryBranch, branchShow, branchHistory"
-                >
-                    <span class="loading loading-bars loading-xs"></span>
-                </div>
+                    wire:target="queryBranch, branchShow, branchHistory"></x-formcomponent.titleindicator>
             </div>
 
             <div class="mt-3 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-9">

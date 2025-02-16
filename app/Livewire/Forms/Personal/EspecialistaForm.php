@@ -23,18 +23,49 @@ class EspecialistaForm extends Form
         'medical_codenumber' => '',
     ];
 
+    /**
+     * Stores a new specialist record.
+     *
+     * This method validates the specialist data and stores it in the database.
+     * It then sends a notification message indicating the creation of the record.
+     *
+     * @param  EspecialistValidation  $validation  The validation instance for specialist data.
+     * @param  EspecialistObj  $especialistobj  The specialist object instance.
+     * @return mixed The result of the notification message creation.
+     */
     public function especialistStore(EspecialistValidation $validation, EspecialistObj $especialistobj)
     {
 
         return NotifyQuerys::msgCreate($especialistobj->store($validation->onEspecialistCreate($this->dataespecialist)));
     }
 
+    /**
+     * Updates an existing specialist record.
+     *
+     * This method validates the updated specialist data and updates the record in the database.
+     * It then sends a notification message indicating the update of the record.
+     *
+     * @param  EspecialistValidation  $validation  The validation instance for specialist data.
+     * @param  EspecialistObj  $especialistobj  The specialist object instance.
+     * @return mixed The result of the notification message update.
+     */
     public function especialistUpdate(EspecialistValidation $validation, EspecialistObj $especialistobj)
     {
         return NotifyQuerys::msgUpadte($especialistobj->update($validation->onEspecialistUpdate($this->dataespecialist), $this->dataespecialist['id']));
     }
 
-    public function infoMedic(EspecialistObj $especialistObj, $medicalId)
+    /**
+     * Retrieves and sets the medical information for a specialist.
+     *
+     * This method fetches the medical information for a given specialist ID,
+     * updates the `dataespecialist` property with the retrieved data, and sets
+     * the specialty and degree names if available.
+     *
+     * @param  EspecialistObj  $especialistObj  The specialist object instance.
+     * @param  int  $medicalId  The ID of the medical specialist to retrieve information for.
+     * @return void
+     */
+    public function infoMedic(EspecialistObj $especialistObj, int $medicalId)
     {
         $dataMedic = $especialistObj->show($medicalId);
 
