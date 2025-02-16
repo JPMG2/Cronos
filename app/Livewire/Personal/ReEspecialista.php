@@ -14,6 +14,8 @@ class ReEspecialista extends Component
 {
     use HandlesActionPolicy,UtilityForm;
 
+    protected $commonQuerys;
+
     public EspecialistaForm $formesp;
 
     #[Title(' - Especialista')]

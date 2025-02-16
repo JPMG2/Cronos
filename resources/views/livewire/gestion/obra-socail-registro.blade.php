@@ -5,7 +5,7 @@
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
     >
         @if(!session("isdisabled"))
-            @livewire("utility.opcion-menu", ["namecomponent" => "especialist"])
+            @livewire("utility.opcion-menu", ["namecomponent" => "obrasocial"])
         @endif
         <x-headerform.borderheader></x-headerform.borderheader>
         <div class="flex items-center">
@@ -230,40 +230,39 @@
             class="mt-2 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-9"
         >
             <div class="relative sm:col-span-4">
-                <div class="relative">
-                    <x-inputs.containligroup
-                        tangleValue="showProvince"
-                        stringFind="stringProvince"
-                    >
-                        <x-inputs.autocomplegroup
-                            label="Provincia"
-                            id="cprovicia"
-                            required="yes"
-                            namerror="province_id"
-                            wmodel="stringProvince"
-                            wprevent="closeList()"
-                            wdebounce="searchProvince"
-                            wreset="resetProvince()"
+                <x-inputs.containautocomplete
+                    modelString="stringProvince"
+                    showModel="showProvince"
+                    modelId="id_province"
+                >
+                    <div class="relative">
+                        <x-inputs.searchinput
+                            :error="$errors->first('province_id')"
+                            x-on:keyup="findProinvence()"
+                            wire:model="stringProvince"
+                            @keydown.escape.prevent.stop="closeList()"
                             isdisabled="{{$isdisabled}}"
-                        ></x-inputs.autocomplegroup>
-                        @if ($listProvince)
+                            @click.away="closeAway()"
+                            @click="seeValues()"
+                            placeholder="buscar..."
+                            resetValues="$wire.resetValuesCity()"
+                        ></x-inputs.searchinput>
+                        <x-inputs.labelsearch required="yes">
+                            Provincia
+                        </x-inputs.labelsearch>
+                        @if (count($listProvince) > 0)
                             <x-inputs.ligroup>
-                                @foreach ($listProvince as $provincies)
+                                @foreach ($listProvince as $province)
                                     <x-inputs.lioption
-                                        wire:key="{{$provincies->id}}"
-                                        wire:target="searchProvince"
-                                        @click.enter.stop="selectValue('cprovicia','{{$provincies->province_name}}')"
-                                        wire:click="resetValuesProvince"
-                                        wire:click.prevent.stop="selectProvince({{$provincies->id}})"
-                                        id="{{'province-'.$loop->iteration}}"
+                                        x-on:click="setValuesProvince('{{$province->id}}','{{$province->province_name}}')"
                                     >
-                                        {{ $provincies->province_name }}
+                                        {{ $province->province_name }}
                                     </x-inputs.lioption>
                                 @endforeach
                             </x-inputs.ligroup>
                         @endif
-                    </x-inputs.containligroup>
-                </div>
+                    </div>
+                </x-inputs.containautocomplete>
                 @error("province_id")
                 <x-inputs.error-validate>
                     {{ $message }}
@@ -271,38 +270,38 @@
                 @enderror
             </div>
             <div class="relative sm:col-span-3">
-                <div class="relative">
-                    <x-inputs.containligroup
-                        tangleValue="showCity"
-                        stringFind="stringCity"
-                    >
-                        <x-inputs.autocomplegroup
-                            label="Ciudad"
-                            id="cciudad"
-                            required="yes"
-                            namerror="city_id"
-                            wmodel="stringCity"
-                            wprevent="closeList()"
-                            wdebounce="searchCity"
-                            wreset="resetCity()"
+                <x-inputs.containautocomplete
+                    modelString="stringCity"
+                    showModel="showCity"
+                    modelId="id_city"
+                >
+                    <div class="relative">
+                        <x-inputs.searchinput
+                            :error="$errors->first('city_id')"
+                            x-on:keyup="findCity()"
+                            wire:model="stringCity"
+                            @keydown.escape.prevent.stop="closeList()"
                             isdisabled="{{$isdisabled}}"
-                        ></x-inputs.autocomplegroup>
-                        @if ($listCities)
+                            @click.away="closeAway()"
+                            placeholder="buscar..."
+                            @click="seeValues()"
+                        ></x-inputs.searchinput>
+                        <x-inputs.labelsearch required="yes">
+                            Ciudad
+                        </x-inputs.labelsearch>
+                        @if (count($listCities) > 0)
                             <x-inputs.ligroup>
                                 @foreach ($listCities as $city)
                                     <x-inputs.lioption
-                                        wire:key="{{$city->id}}"
-                                        @click.enter.stop="selectValue('cprovicia','{{$city->city_name}}')"
-                                        wire:click.prevent.stop="selectCity({{$city->id}})"
-                                        id="{{'city-'.$loop->iteration}}"
+                                        x-on:click="setValuesCity('{{$city->id}}','{{$city->city_name}}')"
                                     >
                                         {{ $city->city_name }}
                                     </x-inputs.lioption>
                                 @endforeach
                             </x-inputs.ligroup>
                         @endif
-                    </x-inputs.containligroup>
-                </div>
+                    </div>
+                </x-inputs.containautocomplete>
                 @error("city_id")
                 <x-inputs.error-validate>
                     {{ $message }}
@@ -447,7 +446,7 @@
                 @csrf
                 <x-headerform.button-group>
                     <x-buttons.cancel
-                        wire:click="Namefunction"
+                        wire:click="clearForm"
                         label="Cancelar"
                     ></x-buttons.cancel>
                     @can("created", $this->actions)

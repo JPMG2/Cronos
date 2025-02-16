@@ -17,8 +17,6 @@ class ObraSocailRegistro extends Component
 
     public ObraSocialForm $form;
 
-    public $typinsurance = '';
-
     protected $commonQuerys;
 
     #[Title(' - Obra social')]
@@ -40,8 +38,8 @@ class ObraSocailRegistro extends Component
         if ($this->isupdate) {
             dd('update');
         }
-        $this->dispatch('show-toast', $result);
-        $this->isupdate = false;
+        $this->endInsurance($result);
+
     }
 
     protected function setIdPronvinceCity()
@@ -66,5 +64,19 @@ class ObraSocailRegistro extends Component
     public function getTypesProperty()
     {
         return InsuranceType::listType()->get();
+    }
+
+    public function clearForm()
+    {
+        $this->isupdate = false;
+        $this->form->reset();
+        $this->cleanFormValues();
+        $this->dispatch('showOptionsForms', show: false);
+    }
+
+    public function endInsurance($result)
+    {
+        $this->dispatch('show-toast', $result);
+        $this->clearForm();
     }
 }

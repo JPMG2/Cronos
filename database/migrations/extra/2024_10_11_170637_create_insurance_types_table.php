@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Credential;
-use App\Models\Medical;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('credential_medical', function (Blueprint $table) {
+        Schema::create('insurance_types', function (Blueprint $table) {
             $table->id();
-            $table->primary(['credential_id', 'medical_id']);
-            $table->foreignIdFor(Credential::class)->constrained();
-            $table->foreignIdFor(Medical::class)->constrained();
-            $table->string('credential_number', 50);
+            $table->string('insuratype_name')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('credential_medical');
+        Schema::dropIfExists('insurance_types');
     }
 };
