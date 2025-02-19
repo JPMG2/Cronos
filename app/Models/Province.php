@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Province extends Model
 {
     use HasFactory;
+
     protected $fillable = ['province_name'];
 
     public function cities(): HasMany
@@ -26,15 +27,16 @@ class Province extends Model
         );
     }
 
-    public function scopeProviceSearch(Builder $query,$value): Builder | null
+    public function scopeProviceSearch(Builder $query, $value): ?Builder
     {
 
-        if($value==''){
-           return null;
+        if ($value == '') {
+            return null;
         }
 
-        return $query->where('province_name','like','%'.$value.'%')
-            ->orderBy('province_name');
-
+        return once(function () use ($query, $value) {
+            return $query->where('province_name', 'like', '%'.$value.'%')
+                ->orderBy('province_name');
+        });
     }
 }

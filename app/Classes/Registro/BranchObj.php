@@ -29,7 +29,7 @@ class BranchObj
      */
     public function show(int $id): Branch
     {
-        return Branch::with('city.province', 'state')->find($id);
+        return Branch::with('city.province', 'state')->findOrFail($id);
 
     }
 
@@ -42,7 +42,7 @@ class BranchObj
      */
     public function update($branchId, array $arrayBrach): Branch
     {
-        $branch = Branch::find($branchId);
+        $branch = Branch::findOrFail($branchId);
 
         $branch->update($this->getValuesModel($arrayBrach, $this->modelName));
 

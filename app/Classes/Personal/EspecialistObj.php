@@ -54,7 +54,7 @@ class EspecialistObj
      */
     public function update(array $arrayEspeciaist, int $spcialistId): Medical
     {
-        $medical = Medical::find($spcialistId);
+        $medical = Medical::findOrFail($spcialistId);
 
         $medical->update($this->getValuesModel($arrayEspeciaist, $this->modelName));
 
@@ -74,6 +74,6 @@ class EspecialistObj
      */
     public function show(int $medicalId)
     {
-        return Medical::listMedicals()->find($medicalId);
+        return Medical::listMedicals()->findOrFail($medicalId);
     }
 }

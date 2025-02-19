@@ -15,9 +15,7 @@
                 <div
                     class="flex items-center justify-between border-b px-4 py-3 dark:border-neutral-700"
                 >
-                    <h3 class="font-bold text-gray-800 dark:text-white">
-                        Sucursales.
-                    </h3>
+                    <x-formcomponent.modaltitle>Sucursales.</x-formcomponent.modaltitle>
                     <button
                         wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
                         type="button"

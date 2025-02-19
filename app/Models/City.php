@@ -25,15 +25,16 @@ class City extends Model
         return $this->belongsTo(Province::class);
     }
 
-    public function scopeCitySearch(Builder $query,$idprovince = null, $citysearc = null): Builder | null
+    public function scopeCitySearch(Builder $query, $idprovince = null, $citysearc = null): ?Builder
     {
-        if($idprovince>0){
-            return $query->where('province_id', $idprovince)
-                         ->where('city_name', 'like', '%'.$citysearc.'%')
-                         ->orderBy('city_name', 'asc');
+        if ($idprovince > 0) {
+            return once(function () use ($query, $idprovince, $citysearc) {
+                return $query->where('province_id', $idprovince)
+                    ->where('city_name', 'like', '%'.$citysearc.'%')
+                    ->orderBy('city_name', 'asc');
+            });
         }
 
         return null;
     }
-
 }

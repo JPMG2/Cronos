@@ -72,6 +72,13 @@ class CompanyObj
         return $company;
     }
 
+    /**
+     * Check if a company record exists.
+     *
+     * This method checks if there is at least one company record in the database.
+     *
+     * @return bool True if a company record exists, false otherwise.
+     */
     public function companyExist(): bool
     {
         return ! is_null(Company::first());

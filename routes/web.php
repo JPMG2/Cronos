@@ -23,15 +23,15 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::get('/re_department', App\Livewire\Registro\ReDepartment::class)
         ->name('re_department');
 });
-/*Route for Personal*/
+/* Route for Personal */
 Route::group(['middleware' => 'auth', 'verified'], function () {
-   Route::get('/re_especialist', App\Livewire\Personal\ReEspecialista::class)
+    Route::get('/re_especialist', App\Livewire\Personal\ReEspecialista::class)
         ->name('re_especialist');
 });
 
 /* Route for Gestión */
 Route::group(['middleware' => 'auth', 'verified'], function () {
-    Route::get('/re_obrasocial', App\Livewire\Gestion\ObraSocailRegistro::class)
+    Route::get('/re_obrasocial', App\Livewire\Gestion\ReObraSocail::class)
         ->name('re_obrasocial');
 });
 

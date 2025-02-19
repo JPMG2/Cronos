@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class InsuranceType extends Model
 {
@@ -24,5 +25,10 @@ class InsuranceType extends Model
         return Attribute::make(
             set: fn ($value) => ucwords(strtolower(trim($value))),
         );
+    }
+
+    public function insurance(): HasMany
+    {
+        return $this->hasMany(Insurance::class);
     }
 }

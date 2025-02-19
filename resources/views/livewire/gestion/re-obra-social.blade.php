@@ -5,7 +5,9 @@
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
     >
         @if(!session("isdisabled"))
-            @livewire("utility.opcion-menu", ["namecomponent" => "obrasocial"])
+            @if($this->countInsurance > 0)
+                @livewire("utility.opcion-menu", ["namecomponent" => "obrasocial"])
+            @endif
         @endif
         <x-headerform.borderheader></x-headerform.borderheader>
         <div class="flex items-center">
@@ -73,19 +75,21 @@
             <div
                 class="relative sm:col-span-2"
                 x-data="{
-                                            openselect: false,
-                                            textselected: @entangle("typinsurance"),
-                                            openSelect() {
-                                                this.openselect = ! this.openselect
-                                            },
-                                            closeList() {
-                                                this.openselect = false
-                                            },
-                                            setValuetext(value) {
-                                                this.textselected = value
-                                                this.openselect = false
-                                            },
-                                        }"
+                         openselect: false,
+                         textselected: @entangle("form.dataobrasocial.insurance_type_name"),
+                         idTypeInsurance: @entangle("form.dataobrasocial.insurance_type_id"),
+                         openSelect() {
+                                  this.openselect = ! this.openselect
+                         },
+                         closeList() {
+                                this.openselect = false
+                         },
+                         setValuetext(name,id) {
+                                 this.textselected = name
+                                 this.idTypeInsurance = id
+                                 this.openselect = false
+                         },
+                        }"
             >
                 <div class="relative">
                     <x-inputs.textgroup
@@ -94,6 +98,8 @@
                         required="yes"
                     >
                         <x-inputs.selexttext
+                            wire:model="form.dataobrasocial.insurance_type_name"
+                            wire:click="getTypesProperty"
                             x-on:click="openSelect()"
                             x-on:click.away="closeList()"
                             x-model="textselected"
@@ -101,6 +107,7 @@
                             @keydown.tab.prevent.stop="closeList()"
                             id="insurancetype"
                             isdisabled="{{$isdisabled}}"
+                            autocomplete="off"
                             :error="$errors->first('insurance_type_id')"
                         ></x-inputs.selexttext>
                     </x-inputs.textgroup>
@@ -113,27 +120,35 @@
                         x-transition:leave="transition ease-in duration-300"
                         x-transition:leave-start="opacity-100 scale-100"
                         x-transition:leave-end="opacity-0 scale-90"
+                        x-on:mouseleave="closeList()"
                     >
-                        @foreach ($this->types as $types)
+                        @if(count($this->types) > 0)
+                            @foreach ($this->types as $types)
+                                <x-inputs.li-select
+                                    index="{{ $loop->iteration }}"
+                                    x-on:click="setValuetext('{{ $types->insuratype_name }}','{{ $types->id }}')"
+                                >
+                                    {{ $types->insuratype_name }}
+                                </x-inputs.li-select>
+                            @endforeach
+                        @else
                             <x-inputs.li-select
                                 index="0"
-                                x-on:click="setValuetext('{{ $types->insuratype_name }}')"
                             >
-                                {{ $types->insuratype_name }}
+                                Sin datos
                             </x-inputs.li-select>
-                        @endforeach
-
-                        <x-inputs.li-select
-                            index="2"
-                            x-on:click="setValuetext('Hola')"
-                            isbuton="true"
-                        >
-                            <x-buttons.newsmall
-                                wire:click="openTypes()"
+                        @endif
+                        @can("created", $this->actions)
+                            <x-inputs.li-select
+                                isbuton="true"
                             >
-                                Nuevo
-                            </x-buttons.newsmall>
-                        </x-inputs.li-select>
+                                <x-buttons.newsmall
+                                    wire:click="openTypes()"
+                                >
+                                    Nuevo
+                                </x-buttons.newsmall>
+                            </x-inputs.li-select>
+                        @endcan
                     </x-inputs.ul-select>
                 </div>
                 @error("insurance_type_id")
@@ -239,6 +254,7 @@
                         <x-inputs.searchinput
                             :error="$errors->first('province_id')"
                             x-on:keyup="findProinvence()"
+
                             wire:model="stringProvince"
                             @keydown.escape.prevent.stop="closeList()"
                             isdisabled="{{$isdisabled}}"
@@ -461,6 +477,7 @@
             </form>
         @endif
     </div>
+    @livewire("gestion.obra-social-tipo")
+    @livewire("gestion.list-obra-social", ["show" => false])
 
-    <livewire:gestion.obra-socail-tipo></livewire:gestion.obra-socail-tipo>
 </div>

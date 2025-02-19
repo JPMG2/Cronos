@@ -59,10 +59,10 @@ class AttributeValidator
     public static function stringValidUnique($model, $uniqueField, $length, $id = null)
     {
         if ($id) {
-            return 'sometimes|min:'.$length.'|unique:'.$model.','.$uniqueField.','.$id.'|email|regex:/^([^<>]*)$/';
+            return 'sometimes|min:'.$length.'|unique:'.$model.','.$uniqueField.','.$id.'|regex:/^([^<>]*)$/';
         }
 
-        return 'sometimes|min:'.$length.'|unique:'.$model.','.$uniqueField.'|email|regex:/^([^<>]*)$/';
+        return 'sometimes|min:'.$length.'|unique:'.$model.','.$uniqueField.'|regex:/^([^<>]*)$/';
     }
 
     public static function webValid($required)

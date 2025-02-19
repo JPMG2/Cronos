@@ -5,7 +5,7 @@
 
 <li
     {{ $attributes }}
-    class="{{ $hovercolor }} relative cursor-default select-none py-1 pl-3 pr-9 text-gray-900"
+    class="{{ $hovercolor }} relative cursor-default select-none py-1 pl-3 pr-9 text-gray-900 text-xs"
     id="listbox-option-{{ $index }}"
     role="option"
 >

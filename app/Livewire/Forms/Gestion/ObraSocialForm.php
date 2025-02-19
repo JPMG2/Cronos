@@ -23,11 +23,11 @@ class ObraSocialForm extends Form
         'insurance_zipcode' => '',
         'insurance_email' => '',
         'insurance_web' => '',
+        'insurance_type_name' => '',
     ];
 
     public function insuranceStore(InsuranceObj $insuranceObj, InsuranceValidation $insuranceValidation): array
     {
-
         return NotifyQuerys::msgCreate($insuranceObj->store($insuranceValidation->onInsuranceCreate($this->dataobrasocial)));
     }
 }

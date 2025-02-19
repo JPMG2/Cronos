@@ -3,6 +3,7 @@
 namespace App\Livewire\Gestion;
 
 use App\Livewire\Forms\Gestion\ObraSocialForm;
+use App\Models\Insurance;
 use App\Models\InsuranceType;
 use App\Traits\HandlesActionPolicy;
 use App\Traits\ProvinceCity;
@@ -11,7 +12,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ObraSocailRegistro extends Component
+class ReObraSocail extends Component
 {
     use HandlesActionPolicy, ProvinceCity, UtilityForm;
 
@@ -24,7 +25,7 @@ class ObraSocailRegistro extends Component
     {
         $this->commonQuerys = app('commonquery');
 
-        return view('livewire.gestion.obra-socail-registro', [
+        return view('livewire.gestion.re-obra-social', [
             'listState' => $this->commonQuerys::stateQuery([1, 2]),
         ]);
     }
@@ -61,6 +62,11 @@ class ObraSocailRegistro extends Component
 
     }
 
+    public function getCountInsuranceProperty()
+    {
+        return Insurance::countInsurance();
+    }
+
     public function getTypesProperty()
     {
         return InsuranceType::listType()->get();
@@ -72,11 +78,17 @@ class ObraSocailRegistro extends Component
         $this->form->reset();
         $this->cleanFormValues();
         $this->dispatch('showOptionsForms', show: false);
+
     }
 
     public function endInsurance($result)
     {
         $this->dispatch('show-toast', $result);
         $this->clearForm();
+    }
+
+    public function obrasocialShow()
+    {
+        $this->dispatch('showOptionForm', 'showModalInsurances', true);
     }
 }

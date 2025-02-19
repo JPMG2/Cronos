@@ -13,6 +13,6 @@ class InsuranceObj
 
     public function store(array $arrayInsurance): Insurance
     {
-        return Insurance::create($this->getValuesModel($arrayInsurance, $this));
+        return Insurance::create($this->getValuesModel($arrayInsurance, $this->modelName));
     }
 }

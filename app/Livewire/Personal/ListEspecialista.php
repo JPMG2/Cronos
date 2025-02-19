@@ -33,7 +33,6 @@ class ListEspecialista extends Component
 
         return view('livewire.personal.list-especialista', [
             'listMedical' => $query->paginate(10),
-            'listFilterValues' => Medical::getFilterableAttributes(),
         ]);
     }
 

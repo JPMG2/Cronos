@@ -29,6 +29,8 @@ trait TableSorting
 
     public $nameRelashion;
 
+    public $listFilterValues;
+
     /**
      * Orders the query results by the specified column.
      *
@@ -126,6 +128,7 @@ trait TableSorting
         $this->resetPage();
         $this->resetOrdersValues();
         $this->filtervalue = $model::$startFilterBay;
+        $this->listFilterValues = $model::getFilterableAttributes();
     }
 
     /**
