@@ -27,8 +27,8 @@
                 </div>
                 <div class="overflow-y-auto p-4">
                     <x-table.boxsearch :listFilterValues="$listFilterValues"></x-table.boxsearch>
-
                     @if(count($listMedical) > 0)
+
 
                         <div
                             class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"

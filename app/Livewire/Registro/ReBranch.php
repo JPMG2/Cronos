@@ -66,8 +66,7 @@ class ReBranch extends Component
         $this->form->reset();
         $this->resetAllProvince();
         $this->cleanFormValues();
-        $this->isdisabled = '';
-        $this->isupdate = false;
+        $this->editActivate();
         $this->dispatch('showOptionsForms', show: false);
     }
 

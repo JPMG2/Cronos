@@ -49,6 +49,7 @@ class BranchForm extends Form
             $this->databranch = $brancData->toArray();
             $this->setProvinceCity($brancData->city->province->id, $brancData->city->id);
             $this->setnameProvinceCity($brancData->city->province->province_name, $brancData->city->city_name);
+
         }
 
     }

@@ -70,11 +70,11 @@ trait ProvinceCity
             $this->showCity = count($this->listCities) > 0;
 
             return $this->listCities;
-        } else {
-            $this->showCity = count($this->listCities) > 0;
-
-            return null;
         }
+
+        $this->showCity = count($this->listCities) > 0;
+
+        return null;
     }
 
     public function getProvinceId(): int
@@ -131,13 +131,15 @@ trait ProvinceCity
 
     public function setnameProvinceCity(string $province, string $city): void
     {
+
         $this->stringProvince = $province;
         $this->stringCity = $city;
+
     }
 
     public function getCityId(): int
     {
-          return is_null($this->id_city) ? 0 : $this->id_city;
+        return is_null($this->id_city) ? 0 : $this->id_city;
     }
 
     public function getProvinceName(): string

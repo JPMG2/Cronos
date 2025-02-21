@@ -100,7 +100,7 @@ trait TableSorting
      */
     public function makeQueryBySearch(string $stringvalue, $query)
     {
-        $stringvalue = ucfirst(strtolower($stringvalue));
+        $stringvalue = strtolower(trim($stringvalue));
 
         if (Str::contains($this->filtervalue, '_id')) {
 
@@ -108,7 +108,7 @@ trait TableSorting
 
         }
 
-        return $query->where($this->filtervalue, 'like', '%'.$stringvalue.'%')
+        return $query->whereRaw('LOWER('.$this->filtervalue.') like ?', ['%'.$stringvalue.'%'])
             ->orderBy($this->filtervalue, $this->sortDirection ? 'asc' : 'desc');
 
     }

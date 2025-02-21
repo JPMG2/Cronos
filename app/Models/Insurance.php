@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Arr;
 
 class Insurance extends Model
 {
     use HasFactory, RecordActivity, TableFilter;
 
-    public static string $startFilterBay = 'insurance_acronym';
+    public static string $startFilterBay = 'insurance_name';
 
     protected $fillable = [
         'insurance_type_id',
@@ -35,8 +37,9 @@ class Insurance extends Model
         return [
             'insurance_name' => 'Nombre',
             'insurance_acronym' => 'Siglas',
-            'insurance_code' => 'Código',
             'insurance_type_id' => 'Tipo',
+            'insurance_cuit' => 'CUIT',
+            'insurance_code' => 'Código',
             'state_id' => 'Estatus',
 
         ];
@@ -52,9 +55,31 @@ class Insurance extends Model
         return $this->belongsTo(InsuranceType::class);
     }
 
-    public function scopeListInsurances(Builder $query): Builder
+    public function state(): BelongsTo
     {
-        return $query;
+        return $this->belongsTo(State::class);
+    }
+
+    public function scopeListInsurances(Builder $query, $stringsearch = null, $relashion = null): Builder
+    {
+        if (! is_null($relashion)) {
+            $relationName = $this->getRelashionName($relashion);
+            if (method_exists($this, $relashion)) {
+                return $this->{$relashion}($query, $relationName, $stringsearch, ['insuranceType', 'state']);
+            }
+        }
+
+        return $query->with(['insuranceType', 'state']);
+    }
+
+    public function getRelashionName(string $relashionvalue): string
+    {
+        $relashionarray = [
+            'state_id' => 'state',
+            'insurance_type_id' => 'insuranceType'];
+
+        return Arr::get($relashionarray, $relashionvalue);
+
     }
 
     protected function casts(): array

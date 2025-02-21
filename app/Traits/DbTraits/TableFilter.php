@@ -29,10 +29,10 @@ trait TableFilter
      * @param  array  $withRelations  The relations to eager load.
      * @return Builder The modified query builder instance.
      */
-    protected function state_id($query, string $relationName, string $searchvalue, array $withRelations)
+    private function state_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
         return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->where('state_name', 'like', '%'.$searchvalue.'%');
+            $query->whereRaw('LOWER(state_name) like ?', ['%'.$searchvalue.'%']);
         })->with($withRelations);
     }
 
@@ -49,10 +49,10 @@ trait TableFilter
      * @param  array  $withRelations  The relations to eager load.
      * @return Builder The modified query builder instance.
      */
-    protected function specialty_id($query, string $relationName, string $searchvalue, array $withRelations)
+    private function specialty_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
         return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->where('specialty_name', 'like', '%'.$searchvalue.'%');
+            $query->whereRaw('LOWER(specialty_name) like ?', ['%'.$searchvalue.'%']);
         })->with($withRelations);
     }
 
@@ -72,7 +72,14 @@ trait TableFilter
     private function credential_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
         return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->where('credential_number', 'like', '%'.$searchvalue.'%');
+            $query->whereRaw('LOWER(credential_number) like ?', ['%'.$searchvalue.'%']);
+        })->with($withRelations);
+    }
+
+    private function insurance_type_id($query, string $relationName, string $searchvalue, array $withRelations)
+    {
+        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
+            $query->whereRaw('LOWER(insuratype_name) like ?', ['%'.$searchvalue.'%']);
         })->with($withRelations);
     }
 }

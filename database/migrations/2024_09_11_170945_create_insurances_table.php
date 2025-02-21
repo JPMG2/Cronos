@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(InsuranceType::class)->nullable()->constrained();
             $table->foreignIdFor(State::class)->constrained();
-            $table->foreignIdFor(City::class)->constrained();
+            $table->foreignIdFor(City::class)->nullable()->constrained();
             $table->string('insurance_name')->unique();
             $table->string('insurance_acronym')->nullable()->unique();
             $table->string('insurance_code')->nullable()->unique();
