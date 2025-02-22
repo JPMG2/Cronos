@@ -77,4 +77,34 @@ class InsuranceValidation
             'insurance_web' => config('nicename.web'),
         ];
     }
+
+    public function onInsuranceUpdate($insurance)
+    {
+
+        return Validator::make(
+            $this->inicialiciteAtributes($insurance),
+            [
+                'insurance_name' => AttributeValidator::uniqueIdNameLength(5, 'insurances', 'insurance_name', $insurance['id']),
+                'insurance_acronym' => AttributeValidator::stringValidUnique('insurances', 'insurance_acronym', 3, $insurance['id']),
+                'insurance_type_id' => 'gt:0|required',
+                // 'province_id' => 'gt:0|required',
+                // 'city_id' => 'gt:0|required',
+                'state_id' => 'gt:0|required',
+                'insurance_code' => AttributeValidator::stringValidUnique('insurances', 'insurance_code', 3, $insurance['id']),
+                'insurance_cuit' => AttributeValidator::stringValidUnique('insurances', 'insurance_cuit', 5, $insurance['id']),
+                'insurance_address' => AttributeValidator::stringValid(false, 5),
+                'insurance_phone' => AttributeValidator::digitValid(5, false),
+                'insurance_zipcode' => AttributeValidator::stringValid(false, 3),
+                'insurance_email' => AttributeValidator::emailValid('insurances', 'insurance_email', $insurance['id']),
+                'insurance_web' => AttributeValidator::webValid(false),
+            ],
+            [
+                'insurance_type_id.gt' => config('nicename.campo_obligado'),
+                'province_id.gt' => config('nicename.campo_obligado'),
+                'city_id.gt' => config('nicename.campo_obligado'),
+                'state_id.gt' => config('nicename.campo_obligado'),
+            ],
+            $this->niceNames()
+        )->validate();
+    }
 }

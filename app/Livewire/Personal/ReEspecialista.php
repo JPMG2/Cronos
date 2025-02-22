@@ -85,6 +85,7 @@ class ReEspecialista extends Component
     #[On('dataMedical')]
     public function medicalLoadData($medicalId)
     {
+        $this->formesp->reset();
         app()->call([$this->formesp, 'infoMedic'], ['medicalId' => $medicalId]);
         $this->dispatch('showOptionsForms', show: true);
         $this->isdisabled = 'disabled';

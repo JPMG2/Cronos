@@ -29,18 +29,50 @@ class ObraSocialForm extends Form
         'insurance_type_name' => '',
     ];
 
+    /**
+     * Store a new insurance record.
+     *
+     * This method creates a new insurance record with the provided data.
+     * It validates the data using the InsuranceValidation object and then stores
+     * the insurance record using the InsuranceObj object. The created insurance
+     * record is then returned as a response message.
+     *
+     * @param  InsuranceObj  $insuranceObj  The insurance object used to store the record.
+     * @param  InsuranceValidation  $insuranceValidation  The validation object used to validate the data.
+     * @return array The response message after creating the insurance record.
+     */
     public function insuranceStore(InsuranceObj $insuranceObj, InsuranceValidation $insuranceValidation): array
     {
         return NotifyQuerys::msgCreate($insuranceObj->store($insuranceValidation->onInsuranceCreate($this->dataobrasocial)));
     }
 
+    /**
+     * Update the specified insurance record.
+     *
+     * This method updates an existing insurance record with the provided data.
+     * It validates the data using the InsuranceValidation object and then updates
+     * the insurance record using the InsuranceObj object. The updated insurance
+     * record is then returned as a response message.
+     *
+     * @param  InsuranceObj  $insuranceObj  The insurance object used to update the record.
+     * @param  InsuranceValidation  $insuranceValidation  The validation object used to validate the data.
+     * @return array The response message after updating the insurance record.
+     */
+    public function insuranceUpdate(InsuranceObj $insuranceObj, InsuranceValidation $insuranceValidation): array
+    {
+        return NotifyQuerys::msgUpadte($insuranceObj->update(
+            $insuranceValidation->onInsuranceUpdate($this->dataobrasocial), $this->dataobrasocial['id']));
+    }
+
     public function infoInsurance(InsuranceObj $insuranceObj, $idInsurance)
     {
+
         $dataInsurance = $insuranceObj->show($idInsurance);
+
         $this->dataobrasocial = $dataInsurance->toArray();
         $this->dataobrasocial['insurance_type_id'] = $dataInsurance->insurance_type_id;
         $this->dataobrasocial['insurance_type_name'] = $dataInsurance->insuranceType->insuratype_name;
-        $this->dataobrasocial['province_id'] = $dataInsurance->city?->provice->id;
+        $this->dataobrasocial['province_id'] = $dataInsurance->city?->province->id;
         $this->dataobrasocial['city_id'] = $dataInsurance->city_id;
         if (! is_null($dataInsurance->city)) {
             $this->setProvinceCity($dataInsurance->city->province->id, $dataInsurance->city->id);

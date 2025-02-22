@@ -38,7 +38,7 @@ class BranchForm extends Form
     public function branchUpdate(BranchValidation $branchValidation, BranchObj $branchObj): array
     {
 
-        return NotifyQuerys::msgUpadte($branchObj->update($this->databranch['id'], $branchValidation->onBranchUpdate($this->databranch)));
+        return NotifyQuerys::msgUpadte($branchObj->update($branchValidation->onBranchUpdate($this->databranch), $this->databranch['id']));
 
     }
 

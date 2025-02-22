@@ -37,7 +37,7 @@ class ReObraSocail extends Component
             $result = app()->call([$this->form, 'insuranceStore']);
         }
         if ($this->isupdate) {
-            dd('update');
+            $result = app()->call([$this->form, 'insuranceUpdate']);
         }
         $this->endInsurance($result);
 
@@ -76,6 +76,7 @@ class ReObraSocail extends Component
     {
         $this->isupdate = false;
         $this->form->reset();
+        $this->resetAllProvince();
         $this->cleanFormValues();
         $this->dispatch('showOptionsForms', show: false);
 
@@ -84,17 +85,21 @@ class ReObraSocail extends Component
     public function endInsurance($result)
     {
         $this->dispatch('show-toast', $result);
+        $this->resetAllProvince();
         $this->clearForm();
     }
 
     public function obrasocialShow()
     {
+
         $this->dispatch('showOptionForm', 'showModalInsurances', true);
     }
 
     #[On('dataInsurance')]
     public function InfroInsurance($insuranceId)
     {
+        $this->form->reset();
+
         app()->call([$this->form, 'infoInsurance'], ['idInsurance' => $insuranceId]);
 
         $this->IdandNames(
@@ -109,5 +114,20 @@ class ReObraSocail extends Component
     public function obrasocialEdit()
     {
         $this->editActivate();
+    }
+
+    public function obrasocialNew(): void
+    {
+        $this->dispatch('new-form', 're_obrasocial');
+    }
+
+    public function obrasocialPrint(): void
+    {
+        $idInsurance = $this->form->dataobrasocial['id'];
+
+        $className = 'InsurancePdf';
+
+        $this->dispatch('printByID', ['idmodel' => $idInsurance, 'className' => $className]);
+
     }
 }

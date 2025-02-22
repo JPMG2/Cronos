@@ -113,6 +113,7 @@ class ReBranch extends Component
     #[On('dataBranch')]
     public function loadBranch($branchId)
     {
+        $this->form->reset();
         app()->call([$this->form, 'infoBranc'], ['branchId' => $branchId]);
 
         $this->IdandNames(

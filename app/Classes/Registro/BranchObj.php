@@ -36,11 +36,11 @@ class BranchObj
     /**
      * Update a branch in the database.
      *
-     * @param  int  $branchId  The ID of the branch.
      * @param  array  $arrayBrach  The array containing the branch data.
+     * @param  int  $branchId  The ID of the branch.
      * @return Branch The updated branch.
      */
-    public function update($branchId, array $arrayBrach): Branch
+    public function update(array $arrayBrach, int $branchId): Branch
     {
         $branch = Branch::findOrFail($branchId);
 
