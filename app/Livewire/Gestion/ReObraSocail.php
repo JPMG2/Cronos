@@ -5,6 +5,7 @@ namespace App\Livewire\Gestion;
 use App\Livewire\Forms\Gestion\ObraSocialForm;
 use App\Models\Insurance;
 use App\Models\InsuranceType;
+use App\Traits\FormActionsTrait;
 use App\Traits\HandlesActionPolicy;
 use App\Traits\ProvinceCity;
 use App\Traits\UtilityForm;
@@ -14,7 +15,7 @@ use Livewire\Component;
 
 class ReObraSocail extends Component
 {
-    use HandlesActionPolicy, ProvinceCity, UtilityForm;
+    use FormActionsTrait, HandlesActionPolicy, ProvinceCity,UtilityForm;
 
     public ObraSocialForm $form;
 
@@ -89,12 +90,6 @@ class ReObraSocail extends Component
         $this->clearForm();
     }
 
-    public function obrasocialShow()
-    {
-
-        $this->dispatch('showOptionForm', 'showModalInsurances', true);
-    }
-
     #[On('dataInsurance')]
     public function InfroInsurance($insuranceId)
     {
@@ -111,23 +106,9 @@ class ReObraSocail extends Component
         $this->dispatch('showOptionsForms', show: true);
     }
 
-    public function obrasocialEdit()
+    public function obrasocialHandleMenuAction(string $nameoption)
     {
-        $this->editActivate();
-    }
-
-    public function obrasocialNew(): void
-    {
-        $this->dispatch('new-form', 're_obrasocial');
-    }
-
-    public function obrasocialPrint(): void
-    {
-        $idInsurance = $this->form->dataobrasocial['id'];
-
-        $className = 'InsurancePdf';
-
-        $this->dispatch('printByID', ['idmodel' => $idInsurance, 'className' => $className]);
-
+        $id = $this->form->dataobrasocial['id'] ?? 0;
+        $this->handleAction($nameoption, [$id, 'InsurancePdf', 're_obrasocial', 'Insurance']);
     }
 }

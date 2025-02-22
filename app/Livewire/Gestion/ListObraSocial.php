@@ -36,7 +36,7 @@ class ListObraSocial extends Component
         ]);
     }
 
-    #[On('showModalInsurances')]
+    #[On('showModalInsurance')]
     public function updateShow($show)
     {
         $this->show = $show;
