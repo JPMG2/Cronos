@@ -91,4 +91,23 @@ class ReObraSocail extends Component
     {
         $this->dispatch('showOptionForm', 'showModalInsurances', true);
     }
+
+    #[On('dataInsurance')]
+    public function InfroInsurance($insuranceId)
+    {
+        app()->call([$this->form, 'infoInsurance'], ['idInsurance' => $insuranceId]);
+
+        $this->IdandNames(
+            $this->form->getProvinceId(), $this->form->getCityId(),
+            $this->form->getProvinceName(), $this->form->getCityName());
+
+        $this->isdisabled = 'disabled';
+
+        $this->dispatch('showOptionsForms', show: true);
+    }
+
+    public function obrasocialEdit()
+    {
+        $this->editActivate();
+    }
 }

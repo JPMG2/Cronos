@@ -6,12 +6,11 @@ use App\Classes\Registro\BranchObj;
 use App\Classes\Registro\BranchValidation;
 use App\Classes\Utilities\NotifyQuerys;
 use App\Traits\ProvinceCity;
-use App\Traits\UtilityForm;
 use Livewire\Form;
 
 class BranchForm extends Form
 {
-    use ProvinceCity, UtilityForm;
+    use ProvinceCity;
 
     public $databranch = [
         'company_id' => '',
@@ -38,6 +37,7 @@ class BranchForm extends Form
 
     public function branchUpdate(BranchValidation $branchValidation, BranchObj $branchObj): array
     {
+
         return NotifyQuerys::msgUpadte($branchObj->update($this->databranch['id'], $branchValidation->onBranchUpdate($this->databranch)));
 
     }

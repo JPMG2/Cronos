@@ -33,13 +33,13 @@ class AttributeValidator
         return 'required|unique:'.$model.','.$uniqueField.'|email|regex:/^([^<>]*)$/';
     }
 
-    public static function emailValid($required)
+    public static function emailValid($model, $uniqueField, $id = null)
     {
-        if ($required) {
-            return 'required|email|regex:/^([^<>]*)$/';
+        if ($id) {
+            return 'sometimes|unique:'.$model.','.$uniqueField.','.$id.'|email|regex:/^([^<>]*)$/';
         }
 
-        return 'sometimes|email|regex:/^([^<>]*)$/';
+        return 'sometimes|unique:'.$model.','.$uniqueField.'|email|regex:/^([^<>]*)$/';
     }
 
     public static function emailValidById($id, $model, $uniqueField)

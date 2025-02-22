@@ -30,7 +30,7 @@ class ModelUpdate extends Component
 
         $queryacion = $this->queryaccion;
 
-        if ($queryacion == 2) {//update
+        if ($queryacion == 2) {// update
 
             $whatchange = $this->seeChanges();
         }

@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class State extends Model
 {
     use HasFactory;
-    protected $fillable=['state_name'];
+
+    protected $fillable = ['state_name'];
 
     protected function stateName(): Attribute
     {

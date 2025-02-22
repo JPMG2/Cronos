@@ -25,7 +25,7 @@
                         <x-close-modal></x-close-modal>
                     </button>
                 </div>
-                <div class="overflow-y-auto p-4">
+                <div class="overflow-y-auto overflow-x-auto p-4">
                     <x-table.boxsearch :listFilterValues="$listFilterValues"></x-table.boxsearch>
                     @if(count($listInsurances) > 0)
 
@@ -99,13 +99,13 @@
                                             class="even:bg-gray-100"
                                             wire:key="{{ $insurance->id }}"
                                         >
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable typetext="txtimportant">
                                                 {{ $loop->iteration }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable typetext="txtimportant" break-words>
                                                 {{ $insurance->insurance_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable typetext="txtimportant" break-words>
                                                 {{ $insurance->insurance_acronym }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" break-words>
@@ -117,14 +117,24 @@
                                             <x-table.tdtable typetext="txtnormal" break-words>
                                                 {{ $insurance->insurance_code }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                            <x-table.tdtable typetext="txtnormal">
                                                 <x-statescolor
                                                     idstatecolor="{{ $insurance->state->id }}"
                                                 >
                                                     {{ $insurance->state->state_name }}
                                                 </x-statescolor>
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap></x-table.tdtable>
+                                            <x-table.tdtable typetext="txtnormal">
+                                                <div
+                                                    class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                                >
+                                                    <x-headerform.eyeoption
+                                                        wire:key="{{ $insurance->id }}"
+                                                        wire:click.prevent="dataInsurance({{ $insurance->id }})"
+
+                                                    ></x-headerform.eyeoption>
+                                                </div>
+                                            </x-table.tdtable>
                                         </tr>
                                     @endforeach
                                 </x-table.tablebody>

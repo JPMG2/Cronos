@@ -24,7 +24,7 @@ class EspecialistValidation
                 ],
                 'specialty_id' => 'sometimes',
                 'state_id' => 'required',
-                'medical_email' => AttributeValidator::emailValid(false),
+                'medical_email' => AttributeValidator::emailValid('medicals', 'medical_email', null),
                 'medical_phone' => AttributeValidator::digitValid(5, false),
                 'medical_address' => AttributeValidator::stringValid(false, 5),
             ],

@@ -17,12 +17,12 @@ class EmailModelObserver
     public function sendEmail(Model $model, $action, $class)
     {
 
-        $classemail = new EmailsModel();
+        $classemail = new EmailsModel;
 
         if ($action == 'update') {
-            $classemail->sendEmailUpdate(new $class(), $model);
+            $classemail->sendEmailUpdate(new $class, $model);
         } else {
-            $classemail->sendEmailCreate(new $class(), $model);
+            $classemail->sendEmailCreate(new $class, $model);
         }
     }
 

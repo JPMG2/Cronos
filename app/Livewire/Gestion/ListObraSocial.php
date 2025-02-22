@@ -42,4 +42,10 @@ class ListObraSocial extends Component
         $this->show = $show;
         $this->inicializteTableSorting('Insurance');
     }
+
+    public function dataInsurance($InsuranceId)
+    {
+        $this->dispatch('dataInsurance', $InsuranceId);
+        $this->show = false;
+    }
 }

@@ -115,17 +115,12 @@ class ReBranch extends Component
     {
         app()->call([$this->form, 'infoBranc'], ['branchId' => $branchId]);
 
-        $this->setValuesPronvinceCity();
+        $this->IdandNames(
+            $this->form->getProvinceId(), $this->form->getCityId(),
+            $this->form->getProvinceName(), $this->form->getCityName());
 
         $this->isdisabled = 'disabled';
 
         $this->dispatch('showOptionsForms', show: true);
-    }
-
-    public function setValuesPronvinceCity()
-    {
-        $this->setProvinceCity($this->form->getProvinceId(), $this->form->getCityId());
-
-        $this->setnameProvinceCity($this->form->getProvinceName(), $this->form->getCityName());
     }
 }

@@ -15,4 +15,17 @@ class InsuranceObj
     {
         return Insurance::create($this->getValuesModel($arrayInsurance, $this->modelName));
     }
+
+    public function update(array $arrayInsurance): Insurance
+    {
+        $insurance = Insurance::findOrFail($arrayInsurance['id']);
+        $insurance->update($this->getValuesModel($arrayInsurance, $this->modelName));
+
+        return $insurance;
+    }
+
+    public function show(int $idInsurance): Insurance
+    {
+        return Insurance::findOrFail($idInsurance);
+    }
 }

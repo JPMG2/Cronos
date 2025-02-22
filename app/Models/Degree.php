@@ -11,6 +11,7 @@ class Degree extends Model
 {
     /** @use HasFactory<DegreeFactory> */
     use HasFactory;
+
     protected $fillable = [
         'degree_name',
         'degree_code',
@@ -23,6 +24,7 @@ class Degree extends Model
 
         );
     }
+
     protected function degreeCode(): Attribute
     {
         return Attribute::make(

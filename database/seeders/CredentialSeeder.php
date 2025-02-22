@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Credential;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CredentialSeeder extends Seeder
@@ -13,15 +12,15 @@ class CredentialSeeder extends Seeder
      */
     public function run(): void
     {
-        $credential=[
+        $credential = [
             [
-                'credential_name'=>'matrícula nacional',
-                'credential_code'=>'MN'
+                'credential_name' => 'matrícula nacional',
+                'credential_code' => 'MN',
             ],
             [
-                'credential_name'=>'matrícula provincial',
-                'credential_code'=>'MP'
-            ]
+                'credential_name' => 'matrícula provincial',
+                'credential_code' => 'MP',
+            ],
         ];
 
         foreach ($credential as $credential) {

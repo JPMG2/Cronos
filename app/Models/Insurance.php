@@ -65,11 +65,11 @@ class Insurance extends Model
         if (! is_null($relashion)) {
             $relationName = $this->getRelashionName($relashion);
             if (method_exists($this, $relashion)) {
-                return $this->{$relashion}($query, $relationName, $stringsearch, ['insuranceType', 'state']);
+                return $this->{$relashion}($query, $relationName, $stringsearch, ['insuranceType', 'state', 'city.province']);
             }
         }
 
-        return $query->with(['insuranceType', 'state']);
+        return $query->with(['insuranceType', 'state', 'city.province']);
     }
 
     public function getRelashionName(string $relashionvalue): string
@@ -153,5 +153,10 @@ class Insurance extends Model
         return Attribute::make(
             set: fn ($value) => strtolower(trim($value)),
         );
+    }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-return  [
-    'nqn'=>[
+return [
+    'nqn' => [
         ['city_name' => 'Alumine'],
         ['city_name' => 'Andacollo'],
         ['city_name' => 'Arroyito'],
@@ -38,7 +38,7 @@ return  [
         ['city_name' => 'Zapala'],
     ],
 
-    'rno'=>[
+    'rno' => [
         ['city_name' => 'Allen'],
         ['city_name' => 'Bariloche'],
         ['city_name' => 'Catriel'],
@@ -66,5 +66,5 @@ return  [
         ['city_name' => 'Villa Lago Gutiérrez'],
         ['city_name' => 'Villa Lago Mascardi'],
         ['city_name' => 'Villa Regina'],
-    ]
+    ],
 ];

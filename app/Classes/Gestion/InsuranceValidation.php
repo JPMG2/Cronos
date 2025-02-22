@@ -26,7 +26,7 @@ class InsuranceValidation
                 'insurance_address' => AttributeValidator::stringValid(false, 5),
                 'insurance_phone' => AttributeValidator::digitValid(5, false),
                 'insurance_zipcode' => AttributeValidator::stringValid(false, 3),
-                'insurance_email' => AttributeValidator::emailValid(false),
+                'insurance_email' => AttributeValidator::emailValid('insurances', 'insurance_email', null),
                 'insurance_web' => AttributeValidator::webValid(false),
             ],
             [
