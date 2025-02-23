@@ -38,7 +38,7 @@
             @if ($mItems->optionmenus_count > 0)
                 @foreach ($mItems->optionmenus as $moption)
                     <div x-data="{ linkHover: false, linkActive: false }">
-                        <x-mmenu.title-menu>
+                        <x-mmenu.title-menu icon="{{$moption->icon_menu}}">
                             {{ $moption->grup_menu }}
                         </x-mmenu.title-menu>
                         @if ($moption->menus_count > 0)

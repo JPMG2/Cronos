@@ -13,10 +13,22 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            ['name_role' => 'Owner'],
-            ['name_role' => 'Administrator'],
-            ['name_role' => 'Auditor'],
-            ['name_role' => 'Operator'],
+            [
+                'name_role' => 'Owner',
+                'description' => 'Usuario con autoridad total sobre la configuración, seguridad y gestión del sistema web',
+            ],
+            [
+                'name_role' => 'Administrator',
+                'description' => 'Usuario con autoridad total sobre la gestión de usuarios y roles',
+            ],
+            [
+                'name_role' => 'Auditor',
+                'description' => 'Usuario con autoridad total sobre la gestión de auditorías',
+            ],
+            [
+                'name_role' => 'Operator',
+                'description' => 'Usuario con autoridad total sobre la gestión de operaciones',
+            ],
         ];
 
         foreach ($roles as $role) {
