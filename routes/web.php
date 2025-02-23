@@ -35,6 +35,12 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         ->name('re_obrasocial');
 });
 
+/* Route for Configuración */
+Route::group(['middleware' => 'auth', 'verified'], function () {
+    Route::get('/re_confrole', App\Livewire\Configuracion\Roles::class)
+        ->name('re_confrole');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

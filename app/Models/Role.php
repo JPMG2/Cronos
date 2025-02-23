@@ -14,6 +14,11 @@ class Role extends Model
 
     protected $fillable = ['name_role', 'description'];
 
+    public static function countRoles()
+    {
+        return self::whereNot('name_role', 'Owner')->count();
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class);
