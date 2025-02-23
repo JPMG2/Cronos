@@ -2,6 +2,19 @@
 
 namespace App\Traits;
 
+use App\Http\Controllers\PDFController;
+
+/**
+ * Handles common form actions.
+ *
+ * @param  string  $action  The action to perform ('edit', 'new', 'print','show','history').
+ * @param  array  $params  An associative array containing:
+ *                         - 'id'             => int
+ *                         - 'pdfClass'       => string
+ *                         - 'route'          => string
+ *                         - 'model'          => string
+ * @return void
+ */
 trait FormActionsTrait
 {
     protected function handleAction($action, array $parameter)
@@ -19,7 +32,11 @@ trait FormActionsTrait
             case 'show':
                 $this->show($parameter);
                 break;
-
+            case 'history':
+                $this->history($parameter);
+                break;
+            default:
+                break;
         }
     }
 
@@ -30,21 +47,30 @@ trait FormActionsTrait
 
     protected function new(array $parameter)
     {
-        $this->dispatch('new-form', $parameter[2]);
+        $this->redirect($parameter['route']);
     }
 
     protected function print($parameter)
     {
-        $idInsurance = $parameter[0];
+        $id = encryptString($parameter['id']);
 
-        $className = $parameter[1];
+        $class = $parameter['pdfClass'];
 
-        $this->dispatch('printByID', ['idmodel' => $idInsurance, 'className' => $className]);
+        $url = action([PDFController::class, 'pdfById'], ['id' => $id, 'class' => $class]);
+
+        $this->dispatch('openWindow', ['url' => $url]);
     }
 
     protected function show($parameter)
     {
-        $nameForm = $parameter[3];
-        $this->dispatch('showOptionForm', 'showModal'.$nameForm, true);
+        $nameForm = $parameter['model'];
+        $this->dispatch('showModal'.$nameForm, show: true);
+    }
+
+    protected function history($parameter)
+    {
+        $id = $parameter['id'];
+        $model = $parameter['model'];
+        $this->dispatch('showModalHistory', ['model' => $model, 'id' => $id]);
     }
 }

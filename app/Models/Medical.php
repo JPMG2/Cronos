@@ -50,6 +50,11 @@ class Medical extends Model
         return self::count();
     }
 
+    public function mainName(): string
+    {
+        return $this->medical_name;
+    }
+
     public function setCredentialIdAttribute($value)
     {
         $this->attributes['credential_id'] = $value ?: null;

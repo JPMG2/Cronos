@@ -60,6 +60,7 @@ class ObraSocialForm extends Form
      */
     public function insuranceUpdate(InsuranceObj $insuranceObj, InsuranceValidation $insuranceValidation): array
     {
+
         return NotifyQuerys::msgUpadte($insuranceObj->update(
             $insuranceValidation->onInsuranceUpdate($this->dataobrasocial), $this->dataobrasocial['id']));
     }

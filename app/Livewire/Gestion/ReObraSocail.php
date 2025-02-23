@@ -34,6 +34,7 @@ class ReObraSocail extends Component
     public function insuraceQuery()
     {
         $this->setIdPronvinceCity();
+
         if (! $this->isupdate) {
             $result = app()->call([$this->form, 'insuranceStore']);
         }
@@ -46,6 +47,7 @@ class ReObraSocail extends Component
 
     protected function setIdPronvinceCity()
     {
+
         $this->form->dataobrasocial['city_id'] = max($this->getCityId(), 0);
         $this->form->dataobrasocial['province_id'] = max($this->getProvinceId(),
             0);
@@ -91,13 +93,13 @@ class ReObraSocail extends Component
     }
 
     #[On('dataInsurance')]
-    public function InfroInsurance($insuranceId)
+    public function InfoInsurance($insuranceId): void
     {
         $this->form->reset();
 
         app()->call([$this->form, 'infoInsurance'], ['idInsurance' => $insuranceId]);
 
-        $this->IdandNames(
+        $this->setLocactionNameID(
             $this->form->getProvinceId(), $this->form->getCityId(),
             $this->form->getProvinceName(), $this->form->getCityName());
 
@@ -109,6 +111,11 @@ class ReObraSocail extends Component
     public function obrasocialHandleMenuAction(string $nameoption)
     {
         $id = $this->form->dataobrasocial['id'] ?? 0;
-        $this->handleAction($nameoption, [$id, 'InsurancePdf', 're_obrasocial', 'Insurance']);
+        $this->handleAction($nameoption, [
+            'id' => $id,
+            'pdfClass' => 'InsurancePdf',
+            'route' => 're_obrasocial',
+            'model' => 'Insurance',
+        ]);
     }
 }

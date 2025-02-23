@@ -53,4 +53,11 @@ class BranchForm extends Form
         }
 
     }
+
+    public function setIdPronvinceCity($provinceId, $cityId)
+    {
+
+        $this->databranch['province_id'] = $provinceId;
+        $this->databranch['city_id'] = $cityId;
+    }
 }

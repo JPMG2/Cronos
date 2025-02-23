@@ -35,6 +35,7 @@
                 <button
                     @mouseenter="tooltip = true"
                     @mouseleave="tooltip = false"
+                    wire:click="$parent.{{ $namecomponent . "HandleMenuAction" }}('export')"
                     @click="$wire.changeColor('export')"
                     class="{{ ! $optioncolor["export"] ? "bg-blue-300" : "bg-yellow-50" }} rounded p-1.5 py-1.5 text-center text-gray-100 shadow-xl"
                 >

@@ -50,6 +50,11 @@ class Insurance extends Model
         return self::count();
     }
 
+    public function mainName(): string
+    {
+        return $this->insurance_name;
+    }
+
     public function insuranceType()
     {
         return $this->belongsTo(InsuranceType::class);
@@ -80,6 +85,21 @@ class Insurance extends Model
 
         return Arr::get($relashionarray, $relashionvalue);
 
+    }
+
+    public function setCityIdAttribute($value)
+    {
+
+        if ((int) $value === 0) {
+            $value = null;
+        }
+
+        $this->attributes['city_id'] = $value;
+    }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 
     protected function casts(): array
@@ -153,10 +173,5 @@ class Insurance extends Model
         return Attribute::make(
             set: fn ($value) => strtolower(trim($value)),
         );
-    }
-
-    public function city(): BelongsTo
-    {
-        return $this->belongsTo(City::class);
     }
 }

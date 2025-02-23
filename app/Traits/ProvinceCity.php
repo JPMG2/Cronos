@@ -152,7 +152,7 @@ trait ProvinceCity
         return $this->stringCity;
     }
 
-    public function IdandNames($provinceId, $cityId, $provinceName, $cityName)
+    public function setLocactionNameID($provinceId, $cityId, $provinceName, $cityName)
     {
         $this->setProvinceCity($provinceId, $cityId);
         $this->setnameProvinceCity($provinceName, $cityName);

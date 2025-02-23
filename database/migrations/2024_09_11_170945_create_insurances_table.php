@@ -20,13 +20,13 @@ return new class extends Migration
             $table->foreignIdFor(State::class)->constrained();
             $table->foreignIdFor(City::class)->nullable()->constrained();
             $table->string('insurance_name')->unique();
-            $table->string('insurance_acronym')->nullable()->unique();
-            $table->string('insurance_code')->nullable()->unique();
-            $table->string('insurance_cuit')->nullable()->unique()->nullable();
+            $table->string('insurance_acronym')->nullable();
+            $table->string('insurance_code')->nullable();
+            $table->string('insurance_cuit')->nullable();
             $table->string('insurance_address');
             $table->string('insurance_phone');
             $table->string('insurance_zipcode')->nullable();
-            $table->string('insurance_email')->unique()->nullable();
+            $table->string('insurance_email')->nullable();
             $table->string('insurance_web')->nullable();
             $table->timestamps();
         });

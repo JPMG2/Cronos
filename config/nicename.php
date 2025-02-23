@@ -29,4 +29,6 @@ return [
     'especialist' => 'especialidad',
     'titulo' => 'titulo',
     'codigomedico' => 'núm matricula',
+    'medical' => 'especialista',
+    'insurance' => 'obra social',
 ];

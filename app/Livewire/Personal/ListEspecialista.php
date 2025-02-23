@@ -36,7 +36,7 @@ class ListEspecialista extends Component
         ]);
     }
 
-    #[On('showModalEspecialist')]
+    #[On('showModalMedical')]
     public function updateShow($show)
     {
         $this->show = $show;

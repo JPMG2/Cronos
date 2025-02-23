@@ -105,7 +105,7 @@
             {{ $slot }}
             @livewire("utility.form-activity")
             @livewire("utility.history-modal")
-            @livewire("utility.option-menu-form")
+           
         </div>
         <!-- end:Page content -->
     </div>

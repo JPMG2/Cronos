@@ -4,6 +4,7 @@ namespace App\Livewire\Personal;
 
 use App\Livewire\Forms\Personal\EspecialistaForm;
 use App\Models\Medical;
+use App\Traits\FormActionsTrait;
 use App\Traits\HandlesActionPolicy;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\On;
@@ -12,11 +13,11 @@ use Livewire\Component;
 
 class ReEspecialista extends Component
 {
-    use HandlesActionPolicy,UtilityForm;
-
-    protected $commonQuerys;
+    use FormActionsTrait,HandlesActionPolicy, UtilityForm;
 
     public EspecialistaForm $formesp;
+
+    protected $commonQuerys;
 
     #[Title(' - Especialista')]
     public function render()
@@ -48,11 +49,6 @@ class ReEspecialista extends Component
         $this->clearForm();
     }
 
-    public function getMedicalsProperty()
-    {
-        return Medical::countMedicals();
-    }
-
     public function clearForm()
     {
         $this->isupdate = false;
@@ -61,25 +57,9 @@ class ReEspecialista extends Component
         $this->dispatch('showOptionsForms', show: false);
     }
 
-    public function especialistShow()
+    public function getMedicalsProperty()
     {
-        $this->dispatch('showOptionForm', 'showModalEspecialist', true);
-    }
-
-    public function especialistEdit()
-    {
-        $this->editActivate();
-
-    }
-
-    public function especialistPrint(): void
-    {
-        $idEspecialist = $this->formesp->dataespecialist['id'];
-
-        $className = 'MedicPdf';
-
-        $this->dispatch('printByID', ['idmodel' => $idEspecialist, 'className' => $className]);
-
+        return Medical::countMedicals();
     }
 
     #[On('dataMedical')]
@@ -89,5 +69,16 @@ class ReEspecialista extends Component
         app()->call([$this->formesp, 'infoMedic'], ['medicalId' => $medicalId]);
         $this->dispatch('showOptionsForms', show: true);
         $this->isdisabled = 'disabled';
+    }
+
+    public function especialistHandleMenuAction(string $nameoption)
+    {
+        $id = $this->formesp->dataespecialist['id'] ?? 0;
+        $this->handleAction($nameoption, [
+            'id' => $id,
+            'pdfClass' => 'MedicPdf',
+            'route' => 're_especialist',
+            'model' => 'Medical',
+        ]);
     }
 }

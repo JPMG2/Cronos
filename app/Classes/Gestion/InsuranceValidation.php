@@ -17,8 +17,8 @@ class InsuranceValidation
                 'insurance_name' => AttributeValidator::uniqueIdNameLength(5, 'insurances', 'insurance_name', null),
                 'insurance_acronym' => AttributeValidator::stringValidUnique('insurances', 'insurance_acronym', 3, null),
                 'insurance_type_id' => 'gt:0|required',
-                // 'province_id' => 'gt:0|required',
-                // 'city_id' => 'gt:0|required',
+                'province_id' => 'sometimes',
+                'city_id' => 'sometimes',
                 'state_id' => 'gt:0|required',
                 'insurance_code' => AttributeValidator::stringValidUnique('insurances', 'insurance_code', 3, null),
                 'insurance_cuit' => AttributeValidator::stringValidUnique('insurances', 'insurance_cuit', 5, null),
@@ -31,8 +31,7 @@ class InsuranceValidation
             ],
             [
                 'insurance_type_id.gt' => config('nicename.campo_obligado'),
-                'province_id.gt' => config('nicename.campo_obligado'),
-                'city_id.gt' => config('nicename.campo_obligado'),
+
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
             $this->niceNames()
@@ -87,8 +86,8 @@ class InsuranceValidation
                 'insurance_name' => AttributeValidator::uniqueIdNameLength(5, 'insurances', 'insurance_name', $insurance['id']),
                 'insurance_acronym' => AttributeValidator::stringValidUnique('insurances', 'insurance_acronym', 3, $insurance['id']),
                 'insurance_type_id' => 'gt:0|required',
-                // 'province_id' => 'gt:0|required',
-                // 'city_id' => 'gt:0|required',
+                'province_id' => 'sometimes|gt:0',
+                'city_id' => 'sometimes|gt:0',
                 'state_id' => 'gt:0|required',
                 'insurance_code' => AttributeValidator::stringValidUnique('insurances', 'insurance_code', 3, $insurance['id']),
                 'insurance_cuit' => AttributeValidator::stringValidUnique('insurances', 'insurance_cuit', 5, $insurance['id']),
@@ -100,8 +99,7 @@ class InsuranceValidation
             ],
             [
                 'insurance_type_id.gt' => config('nicename.campo_obligado'),
-                'province_id.gt' => config('nicename.campo_obligado'),
-                'city_id.gt' => config('nicename.campo_obligado'),
+
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
             $this->niceNames()
