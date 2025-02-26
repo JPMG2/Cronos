@@ -26,39 +26,25 @@
                             class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                         >
                             <thead class="bg-gray-50 dark:bg-gray-800">
-                            <tr>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                >
-                                    ID
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                >
-                                    Departamento
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                >
-                                    Código
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                >
-                                    Creado
-                                </th>
+                            <x-table.thead>
+                                <tr>
+                                    <x-table.th>
+                                        ID
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Departamento
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Código
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Creado
+                                    </x-table.th>
+                                    <x-table.th></x-table.th>
 
-                                <th
-                                    scope="col"
-                                    class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
-                                >
-                                    Opción
-                                </th>
-                            </tr>
+
+                                </tr>
+                            </x-table.thead>
                             </thead>
                             <tbody
                                 class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900"

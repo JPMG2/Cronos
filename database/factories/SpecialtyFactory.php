@@ -17,7 +17,7 @@ class SpecialtyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'specialty_name' => $this->faker->word,
         ];
     }
 }

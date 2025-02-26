@@ -37,7 +37,7 @@ class ReEspecialista extends Component
         if (! $this->isupdate) {
             $result = app()->call([$this->formesp, 'especialistStore']);
         } else {
-
+            dd('update');
             $result = app()->call([$this->formesp, 'especialistUpdate']);
         }
         $this->endEspeciales($result);

@@ -24,6 +24,41 @@
                         <table
                             class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                         >
+                            <thead class="bg-gray-50 dark:bg-gray-800">
+                            <x-table.thead>
+                                <tr>
+                                    <x-table.th>
+                                        ID
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Rol
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Descripción
+                                    </x-table.th>
+                                    <x-table.th></x-table.th>
+                                </tr>
+                            </x-table.thead>
+                            </thead>
+                            <x-table.tablebody>
+                                @foreach ($listRoles as $role)
+                                    <tr
+                                        class="even:bg-gray-100"
+                                        wire:key="{{ $role->id }}"
+                                    >
+                                        <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            {{ $loop->iteration }}
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            {{ $role->name_role }}
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtnormal" break-words>
+                                            {{ $role->description  }}
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtnormal" whitespace-nowrap></x-table.tdtable>
+                                    </tr>
+                                @endforeach
+                            </x-table.tablebody>
                         </table>
                     </div>
 

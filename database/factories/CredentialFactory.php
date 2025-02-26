@@ -17,7 +17,8 @@ class CredentialFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'credential_name' => $this->faker->name,
+            'credential_code' => $this->faker->unique()->randomNumber(4),
         ];
     }
 }

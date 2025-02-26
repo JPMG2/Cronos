@@ -18,6 +18,7 @@ class Breadcrum extends Component
 
     public function getBreadcrumbs($viewname): string
     {
+
         return Menu::where('grup_menu', $viewname)
             ->select('header_menu')
             ->first()->header_menu;

@@ -11,6 +11,11 @@
 |
 */
 
+use App\Models\Action;
+use App\Models\Menu;
+use App\Models\Role;
+use App\Models\User;
+
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
@@ -40,8 +45,35 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
-
-function something()
+function loginUser($user = null)
 {
-    // ..
+    return $user ?? User::factory()->create();
+}
+function createHeaderMenu($nameMenu, $stingHeader)
+{
+    return Menu::factory()->create(['grup_menu' => $nameMenu,
+        'header_menu' => $stingHeader,
+    ]);
+}
+function createRolesAndActions($userInstance)
+{
+    $roles = createRoles();
+    $userInstance->roles()->attach($roles);
+    $idRole = $roles->first()->id;
+    $actions = createActions();
+    foreach ($actions as $action) {
+        $action->roles()->attach($idRole);
+    }
+}
+function createRoles()
+{
+    Artisan::call('db:seed', ['--class' => 'RoleSeeder']);
+
+    return Role::where('name_role', 'Owner')->get();
+}
+function createActions()
+{
+    Artisan::call('db:seed', ['--class' => 'ActionSeeder']);
+
+    return Action::all();
 }

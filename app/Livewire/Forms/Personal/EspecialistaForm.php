@@ -35,7 +35,6 @@ class EspecialistaForm extends Form
      */
     public function especialistStore(EspecialistValidation $validation, EspecialistObj $especialistobj)
     {
-
         return NotifyQuerys::msgCreate($especialistobj->store($validation->onEspecialistCreate($this->dataespecialist)));
     }
 
