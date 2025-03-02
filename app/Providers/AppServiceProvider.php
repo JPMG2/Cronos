@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Classes\Services\ModelService;
 use App\Classes\Utilities\CommonQuerys;
 use App\Listeners\LogSuccess;
 use App\Models\Branch;
@@ -11,6 +12,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+use InvalidArgumentException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +24,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('commonquery', function ($app) {
             return new CommonQuerys;
         });
+
+        $this->app->bind(ModelService::class, /** @throws InvalidArgumentException */
+            function ($app, array $params) {
+                if (! array_key_exists('model', $params) || ! $params['model'] instanceof Model) {
+                    throw new \InvalidArgumentException('A valid Eloquent model must be passed to ModelService.');
+                }
+
+                return new ModelService($params['model']);
+            });
+
     }
 
     /**

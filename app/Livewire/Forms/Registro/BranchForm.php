@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Forms\Registro;
 
-use App\Classes\Registro\BranchObj;
 use App\Classes\Registro\BranchValidation;
+use App\Classes\Services\ModelService;
 use App\Classes\Utilities\NotifyQuerys;
+use App\Models\Branch;
 use App\Traits\ProvinceCity;
 use Livewire\Form;
 
@@ -30,21 +31,25 @@ class BranchForm extends Form
 
     ];
 
-    public function branchStore(BranchValidation $branchValidation, BranchObj $branchObj): array
+    public function branchStore(BranchValidation $branchValidation): array
     {
-        return NotifyQuerys::msgCreate($branchObj->store($branchValidation->onBranchCreate($this->databranch)));
+        $services = $this->iniService();
+
+        return NotifyQuerys::msgCreate($services->store($branchValidation->onBranchCreate($this->databranch)));
     }
 
-    public function branchUpdate(BranchValidation $branchValidation, BranchObj $branchObj): array
+    public function branchUpdate(BranchValidation $branchValidation): array
     {
+        $services = $this->iniService();
 
-        return NotifyQuerys::msgUpadte($branchObj->update($branchValidation->onBranchUpdate($this->databranch), $this->databranch['id']));
+        return NotifyQuerys::msgUpadte($services->update($branchValidation->onBranchUpdate($this->databranch), $this->databranch['id']));
 
     }
 
-    public function infoBranc(BranchObj $branchObj, $branchId)
+    public function infoBranc($branchId)
     {
-        $brancData = $branchObj->show($branchId);
+        $services = $this->iniService();
+        $brancData = $services->showWithRelationship($branchId);
         if ($brancData) {
             $this->databranch = $brancData->toArray();
             $this->setProvinceCity($brancData->city->province->id, $brancData->city->id);
@@ -59,5 +64,10 @@ class BranchForm extends Form
 
         $this->databranch['province_id'] = $provinceId;
         $this->databranch['city_id'] = $cityId;
+    }
+
+    protected function iniService()
+    {
+        return app()->make(ModelService::class, ['model' => new Branch]);
     }
 }

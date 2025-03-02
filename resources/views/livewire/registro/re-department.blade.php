@@ -81,7 +81,7 @@
                                         class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
                                     >
                                         <div
-                                            class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                            class="mr-2 w-4"
                                         >
                                             <x-table.accionopcion
                                                 wire:key="{{ $depa->id }}"
@@ -91,13 +91,14 @@
                                             ></x-table.accionopcion>
                                         </div>
                                         <div
-                                            class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                            class="mr-2 w-4"
                                         >
                                             <x-table.accionopcion
                                                 wire:key="{{ $depa->id }}"
                                                 wire:click.prevent="deleteDepartment({{ $depa }})"
                                                 wire:target="deleteDepartment"
                                                 iconname="delete"
+                                                isDelete="isDelete"
                                             ></x-table.accionopcion>
                                         </div>
                                     </td>

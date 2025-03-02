@@ -40,7 +40,7 @@ class RoleForm extends Form
 
     protected function iniService()
     {
-        return new ModelService(new Role);
+        return app()->make(ModelService::class, ['model' => new Role]);
     }
 
     public function roleUpdate()

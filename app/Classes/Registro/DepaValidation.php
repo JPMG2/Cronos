@@ -2,6 +2,7 @@
 
 namespace App\Classes\Registro;
 
+use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
 
 class DepaValidation
@@ -13,10 +14,8 @@ class DepaValidation
 
             $this->inicialiciteAtributes($dept),
             [
-                'department_name' => config('validaterules.name_unique_reuired_min')(3, 'departments',
-                    'department_name'),
-                'department_code' => config('validaterules.name_unique_reuired_min')(3, 'departments',
-                    'department_code'),
+                'department_name' => AttributeValidator::uniqueIdNameLength(3, 'departments', 'department_name', null),
+                'department_code' => AttributeValidator::uniqueIdNameLength(3, 'departments', 'department_code', null),
             ],
             [
 
@@ -51,8 +50,9 @@ class DepaValidation
 
             $this->inicialiciteAtributes($dept),
             [
-                'department_name' => config('validaterules.name_unique_reuired_min')(3, 'departments', 'department_name', $id),
-                'department_code' => config('validaterules.name_unique_reuired_min')(3, 'departments', 'department_code', $id),
+
+                'department_name' => AttributeValidator::uniqueIdNameLength(3, 'departments', 'department_name', $id),
+                'department_code' => AttributeValidator::uniqueIdNameLength(3, 'departments', 'department_code', $id),
             ],
             [
 

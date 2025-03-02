@@ -173,5 +173,11 @@ class Insurance extends Model
         return Attribute::make(
             set: fn ($value) => strtolower(trim($value)),
         );
+
+    }
+
+    public function showData(int $id)
+    {
+        return self::with(['insuranceType', 'state', 'city.province'])->findOrFail($id);
     }
 }

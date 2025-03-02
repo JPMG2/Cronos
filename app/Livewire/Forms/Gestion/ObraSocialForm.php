@@ -4,7 +4,9 @@ namespace App\Livewire\Forms\Gestion;
 
 use App\Classes\Gestion\InsuranceObj;
 use App\Classes\Gestion\InsuranceValidation;
+use App\Classes\Services\ModelService;
 use App\Classes\Utilities\NotifyQuerys;
+use App\Models\Insurance;
 use App\Traits\ProvinceCity;
 use Livewire\Form;
 
@@ -37,13 +39,14 @@ class ObraSocialForm extends Form
      * the insurance record using the InsuranceObj object. The created insurance
      * record is then returned as a response message.
      *
-     * @param  InsuranceObj  $insuranceObj  The insurance object used to store the record.
      * @param  InsuranceValidation  $insuranceValidation  The validation object used to validate the data.
      * @return array The response message after creating the insurance record.
      */
-    public function insuranceStore(InsuranceObj $insuranceObj, InsuranceValidation $insuranceValidation): array
+    public function insuranceStore(InsuranceValidation $insuranceValidation): array
     {
-        return NotifyQuerys::msgCreate($insuranceObj->store($insuranceValidation->onInsuranceCreate($this->dataobrasocial)));
+        $services = $this->iniService();
+
+        return NotifyQuerys::msgCreate($services->store($insuranceValidation->onInsuranceCreate($this->dataobrasocial)));
     }
 
     /**
@@ -54,21 +57,21 @@ class ObraSocialForm extends Form
      * the insurance record using the InsuranceObj object. The updated insurance
      * record is then returned as a response message.
      *
-     * @param  InsuranceObj  $insuranceObj  The insurance object used to update the record.
      * @param  InsuranceValidation  $insuranceValidation  The validation object used to validate the data.
      * @return array The response message after updating the insurance record.
      */
-    public function insuranceUpdate(InsuranceObj $insuranceObj, InsuranceValidation $insuranceValidation): array
+    public function insuranceUpdate(InsuranceValidation $insuranceValidation): array
     {
+        $services = $this->iniService();
 
-        return NotifyQuerys::msgUpadte($insuranceObj->update(
+        return NotifyQuerys::msgUpadte($services->update(
             $insuranceValidation->onInsuranceUpdate($this->dataobrasocial), $this->dataobrasocial['id']));
     }
 
-    public function infoInsurance(InsuranceObj $insuranceObj, $idInsurance)
+    public function infoInsurance($idInsurance)
     {
-
-        $dataInsurance = $insuranceObj->show($idInsurance);
+        $services = $this->iniService();
+        $dataInsurance = $services->showWithRelationship($idInsurance);
 
         $this->dataobrasocial = $dataInsurance->toArray();
         $this->dataobrasocial['insurance_type_id'] = $dataInsurance->insurance_type_id;
@@ -79,5 +82,10 @@ class ObraSocialForm extends Form
             $this->setProvinceCity($dataInsurance->city->province->id, $dataInsurance->city->id);
             $this->setnameProvinceCity($dataInsurance->city->province->province_name, $dataInsurance->city->city_name);
         }
+    }
+
+    protected function iniService()
+    {
+        return app()->make(ModelService::class, ['model' => new Insurance]);
     }
 }

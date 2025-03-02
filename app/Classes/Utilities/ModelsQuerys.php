@@ -38,4 +38,9 @@ abstract class ModelsQuerys
     {
         return $this->model->findOrFail($id);
     }
+
+    public function showWithRelationship(int $id): ?Model
+    {
+        return $this->model->showData($id);
+    }
 }

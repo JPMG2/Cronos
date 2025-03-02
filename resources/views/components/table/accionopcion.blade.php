@@ -1,9 +1,11 @@
-@props(["iconname" => false])
+@props(["iconname" => false,
+"isDelete" => false,])
 @php
     $iconname = App\Enums\Iconos::tryFrom($iconname)->getName();
+    $colorhover = $isDelete ? 'hover:text-red-700' : 'hover:text-purple-500';
 @endphp
 
-<div class="mr-2 w-4 transform hover:scale-110 hover:text-purple-500">
+<div class="mr-2 w-4 transform hover:scale-110 {{$colorhover}}">
     <svg
         {{ $attributes }}
         fill="none"

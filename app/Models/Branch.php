@@ -142,4 +142,9 @@ class Branch extends Model
             set: fn ($value) => strtolower(trim($value)),
         );
     }
+
+    public function showData(int $id)
+    {
+        return self::with('city.province', 'state')->findOrFail($id);
+    }
 }

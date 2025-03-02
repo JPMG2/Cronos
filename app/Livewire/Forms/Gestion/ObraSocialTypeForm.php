@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Forms\Gestion;
 
-use App\Classes\Gestion\InsuranceTypeObj;
+use App\Classes\Services\ModelService;
 use App\Classes\Utilities\AttributeValidator;
 use App\Classes\Utilities\NotifyQuerys;
+use App\Models\InsuranceType;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
 
@@ -14,7 +15,7 @@ class ObraSocialTypeForm extends Form
         'insuratype_name' => '',
     ];
 
-    public function insuratypeStore(InsuranceTypeObj $insuranceType)
+    public function insuratypeStore()
     {
         $validated = Validator::make(
             ['insuratype_name' => ucwords(strtolower(trim($this->insuratypedata['insuratype_name']))),
@@ -25,10 +26,12 @@ class ObraSocialTypeForm extends Form
             ['insuratype_name' => config('nicename.name')]
         )->validate();
 
-        return NotifyQuerys::msgCreate($insuranceType->store($validated));
+        $services = $this->iniService();
+
+        return NotifyQuerys::msgCreate($services->store($validated));
     }
 
-    public function insuratypeUpdate(InsuranceTypeObj $insuranceType)
+    public function insuratypeUpdate()
     {
         $validated = Validator::make(
             ['insuratype_name' => ucwords(strtolower(trim($this->insuratypedata['insuratype_name']))),
@@ -39,13 +42,22 @@ class ObraSocialTypeForm extends Form
             ['insuratype_name' => config('nicename.name')]
         )->validate();
 
-        return NotifyQuerys::msgUpadte($insuranceType->update($this->insuratypedata));
+        $services = $this->iniService();
+
+        return NotifyQuerys::msgUpadte($services->update($this->insuratypedata, $this->insuratypedata['id']));
     }
 
-    public function insuranceData(InsuranceTypeObj $insuranceType, $idInsuraType)
+    public function insuranceData($idInsuraType)
     {
-        $data = $insuranceType->show($idInsuraType);
+        $services = $this->iniService();
+
+        $data = $services->show($idInsuraType);
 
         $this->insuratypedata = $data->toArray();
+    }
+
+    protected function iniService()
+    {
+        return app()->make(ModelService::class, ['model' => new InsuranceType]);
     }
 }
