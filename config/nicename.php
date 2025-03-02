@@ -31,4 +31,6 @@ return [
     'codigomedico' => 'núm matricula',
     'medical' => 'especialista',
     'insurance' => 'obra social',
+    'role' => 'rol',
+    'descripcion' => 'descripción',
 ];

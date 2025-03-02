@@ -1,4 +1,4 @@
-<div x-data="{ open: $wire.entangle('show') }">
+<div wire:show="show">
 
     <div
         x-show="open"

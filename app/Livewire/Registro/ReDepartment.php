@@ -62,11 +62,6 @@ class ReDepartment extends Component
         return Department::query()->orderBy('department_name')->get();
     }
 
-    public function openDepartment()
-    {
-        $this->opendepartment = true;
-    }
-
     public function editDepartment(Department $department)
     {
         $this->form->datadeparment['department_name'] = $department->department_name;

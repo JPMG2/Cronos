@@ -1,4 +1,5 @@
-@props(["closemodal" => false])
+@props(["closemodal" => false,
+'clearform'=>false])
 <div
     {{ $attributes }}
     class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70"
@@ -17,6 +18,9 @@
         </h5>
         <button
             wire:click="$set('{{ $closemodal }}', false)"
+            @if($clearform)
+                @click="$wire.{{$clearform}}"
+            @endif
             type="button"
             data-drawer-hide="drawer-right-example"
             aria-controls="drawer-right-example"

@@ -29,7 +29,7 @@ class ObraSocialTipo extends Component
     public function queryInsuraceType()
     {
 
-        if ($this->isupdate) {
+        if (! $this->isupdate) {
             $result = app()->call([$this->formtype, 'insuratypeStore']);
         } else {
             $result = app()->call([$this->formtype, 'insuratypeUpdate']);
@@ -62,6 +62,7 @@ class ObraSocialTipo extends Component
 
     public function insuranceInfo($idInsuraType)
     {
+        $this->isupdate = true;
         $result = app()->call([$this->formtype, 'insuranceData'], ['idInsuraType' => $idInsuraType]);
     }
 }

@@ -13,7 +13,7 @@
                         Departamentos
                     </h4>
                 </div>
-                <div class="ml-2" wire:loading wire:target="queryDepa">
+                <div class="ml-2" wire:loading wire:target="queryDepa, openDepartment">
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     </x-alert>
                 @endif
             </div>
-            <x-butonbutton wire:click="openDepartment"></x-butonbutton>
+            <x-butonbutton wire:click="$toggle('opendepartment')  "></x-butonbutton>
             <!-- Modal -->
             <div x-data="{ open: @entangle("opendepartment") }">
                 <x-rightmodal
