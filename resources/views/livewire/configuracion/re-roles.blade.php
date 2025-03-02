@@ -58,9 +58,7 @@
                                         <td
                                             class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
                                         >
-                                            <div
-                                                class="mr-2 w-4 "
-                                            >
+                                            <div>
                                                 <x-table.accionopcion
                                                     wire:key="{{ $role->id }}"
                                                     wire:click.prevent="editRoles({{ $role->id }})"
@@ -68,9 +66,7 @@
                                                     iconname="edit"
                                                 ></x-table.accionopcion>
                                             </div>
-                                            <div
-                                                class="mr-2 w-4 "
-                                            >
+                                            <div>
                                                 <x-table.accionopcion
                                                     wire:key="{{ $role->id }}"
                                                     wire:click.prevent="deleteRole({{ $role->id }})"
@@ -92,63 +88,64 @@
                     </x-alert>
                 @endif
             </div>
-            <x-butonbutton
-                wire:click="$toggle('showRoleModal')"
-            ></x-butonbutton>
-            <div>
-                <div x-data="{ open: @entangle("showRoleModal") }">
-                    <x-rightmodal
-                        style="display: none"
-                        x-show="open"
-                        closemodal="showRoleModal"
-                        clearform="clearForm()"
-                    >
-                        <x-slot:title>Registro</x-slot>
+            @if(!session("isdisabled"))
+                <x-butonbutton
+                    wire:click="$toggle('showRoleModal')"
+                ></x-butonbutton>
+                <div>
+                    <div x-data="{ open: @entangle("showRoleModal") }">
+                        <x-rightmodal
+                            style="display: none"
+                            x-show="open"
+                            closemodal="showRoleModal"
+                            clearform="clearForm()"
+                        >
+                            <x-slot:title>Registro</x-slot>
 
-                        <div class="mt-2 grid grid-cols-1 gap-4">
-                            <div class="relative sm:col-span-1">
-                                <div class="relative">
-                                    <x-inputs.textgroup
-                                        label="Rol"
-                                        for="namrole"
+                            <div class="mt-2 grid grid-cols-1 gap-4">
+                                <div class="relative sm:col-span-1">
+                                    <div class="relative">
+                                        <x-inputs.textgroup
+                                            label="Rol"
+                                            for="namrole"
+                                            required="yes"
+                                        >
+                                            <x-inputs.textinput
+                                                wire:model="roleForm.dataRole.name_role"
+                                                id="namrole"
+                                                autocomplete="off"
+                                                maxlength="100"
+                                                placeholder=" "
+                                                isdisabled=""
+                                                :error="$errors->first('name_role')"
+                                            ></x-inputs.textinput>
+                                        </x-inputs.textgroup>
+                                    </div>
+                                    @error("name_role")
+                                    <x-inputs.error-validate>
+                                        {{ $message }}
+                                    </x-inputs.error-validate>
+                                    @enderror
+                                </div>
+
+                                <div class="relative w-full ">
+                                    <x-inputs.labeltextarea
+                                        label="Descripción"
+                                        for="descriprole"
                                         required="yes"
                                     >
-                                        <x-inputs.textinput
-                                            wire:model="roleForm.dataRole.name_role"
-                                            id="namrole"
-                                            autocomplete="off"
-                                            maxlength="100"
-                                            placeholder=" "
-                                            isdisabled=""
-                                            :error="$errors->first('name_role')"
-                                        ></x-inputs.textinput>
-                                    </x-inputs.textgroup>
+                                        <x-inputs.textarea
+                                            wire:model="roleForm.dataRole.description"
+                                            id="descriprole"
+                                            rows="5"
+                                        ></x-inputs.textarea>
+                                    </x-inputs.labeltextarea>
+
                                 </div>
-                                @error("name_role")
-                                <x-inputs.error-validate>
-                                    {{ $message }}
-                                </x-inputs.error-validate>
-                                @enderror
-                            </div>
 
-                            <div class="relative w-full ">
-                                <x-inputs.labeltextarea
-                                    label="Descripción"
-                                    for="descriprole"
-                                    required="yes"
-                                >
-                                    <x-inputs.textarea
-                                        wire:model="roleForm.dataRole.description"
-                                        id="descriprole"
-                                        rows="5"
-                                    ></x-inputs.textarea>
-                                </x-inputs.labeltextarea>
 
                             </div>
 
-
-                        </div>
-                        @if(!session("isdisabled"))
                             <form id="departamento" wire:submit.prevent="submit">
                                 @csrf
                                 <div class="absolute bottom-6 right-4">
@@ -173,10 +170,11 @@
                                     </x-headerform.button-group>
                                 </div>
                             </form>
-                        @endif
-                    </x-rightmodal>
+                            
+                        </x-rightmodal>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 </div>
