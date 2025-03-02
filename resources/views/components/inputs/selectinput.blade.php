@@ -12,8 +12,10 @@
     <select
         {{ $attributes }}
         {{ $isdisabled }}
-        class="{{ $disableatributs }} {{ $errorColor }} border-1 peer block w-full appearance-none rounded-lg bg-transparent px-2.5 pb-2.5 pt-1.5 text-sm text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
+        class="{{ $disableatributs }} {{ $errorColor }}  block  text-left border-1 w-full appearance-none rounded-lg bg-transparent px-2.5 pb-2.5 py-2  text-sm text-gray-900 focus:outline-none focus:ring-0 dark:text-white"
     >
+
         {{ $slot }}
+
     </select>
 </div>

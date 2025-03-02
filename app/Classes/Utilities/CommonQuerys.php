@@ -2,9 +2,11 @@
 
 namespace App\Classes\Utilities;
 
+use App\Models\Action;
 use App\Models\Company;
 use App\Models\Credential;
 use App\Models\Degree;
+use App\Models\Role;
 use App\Models\Specialty;
 use App\Models\State;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,7 +16,7 @@ class CommonQuerys extends Model
 {
     public static function stateQuery(array $states): Collection
     {
-        if ($states[0] != '*') {
+        if ($states[0] !== '*') {
             return State::whereIn('id', $states)->orderBy('state_name')->get();
         } else {
             return State::orderBy('state_name')->get();
@@ -24,7 +26,7 @@ class CommonQuerys extends Model
 
     public static function companyQuery(array $states): Collection
     {
-        if ($states[0] != '*') {
+        if ($states[0] !== '*') {
             return Company::orderBy('company_name')->whereIn('state_id', $states)->get();
         } else {
             return Company::orderBy('company_name')->get();
@@ -35,8 +37,8 @@ class CommonQuerys extends Model
     public static function companyBranchQuery(array $statecompany, array $statebranch): Collection
     {
 
-        $company = $statecompany[0] != '*' ? Company::whereIn('state_id', $statecompany) : Company::query();
-        $branch = $statebranch[0] != '*' ? ['branches' => function ($query) use ($statebranch) {
+        $company = $statecompany[0] !== '*' ? Company::whereIn('state_id', $statecompany) : Company::query();
+        $branch = $statebranch[0] !== '*' ? ['branches' => function ($query) use ($statebranch) {
             $query->whereIn('state_id', $statebranch)->orderBy('branch_name')->with('state');
         }] : 'branches.state';
 
@@ -67,5 +69,23 @@ class CommonQuerys extends Model
     public static function listCredentials()
     {
         return Credential::orderBy('credential_name')->get();
+    }
+
+    public static function listRoles(?array $roles = null)
+    {
+        if ($roles) {
+            return Role::whereNotIn('name_role', $roles)->orderBy('name_role')->get();
+        }
+
+        return Role::orderBy('name_role')->get();
+    }
+
+    public static function listActions(?array $actions = null)
+    {
+        if ($actions) {
+            return Action::whereNotIn('action_name', $actions)->orderBy('action_sp')->get();
+        }
+
+        return Action::orderBy('action_sp')->get();
     }
 }

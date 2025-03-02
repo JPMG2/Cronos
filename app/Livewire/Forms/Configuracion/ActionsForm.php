@@ -6,5 +6,8 @@ use Livewire\Form;
 
 class ActionsForm extends Form
 {
-    //
+    public $dataaction = [
+        'role_id' => '',
+        'action_id' => [],
+    ];
 }

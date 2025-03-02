@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::get('/re_confrole', App\Livewire\Configuracion\ReRoles::class)
         ->name('re_confrole');
+    Route::get('/re_confper', App\Livewire\Configuracion\ReActions::class)
+        ->name('re_confper');
 });
 
 Route::middleware('auth')->group(function () {

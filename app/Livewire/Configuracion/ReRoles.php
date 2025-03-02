@@ -16,12 +16,13 @@ class ReRoles extends Component
 
     public $showRoleModal = false;
 
-    #[Title(' - ReRoles')]
+    #[Title(' - Roles')]
     public function render()
     {
+        $this->commonQuerys = app('commonquery');
+
         return view('livewire.configuracion.re-roles', [
-            'listRoles' => Role::query()->whereNot('name_role', 'Owner')
-                ->orderBy('name_role')->get(),
+            'listRoles' => $this->commonQuerys::listRoles(['Owner']),
         ]);
     }
 
@@ -50,17 +51,17 @@ class ReRoles extends Component
 
     }
 
-    public function clearForm()
-    {
-
-        $this->roleForm->reset();
-        $this->isupdate = false;
-    }
-
     public function endRoles($result)
     {
         $this->dispatch('show-toast', $result);
         $this->clearForm();
         $this->showRoleModal = false;
+    }
+
+    public function clearForm()
+    {
+
+        $this->roleForm->reset();
+        $this->isupdate = false;
     }
 }
