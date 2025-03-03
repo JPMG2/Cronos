@@ -26,6 +26,7 @@
                         >
                             <x-inputs.selectinput
                                 wire:model="actionForm.dataaction.role_id"
+                                wire:change="roleValue"
                                 id="actionrole"
                                 x-ref="ini"
                                 :error="$errors->first('role_id')"
@@ -89,7 +90,13 @@
                             @endforeach
                         </x-table.tablebody>
                     </table>
+
                 </div>
+                @error("action_id")
+                <x-inputs.error-validate>
+                    {{ $message }}
+                </x-inputs.error-validate>
+                @enderror
                 @if(!session("isdisabled"))
                     <form
                         id="sucursal"

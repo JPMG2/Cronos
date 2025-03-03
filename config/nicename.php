@@ -33,4 +33,5 @@ return [
     'insurance' => 'obra social',
     'role' => 'rol',
     'descripcion' => 'descripción',
+    'action' => 'acción',
 ];

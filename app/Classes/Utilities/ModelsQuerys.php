@@ -43,4 +43,11 @@ abstract class ModelsQuerys
     {
         return $this->model->showData($id);
     }
+
+    public function storeWithRelastionship(int $id, array $data): array
+    {
+        $mainModel = $this->model->findOrFail($id);
+
+        return $mainModel->saveRelation($data);
+    }
 }

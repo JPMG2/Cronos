@@ -26,6 +26,30 @@ class ReActions extends Component
 
     public function queryActionRole()
     {
-        dd($this->actionForm->dataaction);
+        if (! $this->isupdate) {
+            $result = app()->call([$this->actionForm, 'actionStore']);
+        }
+        if ($this->isupdate) {
+            $result = app()->call([$this->actionForm, 'actionUpdate']);
+        }
+        $this->endAction($result);
+    }
+
+    public function endAction($result)
+    {
+        $this->dispatch('show-toast', $result);
+        $this->clearForm();
+
+    }
+
+    public function clearForm()
+    {
+        $this->actionForm->reset();
+        $this->isupdate = false;
+    }
+
+    public function roleValue()
+    {
+        app()->call([$this->actionForm, 'actionData'], ['intRole' => $this->actionForm->dataaction['role_id']]);
     }
 }

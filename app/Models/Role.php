@@ -25,6 +25,11 @@ class Role extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function saveRelation(array $data)
+    {
+        return $this->actions()->sync($data);
+    }
+
     public function actions()
     {
         return $this->belongsToMany(Action::class);
@@ -44,5 +49,10 @@ class Role extends Model
             set: fn ($value) => ucfirst(strtolower(trim($value))),
 
         );
+    }
+
+    public function showData(int $id)
+    {
+        return self::with('actions')->findOrFail($id);
     }
 }
