@@ -7,6 +7,7 @@ use Database\Factories\RoleFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -30,9 +31,14 @@ class Role extends Model
         return $this->actions()->sync($data);
     }
 
-    public function actions()
+    public function actions(): BelongsToMany
     {
         return $this->belongsToMany(Action::class);
+    }
+
+    public function showData(int $id)
+    {
+        return self::with('actions')->findOrFail($id);
     }
 
     protected function nameRole(): Attribute
@@ -49,10 +55,5 @@ class Role extends Model
             set: fn ($value) => ucfirst(strtolower(trim($value))),
 
         );
-    }
-
-    public function showData(int $id)
-    {
-        return self::with('actions')->findOrFail($id);
     }
 }

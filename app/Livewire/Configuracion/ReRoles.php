@@ -4,13 +4,15 @@ namespace App\Livewire\Configuracion;
 
 use App\Livewire\Forms\Configuracion\RoleForm;
 use App\Models\Role;
+use App\Traits\HandleDeleteId;
 use App\Traits\UtilityForm;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class ReRoles extends Component
 {
-    use UtilityForm;
+    use HandleDeleteId, UtilityForm;
 
     public RoleForm $roleForm;
 
@@ -63,5 +65,45 @@ class ReRoles extends Component
 
         $this->roleForm->reset();
         $this->isupdate = false;
+    }
+
+    public function deleteRole(Role $id)
+    {
+        $this->deleteModel($id, function ($id) {
+            if ($id->users()->count() > 0) {
+                return 0;
+            }
+
+            return 1;
+        });
+        /*if ($id->users()->count() > 0) {
+            $this->dispatch('showModalAlert', [
+                'show' => 'true',
+                'title' => 'Error',
+                'type' => 'error',
+                'message' => 'No se puede eliminar el rol, tiene usuarios asignados',
+                'button' => 0,
+                'buttonName' => '',
+                'event' => '',
+            ]);
+
+            return;
+        }
+
+        $this->dispatch('showModalAlert', [
+            'show' => 'true',
+            'title' => 'Advertencia',
+            'type' => 'warning',
+            'message' => 'Realmente desea borrar el rol',
+            'button' => 1,
+            'buttonName' => 'Borrar',
+            'event' => 'roleRemove',
+        ]);*/
+    }
+
+    #[On('roleRemove')]
+    public function remove()
+    {
+        dd($this->idRemove);
     }
 }

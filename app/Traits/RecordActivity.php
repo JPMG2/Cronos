@@ -11,16 +11,13 @@ trait RecordActivity
 
     protected static function bootRecordActivity()
     {
+
         foreach (self::getRecordEvents() as $event) {
             static::$event(function ($model) use ($event) {
                 $model->recordActivity($event);
             });
         }
-    }
 
-    protected static function getRecordEvents()
-    {
-        return ['created', 'updated', 'deleted'];
     }
 
     protected function recordActivity($event)
@@ -61,5 +58,17 @@ trait RecordActivity
 
         return Action::where('action_name', $event)->first()->id;
 
+    }
+
+    protected static function getRecordEvents()
+    {
+        return ['created', 'updated', 'deleted'];
+    }
+
+    protected function recordActivityManytoMany($event, $relation = null, $pivotIds = [])
+    {
+        dd(23);
+        // Log the activity or perform any other action
+        \Log::info("Event: {$event}, Relation: {$relation}, Pivot IDs: ".implode(',', $pivotIds));
     }
 }

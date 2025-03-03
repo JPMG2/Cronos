@@ -26,12 +26,7 @@ class ReActions extends Component
 
     public function queryActionRole()
     {
-        if (! $this->isupdate) {
-            $result = app()->call([$this->actionForm, 'actionStore']);
-        }
-        if ($this->isupdate) {
-            $result = app()->call([$this->actionForm, 'actionUpdate']);
-        }
+        $result = app()->call([$this->actionForm, 'actionStore']);
         $this->endAction($result);
     }
 
