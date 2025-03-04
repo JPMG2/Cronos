@@ -170,7 +170,7 @@
                                     </x-headerform.button-group>
                                 </div>
                             </form>
-                            
+
                         </x-rightmodal>
                     </div>
                 </div>

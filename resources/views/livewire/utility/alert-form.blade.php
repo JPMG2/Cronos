@@ -26,7 +26,7 @@
                 <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
                     @if($button>0)
                         <button type="button"
-                                wire:click="$dispatch('{{$event}}')"
+                                wire:click="closeModal"
                                 class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">
                             {{$buttonName}}
                         </button>

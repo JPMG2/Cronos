@@ -31,7 +31,7 @@
         </a>
         <!-- end::Menu link -->
         @foreach ($menuItems as $mItems)
-            <p class="mb-1 mt-10 px-6 text-xs uppercase text-gray-600">
+            <p class="mb-1 mt-5 px-6 text-xs uppercase text-gray-600">
                 {{ $mItems->name_menu }}
             </p>
             <!-- start::Menu link -->

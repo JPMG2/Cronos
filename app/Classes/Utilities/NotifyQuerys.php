@@ -70,4 +70,15 @@ class NotifyQuerys
 
         return $message;
     }
+
+    public static function msgDestroy(int $numberDelete): array
+    {
+        if ($numberDelete > 0) {
+            $message = ['Se ha borrado exitosamente !!', 1];
+        } else {
+            $message = ['No se ha borrado el registro !!', 0];
+        }
+
+        return $message;
+    }
 }

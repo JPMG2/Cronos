@@ -5,7 +5,7 @@
     @mouseover="linkHover = true"
     @click.outside="linkHover = false"
     @click="linkActive = !linkActive"
-    class="flex cursor-pointer items-center justify-between px-6 py-3 text-gray-400 transition duration-200 hover:bg-black hover:bg-opacity-30 hover:text-gray-100"
+    class="flex cursor-pointer items-center justify-between px-6 py-2 text-gray-400 transition duration-200 hover:bg-black hover:bg-opacity-30 hover:text-gray-100"
     :class=" linkActive ? 'bg-black bg-opacity-30 text-gray-100' : ''"
 >
     <div class="flex items-center">

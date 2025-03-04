@@ -38,4 +38,10 @@ class AlertForm extends Component
         $this->buttonName = $parametes['buttonName'];
         $this->event = $parametes['event'];
     }
+
+    public function closeModal()
+    {
+        $this->showAlert = false;
+        $this->dispatch($this->event);
+    }
 }
