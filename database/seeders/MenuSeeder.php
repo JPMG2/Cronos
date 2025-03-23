@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Menu;
 use Illuminate\Database\Seeder;
 
-class MenuSeeder extends Seeder
+final class MenuSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $mainmenus = ['Registro', 'Gestión', 'Reportes', 'Configuración'];
+        $mainmenus = ['Registro', 'Gestión', 'Servicios', 'Reportes', 'Configuración'];
 
         $registro = [
             [
@@ -51,6 +53,16 @@ class MenuSeeder extends Seeder
             ],
         ];
 
+        $servicios = [
+            [
+                'grup_menu' => 'Clínico',
+                'title_menu' => false,
+                'icon_menu' => 'M6.429 9.75 2.25 12l4.179 2.25m0-4.5 5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0 4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0-5.571 3-5.571-3',
+                'linkto' => '#',
+                'descripcion' => 'Opciones del manejo de servicos de salud',
+            ],
+
+        ];
         foreach ($mainmenus as $menu) {
             $newmenu = Menu::create([
                 'name_menu' => $menu,
@@ -100,7 +112,7 @@ class MenuSeeder extends Seeder
                 'grup_menu' => 'Usuarios',
                 'title_menu' => false,
                 'icon_menu' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
-                'linkto' => '#',
+                'linkto' => 're_user',
                 'header_menu' => 'Registro/Personal/Usuarios',
                 'descripcion' => 'Doctor del sistema',
             ],
@@ -154,7 +166,17 @@ class MenuSeeder extends Seeder
 
             ],
         ];
+        $clínico = [
+            [
+                'grup_menu' => 'Pacientes',
+                'title_menu' => false,
+                'icon_menu' => 'M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z',
+                'linkto' => 're_paciente',
+                'header_menu' => 'Servicios/Clínico/Pacientes',
+                'descripcion' => 'Registro de pacientes ',
 
+            ],
+        ];
         foreach ($array as $opcion) {
             $opcion['menu_id'] = $id;
             $submenu = Menu::create($opcion);
