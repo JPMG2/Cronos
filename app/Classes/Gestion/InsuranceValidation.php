@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Gestion;
 
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
 
-class InsuranceValidation
+final class InsuranceValidation
 {
     public function onInsuranceCreate(array $insurance)
     {
@@ -44,19 +46,19 @@ class InsuranceValidation
 
         return [
 
-            'insurance_name' => strtoupper(trim($insurance['insurance_name'])),
-            'insurance_acronym' => strtoupper(trim($insurance['insurance_acronym'])),
+            'insurance_name' => mb_strtoupper(trim($insurance['insurance_name'])),
+            'insurance_acronym' => mb_strtoupper(trim($insurance['insurance_acronym'])),
             'insurance_type_id' => trim($insurance['insurance_type_id']),
             'province_id' => trim($insurance['province_id']),
             'city_id' => trim($insurance['city_id']),
             'state_id' => trim($insurance['state_id']),
-            'insurance_code' => strtoupper(trim($insurance['insurance_code'])),
-            'insurance_cuit' => strtoupper(trim($insurance['insurance_cuit'])),
+            'insurance_code' => mb_strtoupper(trim($insurance['insurance_code'])),
+            'insurance_cuit' => mb_strtoupper(trim($insurance['insurance_cuit'])),
             'insurance_address' => trim($insurance['insurance_address']),
             'insurance_phone' => trim($insurance['insurance_phone']),
             'insurance_zipcode' => trim($insurance['insurance_zipcode']),
-            'insurance_email' => strtolower(trim($insurance['insurance_email'])),
-            'insurance_web' => strtolower(trim($insurance['insurance_web'])),
+            'insurance_email' => mb_strtolower(trim($insurance['insurance_email'])),
+            'insurance_web' => mb_strtolower(trim($insurance['insurance_web'])),
         ];
 
     }

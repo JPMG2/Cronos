@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Livewire\Personal\ReEspecialista;
 use App\Models\Credential;
 use App\Models\Degree;
@@ -11,6 +13,7 @@ use function Pest\Faker\fake;
 use function Pest\Livewire\livewire;
 
 beforeEach(function () {
+
     $this->user = loginUser();
     createRolesAndActions($this->user);
     createHeaderMenu('Especialistas', 'Registro/Personal/Especialistas');

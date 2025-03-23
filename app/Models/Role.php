@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\RecordActivity;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Role extends Model
+final class Role extends Model
 {
     /** @use HasFactory<RoleFactory> */
     use HasFactory, RecordActivity;
@@ -41,10 +43,15 @@ class Role extends Model
         return self::with('actions')->findOrFail($id);
     }
 
+    public function menus(): BelongsToMany
+    {
+        return $this->belongsToMany(Menu::class);
+    }
+
     protected function nameRole(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
 
         );
     }
@@ -52,7 +59,7 @@ class Role extends Model
     protected function description(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(strtolower(trim($value))),
+            set: fn ($value) => ucfirst(mb_strtolower(trim($value))),
 
         );
     }

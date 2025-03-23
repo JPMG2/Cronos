@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use App\Models\Action;
@@ -8,31 +10,6 @@ use App\Models\Log;
 trait RecordActivity
 {
     public $getChanges;
-
-    protected static function bootRecordActivity()
-    {
-
-        foreach (self::getRecordEvents() as $event) {
-            static::$event(function ($model) use ($event) {
-                $model->recordActivity($event);
-            });
-        }
-
-    }
-
-    protected function recordActivity($event)
-    {
-        if ($event === 'updated') {
-            $this->getChanges = $this->getChanges();
-        }
-
-        $this->log()->create([
-            'user_id' => auth()->id(),
-            'action_id' => $this->getActivityId($event),
-            'log_message' => 'ju',
-            'log_change' => ! empty($this->getChanges) ? json_encode($this->getChanges) : null,
-        ]);
-    }
 
     public function getChanges()
     {
@@ -53,10 +30,14 @@ trait RecordActivity
         return $this->morphMany(Log::class, 'model');
     }
 
-    protected function getActivityId($event)
+    protected static function bootRecordActivity()
     {
 
-        return Action::where('action_name', $event)->first()->id;
+        foreach (self::getRecordEvents() as $event) {
+            static::$event(function ($model) use ($event) {
+                $model->recordActivity($event);
+            });
+        }
 
     }
 
@@ -65,10 +46,24 @@ trait RecordActivity
         return ['created', 'updated', 'deleted'];
     }
 
-    protected function recordActivityManytoMany($event, $relation = null, $pivotIds = [])
+    protected function recordActivity($event)
     {
-        dd(23);
-        // Log the activity or perform any other action
-        \Log::info("Event: {$event}, Relation: {$relation}, Pivot IDs: ".implode(',', $pivotIds));
+        if ($event === 'updated') {
+            $this->getChanges = $this->getChanges();
+        }
+
+        $this->log()->create([
+            'user_id' => auth()->id(),
+            'action_id' => $this->getActivityId($event),
+            'log_message' => 'ju',
+            'log_change' => ! empty($this->getChanges) ? json_encode($this->getChanges) : null,
+        ]);
+    }
+
+    protected function getActivityId($event)
+    {
+
+        return Action::where('action_name', $event)->first()->id;
+
     }
 }

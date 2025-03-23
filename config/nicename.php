@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'company' => 'empresa',
     'cuit' => 'cuit',
@@ -34,4 +36,5 @@ return [
     'role' => 'rol',
     'descripcion' => 'descripción',
     'action' => 'acción',
+    'acceso' => 'acceso',
 ];

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\DbTraits\TableFilter;
@@ -13,7 +15,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 
-class Medical extends Model
+/**
+ * @property-read int $id
+ * @property-read int $state_id
+ * @property-read int $credential_id
+ * @property-read int $specialty_id
+ * @property-read int $degree_id
+ * @property-read string $medical_name
+ * @property-read string $medical_lastname
+ * @property-read string $medical_address
+ * @property-read string $medical_phone
+ * @property-read string $medical_email
+ * @property-read string $medical_dni
+ */
+final class Medical extends Model
 {
     /** @use HasFactory<MedicalFactory> */
     use HasFactory, RecordActivity, TableFilter;
@@ -136,7 +151,7 @@ class Medical extends Model
     protected function medicalName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
 
         );
     }
@@ -144,7 +159,7 @@ class Medical extends Model
     protected function medicalLastname(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
 
         );
     }
@@ -153,7 +168,7 @@ class Medical extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
         );
     }
 
@@ -167,7 +182,7 @@ class Medical extends Model
     protected function medicalEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -57,23 +59,25 @@ function createHeaderMenu($nameMenu, $stingHeader)
 }
 function createRolesAndActions($userInstance)
 {
+    $actions = createActions();
     $roles = createRoles();
     $userInstance->roles()->attach($roles);
     $idRole = $roles->first()->id;
-    $actions = createActions();
+
     foreach ($actions as $action) {
         $action->roles()->attach($idRole);
     }
 }
 function createRoles()
 {
-    Artisan::call('db:seed', ['--class' => 'RoleSeeder']);
 
     return Role::where('name_role', 'Owner')->get();
 }
 function createActions()
 {
+
     Artisan::call('db:seed', ['--class' => 'ActionSeeder']);
+    dd(Action::all());
 
     return Action::all();
 }
