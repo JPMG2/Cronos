@@ -1,26 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Utilities;
 
 use App\Models\Action;
 use App\Models\Company;
 use App\Models\Credential;
 use App\Models\Degree;
+use App\Models\Document;
+use App\Models\Gender;
 use App\Models\Role;
 use App\Models\Specialty;
 use App\Models\State;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class CommonQuerys extends Model
+final class CommonQuerys extends Model
 {
     public static function stateQuery(array $states): Collection
     {
         if ($states[0] !== '*') {
             return State::whereIn('id', $states)->orderBy('state_name')->get();
-        } else {
-            return State::orderBy('state_name')->get();
         }
+
+        return State::orderBy('state_name')->get();
 
     }
 
@@ -28,9 +32,9 @@ class CommonQuerys extends Model
     {
         if ($states[0] !== '*') {
             return Company::orderBy('company_name')->whereIn('state_id', $states)->get();
-        } else {
-            return Company::orderBy('company_name')->get();
         }
+
+        return Company::orderBy('company_name')->get();
 
     }
 
@@ -87,5 +91,15 @@ class CommonQuerys extends Model
         }
 
         return Action::orderBy('action_sp')->get();
+    }
+
+    public static function listDocuments()
+    {
+        return Document::orderBy('id')->get();
+    }
+
+    public static function listGenders()
+    {
+        return Gender::orderBy('gender_name')->get();
     }
 }

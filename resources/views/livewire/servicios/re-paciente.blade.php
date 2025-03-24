@@ -14,7 +14,7 @@
             </div>
             <div class="mt-3 grid grid-cols-1 gap-x-2  gap-y-2 sm:grid-cols-9">
                 <div class="flex gap-x-1 sm:col-span-3">
-                    <div class="relative w-2/5 sm:col-span-3">
+                    <div class="relative w-3/5 sm:col-span-3">
                         <div class="relative">
                             <x-inputs.selectgroup
                                 label="Documento"
@@ -28,7 +28,11 @@
                                     isdisabled=""
                                     :error="$errors->first('degree_id')"
                                 >
-                                    <option label=" "></option>
+                                    @foreach ($listDocument as $document)
+                                        <option value="{{ $document->id }}">
+                                            {{ $document->document_name }}
+                                        </option>
+                                    @endforeach
 
                                 </x-inputs.selectinput>
                             </x-inputs.selectgroup>
@@ -125,7 +129,11 @@
                                 id="patien_gender"
                                 isdisabled=""
                             >
-                                <option label=" "></option>
+                                @foreach ($listGender as $gender)
+                                    <option value="{{ $gender->id }}">
+                                        {{ $gender->gender_name }}
+                                    </option>
+                                @endforeach
 
                             </x-inputs.selectinput>
                         </x-inputs.selectgroup>

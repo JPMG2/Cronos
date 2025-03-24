@@ -12,6 +12,11 @@ final class RePaciente extends Component
     #[Title(' - Pacientes')]
     public function render()
     {
-        return view('livewire.servicios.re-paciente');
+        $this->commonQuerys = app('commonquery');
+
+        return view('livewire.servicios.re-paciente', [
+            'listDocument' => $this->commonQuerys::listDocuments(),
+            'listGender' => $this->commonQuerys::listGenders(),
+        ]);
     }
 }

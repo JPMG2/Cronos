@@ -16,6 +16,7 @@ final class Patient extends Model
 
     protected $fillable = [
         'document_id', 'city_id', 'gender_id',
+        'occupation_id', 'marital_status_id', 'nationality_id',
         'num_document', 'patient_name', 'patient_lastname',
         'patient_datebirth', 'patient_phone', 'patient_email',
         'patient_address', 'patient_photo'];
@@ -25,12 +26,30 @@ final class Patient extends Model
         $this->attributes['city_id'] = $value ?: null;
     }
 
+    public function setOccupationIdAttribute($value)
+    {
+        $this->attributes['occupation_id'] = $value ?: null;
+    }
+
+    public function setMaritalStatusIdAttribute($value)
+    {
+        $this->attributes['marital_status_id'] = $value ?: null;
+    }
+
+    public function setNationalityIdAttribute($value)
+    {
+        $this->attributes['nationality_id'] = $value ?: null;
+    }
+
     protected function casts(): array
     {
         return [
             'document_id' => 'integer',
             'city_id' => 'integer',
             'gender_id' => 'integer',
+            'occupation_id' => 'integer',
+            'marital_status_id' => 'integer',
+            'nationality_id' => 'integer',
             'patient_datebirth' => 'date',
         ];
     }
