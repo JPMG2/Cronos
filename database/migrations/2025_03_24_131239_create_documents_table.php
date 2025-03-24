@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Models\Menu;
-use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,11 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu_role', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->primary(['menu_id', 'role_id']);
-            $table->foreignIdFor(Menu::class)->constrained();
-            $table->foreignIdFor(Role::class)->constrained();
+            $table->string('document_name')->unique();
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu_role');
+        Schema::dropIfExists('documents');
     }
 };
