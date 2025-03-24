@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -45,7 +47,13 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         ->name('re_acceso');
 
 });
+/* Route for Servicios */
+Route::group(['middleware' => 'auth', 'verified'], function () {
+    Route::get('/re_paciente', App\Livewire\Servicios\RePaciente::class)
+        ->name('re_paciente');
 
+});
+/* Route for Profiles */
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
