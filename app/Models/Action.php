@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 final class Action extends Model
 {
-    use HasFactory, RecordActivity;
+    // use HasFactory, RecordActivity;
+    use HasFactory;
 
     protected $fillable = ['action_name', 'action_sp', 'action_inpass'];
 

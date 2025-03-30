@@ -48,6 +48,11 @@ final class Role extends Model
         return $this->belongsToMany(Menu::class);
     }
 
+    public function hasMenu($menulink): bool
+    {
+        return $this->menus()->where('linkto', $menulink)->exists();
+    }
+
     protected function nameRole(): Attribute
     {
         return Attribute::make(

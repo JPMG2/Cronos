@@ -10,6 +10,9 @@ use App\Models\Credential;
 use App\Models\Degree;
 use App\Models\Document;
 use App\Models\Gender;
+use App\Models\MaritalStatus;
+use App\Models\Nationality;
+use App\Models\Occupation;
 use App\Models\Role;
 use App\Models\Specialty;
 use App\Models\State;
@@ -52,12 +55,17 @@ final class CommonQuerys extends Model
 
     public static function anyCompany(): bool
     {
-        return (bool) Company::existCompany();
+        return once(function () {
+            return (bool) Company::existCompany();
+        });
+
     }
 
     public static function CompanyOnPause()
     {
-        return Company::where('state_id', 2)->first();
+        return once(function () {
+            return Company::where('state_id', 2)->first();
+        });
     }
 
     public static function listSpecialties()
@@ -101,5 +109,27 @@ final class CommonQuerys extends Model
     public static function listGenders()
     {
         return Gender::orderBy('gender_name')->get();
+    }
+
+    public static function listOcupacion($occupation = null)
+    {
+        if ($occupation) {
+            $occupation = mb_strtolower($occupation);
+
+            return Occupation::whereRaw('LOWER(occupation_name) like ?', ['%'.$occupation.'%'])->orderBy('occupation_name')->get();
+        }
+
+        return Occupation::orderBy('occupation_name')->get();
+    }
+
+    public static function listNacionalidad()
+    {
+        return Nationality::orderBy('nationality_name')->get();
+    }
+
+    public static function listMaritalStatus()
+    {
+        return MaritalStatus::orderBy('maritalstatus_name')->get();
+
     }
 }

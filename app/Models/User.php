@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+final class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -44,7 +47,7 @@ class User extends Authenticatable
         return $this->roles()->whereIn('name_role', $roles)->exists();
     }
 
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
@@ -52,6 +55,11 @@ class User extends Authenticatable
     public function getUserRoleId()
     {
         return $this->roles()->first()->id;
+    }
+
+    public function getUserRoleName()
+    {
+        return $this->roles()->first()->name_role;
     }
 
     /**

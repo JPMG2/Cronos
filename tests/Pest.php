@@ -71,13 +71,14 @@ function createRolesAndActions($userInstance)
 function createRoles()
 {
 
+    Artisan::call('db:seed', ['--class' => 'RoleSeeder']);
+
     return Role::where('name_role', 'Owner')->get();
 }
 function createActions()
 {
 
     Artisan::call('db:seed', ['--class' => 'ActionSeeder']);
-    dd(Action::all());
 
     return Action::all();
 }
