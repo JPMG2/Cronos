@@ -19,22 +19,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patients', function (Blueprint $table) {
+        Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Document::class)->constrained();
+            $table->foreignIdFor(Document::class)->nullable()->constrained();
             $table->foreignIdFor(City::class)->nullable()->constrained();
-            $table->foreignIdFor(Gender::class)->constrained();
+            $table->foreignIdFor(Gender::class)->nullable()->constrained();
             $table->foreignIdFor(MaritalStatus::class)->nullable()->constrained();
             $table->foreignIdFor(Occupation::class)->nullable()->constrained();
             $table->foreignIdFor(Nationality::class)->nullable()->constrained();
-            $table->string('num_document')->unique();
-            $table->string('patient_name');
-            $table->string('patient_lastname')->nullable();
-            $table->date('patient_datebirth')->nullable();
-            $table->string('patient_phone')->nullable();
-            $table->string('patient_email')->nullable();
-            $table->string('patient_address')->nullable();
-            $table->string('patient_photo')->nullable();
+            $table->string('num_document')->nullable();
+            $table->string('person_name');
+            $table->string('person_lastname');
+            $table->string('person_address')->nullable();
+            $table->string('person_phone')->nullable();
+            $table->string('person_email')->nullable();
+            $table->date('person_datebirth')->nullable();
             $table->timestamps();
         });
     }
@@ -44,6 +43,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('people');
     }
 };

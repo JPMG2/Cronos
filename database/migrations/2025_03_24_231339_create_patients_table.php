@@ -1,13 +1,7 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Models\City;
-use App\Models\Document;
-use App\Models\Gender;
-use App\Models\MaritalStatus;
-use App\Models\Nationality;
-use App\Models\Occupation;
+use App\Models\Person;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,19 +15,7 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Document::class)->constrained();
-            $table->foreignIdFor(City::class)->nullable()->constrained();
-            $table->foreignIdFor(Gender::class)->constrained();
-            $table->foreignIdFor(MaritalStatus::class)->nullable()->constrained();
-            $table->foreignIdFor(Occupation::class)->nullable()->constrained();
-            $table->foreignIdFor(Nationality::class)->nullable()->constrained();
-            $table->string('num_document')->unique();
-            $table->string('patient_name');
-            $table->string('patient_lastname')->nullable();
-            $table->date('patient_datebirth')->nullable();
-            $table->string('patient_phone')->nullable();
-            $table->string('patient_email')->nullable();
-            $table->string('patient_address')->nullable();
+            $table->foreignIdFor(Person::class)->constrained();
             $table->string('patient_photo')->nullable();
             $table->timestamps();
         });

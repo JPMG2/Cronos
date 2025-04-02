@@ -7,6 +7,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,8 +23,7 @@ final class User extends Authenticatable
      */
     protected $fillable = [
         'state_id',
-        'name',
-        'last_name',
+        'person_id',
         'email',
         'password',
     ];
@@ -38,9 +38,10 @@ final class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = [
-        'full_name',
-    ];
+    public function person(): BelongsTo
+    {
+        return $this->belongsTo(Person::class);
+    }
 
     public function hasAnyRole(array $roles): bool
     {
@@ -73,25 +74,6 @@ final class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    protected function getfullNameAttribute(): string
-    {
-        return $this->name.' '.$this->last_name;
-    }
-
-    protected function name(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => str(str(str($value)->squish())->lower())->title(),
-        );
-    }
-
-    protected function lastName(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => str(str(str($value)->squish())->lower())->title(),
-        );
     }
 
     protected function email(): Attribute

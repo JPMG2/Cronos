@@ -232,6 +232,11 @@
                             </template>
                         </x-inputs.dropdown.uldropdown>
                     </x-inputs.dropdown.dropdownconfig>
+                    @error("occupation_id")
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
+                    @enderror
                 </div>
                 <div class="flex gap-x-1 sm:col-span-4">
                     <div class="relative sm:col-span-2 w-4/5">
