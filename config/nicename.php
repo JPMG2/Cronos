@@ -37,4 +37,6 @@ return [
     'descripcion' => 'descripción',
     'action' => 'acción',
     'acceso' => 'acceso',
+    'documtype' => 'documento',
+    'documtnume' => 'número',
 ];

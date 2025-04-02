@@ -22,7 +22,6 @@ final class RePaciente extends Component
             'listDocument' => $this->commonQuerys::listDocuments(),
             'listGender' => $this->commonQuerys::listGenders(),
             'listMaritalStatus' => $this->commonQuerys::listMaritalStatus(),
-            'listNationality' => $this->commonQuerys::listNacionalidad(),
         ]);
     }
 
@@ -46,6 +45,6 @@ final class RePaciente extends Component
 
     public function getPaciente()
     {
-        dd($this->pacienteForm->pacienteData);
+        app()->call([$this->pacienteForm, 'pacienteStore']);
     }
 }

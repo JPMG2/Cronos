@@ -79,18 +79,18 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pacienteData.patient_name"
+                                wire:model="pacienteForm.pacienteData.person_name"
                                 id="pacient_name"
 
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
                                 isdisabled=""
-                                :error="$errors->first('patient_name')"
+                                :error="$errors->first('person_name')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
                     </div>
-                    @error("patient_name")
+                    @error("person_name")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
@@ -104,17 +104,17 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pacienteData.patient_lastname"
+                                wire:model="pacienteForm.pacienteData.person_lastname"
                                 id="pacient_lastname"
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
                                 isdisabled=""
-                                :error="$errors->first('patient_lastname')"
+                                :error="$errors->first('person_lastname')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
                     </div>
-                    @error("patient_lastname")
+                    @error("person_lastname")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
@@ -158,18 +158,18 @@
                             <x-inputs.textinput
                                 x-data
                                 x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
-                                wire:model="pacienteForm.pacienteData.patient_datebirth"
+                                wire:model="pacienteForm.pacienteData.person_datebirth"
                                 id="pacient_datebirth"
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
                                 isdisabled=""
-                                :error="$errors->first('patient_datebirth')"
+                                :error="$errors->first('person_datebirth')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
 
                     </div>
-                    @error("patient_datebirth")
+                    @error("person_datebirth")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
@@ -247,19 +247,19 @@
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pacienteData.patient_phone"
+                                    wire:model="pacienteForm.pacienteData.person_phone"
                                     x-mask="99999999999999999999"
                                     id="patien_phone"
                                     autocomplete="off"
                                     maxlength="20"
                                     placeholder=" "
                                     isdisabled=""
-                                    :error="$errors->first('patient_phone')"
+                                    :error="$errors->first('person_phone')"
 
                                 ></x-inputs.textinput>
                             </x-inputs.textgroup>
                         </div>
-                        @error("patient_phone")
+                        @error("person_phone")
                         <x-inputs.error-validate>
                             {{ $message }}
                         </x-inputs.error-validate>
@@ -273,17 +273,17 @@
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pacienteData.patient_email"
+                                    wire:model="pacienteForm.pacienteData.person_email"
                                     id="patien_email"
                                     autocomplete="off"
                                     maxlength="150"
                                     placeholder=" "
                                     isdisabled=""
-                                    :error="$errors->first('patient_email')"
+                                    :error="$errors->first('person_email')"
                                 ></x-inputs.textinput>
                             </x-inputs.textgroup>
                         </div>
-                        @error("patient_email")
+                        @error("person_email")
                         <x-inputs.error-validate>
                             {{ $message }}
                         </x-inputs.error-validate>
@@ -333,17 +333,17 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pacienteData.patient_address"
+                                wire:model="pacienteForm.pacienteData.person_address"
                                 id="patien_addres"
                                 autocomplete="off"
                                 maxlength="150"
                                 placeholder=" "
                                 isdisabled=""
-                                :error="$errors->first('patient_address')"
+                                :error="$errors->first('person_address')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
                     </div>
-                    @error("patient_address")
+                    @error("person_address")
                     <x-inputs.error-validate>
                         {{ $message }}
                     </x-inputs.error-validate>
