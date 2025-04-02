@@ -98,6 +98,7 @@
                         required="yes"
                     >
                         <x-inputs.selexttext
+
                             wire:model="form.dataobrasocial.insurance_type_name"
                             wire:click="getTypesProperty"
                             x-on:click="openSelect()"

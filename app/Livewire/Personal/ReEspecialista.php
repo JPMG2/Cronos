@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Personal;
 
 use App\Livewire\Forms\Personal\EspecialistaForm;
@@ -11,7 +13,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ReEspecialista extends Component
+final class ReEspecialista extends Component
 {
     use FormActionsTrait,HandlesActionPolicy, UtilityForm;
 

@@ -29,19 +29,23 @@ final class RePaciente extends Component
     #[Computed]
     public function ocupacion()
     {
-        // dd($this->pacienteForm->pacienteData['occupation_id']);
+
         $this->commonQuerys = app('commonquery');
 
-        return $this->commonQuerys::listOcupacion($this->pacienteForm->pacienteData['occupation_id']);
+        return $this->commonQuerys::listOcupacion();
+    }
+
+    #[Computed]
+    public function nationality()
+    {
+
+        $this->commonQuerys = app('commonquery');
+
+        return $this->commonQuerys::listNacionalidad();
     }
 
     public function getPaciente()
     {
         dd($this->pacienteForm->pacienteData);
-    }
-
-    public function computedUpdate($computename)
-    {
-        $this->$computename();
     }
 }

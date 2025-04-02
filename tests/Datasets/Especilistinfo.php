@@ -26,6 +26,7 @@ dataset('especilist info', function () {
         ],
     ];
 });
+
 dataset('required fields', function () {
     return [
         fn () => [
@@ -40,6 +41,34 @@ dataset('required fields', function () {
             'medical_email' => '',
             'medical_dni' => '',
             'medical_codenumber' => '',
+        ],
+    ];
+});
+
+dataset('fields missing', function () {
+    return [
+
+        fn () => [
+            'data' => [
+                'state_id' => State::factory()->create()->id,
+                'credential_id' => '',
+                'specialty_id' => Specialty::factory()->create()->id,
+                'degree_id' => Degree::factory()->create()->id,
+                'medical_name' => '',
+                'medical_lastname' => '',
+                'medical_address' => fake()->address,
+                'medical_phone' => fake()->randomNumber(9, true),
+                'medical_email' => fake()->email,
+                'medical_dni' => fake()->randomNumber(9, true),
+                'medical_codenumber' => '',
+            ],
+
+            'fields' => [
+                'credential_id',
+                'medical_name',
+                'medical_lastname',
+                'medical_codenumber',
+            ],
         ],
     ];
 });

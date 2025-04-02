@@ -205,102 +205,33 @@
                 </div>
 
                 <div class="relative sm:col-span-3">
-                    <div
-
-                        x-data="{
-                            open: false,
-                            activeIndex: 0,
-                            selected: null,
-                            index: 0,
-                            isUsingKeyboard: true,
-                            numberitem: {{$this->ocupacion->count()}},
-                            showoption(){
-                                this.open = !this.open;
-                            },
-                            close() {
-                                this.open = false;
-                                this.isUsingKeyboard = true;
-                            },
-                            keyDown(){
-                                this.isUsingKeyboard = true;
-                                this.activeIndex =  (this.activeIndex + 1) % this.numberitem;
-                            },
-                            keyUp(){
-                                this.isUsingKeyboard = true;
-                                this.activeIndex =  (this.activeIndex - 1 + this.numberitem) % this.numberitem;
-                            },
-                             select(index) {
-                                this.selected = index;
-                                this.close();
-                             },
-                        }"
-                        @keydown.escape.prevent.stop="close()"
-                        @keydown.arrow-down.prevent="keyDown()"
-                        @keydown.arrow-up.prevent="keyUp()"
+                    <x-inputs.dropdown.dropdownconfig
+                        wireidvalue="pacienteForm.pacienteData.occupation_id"
+                        :jsonvalues="json_encode($this->ocupacion->map(fn($o) => ['id' => $o->id, 'name' => $o->occupation_name])->values())"
                     >
-                        <x-inputs.textgroup
+                        <x-inputs.dropdown.labelautocomplet
                             label="Ocupación"
-                            for="pacient_datebirth"
+                            for="pacient_ocupaccion"
                             required="yes"
                         >
-                            <button type="button"
-                                    @click="showoption()"
-                                    class="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-2 pl-3 pr-2 text-left text-gray-900 outline
-                                outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2
-                                focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                                    aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-                                <template x-if="selected === null">
-                                    <span class="col-start-1 row-start-1 truncate pr-6"> &nbsp;</span>
-                                </template>
-                                <template x-if="selected !== null">
-                                <span class="col-start-1 row-start-1 truncate pr-6"
-                                      x-text="$el.innerText = document.getElementById('option-' + selected)?.innerText || ''">
-                                </span>
-                                </template>
+                            <x-inputs.dropdown.buttondropdown/>
+                        </x-inputs.dropdown.labelautocomplet>
+                        <x-inputs.dropdown.uldropdown
+                            ulname="ocupacion"
+                        >
+                            <li class="px-2 py-1">
+                                <x-inputs.dropdown.inputtextfilter
+                                    placeholder="Buscar ocupación..."
+                                />
+                            </li>
 
-                                <svg
-                                    class="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                                    viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                    <path fill-rule="evenodd"
-                                          d="M5.22 10.22a.75.75 0 0 1 1.06 0L8 11.94l1.72-1.72a.75.75 0 1 1 1.06 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-2.25-2.25a.75.75 0 0 1 0-1.06ZM10.78 5.78a.75.75 0 0 1-1.06 0L8 4.06 6.28 5.78a.75.75 0 0 1-1.06-1.06l2.25-2.25a.75.75 0 0 1 1.06 0l2.25 2.25a.75.75 0 0 1 0 1.06Z"
-                                          clip-rule="evenodd"/>
-                                </svg>
-                            </button>
-                        </x-inputs.textgroup>
-                        <ul
-                            x-show="open"
-                            x-transition:enter="transition ease-out duration-100"
-                            x-transition:enter-start="opacity-0 -translate-y-2"
-                            x-transition:enter-end="opacity-100 translate-y-0"
-                            x-transition:leave="transition ease-in duration-75"
-                            x-transition:leave-start="opacity-100"
-                            x-transition:leave-end="opacity-0"
-                            @click.outside="close()"
-                            style="display: none;"
-                            class="absolute z-30 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1
-                              text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm"
-                            tabindex="-1" role="listbox" aria-labelledby="listbox-label"
-                            aria-activedescendant="listbox-ocupacion">
-                            @foreach($this->ocupacion as $ocupacion)
-
-                                <li
-                                    @click="select({{$loop->index}})"
-                                    :id="'option-' + {{$loop->index}}"
-                                    @mouseenter="isUsingKeyboard = false; activeIndex = {{$loop->index}}"
-                                    @mouseleave="isUsingKeyboard = true"
-                                    :class="{
-                    'bg-indigo-600 text-white': isUsingKeyboard && activeIndex === {{$loop->index}},
-                    'hover:bg-indigo-600 hover:text-white': !isUsingKeyboard
-                }"
-                                    class="py-1 pl-3 pr-9 text-gray-900"
-                                    role="option">
-
-                                    <span class="block truncate font-normal">{{$ocupacion->occupation_name}}</span>
-                                </li>
-                            @endforeach
-
-                        </ul>
-                    </div>
+                            <template x-for="(ocupacion, index) in filteredOptions()" :key="ocupacion.id">
+                                <x-inputs.dropdown.lidropdown
+                                    optionname="ocupacion"
+                                />
+                            </template>
+                        </x-inputs.dropdown.uldropdown>
+                    </x-inputs.dropdown.dropdownconfig>
                 </div>
                 <div class="flex gap-x-1 sm:col-span-4">
                     <div class="relative sm:col-span-2 w-4/5">
@@ -355,23 +286,33 @@
                     </div>
                 </div>
                 <div class="relative sm:col-span-2">
-                    <div class="relative">
-                        <x-inputs.selectgroup
+                    <x-inputs.dropdown.dropdownconfig
+                        wireidvalue="pacienteForm.pacienteData.nationality_id"
+                        :jsonvalues="json_encode($this->nationality->map(fn($o) => ['id' => $o->id, 'name' => $o->nationality_name])->values())"
+                    >
+                        <x-inputs.dropdown.labelautocomplet
                             label="Nacionalidad"
-                            for="patien_nation"
+                            for="pacient_nacionalidad"
                             required="yes"
                         >
-                            <x-inputs.selectinput
-                                wire:model.defer="pacienteForm.pacienteData.nationality_id"
-                                id="patien_nation"
-                                isdisabled=""
-                                :error="$errors->first('nationality_id')"
-                            >
-                                <option label=" "></option>
+                            <x-inputs.dropdown.buttondropdown/>
+                        </x-inputs.dropdown.labelautocomplet>
+                        <x-inputs.dropdown.uldropdown
+                            ulname="nationality"
+                        >
+                            <li class="px-2 py-1">
+                                <x-inputs.dropdown.inputtextfilter
+                                    placeholder="Buscar nacionalidad..."
+                                />
+                            </li>
 
-                            </x-inputs.selectinput>
-                        </x-inputs.selectgroup>
-                    </div>
+                            <template x-for="(nationality, index) in filteredOptions()" :key="nationality.id">
+                                <x-inputs.dropdown.lidropdown
+                                    optionname="nationality"
+                                />
+                            </template>
+                        </x-inputs.dropdown.uldropdown>
+                    </x-inputs.dropdown.dropdownconfig>
                     @error("nationality_id")
                     <x-inputs.error-validate>
                         {{ $message }}
