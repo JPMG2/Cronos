@@ -382,4 +382,5 @@
             @endif
         </div>
     </div>
+    @livewire("servicios.list-paciente", ["show" => false])
 </div>

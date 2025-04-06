@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\PersonFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,11 +17,24 @@ final class Person extends Model
     /** @use HasFactory<PersonFactory> */
     use HasFactory;
 
+    public static string $startFilterBay = 'num_document';
+
     protected $fillable = [
         'document_id', 'city_id', 'gender_id', 'marital_status_id', 'occupation_id',
         'nationality_id', 'num_document', 'person_name', 'person_lastname',
         'person_address', 'person_phone', 'person_email', 'person_datebirth',
     ];
+
+    public static function getFilterableAttributes(): array
+    {
+        return [
+            'num_document' => 'Documento',
+            'person_name' => 'Nombre',
+            'person_lastname' => 'Apellido',
+            'person_phone' => 'Teléfono',
+
+        ];
+    }
 
     public static function documentExist(int $documentType, string $numdocument, $personId = null)
     {
@@ -104,6 +118,11 @@ final class Person extends Model
     public function setNationalityIdAttribute($value)
     {
         $this->attributes['nationality_id'] = $value ?: null;
+    }
+
+    public function scopeListPatients(Builder $query): Builder
+    {
+        return $query->whereHas('patiente');
     }
 
     protected function casts(): array

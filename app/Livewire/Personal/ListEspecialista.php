@@ -6,6 +6,7 @@ namespace App\Livewire\Personal;
 
 use App\Models\Medical;
 use App\Traits\TableSorting;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,7 +25,7 @@ final class ListEspecialista extends Component
 
     public function render()
     {
-        $queryIncial = Medical::listMedicals();
+        $queryIncial = $this->especialistList();
 
         $query = $this->makeQueryByColumn($queryIncial)->orderBy('medical_name');
 
@@ -36,6 +37,12 @@ final class ListEspecialista extends Component
         return view('livewire.personal.list-especialista', [
             'listMedical' => $query->paginate(10),
         ]);
+    }
+
+    #[Computed]
+    public function especialistList()
+    {
+        return Medical::listMedicals();
     }
 
     #[On('showModalMedical')]

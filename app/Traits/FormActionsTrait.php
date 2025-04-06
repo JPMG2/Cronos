@@ -66,6 +66,7 @@ trait FormActionsTrait
     protected function show($parameter)
     {
         $nameForm = $parameter['model'];
+
         $this->dispatch('showModal'.$nameForm, show: true);
     }
 

@@ -9,6 +9,7 @@ use App\Models\Patient;
 use App\Traits\FormActionsTrait;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -87,7 +88,13 @@ final class RePaciente extends Component
             'id' => $id,
             'pdfClass' => 'MedicPdf',
             'route' => 're_paciente',
-            'model' => 'Medical',
+            'model' => 'Patient',
         ]);
+    }
+
+    #[On('dataPatient')]
+    public function loadPatiente($show)
+    {
+        $this->show = $show;
     }
 }
