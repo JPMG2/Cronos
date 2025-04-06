@@ -86,4 +86,13 @@ final class AttributeValidator
 
         return new MedicalCredential($idcredential, $credential, $id);
     }
+
+    public static function dateValid($required)
+    {
+        if ($required) {
+            return 'required|regex:/^([^<>]*)$/|max:255|date_format:d-m-Y';
+        }
+
+        return 'sometimes|regex:/^([^<>]*)$/|max:255|date_format:d-m-Y';
+    }
 }

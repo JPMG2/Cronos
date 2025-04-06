@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\Action;
 use App\Models\User;
 
-class ActionPolicy
+final class ActionPolicy
 {
     /**
      * Create a new policy instance.
@@ -20,12 +22,6 @@ class ActionPolicy
         return $myAction->roles()
             ->where('role_id', $user->getUserRoleId())
             ->exists();
-
-    }
-
-    private function checkUser($user)
-    {
-        return (bool) $user->hasAnyRole(['Owner', 'Administrator']);
 
     }
 
@@ -117,6 +113,12 @@ class ActionPolicy
         return $myAction->roles()
             ->where('role_id', $user->getUserRoleId())
             ->exists();
+
+    }
+
+    private function checkUser($user)
+    {
+        return (bool) $user->hasAnyRole(['Owner', 'Administrator']);
 
     }
 }

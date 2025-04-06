@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Utility;
 
 use App\Classes\Utilities\HistoryLog;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class HistoryModal extends Component
+final class HistoryModal extends Component
 {
     public $show = false;
 
@@ -29,7 +31,7 @@ class HistoryModal extends Component
         $historyData = new HistoryLog($array);
         $this->listHistoryData = $historyData->loadHistoryData();
         $this->modelname = $array['model'];
-        $this->historyTitle = 'Historial de '.config('nicename.'.strtolower($array['model']));
+        $this->historyTitle = 'Historial de '.config('nicename.'.mb_strtolower($array['model']));
 
     }
 

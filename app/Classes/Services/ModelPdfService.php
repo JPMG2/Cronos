@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Services;
 
 use App\Interfaces\ModelPdfGenerator;
 
-class ModelPdfService
+final class ModelPdfService
 {
     public function generatePdfById(ModelPdfGenerator $modelPdfGenerator, $id)
     {

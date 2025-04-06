@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms\Configuracion;
 
 use App\Classes\Services\ModelService;
@@ -8,7 +10,7 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
 
-class ActionsForm extends Form
+final class ActionsForm extends Form
 {
     public $dataaction = [
         'role_id' => '',
@@ -34,23 +36,27 @@ class ActionsForm extends Form
         )->validate();
         $services = $this->iniService();
 
-        return NotifyQuerys::msgCreateUpdateMany($services->storeWithRelastionship($this->dataaction['role_id'], $this->dataaction['action_id']));
-    }
-
-    protected function iniService()
-    {
-        return app()->make(ModelService::class, ['model' => new Role]);
+        return NotifyQuerys::msgCreateUpdateMany($services
+            ->addWithRelastionship((int) $this->dataaction['role_id'],
+                $this->dataaction['action_id'],
+                'actions'
+            ));
     }
 
     public function actionData(int $intRole)
     {
         $services = $this->iniService();
-        $data = $services->showWithRelationship($this->dataaction['role_id']);
+        $data = $services->showWithRelationship((int) $this->dataaction['role_id']);
         if (count($data->actions) > 0) {
             $this->dataaction['action_id'] = $data->actions->pluck('id')->toArray();
         } else {
             $this->dataaction['action_id'] = [];
         }
 
+    }
+
+    protected function iniService()
+    {
+        return app()->make(ModelService::class, ['model' => new Role]);
     }
 }

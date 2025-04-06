@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Listeners;
 
 use App\Models\Action;
 use App\Models\Welcome;
 use Illuminate\Auth\Events\Login;
 
-class LogSuccess
+final class LogSuccess
 {
     /**
      * Create the event listener.

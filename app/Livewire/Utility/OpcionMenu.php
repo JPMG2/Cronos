@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Utility;
 
 use App\Traits\HandlesActionPolicy;
@@ -7,7 +9,7 @@ use Illuminate\Support\Arr;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class OpcionMenu extends Component
+final class OpcionMenu extends Component
 {
     use HandlesActionPolicy;
 

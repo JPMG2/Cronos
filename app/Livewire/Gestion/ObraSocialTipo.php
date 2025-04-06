@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Gestion;
 
 use App\Livewire\Forms\Gestion\ObraSocialTypeForm;
@@ -8,7 +10,7 @@ use App\Traits\UtilityForm;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class ObraSocialTipo extends Component
+final class ObraSocialTipo extends Component
 {
     use UtilityForm;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\RecordActivity;
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Branch extends Model
+final class Branch extends Model
 {
     use HasFactory, RecordActivity, SoftDeletes;
 
@@ -62,6 +64,11 @@ class Branch extends Model
         return $this->branch_name;
     }
 
+    public function showData(int $id)
+    {
+        return self::with('city.province', 'state')->findOrFail($id);
+    }
+
     protected function casts(): array
     {
         return [
@@ -74,7 +81,7 @@ class Branch extends Model
     protected function branchName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
 
         );
     }
@@ -90,7 +97,7 @@ class Branch extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
         );
     }
 
@@ -111,40 +118,35 @@ class Branch extends Model
     protected function branchEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 
     protected function branchWeb(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 
     protected function branchPersonContact(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
         );
     }
 
     protected function branchPersonPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 
     protected function branchPersonEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
-    }
-
-    public function showData(int $id)
-    {
-        return self::with('city.province', 'state')->findOrFail($id);
     }
 }

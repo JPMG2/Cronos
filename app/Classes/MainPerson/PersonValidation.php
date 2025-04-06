@@ -16,10 +16,16 @@ final class PersonValidation
 
             $this->inicialiciteAtributes($person),
             [
-                'document_id' => 'required',
-                'num_document' => AttributeValidator::uniqueIdNameLength(5, 'people', 'num_document', null),
                 'person_name' => AttributeValidator::stringValid(true, 4),
                 'person_lastname' => AttributeValidator::stringValid(true, 4),
+                'gender_id' => 'sometimes|exists:genders,id',
+                'person_datebirth' => AttributeValidator::dateValid(true),
+                'marital_status_id' => 'sometimes|exists:marital_statuses,id',
+                'occupation_id' => 'sometimes|exists:occupations,id',
+                'person_phone' => AttributeValidator::digitValid(5, false),
+                'person_email' => AttributeValidator::emailValid('people', 'person_email', null),
+                'nationality_id' => 'sometimes|exists:nationalities,id',
+                'person_address' => AttributeValidator::stringValid(false, 5),
             ],
             [
 
@@ -33,10 +39,16 @@ final class PersonValidation
     {
 
         return [
-            'document_id' => trim($person['document_id']),
-            'num_document' => trim($person['num_document']),
             'person_name' => ucwords(mb_strtolower(trim($person['person_name']))),
             'person_lastname' => ucwords(mb_strtolower(trim($person['person_lastname']))),
+            'gender_id' => trim((string) $person['gender_id']),
+            'person_datebirth' => trim($person['person_datebirth']),
+            'marital_status_id' => trim((string) $person['marital_status_id']),
+            'occupation_id' => trim((string) $person['occupation_id']),
+            'person_phone' => trim($person['person_phone']),
+            'person_email' => mb_strtolower(trim($person['person_email'])),
+            'nationality_id' => trim((string) $person['nationality_id']),
+            'person_address' => trim($person['person_address']),
         ];
 
     }
@@ -44,10 +56,16 @@ final class PersonValidation
     public function niceNames(): array
     {
         return [
-            'document_id' => config('nicename.status'),
             'person_name' => config('nicename.name'),
-            'num_document' => config('nicename.documtnume'),
             'person_lastname' => config('nicename.apellido'),
+            'gender_id' => config('nicename.gender'),
+            'person_datebirth' => config('nicename.datebirth'),
+            'marital_status_id' => config('nicename.maritalstatus'),
+            'occupation_id' => config('nicename.occupation'),
+            'person_phone' => config('nicename.telefono'),
+            'person_email' => config('nicename.correo'),
+            'nationality_id' => config('nicename.nacionalidad'),
+            'person_address' => config('nicename.direccion'),
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Gestion;
 
 use App\Models\Insurance;
@@ -8,7 +10,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ListObraSocial extends Component
+final class ListObraSocial extends Component
 {
     use TableSorting, WithPagination;
 

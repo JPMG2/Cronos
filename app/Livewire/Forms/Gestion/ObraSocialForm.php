@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms\Gestion;
 
 use App\Classes\Gestion\InsuranceObj;
@@ -10,7 +12,7 @@ use App\Models\Insurance;
 use App\Traits\ProvinceCity;
 use Livewire\Form;
 
-class ObraSocialForm extends Form
+final class ObraSocialForm extends Form
 {
     use ProvinceCity;
 

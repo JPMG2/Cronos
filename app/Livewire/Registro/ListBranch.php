@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Registro;
 
 use App\Classes\Utilities\CommonQuerys;
@@ -7,7 +9,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ListBranch extends Component
+final class ListBranch extends Component
 {
     use WithPagination;
 

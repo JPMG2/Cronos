@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\State;
 use Illuminate\Database\Seeder;
 
-class StateSeeder extends Seeder
+final class StateSeeder extends Seeder
 {
     /**
      * Run the database seeds.

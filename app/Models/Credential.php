@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Database\Factories\CredentialFactory;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Credential extends Model
+final class Credential extends Model
 {
     /** @use HasFactory<CredentialFactory> */
     use HasFactory;
@@ -41,7 +43,7 @@ class Credential extends Model
     protected function credentialName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
 
         );
     }
@@ -49,7 +51,7 @@ class Credential extends Model
     protected function credentialCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
 
         );
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms\Personal;
 
 use App\Classes\Personal\EspecialistObj;
@@ -7,7 +9,7 @@ use App\Classes\Personal\EspecialistValidation;
 use App\Classes\Utilities\NotifyQuerys;
 use Livewire\Form;
 
-class EspecialistaForm extends Form
+final class EspecialistaForm extends Form
 {
     public $dataespecialist = [
         'state_id' => 1,

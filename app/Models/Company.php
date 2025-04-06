@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\RecordActivity;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Company extends Model
+final class Company extends Model
 {
     use HasFactory, RecordActivity, SoftDeletes;
 
@@ -46,7 +48,7 @@ class Company extends Model
     protected function companyName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
 
         );
     }
@@ -62,7 +64,7 @@ class Company extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
         );
     }
 
@@ -83,35 +85,35 @@ class Company extends Model
     protected function companyEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 
     protected function companyWeb(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 
     protected function companyPersonContact(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
         );
     }
 
     protected function companyPersonPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 
     protected function companyPersonEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 }

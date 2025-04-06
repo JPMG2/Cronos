@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Registro;
 
 use App\Interfaces\ModelEmail;
@@ -7,7 +9,7 @@ use App\Mail\Registro\CompanyCreateMail;
 use App\Mail\Registro\CompanyUpdateMail;
 use Illuminate\Support\Facades\Mail;
 
-class CompanyEmail implements ModelEmail
+final class CompanyEmail implements ModelEmail
 {
     public function sendEmailCreate($model)
     {

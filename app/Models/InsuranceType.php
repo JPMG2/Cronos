@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\RecordActivity;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class InsuranceType extends Model
+final class InsuranceType extends Model
 {
     use HasFactory, RecordActivity;
 
@@ -20,15 +22,15 @@ class InsuranceType extends Model
         return $query->orderBy('insuratype_name');
     }
 
-    protected function insuratypeName(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
-        );
-    }
-
     public function insurance(): HasMany
     {
         return $this->hasMany(Insurance::class);
+    }
+
+    protected function insuratypeName(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+        );
     }
 }

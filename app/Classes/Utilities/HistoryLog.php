@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Utilities;
 
-class HistoryLog
+final class HistoryLog
 {
     public $model;
 

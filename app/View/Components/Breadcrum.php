@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\View\Components;
 
 use App\Models\Menu;
@@ -7,7 +9,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Breadcrum extends Component
+final class Breadcrum extends Component
 {
     public $breadcrumbs;
 

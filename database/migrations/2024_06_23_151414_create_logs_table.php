@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\User::class);
-            $table->foreignIdFor(\App\Models\Action::class);
+            $table->foreignIdFor(App\Models\User::class);
+            $table->foreignIdFor(App\Models\Action::class);
             $table->morphs('model');
             $table->text('log_message');
             $table->json('log_change')->nullable();

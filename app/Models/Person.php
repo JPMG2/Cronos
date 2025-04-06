@@ -22,6 +22,20 @@ final class Person extends Model
         'person_address', 'person_phone', 'person_email', 'person_datebirth',
     ];
 
+    public static function documentExist(int $documentType, string $numdocument, $personId = null)
+    {
+        if ($personId) {
+            return self::where('document_id', $documentType)
+                ->where('num_document', $numdocument)
+                ->where('id', '!=', $personId)
+                ->exists();
+        }
+
+        return self::where('num_document', $numdocument)
+            ->where('document_id', $documentType)
+            ->exists();
+    }
+
     public function document(): BelongsTo
     {
         return $this->belongsTo(Document::class);
@@ -57,6 +71,16 @@ final class Person extends Model
         return $this->hasOne(User::class);
     }
 
+    public function patiente(): HasOne
+    {
+        return $this->hasOne(Patient::class);
+    }
+
+    public function saveRelation(array $data, string $relation): Model
+    {
+        return $this->$relation()->create($data);
+    }
+
     public function setCityIdAttribute($value)
     {
         $this->attributes['city_id'] = $value ?: null;
@@ -64,7 +88,7 @@ final class Person extends Model
 
     public function setGenderIdAttribute($value)
     {
-        $this->attributes['city_id'] = $value ?: null;
+        $this->attributes['gender_id'] = $value ?: null;
     }
 
     public function setOccupationIdAttribute($value)

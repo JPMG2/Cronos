@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Registro;
 
 use App\Models\Company;
 use App\Traits\UtilityForm;
 
-class CompanyObj
+final class CompanyObj
 {
     use UtilityForm;
 

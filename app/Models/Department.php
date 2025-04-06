@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\RecordActivity;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Department extends Model
+final class Department extends Model
 {
     use HasFactory, RecordActivity;
 
@@ -33,14 +35,14 @@ class Department extends Model
     protected function departmentName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
         );
     }
 
     protected function departmentCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
         );
     }
 }

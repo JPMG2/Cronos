@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Registro;
 
 use App\Livewire\Forms\Registro\BranchForm;
@@ -12,7 +14,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ReBranch extends Component
+final class ReBranch extends Component
 {
     use FormActionsTrait, HandlesActionPolicy, ProvinceCity, UtilityForm;
 

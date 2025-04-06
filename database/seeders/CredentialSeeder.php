@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Credential;
 use Illuminate\Database\Seeder;
 
-class CredentialSeeder extends Seeder
+final class CredentialSeeder extends Seeder
 {
     /**
      * Run the database seeds.

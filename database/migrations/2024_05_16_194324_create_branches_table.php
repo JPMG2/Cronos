@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\City;
 use App\Models\Company;
 use App\Models\State;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -7,18 +9,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class City extends Model
+final class City extends Model
 {
     use HasFactory;
 
     protected $fillable = ['province_id', 'city_name'];
-
-    protected function cityName(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => str(str(str($value)->squish())->lower())->title(),
-        );
-    }
 
     public function province()
     {
@@ -36,5 +31,12 @@ class City extends Model
         }
 
         return null;
+    }
+
+    protected function cityName(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => str(str(str($value)->squish())->lower())->title(),
+        );
     }
 }

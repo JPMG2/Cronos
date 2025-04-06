@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Registro;
 
 use App\Classes\Registro\CompanyObj;
@@ -9,7 +11,7 @@ use App\Traits\UtilityForm;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ReCompany extends Component
+final class ReCompany extends Component
 {
     use ProvinceCity, UtilityForm;
 

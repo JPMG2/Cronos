@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\View\Components;
 
 use App\Classes\Utilities\CommonQuerys;
@@ -8,7 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\Component;
 
-class CompanyWatcher extends Component
+final class CompanyWatcher extends Component
 {
     public function __construct(readonly CommonQuerys $commonQuerys) {}
 

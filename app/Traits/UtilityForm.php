@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Illuminate\Support\Facades\App;
@@ -33,6 +35,6 @@ trait UtilityForm
     public function editActivate()
     {
         $this->isdisabled = '';
-        $this->isupdate = true;
+        $this->isupdate = false;
     }
 }

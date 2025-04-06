@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Mail\Registro;
 
 use Illuminate\Bus\Queueable;
@@ -7,7 +9,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class CompanyUpdateMail extends Mailable
+final class CompanyUpdateMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,7 +33,7 @@ class CompanyUpdateMail extends Mailable
         );
     }
 
-    public function build(): CompanyUpdateMail
+    public function build(): self
     {
         return $this->markdown('emails.registro.companyupdatemail')
             ->with([

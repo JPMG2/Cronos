@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Trait TableSorting
  *
@@ -57,23 +59,6 @@ trait TableSorting
     }
 
     /**
-     * Retrieves the current column name used for sorting.
-     *
-     * This method returns the column name that is currently set for sorting.
-     * If the column name is not set, it returns null.
-     *
-     * @return string|null The column name used for sorting, or null if not set.
-     */
-    protected function getQueryValues(): ?string
-    {
-        if (empty($this->columName)) {
-            return null;
-        }
-
-        return $this->columName;
-    }
-
-    /**
      * Builds the query with ordering based on the current column and sort direction.
      *
      * This method orders the query results by the column name retrieved from `getQueryValues()`
@@ -100,7 +85,7 @@ trait TableSorting
      */
     public function makeQueryBySearch(string $stringvalue, $query)
     {
-        $stringvalue = strtolower(trim($stringvalue));
+        $stringvalue = mb_strtolower(trim($stringvalue));
 
         if (Str::contains($this->filtervalue, '_id')) {
 
@@ -129,6 +114,23 @@ trait TableSorting
         $this->resetOrdersValues();
         $this->filtervalue = $model::$startFilterBay;
         $this->listFilterValues = $model::getFilterableAttributes();
+    }
+
+    /**
+     * Retrieves the current column name used for sorting.
+     *
+     * This method returns the column name that is currently set for sorting.
+     * If the column name is not set, it returns null.
+     *
+     * @return string|null The column name used for sorting, or null if not set.
+     */
+    protected function getQueryValues(): ?string
+    {
+        if (empty($this->columName)) {
+            return null;
+        }
+
+        return $this->columName;
     }
 
     /**

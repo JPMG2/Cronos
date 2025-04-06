@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Registro;
 
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
 
-class CompanyValidation
+final class CompanyValidation
 {
     public function onCompanyCreate(array $company)
     {
@@ -44,16 +46,16 @@ class CompanyValidation
     {
 
         return [
-            'company_name' => strtoupper(strtolower(trim($company['company_name']))),
+            'company_name' => mb_strtoupper(mb_strtolower(trim($company['company_name']))),
             'company_cuit' => trim($company['company_cuit']),
             'company_phone' => trim($company['company_phone']),
-            'company_email' => strtolower(trim($company['company_email'])),
+            'company_email' => mb_strtolower(trim($company['company_email'])),
             'company_address' => trim($company['company_address']),
             'company_zipcode' => trim($company['company_zipcode']),
             'company_person_contact' => trim($company['company_person_contact']),
             'company_person_phone' => trim($company['company_person_phone']),
-            'company_person_email' => strtolower(trim($company['company_person_email'])),
-            'company_web' => strtolower(trim($company['company_web'])),
+            'company_person_email' => mb_strtolower(trim($company['company_person_email'])),
+            'company_web' => mb_strtolower(trim($company['company_web'])),
             'province_id' => trim($company['province_id']),
             'city_id' => trim($company['city_id']),
             'state_id' => trim($company['state_id']),

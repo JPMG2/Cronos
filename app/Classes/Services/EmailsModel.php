@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Services;
 
 use App\Interfaces\ModelEmail;
 
-class EmailsModel
+final class EmailsModel
 {
     public function sendEmailCreate(ModelEmail $modelEmail, $model)
     {

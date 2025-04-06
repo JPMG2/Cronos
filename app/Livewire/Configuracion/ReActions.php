@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Configuracion;
 
 use App\Livewire\Forms\Configuracion\ActionsForm;
@@ -7,7 +9,7 @@ use App\Traits\UtilityForm;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ReActions extends Component
+final class ReActions extends Component
 {
     use UtilityForm;
 

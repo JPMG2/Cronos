@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Personal;
 
 use App\Models\Medical;
@@ -8,7 +10,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ListEspecialista extends Component
+final class ListEspecialista extends Component
 {
     use TableSorting, WithPagination;
 

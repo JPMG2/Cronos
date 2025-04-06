@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /* explode Breadcrumbs to use in Form */
 
 use Illuminate\Support\Arr;

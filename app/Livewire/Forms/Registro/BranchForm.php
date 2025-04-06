@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms\Registro;
 
 use App\Classes\Registro\BranchValidation;
@@ -9,7 +11,7 @@ use App\Models\Branch;
 use App\Traits\ProvinceCity;
 use Livewire\Form;
 
-class BranchForm extends Form
+final class BranchForm extends Form
 {
     use ProvinceCity;
 
@@ -53,7 +55,7 @@ class BranchForm extends Form
         if ($brancData) {
             $this->databranch = $brancData->toArray();
             $this->setProvinceCity($brancData->city->province->id, $brancData->city->id);
-            $this->setnameProvinceCity($brancData->city->province->province_name, $brancData->city->city_name);
+            $this->setnameProvinceCity($brancData->city->province->province_name->value(), $brancData->city->city_name);
 
         }
 

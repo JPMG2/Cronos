@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Configuracion;
 
 use App\Classes\Utilities\AlertModal;
@@ -12,7 +14,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ReRoles extends Component
+final class ReRoles extends Component
 {
     use HandleDeleteId, UtilityForm;
 

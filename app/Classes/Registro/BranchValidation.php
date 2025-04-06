@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Registro;
 
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
 
-class BranchValidation
+final class BranchValidation
 {
     public function onBranchCreate(array $branch)
     {
@@ -43,20 +45,20 @@ class BranchValidation
     {
 
         return [
-            'company_id' => trim($branch['company_id']),
-            'state_id' => trim($branch['state_id']),
-            'city_id' => trim($branch['city_id']),
-            'province_id' => trim($branch['province_id']),
-            'branch_name' => strtoupper(strtolower(trim($branch['branch_name']))),
+            'company_id' => trim((string) $branch['company_id']),
+            'state_id' => trim((string) $branch['state_id']),
+            'city_id' => trim((string) $branch['city_id']),
+            'province_id' => trim((string) $branch['province_id']),
+            'branch_name' => mb_strtoupper(mb_strtolower(trim($branch['branch_name']))),
             'branch_code' => trim($branch['branch_code']),
             'branch_address' => trim($branch['branch_address']),
             'branch_phone' => trim($branch['branch_phone']),
             'branch_zipcode' => trim($branch['branch_zipcode']),
-            'branch_email' => strtolower(trim($branch['branch_email'])),
-            'branch_web' => strtolower(trim($branch['branch_web'])),
+            'branch_email' => mb_strtolower(trim($branch['branch_email'])),
+            'branch_web' => mb_strtolower(trim($branch['branch_web'])),
             'branch_person_contact' => trim($branch['branch_person_contact']),
             'branch_person_phone' => trim($branch['branch_person_phone']),
-            'branch_person_email' => strtolower(trim($branch['branch_person_email'])),
+            'branch_person_email' => mb_strtolower(trim($branch['branch_person_email'])),
 
         ];
 

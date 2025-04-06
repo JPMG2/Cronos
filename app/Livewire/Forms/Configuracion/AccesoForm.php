@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\Configuracion;
 
+use App\Classes\Services\ModelService;
 use App\Classes\Utilities\NotifyQuerys;
 use App\Models\Menu;
 use App\Models\Role;
@@ -46,7 +47,13 @@ final class AccesoForm extends Form
         }
         $allMenuIds = array_merge($uniqueMenuIds, $this->dataacceso['menu_id'], $this->dataacceso['menu_options']);
 
-        return NotifyQuerys::msgCreateUpdateMany($role->menus()->sync($allMenuIds));
+        $services = $this->iniService();
+
+        return NotifyQuerys::msgCreateUpdateMany($services
+            ->addWithRelastionship((int) $this->dataacceso['role_id'],
+                $allMenuIds,
+                'menus'
+            ));
 
     }
 
@@ -75,5 +82,10 @@ final class AccesoForm extends Form
 
         return $this->dataacceso['menu_id'];
 
+    }
+
+    protected function iniService()
+    {
+        return app()->make(ModelService::class, ['model' => new Role]);
     }
 }

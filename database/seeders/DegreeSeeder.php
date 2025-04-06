@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Degree;
 use Illuminate\Database\Seeder;
 
-class DegreeSeeder extends Seeder
+final class DegreeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

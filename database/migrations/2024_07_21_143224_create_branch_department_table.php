@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Branch;
 use App\Models\Department;
 use App\Models\State;

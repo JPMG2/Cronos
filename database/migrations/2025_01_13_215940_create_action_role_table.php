@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Action;
 use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;

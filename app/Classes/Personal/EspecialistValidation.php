@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Personal;
 
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
 
-class EspecialistValidation
+final class EspecialistValidation
 {
     public function onEspecialistCreate(array $especialsit)
     {
@@ -44,11 +46,11 @@ class EspecialistValidation
             'credential_id' => trim($especialsit['credential_id']),
             'specialty_id' => trim($especialsit['specialty_id']),
             'degree_id' => trim($especialsit['degree_id']),
-            'medical_name' => ucwords(strtolower(trim($especialsit['medical_name']))),
-            'medical_lastname' => ucwords(strtolower(trim($especialsit['medical_lastname']))),
+            'medical_name' => ucwords(mb_strtolower(trim($especialsit['medical_name']))),
+            'medical_lastname' => ucwords(mb_strtolower(trim($especialsit['medical_lastname']))),
             'medical_address' => trim($especialsit['medical_address']),
             'medical_phone' => trim($especialsit['medical_phone']),
-            'medical_email' => strtolower(trim($especialsit['medical_email'])),
+            'medical_email' => mb_strtolower(trim($especialsit['medical_email'])),
             'medical_dni' => trim($especialsit['medical_dni']),
             'medical_codenumber' => trim($especialsit['medical_codenumber']),
         ];

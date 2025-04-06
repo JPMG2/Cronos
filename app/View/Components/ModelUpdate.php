@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\View\Components;
 
 use App\Models\Log;
@@ -7,7 +9,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class ModelUpdate extends Component
+final class ModelUpdate extends Component
 {
     /**
      * Create a new component instance.
@@ -30,7 +32,7 @@ class ModelUpdate extends Component
 
         $queryacion = $this->queryaccion;
 
-        if ($queryacion == 2) {// update
+        if ($queryacion === 2) {// update
 
             $whatchange = $this->seeChanges();
         }
@@ -45,11 +47,11 @@ class ModelUpdate extends Component
 
     public function namemodel(): string
     {
-        $getmodelname = strrpos($this->modelObj, '\\');
+        $getmodelname = mb_strrpos($this->modelObj, '\\');
 
-        $getmodelname = substr($this->modelObj, $getmodelname + 1);
+        $getmodelname = mb_substr($this->modelObj, $getmodelname + 1);
 
-        return config('nicename.'.strtolower($getmodelname));
+        return config('nicename.'.mb_strtolower($getmodelname));
     }
 
     public function seeChanges()

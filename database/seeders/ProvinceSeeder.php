@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Province;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 
-class ProvinceSeeder extends Seeder
+final class ProvinceSeeder extends Seeder
 {
     /**
      * Run the database seeds.

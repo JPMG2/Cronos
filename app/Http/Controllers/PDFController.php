@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Classes\Services\ModelPdfService;
 
-class PDFController extends Controller
+final class PDFController extends Controller
 {
     public function pdfById($id, $type)
     {

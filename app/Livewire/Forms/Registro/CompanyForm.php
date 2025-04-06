@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms\Registro;
 
 use App\Classes\Registro\CompanyObj;
@@ -9,7 +11,7 @@ use App\Traits\ProvinceCity;
 use App\Traits\UtilityForm;
 use Livewire\Form;
 
-class CompanyForm extends Form
+final class CompanyForm extends Form
 {
     use ProvinceCity, UtilityForm;
 
@@ -83,7 +85,7 @@ class CompanyForm extends Form
 
             $this->setProvinceCity($companyArray->city->province->id, $companyArray->city->id);
 
-            $this->setnameProvinceCity($companyArray->city->province->province_name, $companyArray->city->city_name);
+            $this->setnameProvinceCity($companyArray->city->province->province_name->value(), $companyArray->city->city_name);
         }
 
     }

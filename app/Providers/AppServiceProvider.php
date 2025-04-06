@@ -9,7 +9,9 @@ use App\Classes\Utilities\CommonQuerys;
 use App\Listeners\LogSuccess;
 use App\Models\Branch;
 use App\Models\Company;
+use App\Models\Patient;
 use App\Observers\EmailModelObserver;
+use App\Observers\PatientObserver;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +56,7 @@ final class AppServiceProvider extends ServiceProvider
 
         Branch::observe(EmailModelObserver::class);
         Company::observe(EmailModelObserver::class);
-
+        Patient::observe(PatientObserver::class);
         Event::listen(Login::class, LogSuccess::class);
     }
 

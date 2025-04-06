@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\InsuranceType>
  */
-class InsuranceTypeFactory extends Factory
+final class InsuranceTypeFactory extends Factory
 {
     /**
      * Define the model's default state.

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class InsuranceTypeSeeder extends Seeder
+final class InsuranceTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

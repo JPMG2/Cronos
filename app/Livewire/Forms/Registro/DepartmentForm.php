@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms\Registro;
 
 use App\Classes\Registro\DepaValidation;
@@ -8,7 +10,7 @@ use App\Classes\Utilities\NotifyQuerys;
 use App\Models\Department;
 use Livewire\Form;
 
-class DepartmentForm extends Form
+final class DepartmentForm extends Form
 {
     public array $datadeparment = [
         'department_name' => '',

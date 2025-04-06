@@ -4,6 +4,11 @@
     <div
         class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
     >
+        @if(!session("isdisabled"))
+            @if ($this->numpatients > 0)
+                @livewire("utility.opcion-menu", ["namecomponent" => "patient"])
+            @endif
+        @endif
         <x-headerform.borderheader></x-headerform.borderheader>
         <div>
             <div class="flex items-center">
@@ -22,7 +27,7 @@
                                 required="yes"
                             >
                                 <x-inputs.selectinput
-                                    wire:model.defer="pacienteForm.pacienteData.document_id"
+                                    wire:model.defer="pacienteForm.pesonData.document_id"
                                     x-ref="ini"
                                     id="paci_document"
                                     isdisabled=""
@@ -51,10 +56,10 @@
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pacienteData.num_document"
+                                    wire:model="pacienteForm.pesonData.num_document"
                                     x-mask="99999999999999999999"
                                     id="pacient_numdocument"
-
+                                    @blur="$wire.validateDocument()"
                                     autocomplete="off"
                                     maxlength="20"
                                     placeholder=" "
@@ -79,7 +84,7 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pacienteData.person_name"
+                                wire:model="pacienteForm.pesonData.person_name"
                                 id="pacient_name"
 
                                 autocomplete="off"
@@ -104,7 +109,7 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pacienteData.person_lastname"
+                                wire:model="pacienteForm.pesonData.person_lastname"
                                 id="pacient_lastname"
                                 autocomplete="off"
                                 maxlength="200"
@@ -128,7 +133,7 @@
                             required="yes"
                         >
                             <x-inputs.selectinput
-                                wire:model.defer="pacienteForm.pacienteData.gender_id"
+                                wire:model.defer="pacienteForm.pesonData.gender_id"
                                 id="patien_gender"
                                 isdisabled=""
                                 :error="$errors->first('gender_id')"
@@ -158,7 +163,7 @@
                             <x-inputs.textinput
                                 x-data
                                 x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
-                                wire:model="pacienteForm.pacienteData.person_datebirth"
+                                wire:model="pacienteForm.pesonData.person_datebirth"
                                 id="pacient_datebirth"
                                 autocomplete="off"
                                 maxlength="200"
@@ -183,7 +188,7 @@
                             required="yes"
                         >
                             <x-inputs.selectinput
-                                wire:model.defer="pacienteForm.pacienteData.marital_status_id"
+                                wire:model.defer="pacienteForm.pesonData.marital_status_id"
                                 id="patien_estcivil"
                                 isdisabled=""
                                 :error="$errors->first('marital_status_id')"
@@ -206,7 +211,7 @@
 
                 <div class="relative sm:col-span-3">
                     <x-inputs.dropdown.dropdownconfig
-                        wireidvalue="pacienteForm.pacienteData.occupation_id"
+                        wireidvalue="pacienteForm.pesonData.occupation_id"
                         :jsonvalues="json_encode($this->ocupacion->map(fn($o) => ['id' => $o->id, 'name' => $o->occupation_name])->values())"
                     >
                         <x-inputs.dropdown.labelautocomplet
@@ -247,7 +252,7 @@
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pacienteData.person_phone"
+                                    wire:model="pacienteForm.pesonData.person_phone"
                                     x-mask="99999999999999999999"
                                     id="patien_phone"
                                     autocomplete="off"
@@ -273,7 +278,7 @@
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pacienteData.person_email"
+                                    wire:model="pacienteForm.pesonData.person_email"
                                     id="patien_email"
                                     autocomplete="off"
                                     maxlength="150"
@@ -292,7 +297,7 @@
                 </div>
                 <div class="relative sm:col-span-2">
                     <x-inputs.dropdown.dropdownconfig
-                        wireidvalue="pacienteForm.pacienteData.nationality_id"
+                        wireidvalue="pacienteForm.pesonData.nationality_id"
                         :jsonvalues="json_encode($this->nationality->map(fn($o) => ['id' => $o->id, 'name' => $o->nationality_name])->values())"
                     >
                         <x-inputs.dropdown.labelautocomplet
@@ -333,7 +338,7 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pacienteData.person_address"
+                                wire:model="pacienteForm.pesonData.person_address"
                                 id="patien_addres"
                                 autocomplete="off"
                                 maxlength="150"

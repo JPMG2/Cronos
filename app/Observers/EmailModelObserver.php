@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Observers;
 
 use App\Classes\Services\EmailsModel;
 use Illuminate\Database\Eloquent\Model;
 
-class EmailModelObserver
+final class EmailModelObserver
 {
     public function created(Model $model)
     {
+
         $baseclass = trim('App\Classes\Registro\ ').class_basename($model).'Email';
 
         $this->sendEmail($model, 'created', $baseclass);
@@ -19,7 +22,7 @@ class EmailModelObserver
 
         $classemail = new EmailsModel;
 
-        if ($action == 'update') {
+        if ($action === 'update') {
             $classemail->sendEmailUpdate(new $class, $model);
         } else {
             $classemail->sendEmailCreate(new $class, $model);

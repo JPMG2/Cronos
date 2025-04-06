@@ -28,9 +28,9 @@ final class Role extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function saveRelation(array $data)
+    public function saveRelation(array $data, string $relation): array
     {
-        return $this->actions()->sync($data);
+        return $this->$relation()->sync($data);
     }
 
     public function actions(): BelongsToMany

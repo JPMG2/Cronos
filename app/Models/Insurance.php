@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Traits\DbTraits\TableFilter;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Arr;
 
-class Insurance extends Model
+final class Insurance extends Model
 {
     use HasFactory, RecordActivity, TableFilter;
 
@@ -102,6 +104,11 @@ class Insurance extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function showData(int $id)
+    {
+        return self::with(['insuranceType', 'state', 'city.province'])->findOrFail($id);
+    }
+
     protected function casts(): array
     {
         return [
@@ -114,28 +121,28 @@ class Insurance extends Model
     protected function insuranceName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
         );
     }
 
     protected function insuranceAcronym(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
         );
     }
 
     protected function insuranceCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
         );
     }
 
     protected function insuranceCuit(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
         );
     }
 
@@ -143,41 +150,36 @@ class Insurance extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
         );
     }
 
     protected function insurancePhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
         );
     }
 
     protected function insuranceZipcode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtoupper(strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
         );
     }
 
     protected function insuranceEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
     }
 
     protected function insuranceWeb(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value)),
         );
 
-    }
-
-    public function showData(int $id)
-    {
-        return self::with(['insuranceType', 'state', 'city.province'])->findOrFail($id);
     }
 }

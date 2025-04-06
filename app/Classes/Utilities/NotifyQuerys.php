@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Utilities;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NotifyQuerys
+final class NotifyQuerys
 {
     /**
      * Generate a response message after updating a model.

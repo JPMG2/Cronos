@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Registro;
 
 use App\Livewire\Forms\Registro\DepartmentForm;
@@ -8,7 +10,7 @@ use App\Traits\UtilityForm;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ReDepartment extends Component
+final class ReDepartment extends Component
 {
     use UtilityForm;
 

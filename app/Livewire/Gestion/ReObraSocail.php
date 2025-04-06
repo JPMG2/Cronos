@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Gestion;
 
 use App\Livewire\Forms\Gestion\ObraSocialForm;
@@ -13,7 +15,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-class ReObraSocail extends Component
+final class ReObraSocail extends Component
 {
     use FormActionsTrait, HandlesActionPolicy, ProvinceCity,UtilityForm;
 
@@ -43,14 +45,6 @@ class ReObraSocail extends Component
         }
         $this->endInsurance($result);
 
-    }
-
-    protected function setIdPronvinceCity()
-    {
-
-        $this->form->dataobrasocial['city_id'] = max($this->getCityId(), 0);
-        $this->form->dataobrasocial['province_id'] = max($this->getProvinceId(),
-            0);
     }
 
     public function openTypes()
@@ -117,5 +111,13 @@ class ReObraSocail extends Component
             'route' => 're_obrasocial',
             'model' => 'Insurance',
         ]);
+    }
+
+    protected function setIdPronvinceCity()
+    {
+
+        $this->form->dataobrasocial['city_id'] = max($this->getCityId(), 0);
+        $this->form->dataobrasocial['province_id'] = max($this->getProvinceId(),
+            0);
     }
 }

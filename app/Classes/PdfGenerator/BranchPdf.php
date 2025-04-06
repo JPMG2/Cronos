@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\PdfGenerator;
 
 use App\Interfaces\ModelPdfGenerator;
@@ -7,7 +9,7 @@ use App\Models\Branch;
 use App\Models\Company;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class BranchPdf implements ModelPdfGenerator
+final class BranchPdf implements ModelPdfGenerator
 {
     public function generatePdfById($id)
     {

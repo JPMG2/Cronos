@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Classes\Registro;
 
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
 
-class DepaValidation
+final class DepaValidation
 {
     public function onDepartmentCreate(array $dept)
     {
@@ -29,8 +31,8 @@ class DepaValidation
     {
 
         return [
-            'department_name' => ucwords(strtolower(trim($dept['department_name']))),
-            'department_code' => strtoupper(trim($dept['department_code'])),
+            'department_name' => ucwords(mb_strtolower(trim($dept['department_name']))),
+            'department_code' => mb_strtoupper(trim($dept['department_code'])),
         ];
 
     }

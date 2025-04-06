@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Utility;
 
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class AlertForm extends Component
+final class AlertForm extends Component
 {
     public $showAlert = false;
 

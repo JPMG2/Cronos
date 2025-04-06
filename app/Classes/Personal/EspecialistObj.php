@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Class EspecialistObj
  *
@@ -13,7 +15,7 @@ use App\Models\Credential;
 use App\Models\Medical;
 use App\Traits\UtilityForm;
 
-class EspecialistObj
+final class EspecialistObj
 {
     use UtilityForm;
 

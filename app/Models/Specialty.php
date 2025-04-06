@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Database\Factories\SpecialtyFactory;
@@ -7,7 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Specialty extends Model
+final class Specialty extends Model
 {
     /** @use HasFactory<SpecialtyFactory> */
     use HasFactory;
@@ -19,7 +21,7 @@ class Specialty extends Model
     protected function specialtyName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
 
         );
     }

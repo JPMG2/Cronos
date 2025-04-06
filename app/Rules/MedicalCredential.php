@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Rules;
 
 use App\Models\Credential;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class MedicalCredential implements ValidationRule
+final class MedicalCredential implements ValidationRule
 {
-    protected $credentialID;
+    private $credentialID;
 
-    protected $credentialNumber;
+    private $credentialNumber;
 
-    protected $credentialModelId;
+    private $credentialModelId;
 
     public function __construct(int $credentialID, $credentialNumber, ?int $credentialModelId = null)
     {

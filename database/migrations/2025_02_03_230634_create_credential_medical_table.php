@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Credential;
 use App\Models\Medical;
 use Illuminate\Database\Migrations\Migration;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use App\Models\City;
@@ -51,12 +53,6 @@ trait ProvinceCity
         $this->showProvince = false;
     }
 
-    private function setProvinceId(int $id): void
-    {
-        $this->id_province = $id;
-
-    }
-
     public function searchCity()
     {
 
@@ -89,11 +85,6 @@ trait ProvinceCity
 
         $this->showCity = false;
 
-    }
-
-    private function setCityId(int $id): void
-    {
-        $this->id_city = $id;
     }
 
     public function resetValuesProvince(): void
@@ -156,5 +147,16 @@ trait ProvinceCity
     {
         $this->setProvinceCity($provinceId, $cityId);
         $this->setnameProvinceCity($provinceName, $cityName);
+    }
+
+    private function setProvinceId(int $id): void
+    {
+        $this->id_province = $id;
+
+    }
+
+    private function setCityId(int $id): void
+    {
+        $this->id_city = $id;
     }
 }
