@@ -84,4 +84,18 @@ trait TableFilter
             $query->whereRaw('LOWER(insuratype_name) like ?', ['%'.$searchvalue.'%']);
         })->with($withRelations);
     }
+
+    private function nationality_id($query, string $relationName, string $searchvalue, array $withRelations)
+    {
+        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
+            $query->whereRaw('LOWER(nationality_name) like ?', ['%'.$searchvalue.'%']);
+        })->with($withRelations);
+    }
+
+    private function occupation_id($query, string $relationName, string $searchvalue, array $withRelations)
+    {
+        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
+            $query->whereRaw('LOWER(occupation_name) like ?', ['%'.$searchvalue.'%']);
+        })->with($withRelations);
+    }
 }

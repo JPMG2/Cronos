@@ -83,8 +83,13 @@
                                         <x-table.th>
                                             Correo
                                         </x-table.th>
-                                        <x-table.th>
-
+                                        <x-table.th
+                                            wire:click="orderColumBy('nationality_id')"
+                                        >
+                                            <x-table.sortcolumn currentColumn="nationality_id" :$columName
+                                                                :$sortDirection>
+                                                <div>Nacionalidad</div>
+                                            </x-table.sortcolumn>
                                         </x-table.th>
                                     </tr>
                                 </x-table.thead>
@@ -97,10 +102,37 @@
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ $loop->iteration }}
                                             </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->num_document }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->person_name }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->person_lastname }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->gender?->gender_name }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->person_datebirth }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->person_phone }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->person_email }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$patiente->nationality?->nationality_name }}
+                                            </x-table.tdtable>
                                         </tr>
                                     @endforeach
                                 </x-table.tablebody>
                             </table>
+                            <div class="mt-2 mb-2 justify-end mx-2">
+                                {{ $listPatients->links() }}
+                            </div>
                             @else
                                 <x-alert windowtype="error">
                                     No existen especialistas registrados.

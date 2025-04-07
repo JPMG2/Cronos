@@ -23,6 +23,11 @@ final class ListPaciente extends Component
 
         $query = $this->makeQueryByColumn($queryIncial)->orderBy('num_document');
 
+        if (! empty($this->sortField)) {
+            $this->nameRelashion = 'listPatients';
+            $query = $this->makeQueryBySearch($this->sortField, $queryIncial);
+        }
+
         return view('livewire.servicios.list-paciente', [
             'listPatients' => $query->paginate(10),
         ]);

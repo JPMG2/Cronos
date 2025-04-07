@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Traits\DbTraits\TableFilter;
+use Carbon\Carbon;
 use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -11,11 +13,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Arr;
 
 final class Person extends Model
 {
     /** @use HasFactory<PersonFactory> */
-    use HasFactory;
+    use HasFactory,TableFilter;
 
     public static string $startFilterBay = 'num_document';
 
@@ -32,7 +35,7 @@ final class Person extends Model
             'person_name' => 'Nombre',
             'person_lastname' => 'Apellido',
             'person_phone' => 'Teléfono',
-
+            'nationality_id' => 'Nacionalidad',
         ];
     }
 
@@ -120,9 +123,32 @@ final class Person extends Model
         $this->attributes['nationality_id'] = $value ?: null;
     }
 
-    public function scopeListPatients(Builder $query): Builder
+    public function scopeListPatients(Builder $query, $stringsearch = null, $relashion = null): Builder
     {
-        return $query->whereHas('patiente');
+        if (! is_null($relashion)) {
+
+            $relationName = $this->getRelashionName($relashion);
+
+            if (method_exists($this, $relationName)) {
+                return $this->{$relashion}($query, $relationName, $stringsearch, ['gender', 'maritalStatus', 'occupation', 'nationality', 'city']);
+            }
+        }
+
+        return $query->whereHas('patiente')->with(['gender', 'maritalStatus', 'occupation', 'nationality', 'city']);
+
+    }
+
+    public function getRelashionName(string $relashionvalue): string
+    {
+        $relashionarray = [
+            'city_id' => 'city',
+            'gender_id' => 'gender',
+            'marital_status_id' => 'maritalStatus',
+            'occupation_id' => 'occupation',
+            'nationality_id' => 'nationality', ];
+
+        return Arr::get($relashionarray, $relashionvalue);
+
     }
 
     protected function casts(): array
@@ -190,6 +216,14 @@ final class Person extends Model
     protected function numDocument(): Attribute
     {
         return Attribute::make(
+            set: fn ($value) => trim($value),
+        );
+    }
+
+    protected function personDatebirth(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->format('d-m-Y'),
             set: fn ($value) => trim($value),
         );
     }
