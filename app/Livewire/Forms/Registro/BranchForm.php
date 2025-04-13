@@ -51,7 +51,7 @@ final class BranchForm extends Form
     public function infoBranc($branchId)
     {
         $services = $this->iniService();
-        $brancData = $services->showWithRelationship($branchId);
+        $brancData = $services->showWithRelationship($branchId, 'showDataRelashion');
         if ($brancData) {
             $this->databranch = $brancData->toArray();
             $this->setProvinceCity($brancData->city->province->id, $brancData->city->id);

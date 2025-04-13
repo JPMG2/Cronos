@@ -73,7 +73,7 @@ final class ObraSocialForm extends Form
     public function infoInsurance($idInsurance)
     {
         $services = $this->iniService();
-        $dataInsurance = $services->showWithRelationship($idInsurance);
+        $dataInsurance = $services->showWithRelationship($idInsurance, 'showInsuraceRelashion');
 
         $this->dataobrasocial = $dataInsurance->toArray();
         $this->dataobrasocial['insurance_type_id'] = $dataInsurance->insurance_type_id;
@@ -82,7 +82,7 @@ final class ObraSocialForm extends Form
         $this->dataobrasocial['city_id'] = $dataInsurance->city_id;
         if (! is_null($dataInsurance->city)) {
             $this->setProvinceCity($dataInsurance->city->province->id, $dataInsurance->city->id);
-            $this->setnameProvinceCity($dataInsurance->city->province->province_name, $dataInsurance->city->city_name);
+            $this->setnameProvinceCity($dataInsurance->city->province->province_name->value, $dataInsurance->city->city_name->value);
         }
     }
 

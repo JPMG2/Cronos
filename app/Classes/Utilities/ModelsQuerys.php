@@ -13,7 +13,7 @@ abstract class ModelsQuerys
 {
     use UtilityForm;
 
-    protected $modelName;
+    protected string $modelName;
 
     protected Model $model;
 
@@ -38,32 +38,30 @@ abstract class ModelsQuerys
         return $model;
     }
 
-    final public function show(int $id): ?Model
+    final public function show(int $id): Model
     {
         return $this->model->findOrFail($id);
     }
 
-    final public function showWithRelationship(int $id): ?Model
+    final public function showWithRelationship(int $id, string $relationName): ?Model
     {
-        return $this->model->showData($id);
+        return $this->model->showData($id, $relationName);
     }
 
-    final public function addWithRelastionship(int $id, array $data, string $namerelation): array
+    final public function addWithRelastionship(int $id, array $data, string $relationName): array
     {
-        $mainModel = $this->model->findOrFail($id);
-
-        return $mainModel->saveRelation($data, $namerelation);
+        return $this->model->findOrFail($id)->saveRelation($data, $relationName);
     }
 
-    final public function storeRelastionship(array $parentModel, array $chilModel, string $namerelation): ?Model
+    final public function storeRelastionship(array $parentModel, array $chilModel, string $relationName): ?Model
     {
         $newInstance = null;
         try {
-            DB::transaction(function () use ($parentModel, $chilModel, $namerelation, &$newInstance) {
+            DB::transaction(function () use ($parentModel, $chilModel, $relationName, &$newInstance) {
 
                 $newInstance = $this->store($parentModel);
 
-                $newInstance->saveRelation($chilModel, $namerelation);
+                $newInstance->saveRelation($chilModel, $relationName);
 
             });
         } catch (Exception $e) {

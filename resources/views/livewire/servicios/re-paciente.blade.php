@@ -212,7 +212,7 @@
                 <div class="relative sm:col-span-3">
                     <x-inputs.dropdown.dropdownconfig
                         wireidvalue="pacienteForm.pesonData.occupation_id"
-                        :jsonvalues="json_encode($this->ocupacion->map(fn($o) => ['id' => $o->id, 'name' => $o->occupation_name])->values())"
+                        :jsonvalues="json_encode($this->occupation->map(fn($o) => ['id' => $o->id, 'name' => $o->occupation_name])->values())"
                     >
                         <x-inputs.dropdown.labelautocomplet
                             label="Ocupación"

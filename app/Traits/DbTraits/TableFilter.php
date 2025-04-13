@@ -18,6 +18,13 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait TableFilter
 {
+    private function applyFilter(Builder $query, string $relationName, string $columnName, string $searchValue, array $withRelations): Builder
+    {
+        return $query->whereHas($relationName, function ($query) use ($columnName, $searchValue) {
+            $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%']);
+        })->with($withRelations);
+    }
+
     /**
      * Filters the query results based on the state name of a related model.
      *
@@ -33,9 +40,7 @@ trait TableFilter
      */
     private function state_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
-        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->whereRaw('LOWER(state_name) like ?', ['%'.$searchvalue.'%']);
-        })->with($withRelations);
+        return $this->applyFilter($query, $relationName, 'state_name', $searchvalue, $withRelations);
     }
 
     /**
@@ -53,9 +58,8 @@ trait TableFilter
      */
     private function specialty_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
-        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->whereRaw('LOWER(specialty_name) like ?', ['%'.$searchvalue.'%']);
-        })->with($withRelations);
+        return $this->applyFilter($query, $relationName, 'specialty_name', $searchvalue, $withRelations);
+
     }
 
     /**
@@ -73,29 +77,21 @@ trait TableFilter
      */
     private function credential_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
-        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->whereRaw('LOWER(credential_number) like ?', ['%'.$searchvalue.'%']);
-        })->with($withRelations);
+        return $this->applyFilter($query, $relationName, 'credential_number', $searchvalue, $withRelations);
     }
 
     private function insurance_type_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
-        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->whereRaw('LOWER(insuratype_name) like ?', ['%'.$searchvalue.'%']);
-        })->with($withRelations);
+        return $this->applyFilter($query, $relationName, 'insuratype_name', $searchvalue, $withRelations);
     }
 
     private function nationality_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
-        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->whereRaw('LOWER(nationality_name) like ?', ['%'.$searchvalue.'%']);
-        })->with($withRelations);
+        return $this->applyFilter($query, $relationName, 'nationality_name', $searchvalue, $withRelations);
     }
 
     private function occupation_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
-        return $query->whereHas($relationName, function ($query) use ($searchvalue) {
-            $query->whereRaw('LOWER(occupation_name) like ?', ['%'.$searchvalue.'%']);
-        })->with($withRelations);
+        return $this->applyFilter($query, $relationName, 'occupation_name', $searchvalue, $withRelations);
     }
 }

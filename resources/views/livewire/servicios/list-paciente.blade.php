@@ -83,13 +83,8 @@
                                         <x-table.th>
                                             Correo
                                         </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('nationality_id')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="nationality_id" :$columName
-                                                                :$sortDirection>
-                                                <div>Nacionalidad</div>
-                                            </x-table.sortcolumn>
+                                        <x-table.th>
+
                                         </x-table.th>
                                     </tr>
                                 </x-table.thead>
@@ -123,8 +118,15 @@
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{$patiente->person_email }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->nationality?->nationality_name }}
+                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                                <div
+                                                    class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                                >
+                                                    <x-headerform.eyeoption
+                                                        wire:key="{{ $patiente->id }}"
+                                                        wire:click.prevent="patientId({{ $patiente->id }})"
+                                                    ></x-headerform.eyeoption>
+                                                </div>
                                             </x-table.tdtable>
                                         </tr>
                                     @endforeach

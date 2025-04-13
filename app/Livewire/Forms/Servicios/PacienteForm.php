@@ -13,7 +13,7 @@ use Livewire\Form;
 
 final class PacienteForm extends Form
 {
-    public $pesonData = [
+    public array $pesonData = [
         'document_id' => 1,
         'city_id' => null,
         'gender_id' => 1,
@@ -30,7 +30,7 @@ final class PacienteForm extends Form
 
     ];
 
-    public $pacienteData = [
+    public array $pacienteData = [
         'patient_photo' => '',
     ];
 
@@ -55,8 +55,19 @@ final class PacienteForm extends Form
         }
     }
 
+    public function infoPatient($patientId): void
+    {
+        $services = $this->iniService();
+        $info = $services->showWithRelationship($patientId, 'showDataPatient');
+        $this->pesonData = $info->toArray();
+        $this->extraInfoPaient($info);
+
+    }
+
     protected function iniService()
     {
         return app()->make(ModelService::class, ['model' => new Person]);
     }
+
+    protected function extraInfoPaient($data) {}
 }

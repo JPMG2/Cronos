@@ -104,7 +104,13 @@ final class Insurance extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function showData(int $id)
+    public function showData(int $id, string $relashion)
+    {
+
+        return $this->$relashion($id);
+    }
+
+    public function showInsuraceRelashion(int $id)
     {
         return self::with(['insuranceType', 'state', 'city.province'])->findOrFail($id);
     }

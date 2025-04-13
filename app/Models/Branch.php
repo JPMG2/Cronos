@@ -64,7 +64,13 @@ final class Branch extends Model
         return $this->branch_name;
     }
 
-    public function showData(int $id)
+    public function showData(int $id, string $relashion)
+    {
+
+        return $this->$relashion($id);
+    }
+
+    public function showDataRelashion(int $id)
     {
         return self::with('city.province', 'state')->findOrFail($id);
     }

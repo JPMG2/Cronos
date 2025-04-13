@@ -12,6 +12,23 @@
          filterText: '',
 
          options: {{ $jsonvalues}},
+            init() {
+                this.$wire.$watch('{{$wireidvalue}}', (value) => {
+                 if(value){
+                    this.selected = value;
+                    const selectedOption = this.options.find(option => option.id === value);
+                    if (selectedOption) {
+                        this.valuedText = selectedOption.name;
+                    } else {
+                        this.valuedText = '';
+                    }
+                 }else{
+                    this.selected = null;
+                    this.valuedText = '';
+                 }
+                })
+
+            },
          showoption() {
            this.open = !this.open;
            this.filterText = '';

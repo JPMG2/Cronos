@@ -12,8 +12,10 @@ use App\Models\Company;
 use App\Models\Patient;
 use App\Observers\EmailModelObserver;
 use App\Observers\PatientObserver;
+use Carbon\CarbonImmutable;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Vite;
@@ -47,9 +49,11 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Vite::prefetch(concurrency: 3);
+
         $this->configureCommands();
         $this->configureModels();
+        $this->configureDates();
+        $this->configureVite();
         Model::preventLazyLoading(! $this->app->isProduction());
         Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
         Model::preventAccessingMissingAttributes(! $this->app->isProduction());
@@ -67,8 +71,18 @@ final class AppServiceProvider extends ServiceProvider
         );
     }
 
-    private function configureModels()
+    private function configureModels(): void
     {
         Model::shouldBeStrict();
+    }
+
+    private function configureDates(): void
+    {
+        Date::use(CarbonImmutable::class);
+    }
+
+    private function configureVite(): void
+    {
+        Vite::prefetch(concurrency: 3);
     }
 }

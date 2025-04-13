@@ -46,7 +46,7 @@ final class ActionsForm extends Form
     public function actionData(int $intRole)
     {
         $services = $this->iniService();
-        $data = $services->showWithRelationship((int) $this->dataaction['role_id']);
+        $data = $services->showWithRelationship((int) $this->dataaction['role_id'], 'showActionRelashion');
         if (count($data->actions) > 0) {
             $this->dataaction['action_id'] = $data->actions->pluck('id')->toArray();
         } else {

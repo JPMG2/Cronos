@@ -38,7 +38,13 @@ final class Role extends Model
         return $this->belongsToMany(Action::class);
     }
 
-    public function showData(int $id)
+    public function showData(int $id, string $relashion)
+    {
+
+        return $this->$relashion($id);
+    }
+
+    public function showActionRelashion(int $id)
     {
         return self::with('actions')->findOrFail($id);
     }

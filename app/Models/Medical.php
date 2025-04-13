@@ -106,7 +106,7 @@ final class Medical extends Model
 
             $relationName = $this->getRelashionName($relashion);
 
-            if (method_exists($this, $relationName)) {
+            if (method_exists($this, $relashion)) {
 
                 return $this->{$relashion}($query, $relationName, $stringsearch, ['specialty', 'degree', 'credentials', 'state']);
             }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\DbTraits\TableFilter;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Database\Factories\PersonFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -35,11 +35,10 @@ final class Person extends Model
             'person_name' => 'Nombre',
             'person_lastname' => 'Apellido',
             'person_phone' => 'Teléfono',
-            'nationality_id' => 'Nacionalidad',
         ];
     }
 
-    public static function documentExist(int $documentType, string $numdocument, $personId = null)
+    public static function documentExist(int $documentType, string $numdocument, $personId = null): bool
     {
         if ($personId) {
             return self::where('document_id', $documentType)
@@ -129,7 +128,7 @@ final class Person extends Model
 
             $relationName = $this->getRelashionName($relashion);
 
-            if (method_exists($this, $relationName)) {
+            if (method_exists($this, $relashion)) {
                 return $this->{$relashion}($query, $relationName, $stringsearch, ['gender', 'maritalStatus', 'occupation', 'nationality', 'city']);
             }
         }
@@ -149,6 +148,18 @@ final class Person extends Model
 
         return Arr::get($relashionarray, $relashionvalue);
 
+    }
+
+    public function showData(int $id, string $relashion)
+    {
+
+        return $this->$relashion($id);
+    }
+
+    public function showDataPatient(int $id)
+    {
+        return self::whereHas('patiente')->with(['gender', 'maritalStatus', 'occupation', 'nationality', 'city'])
+            ->findOrFail($id);
     }
 
     protected function casts(): array
@@ -223,7 +234,7 @@ final class Person extends Model
     protected function personDatebirth(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('d-m-Y'),
+            get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
             set: fn ($value) => trim($value),
         );
     }

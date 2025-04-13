@@ -38,7 +38,7 @@ final class RePaciente extends Component
     }
 
     #[Computed]
-    public function ocupacion()
+    public function occupation()
     {
 
         $this->commonQuerys = app('commonquery');
@@ -69,32 +69,35 @@ final class RePaciente extends Component
         $this->clearForm();
     }
 
-    public function clearForm()
+    public function clearForm(): void
     {
         $this->pacienteForm->reset();
         $this->cleanFormValues();
     }
 
-    public function validateDocument()
+    public function validateDocument(): void
     {
         app()->call([$this->pacienteForm, 'validateDocumente'], ['typeQuery' => $this->isupdate]);
     }
 
-    public function patientHandleMenuAction(string $nameoption)
+    public function patientHandleMenuAction(string $nameoption): void
     {
 
         $id = $this->pacienteForm->pesonData['id'] ?? 0;
         $this->handleAction($nameoption, [
             'id' => $id,
-            'pdfClass' => 'MedicPdf',
+            'pdfClass' => 'PatientPdf',
             'route' => 're_paciente',
             'model' => 'Patient',
         ]);
     }
 
     #[On('dataPatient')]
-    public function loadPatiente($show)
+    public function loadPatiente($patientId)
     {
-        $this->show = $show;
+        $this->dispatch('showOptionsForms', show: true);
+        $this->pacienteForm->reset();
+        $this->isdisabled = 'disabled';
+        app()->call([$this->pacienteForm, 'infoPatient'], ['patientId' => $patientId]);
     }
 }
