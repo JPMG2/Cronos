@@ -35,6 +35,6 @@ trait UtilityForm
     public function editActivate()
     {
         $this->isdisabled = '';
-        $this->isupdate = false;
+        $this->isupdate = true;
     }
 }

@@ -1,8 +1,22 @@
-<button
+@props([
+    "isdisabled" => false,
+])
 
+@php
+    $buttondisable='';
+      if ($isdisabled) {
+          $disableatributs = "bg-gray-100";
+            $buttondisable = 'disabled';
+      } else {
+          $disableatributs = "bg-white";
+      }
+@endphp
+
+<button
+    {{$buttondisable}}
     type="button"
     @click="showoption()"
-    class="relative grid w-full cursor-default grid-cols-1 rounded-md bg-white  py-2 pl-3 pr-2 text-left text-gray-900 outline
+    class="relative grid w-full {{$disableatributs}} cursor-default grid-cols-1 rounded-md   py-2 pl-3 pr-2 text-left text-gray-900 outline
                outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-1
                focus:-outline-offset-1 focus:outline-blue-600 sm:text-sm/6"
     aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">

@@ -59,7 +59,10 @@ final class RePaciente extends Component
     {
         if (! $this->isupdate) {
             $result = app()->call([$this->pacienteForm, 'pacienteStore']);
+        } else {
+            $result = app()->call([$this->pacienteForm, 'pacienteUpdate']);
         }
+
         $this->endPatient($result);
     }
 
@@ -72,6 +75,7 @@ final class RePaciente extends Component
     public function clearForm(): void
     {
         $this->pacienteForm->reset();
+        $this->isupdate = false;
         $this->cleanFormValues();
     }
 

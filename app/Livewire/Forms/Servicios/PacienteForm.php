@@ -43,16 +43,35 @@ final class PacienteForm extends Form
 
         $services = $this->iniService();
 
-        return NotifyQuerys::msgCreate($services->storeRelastionship(
+        return NotifyQuerys::msgCreate($services->createAndAssociate(
             $this->pesonData, $this->pacienteData, 'patiente')
         );
     }
 
+    public function pacienteUpdate(
+        PatientPersonValidation $patientValidation,
+        PersonValidation $personValidation): array
+    {
+        $patientValidation->onPatientPersonUpdate((array) $this->pesonData, (int) $this->pesonData['id']);
+
+        $personValidation->onPersonUpdate((array) $this->pesonData, (int) $this->pesonData['id']);
+
+        $services = $this->iniService();
+
+        return NotifyQuerys::msgUpadte($services->updateAndAssociate((int) $this->pesonData['id'],
+            $this->pesonData, $this->pacienteData, 'patiente'
+        ));
+    }
+
     public function validateDocumente(PatientPersonValidation $patientValidation, $typeQuery)
     {
+
         if (! $typeQuery) {
             $patientValidation->onPatientPersonCreate($this->pesonData);
+        } else {
+            $patientValidation->onPatientPersonUpdate((array) $this->pesonData, (int) $this->pesonData['id']);
         }
+
     }
 
     public function infoPatient($patientId): void

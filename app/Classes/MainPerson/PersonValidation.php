@@ -35,6 +35,31 @@ final class PersonValidation
         )->validate();
     }
 
+    public function onPersonUpdate(array $person, int $id)
+    {
+        return Validator::make(
+
+            $this->inicialiciteAtributes($person),
+            [
+                'person_name' => AttributeValidator::stringValid(true, 4),
+                'person_lastname' => AttributeValidator::stringValid(true, 4),
+                'gender_id' => 'sometimes|exists:genders,id',
+                'person_datebirth' => AttributeValidator::dateValid(true),
+                'marital_status_id' => 'sometimes|exists:marital_statuses,id',
+                'occupation_id' => 'sometimes|exists:occupations,id',
+                'person_phone' => AttributeValidator::digitValid(5, false),
+                'person_email' => AttributeValidator::emailValid('people', 'person_email', $id),
+                'nationality_id' => 'sometimes|exists:nationalities,id',
+                'person_address' => AttributeValidator::stringValid(false, 5),
+            ],
+            [
+
+            ],
+            $this->niceNames()
+
+        )->validate();
+    }
+
     public function inicialiciteAtributes($person)
     {
 

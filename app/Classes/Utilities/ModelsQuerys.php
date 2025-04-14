@@ -53,15 +53,15 @@ abstract class ModelsQuerys
         return $this->model->findOrFail($id)->saveRelation($data, $relationName);
     }
 
-    final public function storeRelastionship(array $parentModel, array $chilModel, string $relationName): ?Model
+    final public function createAndAssociate(array $parentModel, array $childModel, string $relationName): ?Model
     {
         $newInstance = null;
         try {
-            DB::transaction(function () use ($parentModel, $chilModel, $relationName, &$newInstance) {
+            DB::transaction(function () use ($parentModel, $childModel, $relationName, &$newInstance) {
 
                 $newInstance = $this->store($parentModel);
 
-                $newInstance->saveRelation($chilModel, $relationName);
+                $newInstance->saveRelation($childModel, $relationName);
 
             });
         } catch (Exception $e) {
@@ -70,4 +70,6 @@ abstract class ModelsQuerys
 
         return $newInstance;
     }
+
+    final public function updateAndAssociate(int $idParent, array $parentModel, array $childModel, string $relationName) {}
 }

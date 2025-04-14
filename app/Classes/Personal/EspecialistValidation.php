@@ -42,10 +42,10 @@ final class EspecialistValidation
     {
 
         return [
-            'state_id' => trim($especialsit['state_id']),
-            'credential_id' => trim($especialsit['credential_id']),
-            'specialty_id' => trim($especialsit['specialty_id']),
-            'degree_id' => trim($especialsit['degree_id']),
+            'state_id' => trim((string) $especialsit['state_id']),
+            'credential_id' => trim((string) $especialsit['credential_id']),
+            'specialty_id' => trim((string) $especialsit['specialty_id']),
+            'degree_id' => trim((string) $especialsit['degree_id']),
             'medical_name' => ucwords(mb_strtolower(trim($especialsit['medical_name']))),
             'medical_lastname' => ucwords(mb_strtolower(trim($especialsit['medical_lastname']))),
             'medical_address' => trim($especialsit['medical_address']),

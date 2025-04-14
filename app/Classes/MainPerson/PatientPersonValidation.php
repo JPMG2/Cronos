@@ -32,6 +32,28 @@ final class PatientPersonValidation
         )->validate();
     }
 
+    public function onPatientPersonUpdate(array $person, int $id)
+    {
+        return Validator::make(
+
+            $this->inicialiciteAtributes($person),
+            [
+                'document_id' => 'required',
+                'num_document' => [
+                    'required',
+                    'min:5',
+                    'unique' => AttributeDocumentValidator::documentTypeUnique((int) $person['document_id'], $person['num_document'], $id),
+                ],
+
+            ],
+            [
+
+            ],
+            $this->niceNames()
+
+        )->validate();
+    }
+
     public function inicialiciteAtributes($person)
     {
 

@@ -30,7 +30,7 @@
                                     wire:model.defer="pacienteForm.pesonData.document_id"
                                     x-ref="ini"
                                     id="paci_document"
-                                    isdisabled=""
+                                    isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('document_id')"
                                 >
                                     @foreach ($listDocument as $document)
@@ -63,7 +63,7 @@
                                     autocomplete="off"
                                     maxlength="20"
                                     placeholder=" "
-                                    isdisabled=""
+                                    isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('num_document')"
 
                                 ></x-inputs.textinput>
@@ -86,11 +86,10 @@
                             <x-inputs.textinput
                                 wire:model="pacienteForm.pesonData.person_name"
                                 id="pacient_name"
-
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
-                                isdisabled=""
+                                isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('person_name')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
@@ -114,7 +113,7 @@
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
-                                isdisabled=""
+                                isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('person_lastname')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
@@ -135,7 +134,7 @@
                             <x-inputs.selectinput
                                 wire:model.defer="pacienteForm.pesonData.gender_id"
                                 id="patien_gender"
-                                isdisabled=""
+                                isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('gender_id')"
                             >
                                 @foreach ($listGender as $gender)
@@ -168,7 +167,7 @@
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
-                                isdisabled=""
+                                isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('person_datebirth')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
@@ -190,7 +189,7 @@
                             <x-inputs.selectinput
                                 wire:model.defer="pacienteForm.pesonData.marital_status_id"
                                 id="patien_estcivil"
-                                isdisabled=""
+                                isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('marital_status_id')"
                             >
                                 <option label=" "></option>
@@ -219,7 +218,9 @@
                             for="pacient_ocupaccion"
                             required="yes"
                         >
-                            <x-inputs.dropdown.buttondropdown/>
+                            <x-inputs.dropdown.buttondropdown
+                                isdisabled="{{$isdisabled}}"
+                            />
                         </x-inputs.dropdown.labelautocomplet>
                         <x-inputs.dropdown.uldropdown
                             ulname="ocupacion"
@@ -258,7 +259,7 @@
                                     autocomplete="off"
                                     maxlength="20"
                                     placeholder=" "
-                                    isdisabled=""
+                                    isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('person_phone')"
 
                                 ></x-inputs.textinput>
@@ -283,7 +284,7 @@
                                     autocomplete="off"
                                     maxlength="150"
                                     placeholder=" "
-                                    isdisabled=""
+                                    isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('person_email')"
                                 ></x-inputs.textinput>
                             </x-inputs.textgroup>
@@ -305,7 +306,9 @@
                             for="pacient_nacionalidad"
                             required="yes"
                         >
-                            <x-inputs.dropdown.buttondropdown/>
+                            <x-inputs.dropdown.buttondropdown
+                                isdisabled="{{$isdisabled}}"
+                            />
                         </x-inputs.dropdown.labelautocomplet>
                         <x-inputs.dropdown.uldropdown
                             ulname="nationality"
@@ -343,7 +346,7 @@
                                 autocomplete="off"
                                 maxlength="150"
                                 placeholder=" "
-                                isdisabled=""
+                                isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('person_address')"
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
