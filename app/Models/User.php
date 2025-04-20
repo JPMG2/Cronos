@@ -55,12 +55,14 @@ final class User extends Authenticatable
 
     public function getUserRoleId()
     {
-        return $this->roles()->first()->id;
+        return $this->roles->first()?->id;
     }
 
     public function getUserRoleName()
     {
-        return $this->roles()->first()->name_role;
+        return $this->relationLoaded('roles')
+            ? $this->roles->first()?->name_role
+            : $this->roles()->first()?->name_role;
     }
 
     /**

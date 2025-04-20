@@ -89,7 +89,10 @@
                                                 {{ $medical->medical_lastname }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" break-words>
-                                                {{ $medical->credentials->first()->credential_code.'-'.$medical->first_credential_number }}
+                                                @php
+                                                    $credential = $medical->credentials->first();
+                                                @endphp
+                                                {{ $credential?->credential_code . '-' . $credential?->pivot?->credential_number }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ optional($medical->specialty)->specialty_name ?? '-'}}
