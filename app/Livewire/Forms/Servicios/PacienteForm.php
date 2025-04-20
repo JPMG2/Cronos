@@ -41,11 +41,11 @@ final class PacienteForm extends Form
         $patientValidation->onPatientPersonCreate($this->pesonData);
         $personValidation->onPersonCreate($this->pesonData);
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgCreate($services->createAndAssociate(
-            $this->pesonData, $this->pacienteData, 'patiente')
+        return $this->handleService('msgCreate',
+            fn ($services) => $services->createAndAssociate(
+                $this->pesonData, $this->pacienteData, 'patiente')
         );
+
     }
 
     public function pacienteUpdate(
@@ -56,11 +56,10 @@ final class PacienteForm extends Form
 
         $personValidation->onPersonUpdate((array) $this->pesonData, (int) $this->pesonData['id']);
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgUpadte($services->updateAndAssociate((int) $this->pesonData['id'],
-            $this->pesonData, $this->pacienteData, 'patiente'
-        ));
+        return $this->handleService('msgUpadte',
+            fn ($services) => $services->updateAndAssociate(
+                (int) $this->pesonData['id'], $this->pesonData, $this->pacienteData, 'patiente')
+        );
     }
 
     public function validateDocumente(PatientPersonValidation $patientValidation, $typeQuery)
@@ -79,14 +78,18 @@ final class PacienteForm extends Form
         $services = $this->iniService();
         $info = $services->showWithRelationship($patientId, 'showDataPatient');
         $this->pesonData = $info->toArray();
-        $this->extraInfoPaient($info);
 
+    }
+
+    protected function handleService(string $msgType, callable $callback): array
+    {
+        $services = $this->iniService();
+
+        return NotifyQuerys::{$msgType}($callback($services));
     }
 
     protected function iniService()
     {
         return app()->make(ModelService::class, ['model' => new Person]);
     }
-
-    protected function extraInfoPaient($data) {}
 }

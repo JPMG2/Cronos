@@ -97,6 +97,11 @@ final class Person extends Model
         return $this->$relation()->create($data);
     }
 
+    public function updateRelation(array $data, string $relation): int
+    {
+        return $this->$relation()->update($data);
+    }
+
     public function setCityIdAttribute($value)
     {
         $this->attributes['city_id'] = $value ?: null;
@@ -213,7 +218,7 @@ final class Person extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucfirst(mb_strtolower(trim($value))),
         );
     }
 

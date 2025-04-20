@@ -69,6 +69,7 @@ final class RePaciente extends Component
     public function endPatient($result)
     {
         $this->dispatch('show-toast', $result);
+        $this->dispatch('showOptionsForms', show: false);
         $this->clearForm();
     }
 

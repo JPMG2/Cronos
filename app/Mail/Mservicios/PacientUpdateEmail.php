@@ -6,7 +6,6 @@ namespace App\Mail\Mservicios;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
@@ -14,12 +13,15 @@ final class PacientUpdateEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $person;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($person)
     {
-        //
+        $this->person = $person;
+
     }
 
     /**
@@ -32,23 +34,11 @@ final class PacientUpdateEmail extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
+    public function build(): self
     {
-        return new Content(
-            markdown: 'emails.mservicios.patientupdateemail',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->markdown('emails.mservicios.patientupdateemail')
+            ->with([
+                'patient' => $this->person,
+            ]);
     }
 }

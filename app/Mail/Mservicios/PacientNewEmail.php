@@ -13,14 +13,14 @@ final class PacientNewEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $pacient;
+    public $person;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($pacient)
+    public function __construct($person)
     {
-        $this->pacient = $pacient;
+        $this->person = $person;
     }
 
     /**
@@ -29,7 +29,7 @@ final class PacientNewEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bienvenido/a '.$this->pacient->person->fullName,
+            subject: 'Bienvenido/a '.$this->person->fullName,
         );
     }
 
@@ -37,7 +37,7 @@ final class PacientNewEmail extends Mailable
     {
         return $this->markdown('emails.mservicios.patientnewemail')
             ->with([
-                'patient' => $this->pacient,
+                'patient' => $this->person,
             ]);
     }
 }
