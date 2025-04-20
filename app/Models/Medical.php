@@ -102,19 +102,27 @@ final class Medical extends Model
 
     public function scopeListMedicals(Builder $query, $stringsearch = null, $relashion = null): Builder
     {
+        $with = [
+            'specialty:id,specialty_name',
+            'degree:id,degree_name',
+            'state:id,state_name',
+            'credentials' => function ($query) {
+                $query->select('credentials.id', 'credential_name');
+            },
+        ];
         if (! is_null($relashion)) {
 
             $relationName = $this->getRelashionName($relashion);
 
             if (method_exists($this, $relashion)) {
 
-                return $this->{$relashion}($query, $relationName, $stringsearch, ['specialty', 'degree', 'credentials', 'state']);
+                return $this->{$relashion}($query, $relationName, $stringsearch, $with);
             }
 
             return $query;
         }
 
-        return $query->with(['specialty', 'degree', 'credentials', 'state']);
+        return $query->with($with);
 
     }
 
