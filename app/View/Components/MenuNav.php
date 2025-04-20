@@ -8,6 +8,7 @@ use App\Models\Menu;
 use Auth;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
 
 final class MenuNav extends Component
@@ -26,17 +27,20 @@ final class MenuNav extends Component
     public function render(): View|Closure|string
     {
         $user = Auth::user();
-        if ($user->getUserRoleName() === 'Owner') {
-            $menuItems = Menu::with('optionmenus')->whereNull('menu_id')
-                ->withcount('optionmenus')
-                ->orderBy('id')
-                ->get();
-        } else {
+        $cacheKeyMenu = 'menu-'.$user->id;
+        $menuItems = Cache::remember($cacheKeyMenu, 1440, function () use ($user) {
+            if ($user->getUserRoleName() === 'Owner') {
+                return Menu::with('optionmenus')->whereNull('menu_id')
+                    ->withcount('optionmenus')
+                    ->orderBy('id')
+                    ->get();
+            }
+
             $opcionmenus = $user->roles->flatMap(function ($rol) {
                 return $rol->menus->pluck('id');
             })->toArray();
 
-            $menuItems = Menu::with([
+            return Menu::with([
                 'optionmenus' => function ($query) use ($opcionmenus) {
                     $query->whereIn('id', $opcionmenus)
                         ->with([
@@ -50,7 +54,8 @@ final class MenuNav extends Component
                 ->withcount('optionmenus')
                 ->whereIn('id', $opcionmenus) // <-- filter parents too
                 ->get();
-        }
+
+        });
 
         return view('components.mmenu.menu-nav', compact('menuItems'));
     }

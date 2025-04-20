@@ -53,16 +53,14 @@ final class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
-    public function getUserRoleId()
+    public function getUserRoleId(): int
     {
-        return $this->roles->first()?->id;
+        return (int) $this->roles->pluck('id')->implode(',');
     }
 
-    public function getUserRoleName()
+    public function getUserRoleName(): string
     {
-        return $this->relationLoaded('roles')
-            ? $this->roles->first()?->name_role
-            : $this->roles()->first()?->name_role;
+        return $this->roles->pluck('name_role')->implode(',');
     }
 
     /**

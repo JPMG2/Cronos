@@ -1,7 +1,9 @@
 <?php
 
 declare(strict_types=1);
-use App\Models\Person;
+
+use App\Models\Menu;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +15,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patients', function (Blueprint $table) {
+        Schema::create('menu_role', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Person::class)->constrained();
-            $table->string('patient_photo')->nullable();
+            $table->primary(['menu_id', 'role_id']);
+            $table->foreignIdFor(Menu::class)->constrained();
+            $table->foreignIdFor(Role::class)->constrained();
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('menu_role');
     }
 };
