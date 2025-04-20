@@ -15,7 +15,7 @@
                 <x-formcomponent.titleform>Datos de especialista</x-formcomponent.titleform>
                 <x-formcomponent.titleindicator
                     wire:loading
-                    wire:target="getEspecialis,especialistShow"></x-formcomponent.titleindicator>
+                    wire:target="getEspecialis,especialistHandleMenuAction"></x-formcomponent.titleindicator>
             </div>
 
             <div class="mt-3 grid grid-cols-1 gap-x-2  gap-y-2 sm:grid-cols-9">

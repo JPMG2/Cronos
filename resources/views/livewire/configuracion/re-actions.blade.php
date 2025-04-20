@@ -12,7 +12,8 @@
                         Permisos
                     </h4>
                 </div>
-                <div class="ml-2" wire:loading wire:target="queryActionRole">
+                <div class="ml-2" wire:loading
+                     wire:target="queryActionRole,roleValue">
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
             </div>

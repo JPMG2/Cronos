@@ -82,7 +82,7 @@ final class ObraSocialForm extends Form
         $this->dataobrasocial['city_id'] = $dataInsurance->city_id;
         if (! is_null($dataInsurance->city)) {
             $this->setProvinceCity($dataInsurance->city->province->id, $dataInsurance->city->id);
-            $this->setnameProvinceCity($dataInsurance->city->province->province_name->value, $dataInsurance->city->city_name->value);
+            $this->setnameProvinceCity($dataInsurance->city->province->province_name->value, $dataInsurance->city->city_name);
         }
     }
 

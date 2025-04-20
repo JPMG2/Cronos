@@ -20,7 +20,7 @@
                 <x-formcomponent.titleform>Datos de sucursal</x-formcomponent.titleform>
                 <x-formcomponent.titleindicator
                     wire:loading
-                    wire:target="queryBranch, branchShow, branchHistory"></x-formcomponent.titleindicator>
+                    wire:target="queryBranch, branchHandleMenuAction"></x-formcomponent.titleindicator>
             </div>
 
             <div class="mt-3 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-9">

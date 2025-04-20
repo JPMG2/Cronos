@@ -14,7 +14,7 @@
             <x-formcomponent.titleform>Datos Obra social</x-formcomponent.titleform>
             <x-formcomponent.titleindicator
                 wire:loading
-                wire:target="insuraceQuery,openTypes"></x-formcomponent.titleindicator>
+                wire:target="insuraceQuery,obrasocialHandleMenuAction"></x-formcomponent.titleindicator>
         </div>
 
 
@@ -471,6 +471,7 @@
                             wire:submit.prevent="insuraceQuery"
                             wire:click.prevent="insuraceQuery"
                             label="Guardar"
+                            isdisabled="{{$isdisabled}}"
                             :error="count($errors)"
                         ></x-buttons.save>
                     @endcan

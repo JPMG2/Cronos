@@ -55,7 +55,7 @@ final class RePaciente extends Component
         return $this->commonQuerys::listNacionalidad();
     }
 
-    public function getPaciente()
+    public function queryPaciente()
     {
         if (! $this->isupdate) {
             $result = app()->call([$this->pacienteForm, 'pacienteStore']);

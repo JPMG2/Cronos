@@ -15,7 +15,7 @@
                 <x-formcomponent.titleform>Datos de paciente</x-formcomponent.titleform>
                 <x-formcomponent.titleindicator
                     wire:loading
-                    wire:target="getPaciente"></x-formcomponent.titleindicator>
+                    wire:target="queryPaciente,patientHandleMenuAction"></x-formcomponent.titleindicator>
             </div>
             <div class="mt-3 grid grid-cols-1 gap-x-2  gap-y-2 sm:grid-cols-9">
                 <div class="flex gap-x-1 sm:col-span-3">
@@ -372,11 +372,11 @@
                         ></x-buttons.cancel>
 
                         <x-buttons.save
-                            wire:submit.prevent="getPaciente"
-                            wire:click.prevent="getPaciente"
+                            wire:submit.prevent="queryPaciente"
+                            wire:click.prevent="queryPaciente"
                             namefucion=""
                             label="Guardar"
-                            isdisabled=""
+                            isdisabled="{{$isdisabled}}"
                             :error="count($errors)"
                         ></x-buttons.save>
 

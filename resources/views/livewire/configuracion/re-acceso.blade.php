@@ -12,7 +12,8 @@
                         Accesos
                     </h4>
                 </div>
-                <div class="ml-2" wire:loading wire:target="queryActionAccion">
+                <div class="ml-2" wire:loading
+                     wire:target="queryActionAccion,loadMenus">
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
             </div>
