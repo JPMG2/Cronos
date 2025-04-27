@@ -26,6 +26,7 @@ final class MenuNav extends Component
      */
     public function render(): View|Closure|string
     {
+
         $user = Auth::user();
         $cacheKeyMenu = 'menu-'.$user->id;
         $menuItems = Cache::remember($cacheKeyMenu, 1440, function () use ($user) {

@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         ->name('re_confper')->middleware(['rolemenu:re_confper']);
     Route::get('/re_acceso', App\Livewire\Configuracion\ReAcceso::class)
         ->name('re_acceso')->middleware(['rolemenu:re_acceso']);
+    Route::get('/re_horario', App\Livewire\Configuracion\ReHorario::class)
+        ->name('re_horario')->middleware(['rolemenu:re_horario']);
 
 });
 /* Route for Servicios */
