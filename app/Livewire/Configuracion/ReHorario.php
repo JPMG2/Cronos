@@ -20,4 +20,6 @@ final class ReHorario extends Component
     {
         return DaysOfWeek::cases();
     }
+
+    public function querySchedule() {}
 }
