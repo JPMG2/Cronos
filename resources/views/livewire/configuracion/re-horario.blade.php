@@ -74,6 +74,7 @@
 
                                         <label for="{{'horaio'.$loop->index}}">
                                             <input
+                                                wire:model="horarioForm.datahorario.day_of_week"
                                                 x-data="checkDay('{{$loop->index}}')"
                                                 @click="activeDay($event.target.checked)"
                                                 x-init="checkInitialState($el.checked)"
@@ -87,6 +88,7 @@
                                             class="relative flex-1 w-24 flex items-center"
                                         >
                                             <x-inputs.timeinput
+                                                wire:model="horarioForm.datahorario.morning_start.{{ $loop->index }}"
                                                 x-ref="{{'starmorning'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'startm' }}"
                                                 idinput="{{ $day->getName().'startm' }}"
@@ -99,6 +101,7 @@
                                             class="relative flex-1 w-24 flex items-center"
                                         >
                                             <x-inputs.timeinput
+                                                wire:model="horarioForm.datahorario.morning_end.{{ $loop->index }}"
                                                 x-ref="{{'endmorning'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'endm' }}"
                                                 idinput="{{ $day->getName().'endm' }}"
@@ -111,6 +114,7 @@
                                             class="relative flex-1 w-24 flex items-center"
                                         >
                                             <x-inputs.timeinput
+                                                wire:model="horarioForm.datahorario.afternoon_start.{{ $loop->index }}"
                                                 x-ref="{{'starafter'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'starta' }}"
                                                 idinput="{{ $day->getName().'starta' }}"
@@ -123,6 +127,7 @@
                                             class="relative flex-1 w-24 flex items-center"
                                         >
                                             <x-inputs.timeinput
+                                                wire:model="horarioForm.datahorario.afternoon_end.{{ $loop->index }}"
                                                 x-ref="{{'endafter'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'enda' }}"
                                                 idinput="{{ $day->getName().'enda' }}"
@@ -170,42 +175,40 @@
 <script>
     Alpine.data('checkDay', (numberDay) => {
         return {
+            getInputElements() {
+                return {
+                    inputms: document.querySelector(`[x-ref="starmorning${numberDay}"]`),
+                    inputme: document.querySelector(`[x-ref="endmorning${numberDay}"]`),
+                    inputas: document.querySelector(`[x-ref="starafter${numberDay}"]`),
+                    inputae: document.querySelector(`[x-ref="endafter${numberDay}"]`)
+                };
+            },
+
             checkInitialState(isChecked) {
 
                 if (!isChecked) {
-                    const inputms = document.querySelector(`[x-ref="starmorning${numberDay}"]`);
-                    const inputme = document.querySelector(`[x-ref="endmorning${numberDay}"]`);
-                    const inputas = document.querySelector(`[x-ref="starafter${numberDay}"]`);
-                    const inputae = document.querySelector(`[x-ref="endafter${numberDay}"]`);
+                    const inputs = this.getInputElements();
 
-
-                    if (inputms && inputme && inputas && inputae) {
-                        inputms.disabled = !isChecked;
-                        inputme.disabled = !isChecked;
-                        inputas.disabled = !isChecked;
-                        inputae.disabled = !isChecked;
+                    if (Object.values(inputs).every(input => input)) {
+                        Object.values(inputs).forEach(input => {
+                            input.disabled = !isChecked;
+                        });
                     }
-
                 }
             },
 
             activeDay: function (ischecked) {
-                const inputms = document.querySelector(`[x-ref="starmorning${numberDay}"]`);
-                const inputme = document.querySelector(`[x-ref="endmorning${numberDay}"]`);
-                const inputas = document.querySelector(`[x-ref="starafter${numberDay}"]`);
-                const inputae = document.querySelector(`[x-ref="endafter${numberDay}"]`);
-                inputms.disabled = !ischecked;
-                inputme.disabled = !ischecked;
-                inputas.disabled = !ischecked;
-                inputae.disabled = !ischecked;
+                const inputs = this.getInputElements();
+
+                Object.values(inputs).forEach(input => {
+                    input.disabled = !ischecked;
+                    input.value = ischecked ? input.value : '';
+                });
+
                 if (ischecked) {
-                    inputms.focus();
-                } else {
-                    inputms.value = '';
-                    inputme.value = '';
-                    inputas.value = '';
-                    inputae.value = '';
+                    inputs.inputms.focus();
                 }
+
             }
         }
     })
