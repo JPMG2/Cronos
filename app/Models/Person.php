@@ -240,7 +240,7 @@ final class Person extends Model
     {
         return Attribute::make(
             get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
-            set: fn ($value) => trim($value),
+            set: fn ($value) => $value,
         );
     }
 }

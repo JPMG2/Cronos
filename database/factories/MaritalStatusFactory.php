@@ -19,7 +19,7 @@ final class MaritalStatusFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'maritalstatus_name' => fake()->randomElement(['Soltero', 'Casado', 'Divorciado', 'Viudo', 'Unión Libre']),
         ];
     }
 }

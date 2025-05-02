@@ -49,14 +49,17 @@ expect()->extend('toBeOne', function () {
 */
 function loginUser($user = null)
 {
+
     return $user ?? User::factory()->create();
 }
+
 function createHeaderMenu($nameMenu, $stingHeader)
 {
     return Menu::factory()->create(['grup_menu' => $nameMenu,
         'header_menu' => $stingHeader,
     ]);
 }
+
 function createRolesAndActions($userInstance)
 {
     $actions = createActions();
@@ -68,6 +71,7 @@ function createRolesAndActions($userInstance)
         $action->roles()->attach($idRole);
     }
 }
+
 function createRoles()
 {
 
@@ -75,6 +79,7 @@ function createRoles()
 
     return Role::where('name_role', 'Owner')->get();
 }
+
 function createActions()
 {
 

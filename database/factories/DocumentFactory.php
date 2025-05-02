@@ -7,7 +7,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Document>
+ * @extends Factory<\App\Models\Document>
  */
 final class DocumentFactory extends Factory
 {
@@ -19,7 +19,7 @@ final class DocumentFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'document_name' => fake()->randomElement(['DNI', 'Pasaporte', 'Cédula']),
         ];
     }
 }

@@ -19,7 +19,7 @@ final class OccupationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'occupation_name' => fake()->jobTitle(),
         ];
     }
 }

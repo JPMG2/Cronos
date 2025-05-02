@@ -19,7 +19,7 @@ final class NationalityFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nationality_name' => fake()->randomElement(['Argentina', 'Venezuela']),
         ];
     }
 }
