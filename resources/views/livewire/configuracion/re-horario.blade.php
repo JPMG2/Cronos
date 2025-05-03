@@ -92,10 +92,13 @@
                                                 x-ref="{{'starmorning'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'startm' }}"
                                                 idinput="{{ $day->getName().'startm' }}"
+
                                             />
                                         </div>
                                     </x-table.tdtable>
-                                    <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                    <x-table.tdtable
+                                        x-data="checkClosetime()"
+                                        typetext="txtimportant" whitespace-nowrap>
                                         <div
 
                                             class="relative flex-1 w-24 flex items-center"
@@ -105,8 +108,14 @@
                                                 x-ref="{{'endmorning'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'endm' }}"
                                                 idinput="{{ $day->getName().'endm' }}"
+                                                @blur="checkCloseSchedule('{{$day->getName()}}','{{$loop->index}}')"
                                             />
+
                                         </div>
+                                        <template x-if="errorMorning['{{$loop->index}}']">
+                                            <div class="text-red-500 text-xs"
+                                                 x-text="errorMorning['{{$loop->index}}']"></div>
+                                        </template>
                                     </x-table.tdtable>
                                     <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                         <div
@@ -121,7 +130,9 @@
                                             />
                                         </div>
                                     </x-table.tdtable>
-                                    <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                    <x-table.tdtable
+                                        x-data="checkClosetimeAfternoon()"
+                                        typetext="txtimportant" whitespace-nowrap>
                                         <div
 
                                             class="relative flex-1 w-24 flex items-center"
@@ -131,9 +142,13 @@
                                                 x-ref="{{'endafter'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'enda' }}"
                                                 idinput="{{ $day->getName().'enda' }}"
+                                                @blur="checkCloseScheduleAfternoon('{{$day->getName()}}','{{$loop->index}}')"
                                             />
                                         </div>
-
+                                        <template x-if="errorAfternoon['{{$loop->index}}']">
+                                            <div class="text-red-500 text-xs"
+                                                 x-text="errorAfternoon['{{$loop->index}}']"></div>
+                                        </template>
                                     </x-table.tdtable>
                                 </tr>
                             @endforeach
@@ -209,8 +224,66 @@
                     inputs.inputms.focus();
                 }
 
-            }
+            },
         }
-    })
+    });
+    Alpine.data('checkClosetime', () => {
+
+        return {
+            errorMorning: {},
+            checkCloseSchedule: function (day, index) {
+                let start = document.querySelector(`[x-ref="starmorning${index}"]`).value;
+                let end = document.querySelector(`[x-ref="endmorning${index}"]`).value;
+
+                if (start !== '' && end === '') {
+                    this.errorMorning[index] = 'hora fin obligatoria';
+                    document.querySelector(`[x-ref="endmorning${index}"]`).focus();
+                } else {
+                    let starttime = timeToMinutes(start);
+                    let endtime = timeToMinutes(end);
+                    if (endtime <= starttime && starttime !== 0) {
+                        this.errorMorning[index] = 'hora incorrecta';
+                        document.querySelector(`[x-ref="endmorning${index}"]`).focus();
+                    } else {
+                        this.errorMorning[index] = '';
+                    }
+                }
+            }
+
+        }
+    });
+    Alpine.data('checkClosetimeAfternoon', () => {
+
+        return {
+            errorAfternoon: {},
+            checkCloseScheduleAfternoon: function (day, index) {
+                let start = document.querySelector(`[x-ref="starafter${index}"]`).value;
+                let end = document.querySelector(`[x-ref="endafter${index}"]`).value;
+
+                if (start !== '' && end === '') {
+                    this.errorMorning[index] = 'hora fin obligatoria';
+                    document.querySelector(`[x-ref="endafter${index}"]`).focus();
+                } else {
+                    let starttime = timeToMinutes(start);
+                    let endtime = timeToMinutes(end);
+                    if (endtime <= starttime && starttime !== 0) {
+                        this.errorAfternoon[index] = 'hora incorrecta';
+                        document.querySelector(`[x-ref="endafter${index}"]`).focus();
+                    } else {
+                        this.errorAfternoon[index] = '';
+                    }
+                }
+            }
+
+        }
+    });
+
+
+    function timeToMinutes(timeStr) {
+        if (!timeStr) return 0;
+        const [hours, minutes] = timeStr.split(':').map(Number);
+        return hours * 60 + minutes;
+    }
 </script>
+
 @endscript

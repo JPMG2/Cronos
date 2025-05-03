@@ -7,11 +7,14 @@
     x-data="timeValidation"
     x-model="time"
     @input="formatTime($event)"
+    @blur="checkTime($el)"
     maxlength="5"
     type="text"
     name="{{$nameinput}}"
     id="{{$idinput}}"
-    class="flex-1 py-1 pr-2 w-1 border-gray-300 rounded focus:outline-none focus:ring-0 focus:border-gray-300"
+    class="flex-1 py-1 pr-2 w-1 border-gray-300 rounded focus:border-blue-600
+    focus:outline-none focus:ring-0
+    dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
     placeholder="00:00"
     autocomplete="off"
 >
@@ -30,6 +33,11 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data('timeValidation', () => ({
             time: '',
+            checkTime: function (dom) {
+                if (dom.value.length < 5 && dom.value !== '') {
+                    dom.focus()
+                }
+            },
             formatTime(event) {
                 let input = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
                 let hours = input.substring(0, 2); // Get first two digits
@@ -52,4 +60,5 @@
             }
         }));
     });
+
 </script>

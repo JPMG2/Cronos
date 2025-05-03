@@ -24,5 +24,8 @@ final class ReHorario extends Component
         return DaysOfWeek::cases();
     }
 
-    public function querySchedule() {}
+    public function querySchedule()
+    {
+        dd($this->horarioForm->datahorario);
+    }
 }

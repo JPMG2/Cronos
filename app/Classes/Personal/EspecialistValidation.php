@@ -49,9 +49,9 @@ final class EspecialistValidation
             'medical_name' => ucwords(mb_strtolower(trim($especialsit['medical_name']))),
             'medical_lastname' => ucwords(mb_strtolower(trim($especialsit['medical_lastname']))),
             'medical_address' => trim($especialsit['medical_address']),
-            'medical_phone' => trim($especialsit['medical_phone']),
+            'medical_phone' => trim((string) $especialsit['medical_phone']),
             'medical_email' => mb_strtolower(trim($especialsit['medical_email'])),
-            'medical_dni' => trim($especialsit['medical_dni']),
+            'medical_dni' => trim((string) $especialsit['medical_dni']),
             'medical_codenumber' => trim($especialsit['medical_codenumber']),
         ];
 
