@@ -23,4 +23,7 @@ return RectorConfig::configure()
         earlyReturn: true,
         strictBooleans: true,
     )
-    ->withPhpSets();
+    ->withPhpSets()
+    ->withSets([
+        LaravelSetList::LARAVEL_120,
+    ]);

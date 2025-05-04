@@ -161,8 +161,19 @@ final class Medical extends Model
     protected function medicalName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: function ($value) {
+                // Basic transformation
+                $name = ucwords(mb_strtolower(trim($value)));
 
+                // Preserve common medical acronyms and titles
+                $acronyms = ['DVM', 'MD', 'PhD', 'RN', 'PA', 'NP', 'DO'];
+                foreach ($acronyms as $acronym) {
+                    // Replace any lowercase version with uppercase
+                    $name = str_ireplace(" $acronym", " $acronym", $name);
+                }
+
+                return $name;
+            }
         );
     }
 

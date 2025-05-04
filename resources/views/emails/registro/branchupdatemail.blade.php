@@ -1,8 +1,12 @@
 <x-mail::message>
 # Saludos.
-Queremos agradecerles por la reciente actualización de datos en la sucursal {{$branch->branch_name}}. Nuestro objetivo es mantenerlos siempre informados de los cambios realizados.
+Les informamos que hemos registrado exitosamente la actualización de los datos de su sucursal en nuestro sistema.
 
-Gracias,
+Contar con información precisa y actualizada nos permite optimizar los procesos de comunicación y garantizar una mejor gestión administrativa.
+
+Si detectan algún error o necesitan realizar nuevos cambios, no duden en contactarnos.
+
+¡Gracias por seguir trabajando junto a nosotros!
 <br />
 {{ config("app.name") }}
 </x-mail::message>

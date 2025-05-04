@@ -56,9 +56,9 @@ final class CompanyValidation
             'company_person_phone' => trim($company['company_person_phone']),
             'company_person_email' => mb_strtolower(trim($company['company_person_email'])),
             'company_web' => mb_strtolower(trim($company['company_web'])),
-            'province_id' => trim($company['province_id']),
-            'city_id' => trim($company['city_id']),
-            'state_id' => trim($company['state_id']),
+            'province_id' => trim((string) $company['province_id']),
+            'city_id' => trim((string) $company['city_id']),
+            'state_id' => trim((string) $company['state_id']),
         ];
 
     }

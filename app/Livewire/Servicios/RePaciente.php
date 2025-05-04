@@ -55,7 +55,7 @@ final class RePaciente extends Component
         return $this->commonQuerys::listNacionalidad();
     }
 
-    public function queryPaciente()
+    public function queryPaciente(): void
     {
         if (! $this->isupdate) {
             $result = app()->call([$this->pacienteForm, 'pacienteStore']);
@@ -66,7 +66,7 @@ final class RePaciente extends Component
         $this->endPatient($result);
     }
 
-    public function endPatient($result)
+    public function endPatient($result): void
     {
         $this->dispatch('show-toast', $result);
         $this->dispatch('showOptionsForms', show: false);
@@ -98,7 +98,7 @@ final class RePaciente extends Component
     }
 
     #[On('dataPatient')]
-    public function loadPatiente($patientId)
+    public function loadPatiente($patientId): void
     {
         $this->dispatch('showOptionsForms', show: true);
         $this->pacienteForm->reset();

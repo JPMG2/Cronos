@@ -52,9 +52,9 @@ final class PacienteForm extends Form
         PatientPersonValidation $patientValidation,
         PersonValidation $personValidation): array
     {
-        $patientValidation->onPatientPersonUpdate((array) $this->pesonData, (int) $this->pesonData['id']);
+        $patientValidation->onPatientPersonUpdate($this->pesonData, (int) $this->pesonData['id']);
 
-        $personValidation->onPersonUpdate((array) $this->pesonData, (int) $this->pesonData['id']);
+        $personValidation->onPersonUpdate($this->pesonData, (int) $this->pesonData['id']);
 
         return $this->handleService('msgUpadte',
             fn ($services) => $services->updateAndAssociate(
@@ -62,13 +62,13 @@ final class PacienteForm extends Form
         );
     }
 
-    public function validateDocumente(PatientPersonValidation $patientValidation, $typeQuery)
+    public function validateDocumente(PatientPersonValidation $patientValidation, $typeQuery): void
     {
 
         if (! $typeQuery) {
             $patientValidation->onPatientPersonCreate($this->pesonData);
         } else {
-            $patientValidation->onPatientPersonUpdate((array) $this->pesonData, (int) $this->pesonData['id']);
+            $patientValidation->onPatientPersonUpdate($this->pesonData, (int) $this->pesonData['id']);
         }
 
     }
@@ -81,14 +81,14 @@ final class PacienteForm extends Form
 
     }
 
-    protected function handleService(string $msgType, callable $callback): array
+    private function handleService(string $msgType, callable $callback): array
     {
         $services = $this->iniService();
 
         return NotifyQuerys::{$msgType}($callback($services));
     }
 
-    protected function iniService()
+    private function iniService()
     {
         return app()->make(ModelService::class, ['model' => new Person]);
     }

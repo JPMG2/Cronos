@@ -21,6 +21,7 @@ final class PacientNewEmail extends Mailable
     public function __construct($person)
     {
         $this->person = $person;
+
     }
 
     /**
@@ -29,12 +30,13 @@ final class PacientNewEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bienvenido/a '.$this->person->fullName,
+            subject: 'Bienvenido/a '.$this->person->fullname,
         );
     }
 
     public function build(): self
     {
+
         return $this->markdown('emails.mservicios.patientnewemail')
             ->with([
                 'patient' => $this->person,

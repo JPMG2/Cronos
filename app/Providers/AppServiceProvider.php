@@ -9,8 +9,10 @@ use App\Classes\Utilities\CommonQuerys;
 use App\Listeners\LogSuccess;
 use App\Models\Branch;
 use App\Models\Company;
+use App\Models\Patient;
 use App\Models\Person;
 use App\Observers\EmailModelObserver;
+use App\Observers\PatientObserver;
 use App\Observers\PersonObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Auth\Events\Login;
@@ -61,6 +63,7 @@ final class AppServiceProvider extends ServiceProvider
         Branch::observe(EmailModelObserver::class);
         Company::observe(EmailModelObserver::class);
         Person::observe(PersonObserver::class);
+        Patient::observe(PatientObserver::class);
         Event::listen(Login::class, LogSuccess::class);
     }
 

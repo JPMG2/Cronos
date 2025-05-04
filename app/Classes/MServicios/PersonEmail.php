@@ -9,19 +9,14 @@ use Illuminate\Support\Facades\Mail;
 
 final class PersonEmail implements ModelEmail
 {
-    private $emailClass;
+    public function __construct(private $emailClass) {}
 
-    public function __construct($emailClass)
-    {
-        $this->emailClass = $emailClass;
-    }
-
-    public function sendEmailCreate($model)
+    public function sendEmailCreate($model): void
     {
         Mail::to($model->person_email)->send(new $this->emailClass($model));
     }
 
-    public function sendEmailUpdate($model)
+    public function sendEmailUpdate($model): void
     {
 
         Mail::to($model->person_email)->send(new $this->emailClass($model));

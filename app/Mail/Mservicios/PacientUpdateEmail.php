@@ -30,7 +30,7 @@ final class PacientUpdateEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pacient Update Email',
+            subject: 'Actualización de datos para '.$this->person->fullname,
         );
     }
 
