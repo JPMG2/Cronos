@@ -51,7 +51,7 @@ final class Credential extends Model
     protected function credentialCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(trim((string) $value))),
 
         );
     }

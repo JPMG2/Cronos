@@ -16,7 +16,7 @@ dataset('especilist info', function () {
             'credential_id' => Credential::factory()->create()->id,
             'specialty_id' => Specialty::factory()->create()->id,
             'degree_id' => Degree::factory()->create()->id,
-            'medical_name' => fake()->name,
+            'medical_name' => fake()->firstName,
             'medical_lastname' => fake()->lastName,
             'medical_address' => fake()->address,
             'medical_phone' => fake()->randomNumber(9, true),

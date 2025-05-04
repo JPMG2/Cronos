@@ -8,8 +8,9 @@ use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRecto
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/app',
-        __DIR__.'/src',
-        __DIR__.'/tests',
+        __DIR__.'/bootstrap/app.php',
+        __DIR__.'/database',
+        __DIR__.'/public',
     ])
     ->withSkip([
         AddOverrideAttributeToOverriddenMethodsRector::class,

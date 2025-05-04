@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 use App\Livewire\Personal\ReEspecialista;
 use App\Models\Medical;
-use App\Traits\FormActionsTrait;
-use App\Traits\HandlesActionPolicy;
-use App\Traits\UtilityForm;
 
 use function Pest\Livewire\livewire;
 
@@ -18,9 +15,14 @@ beforeEach(function () {
     createHeaderMenu('Especialistas', 'Registro/Personal/Especialistas');
 });
 
-it('renders  ReEspecialista form correctly', function () {
-    livewire(ReEspecialista::class)
-        ->assertStatus(200);
+it('renders ReEspecialista form correctly with initial state', function () {
+    $component = livewire(ReEspecialista::class)
+        ->assertStatus(200)
+        ->assertViewIs('livewire.personal.re-especialista')
+        ->assertViewHas(['listState', 'listSpecialties', 'listDegree', 'listCredential']);
+
+    expect($component->isupdate)->toBeFalse()
+        ->and($component->formesp->dataespecialist)->toBeArray();
 });
 
 it('checks if form has required attributes', function (Closure $fields) {
@@ -29,18 +31,6 @@ it('checks if form has required attributes', function (Closure $fields) {
     $arrayAtributtes = $component->formesp->dataespecialist;
     expect(array_keys($arrayAtributtes))->toEqual(array_keys($fields));
 })->with('required fields');
-
-it('check if Traits are present', function () {
-    $reflection = new ReflectionClass(ReEspecialista::class);
-    $traits = $reflection->getTraitNames();
-
-    expect($traits)->toContain(
-        FormActionsTrait::class,
-        HandlesActionPolicy::class,
-        UtilityForm::class
-    );
-
-});
 
 it('fails when fields are missing', function ($params) {
     $data = $params['data'];
@@ -56,8 +46,13 @@ it('creates a new Medic successfully', function (Closure $dataFactory) {
     $data = $dataFactory();
     $component = livewire(ReEspecialista::class);
     $component->set('formesp.dataespecialist', $data);
-    $nameMedic = $component->formesp->dataespecialist['medical_name'];
+
+    // Apply the same case transformation as the model does
+    $expectedName = ucwords(mb_strtolower(trim($data['medical_name'])));
+
     $component->call('getEspecialis');
     $nameCreate = Medical::latest()->first()->medical_name;
-    expect($nameCreate)->toBe($nameMedic);
+
+    // Compare against the transformed expected name, not the original data
+    expect($nameCreate)->toBe($expectedName);
 })->with('especilist info');

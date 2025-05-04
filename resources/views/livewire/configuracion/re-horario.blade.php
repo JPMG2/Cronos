@@ -117,9 +117,10 @@
                                                  x-text="errorMorning['{{$loop->index}}']"></div>
                                         </template>
                                     </x-table.tdtable>
-                                    <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                    <x-table.tdtable
+                                        x-data="checkMorningAfternoon()"
+                                        typetext="txtimportant" whitespace-nowrap>
                                         <div
-
                                             class="relative flex-1 w-24 flex items-center"
                                         >
                                             <x-inputs.timeinput
@@ -127,8 +128,13 @@
                                                 x-ref="{{'starafter'.$loop->index}}"
                                                 nameinput="{{ $day->getName().'starta' }}"
                                                 idinput="{{ $day->getName().'starta' }}"
+                                                @blur="checkIniAfternoon('{{$day->getName()}}','{{$loop->index}}')"
                                             />
                                         </div>
+                                        <template x-if="errorMorningAfternoon['{{$loop->index}}']">
+                                            <div class="text-red-500 text-xs"
+                                                 x-text="errorMorningAfternoon['{{$loop->index}}']"></div>
+                                        </template>
                                     </x-table.tdtable>
                                     <x-table.tdtable
                                         x-data="checkClosetimeAfternoon()"
@@ -261,7 +267,7 @@
                 let end = document.querySelector(`[x-ref="endafter${index}"]`).value;
 
                 if (start !== '' && end === '') {
-                    this.errorMorning[index] = 'hora fin obligatoria';
+                    this.errorAfternoon[index] = 'hora fin obligatoria';
                     document.querySelector(`[x-ref="endafter${index}"]`).focus();
                 } else {
                     let starttime = timeToMinutes(start);
@@ -277,7 +283,23 @@
 
         }
     });
-
+    Alpine.data('checkMorningAfternoon', () => {
+        return {
+            errorMorningAfternoon: {},
+            checkIniAfternoon: function (day, index) {
+                let end = document.querySelector(`[x-ref="endmorning${index}"]`).value;
+                let start = document.querySelector(`[x-ref="starafter${index}"]`).value;
+                let starttime = timeToMinutes(start);
+                let endtime = timeToMinutes(end);
+                if (starttime < endtime) {
+                    this.errorMorningAfternoon[index] = 'hora incorrecta';
+                    document.querySelector(`[x-ref="starafter${index}"]`).focus();
+                } else {
+                    this.errorMorningAfternoon[index] = '';
+                }
+            }
+        }
+    });
 
     function timeToMinutes(timeStr) {
         if (!timeStr) return 0;
