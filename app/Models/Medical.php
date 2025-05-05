@@ -15,19 +15,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 
-/**
- * @property-read int $id
- * @property-read int $state_id
- * @property-read int $credential_id
- * @property-read int $specialty_id
- * @property-read int $degree_id
- * @property-read string $medical_name
- * @property-read string $medical_lastname
- * @property-read string $medical_address
- * @property-read string $medical_phone
- * @property-read string $medical_email
- * @property-read string $medical_dni
- */
 final class Medical extends Model
 {
     /** @use HasFactory<MedicalFactory> */

@@ -60,20 +60,20 @@ final class PersonValidation
         )->validate();
     }
 
-    public function inicialiciteAtributes($person)
+    public function inicialiciteAtributes(array $person): array
     {
 
         return [
-            'person_name' => ucwords(mb_strtolower(trim($person['person_name']))),
-            'person_lastname' => ucwords(mb_strtolower(trim($person['person_lastname']))),
+            'person_name' => ucwords(mb_strtolower(trim((string) $person['person_name']))),
+            'person_lastname' => ucwords(mb_strtolower(trim((string) $person['person_lastname']))),
             'gender_id' => trim((string) $person['gender_id']),
-            'person_datebirth' => trim($person['person_datebirth']),
+            'person_datebirth' => trim((string) $person['person_datebirth']),
             'marital_status_id' => trim((string) $person['marital_status_id']),
             'occupation_id' => trim((string) $person['occupation_id']),
-            'person_phone' => trim($person['person_phone']),
-            'person_email' => mb_strtolower(trim($person['person_email'])),
+            'person_phone' => trim((string) $person['person_phone']),
+            'person_email' => mb_strtolower(trim((string) $person['person_email'])),
             'nationality_id' => trim((string) $person['nationality_id']),
-            'person_address' => trim($person['person_address']),
+            'person_address' => trim((string) $person['person_address']),
         ];
 
     }
