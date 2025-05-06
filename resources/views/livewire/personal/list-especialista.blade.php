@@ -90,9 +90,11 @@
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" break-words>
                                                 @php
-                                                    $credential = $medical->credentials->first();
+                                                    $firstCredential = $medical->credentials->first();
+                                                    $credential = $firstCredential ? $firstCredential->credential_code : '-';
+                                                    $numatricula = $firstCredential ? $firstCredential->pivot->credential_number : '-';
                                                 @endphp
-                                                {{ $credential?->credential_code . '-' . $credential?->pivot?->credential_number }}
+                                                {{ $credential !== '-' && $numatricula !== '-' ? "$credential-$numatricula" : '-' }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ optional($medical->specialty)->specialty_name ?? '-'}}

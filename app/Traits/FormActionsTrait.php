@@ -11,7 +11,7 @@ use App\Http\Controllers\PDFController;
  *
  * @param  string  $action  The action to perform ('edit', 'new', 'print','show','history').
  * @param  array  $params  An associative array containing:
- *                         - 'id'             => int
+ *                         - 'Id'             => int
  *                         - 'pdfClass'       => string
  *                         - 'route'          => string
  *                         - 'model'          => string
@@ -49,10 +49,10 @@ trait FormActionsTrait
 
     protected function new(array $parameter)
     {
-        $this->redirect($parameter['route']);
+        to_route($parameter['route']);
     }
 
-    protected function print($parameter)
+    protected function print(array $parameter)
     {
         $id = encryptString($parameter['id']);
 
@@ -63,14 +63,14 @@ trait FormActionsTrait
         $this->dispatch('openWindow', ['url' => $url]);
     }
 
-    protected function show($parameter)
+    protected function show(array $parameter)
     {
         $nameForm = $parameter['model'];
 
         $this->dispatch('showModal'.$nameForm, show: true);
     }
 
-    protected function history($parameter)
+    protected function history(array $parameter)
     {
         $id = $parameter['id'];
         $model = $parameter['model'];

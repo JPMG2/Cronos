@@ -94,7 +94,7 @@ final class Medical extends Model
             'degree:id,degree_name',
             'state:id,state_name',
             'credentials' => function ($query) {
-                $query->select('credentials.id', 'credential_name');
+                $query->select('credentials.id', 'credential_name', 'credential_code', 'credential_number');
             },
         ];
         if (! is_null($relashion)) {

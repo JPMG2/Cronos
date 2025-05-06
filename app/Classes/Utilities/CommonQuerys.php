@@ -45,7 +45,7 @@ final class CommonQuerys extends Model
     {
 
         $company = $statecompany[0] !== '*' ? Company::whereIn('state_id', $statecompany) : Company::query();
-        $branch = $statebranch[0] !== '*' ? ['branches' => function ($query) use ($statebranch) {
+        $branch = $statebranch[0] !== '*' ? ['branches' => function ($query) use ($statebranch): void {
             $query->whereIn('state_id', $statebranch)->orderBy('branch_name')->with('state');
         }] : 'branches.state';
 
@@ -55,17 +55,13 @@ final class CommonQuerys extends Model
 
     public static function anyCompany(): bool
     {
-        return once(function () {
-            return (bool) Company::existCompany();
-        });
+        return once(fn (): bool => Company::existCompany());
 
     }
 
     public static function CompanyOnPause()
     {
-        return once(function () {
-            return Company::where('state_id', 2)->first();
-        });
+        return once(fn () => Company::where('state_id', 2)->first());
     }
 
     public static function listSpecialties()
@@ -85,7 +81,7 @@ final class CommonQuerys extends Model
 
     public static function listRoles(?array $roles = null)
     {
-        if ($roles) {
+        if ($roles !== null && $roles !== []) {
             return Role::whereNotIn('name_role', $roles)->orderBy('name_role')->get();
         }
 
@@ -94,7 +90,7 @@ final class CommonQuerys extends Model
 
     public static function listActions(?array $actions = null)
     {
-        if ($actions) {
+        if ($actions !== null && $actions !== []) {
             return Action::whereNotIn('action_name', $actions)->orderBy('action_sp')->get();
         }
 
@@ -114,7 +110,7 @@ final class CommonQuerys extends Model
     public static function listOcupacion($occupation = null)
     {
         if ($occupation) {
-            $occupation = mb_strtolower($occupation);
+            $occupation = mb_strtolower((string) $occupation);
 
             return Occupation::whereRaw('LOWER(occupation_name) like ?', ['%'.$occupation.'%'])->orderBy('occupation_name')->get();
         }
