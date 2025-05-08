@@ -26,6 +26,6 @@ final class ReHorario extends Component
 
     public function querySchedule(): never
     {
-        dd($this->horarioForm->datahorario);
+        app()->call([$this->horarioForm, 'scheduleStoreUpdate']);
     }
 }

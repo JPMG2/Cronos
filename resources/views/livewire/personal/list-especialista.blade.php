@@ -92,7 +92,7 @@
                                                 @php
                                                     $firstCredential = $medical->credentials->first();
                                                     $credential = $firstCredential ? $firstCredential->credential_code : '-';
-                                                    $numatricula = $firstCredential ? $firstCredential->pivot->credential_number : '-';
+                                                    $numatricula = $medical->firstCredentialNumber;
                                                 @endphp
                                                 {{ $credential !== '-' && $numatricula !== '-' ? "$credential-$numatricula" : '-' }}
                                             </x-table.tdtable>

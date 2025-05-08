@@ -23,40 +23,31 @@ final class CommonQuerys extends Model
 {
     public static function stateQuery(array $states): Collection
     {
-        if ($states[0] !== '*') {
-            return State::whereIn('id', $states)->orderBy('state_name')->get();
-        }
-
-        return State::orderBy('state_name')->get();
-
+        return $states[0] !== '*'
+            ? State::whereIn('id', $states)->orderBy('state_name')->get()
+            : State::orderBy('state_name')->get();
     }
 
     public static function companyQuery(array $states): Collection
     {
-        if ($states[0] !== '*') {
-            return Company::orderBy('company_name')->whereIn('state_id', $states)->get();
-        }
-
-        return Company::orderBy('company_name')->get();
-
+        return $states[0] !== '*'
+            ? Company::whereIn('state_id', $states)->orderBy('company_name')->get()
+            : Company::orderBy('company_name')->get();
     }
 
     public static function companyBranchQuery(array $statecompany, array $statebranch): Collection
     {
-
         $company = $statecompany[0] !== '*' ? Company::whereIn('state_id', $statecompany) : Company::query();
-        $branch = $statebranch[0] !== '*' ? ['branches' => function ($query) use ($statebranch): void {
-            $query->whereIn('state_id', $statebranch)->orderBy('branch_name')->with('state');
-        }] : 'branches.state';
+        $branch = $statebranch[0] !== '*'
+            ? ['branches' => fn ($query) => $query->whereIn('state_id', $statebranch)->orderBy('branch_name')->with('state')]
+            : 'branches.state';
 
         return $company->with($branch)->get();
-
     }
 
     public static function anyCompany(): bool
     {
         return once(fn (): bool => Company::existCompany());
-
     }
 
     public static function CompanyOnPause()
@@ -64,68 +55,60 @@ final class CommonQuerys extends Model
         return once(fn () => Company::where('state_id', 2)->first());
     }
 
-    public static function listSpecialties()
+    public static function listSpecialties(): Collection
     {
         return Specialty::orderBy('specialty_name')->get();
     }
 
-    public static function listDegrees()
+    public static function listDegrees(): Collection
     {
         return Degree::orderBy('degree_name')->get();
     }
 
-    public static function listCredentials()
+    public static function listCredentials(): Collection
     {
         return Credential::orderBy('credential_name')->get();
     }
 
-    public static function listRoles(?array $roles = null)
+    public static function listRoles(?array $roles = null): Collection
     {
-        if ($roles !== null && $roles !== []) {
-            return Role::whereNotIn('name_role', $roles)->orderBy('name_role')->get();
-        }
-
-        return Role::orderBy('name_role')->get();
+        return $roles && $roles !== []
+            ? Role::whereNotIn('name_role', $roles)->orderBy('name_role')->get()
+            : Role::orderBy('name_role')->get();
     }
 
-    public static function listActions(?array $actions = null)
+    public static function listActions(?array $actions = null): Collection
     {
-        if ($actions !== null && $actions !== []) {
-            return Action::whereNotIn('action_name', $actions)->orderBy('action_sp')->get();
-        }
-
-        return Action::orderBy('action_sp')->get();
+        return $actions && $actions !== []
+            ? Action::whereNotIn('action_name', $actions)->orderBy('action_sp')->get()
+            : Action::orderBy('action_sp')->get();
     }
 
-    public static function listDocuments()
+    public static function listDocuments(): Collection
     {
         return Document::orderBy('id')->get();
     }
 
-    public static function listGenders()
+    public static function listGenders(): Collection
     {
         return Gender::orderBy('gender_name')->get();
     }
 
-    public static function listOcupacion($occupation = null)
+    public static function listOcupacion(?string $occupation = null): Collection
     {
-        if ($occupation) {
-            $occupation = mb_strtolower((string) $occupation);
-
-            return Occupation::whereRaw('LOWER(occupation_name) like ?', ['%'.$occupation.'%'])->orderBy('occupation_name')->get();
-        }
-
-        return Occupation::orderBy('occupation_name')->get();
+        return $occupation
+            ? Occupation::whereRaw('LOWER(occupation_name) like ?', ['%'.mb_strtolower($occupation).'%'])
+                ->orderBy('occupation_name')->get()
+            : Occupation::orderBy('occupation_name')->get();
     }
 
-    public static function listNacionalidad()
+    public static function listNacionalidad(): Collection
     {
         return Nationality::orderBy('nationality_name')->get();
     }
 
-    public static function listMaritalStatus()
+    public static function listMaritalStatus(): Collection
     {
         return MaritalStatus::orderBy('maritalstatus_name')->get();
-
     }
 }

@@ -42,4 +42,5 @@ return [
     'maritalstatus' => 'estado civil',
     'occupation' => 'ocupación',
     'nacionalidad' => 'nacionalidad',
+    'day_of_week' => 'horario',
 ];

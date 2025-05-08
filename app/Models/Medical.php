@@ -43,11 +43,10 @@ final class Medical extends Model
             'credential_id' => 'Matricula',
             'specialty_id' => 'Espacialidad',
             'state_id' => 'Estatus',
-
         ];
     }
 
-    public static function countMedicals()
+    public static function countMedicals(): int
     {
         return self::count();
     }
@@ -57,17 +56,17 @@ final class Medical extends Model
         return $this->medical_name;
     }
 
-    public function setCredentialIdAttribute($value)
+    public function setCredentialIdAttribute($value): void
     {
         $this->attributes['credential_id'] = $value ?: null;
     }
 
-    public function setSpecialtyIdAttribute($value)
+    public function setSpecialtyIdAttribute($value): void
     {
         $this->attributes['specialty_id'] = $value ?: null;
     }
 
-    public function setDegreeIdAttribute($value)
+    public function setDegreeIdAttribute($value): void
     {
         $this->attributes['degree_id'] = $value ?: null;
     }
@@ -87,46 +86,37 @@ final class Medical extends Model
         return $this->belongsTo(Specialty::class);
     }
 
-    public function scopeListMedicals(Builder $query, $stringsearch = null, $relashion = null): Builder
+    public function scopeListMedicals(Builder $query, ?string $stringsearch = null, ?string $relashion = null): Builder
     {
         $with = [
             'specialty:id,specialty_name',
             'degree:id,degree_name',
             'state:id,state_name',
-            'credentials' => function ($query) {
-                $query->select('credentials.id', 'credential_name', 'credential_code', 'credential_number');
-            },
+            'credentials' => fn ($query) => $query->select('credentials.id', 'credential_name', 'credential_code', 'credential_number'),
         ];
-        if (! is_null($relashion)) {
 
+        if ($relashion && method_exists($this, $relashion)) {
             $relationName = $this->getRelashionName($relashion);
 
-            if (method_exists($this, $relashion)) {
-
-                return $this->{$relashion}($query, $relationName, $stringsearch, $with);
-            }
-
-            return $query;
+            return $this->{$relashion}($query, $relationName, $stringsearch, $with);
         }
 
         return $query->with($with);
-
     }
 
     public function getRelashionName(string $relashionvalue): string
     {
-        $relashionarray = ['state_id' => 'state',
+        return Arr::get([
+            'state_id' => 'state',
             'credential_id' => 'credentials',
             'specialty_id' => 'specialty',
-            'degree_id' => 'degree'];
-
-        return Arr::get($relashionarray, $relashionvalue);
-
+            'degree_id' => 'degree',
+        ], $relashionvalue, '');
     }
 
     public function getFirstCredentialNumberAttribute(): ?string
     {
-        return $this->credentials()->first()?->pivot->credential_number;
+        return $this->credentials->first()?->pivot->credential_number;
     }
 
     public function credentials(): BelongsToMany
@@ -148,56 +138,42 @@ final class Medical extends Model
     protected function medicalName(): Attribute
     {
         return Attribute::make(
-            set: function ($value) {
-                // Basic transformation
-                $name = ucwords(mb_strtolower(trim($value)));
-
-                // Preserve common medical acronyms and titles
-                $acronyms = ['DVM', 'MD', 'PhD', 'RN', 'PA', 'NP', 'DO'];
-                foreach ($acronyms as $acronym) {
-                    // Replace any lowercase version with uppercase
-                    $name = str_ireplace(" $acronym", " $acronym", $name);
-                }
-
-                return $name;
-            }
+            set: fn ($value) => ucwords(mb_strtolower(trim($value)))
         );
     }
 
     protected function medicalLastname(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
-
+            set: fn ($value) => ucwords(mb_strtolower(trim($value)))
         );
     }
 
     protected function medicalAddress(): Attribute
     {
         return Attribute::make(
-
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(trim($value)))
         );
     }
 
-    protected function medicalphone(): Attribute
+    protected function medicalPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => trim($value)
         );
     }
 
     protected function medicalEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(trim($value))
         );
     }
 
     protected function medicalDni(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => trim($value)
         );
     }
 }

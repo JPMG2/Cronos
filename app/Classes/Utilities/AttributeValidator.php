@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Classes\Utilities;
 
+use App\Rules\ArraySchedule;
 use App\Rules\MedicalCredential;
 
 final class AttributeValidator
@@ -94,5 +95,15 @@ final class AttributeValidator
         }
 
         return 'sometimes|regex:/^([^<>]*)$/|max:255|date_format:d-m-Y';
+    }
+
+    public static function hasTobeArray($length)
+    {
+        return 'array|min:'.$length;
+    }
+
+    public static function scheduleArray(array $schedule)
+    {
+        return new ArraySchedule($schedule);
     }
 }

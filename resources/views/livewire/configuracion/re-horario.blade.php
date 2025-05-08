@@ -74,7 +74,7 @@
 
                                         <label for="{{'horaio'.$loop->index}}">
                                             <input
-                                                wire:model="horarioForm.datahorario.day_of_week"
+                                                wire:model="horarioForm.datahorario.day_of_week.{{ $loop->index }}"
                                                 x-data="checkDay('{{$loop->index}}')"
                                                 @click="activeDay($event.target.checked)"
                                                 x-init="checkInitialState($el.checked)"
@@ -95,6 +95,10 @@
 
                                             />
                                         </div>
+
+                                        @error("morning_start.{$loop->index}")
+                                        <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
                                     </x-table.tdtable>
                                     <x-table.tdtable
                                         x-data="checkClosetime()"
@@ -116,6 +120,8 @@
                                             <div class="text-red-500 text-xs"
                                                  x-text="errorMorning['{{$loop->index}}']"></div>
                                         </template>
+
+
                                     </x-table.tdtable>
                                     <x-table.tdtable
                                         x-data="checkMorningAfternoon()"
@@ -163,6 +169,11 @@
                         </thead>
                     </table>
                 </div>
+                @error('day_of_week')
+                <x-inputs.error-validate>
+                    {{ $message }}
+                </x-inputs.error-validate>
+                @enderror
                 <form
                     id="scheduleForm"
                     wire:submit.prevent="submit"
