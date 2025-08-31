@@ -9,13 +9,19 @@
                 @livewire("utility.opcion-menu", ["namecomponent" => "patient"])
             @endif
         @endif
+        @teleport('#modal-personData')
+        <x-Person.data-person :$name_person :$lastname_person :$documentType_person
+                              :$document_person :$email_person
+                              :$phone_person></x-Person.data-person>
+        @endteleport
         <x-headerform.borderheader></x-headerform.borderheader>
         <div>
             <div class="flex items-center">
                 <x-formcomponent.titleform>Datos de paciente</x-formcomponent.titleform>
                 <x-formcomponent.titleindicator
                     wire:loading
-                    wire:target="queryPaciente,patientHandleMenuAction"></x-formcomponent.titleindicator>
+                    wire:target="submitPatient,patientHandleMenuAction">
+                </x-formcomponent.titleindicator>
             </div>
             <div class="mt-3 grid grid-cols-1 gap-x-2  gap-y-2 sm:grid-cols-9">
                 <div class="flex gap-x-1 sm:col-span-3">
@@ -23,17 +29,18 @@
                         <div class="relative">
                             <x-inputs.selectgroup
                                 label="Documento"
-                                for="paci_document"
+                                for="paci_docutype"
                                 required="yes"
+                                isdisabled="{{$isdisabled}}"
                             >
                                 <x-inputs.selectinput
-                                    wire:model.defer="pacienteForm.pesonData.document_id"
-                                    x-ref="ini"
-                                    id="paci_document"
+                                    wire:model.defer="pacienteForm.personData.document_id"
+                                    id="paci_docutype"
                                     isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('document_id')"
+                                    required
                                 >
-                                    @foreach ($listDocument as $document)
+                                    @foreach ($this->documentType as $document)
                                         <option value="{{ $document->id }}">
                                             {{ $document->document_name }}
                                         </option>
@@ -52,22 +59,24 @@
                         <div class="relative">
                             <x-inputs.textgroup
                                 label="Número"
-                                for="pacient_numdocument"
+                                for="documentnumber"
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pesonData.num_document"
+                                    x-ref="ini"
+                                    wire:model="pacienteForm.personData.num_document"
                                     x-mask="99999999999999999999"
-                                    id="pacient_numdocument"
-                                    @blur="$wire.validateDocument()"
+                                    id="documentnumber"
                                     autocomplete="off"
+                                    @blur="$wire.validatePersonExits()"
                                     maxlength="20"
                                     placeholder=" "
                                     isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('num_document')"
-
+                                    required
                                 ></x-inputs.textinput>
                             </x-inputs.textgroup>
+
                         </div>
                         @error("num_document")
                         <x-inputs.error-validate>
@@ -80,17 +89,18 @@
                     <div class="relative">
                         <x-inputs.textgroup
                             label="Nombre"
-                            for="pacient_name"
+                            for="paci_name"
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pesonData.person_name"
-                                id="pacient_name"
+                                wire:model="pacienteForm.personData.person_name"
+                                id="paci_name"
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
                                 isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('person_name')"
+                                required
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
                     </div>
@@ -104,17 +114,18 @@
                     <div class="relative">
                         <x-inputs.textgroup
                             label="Apellido"
-                            for="pacient_lastname"
+                            for="paci_apellido"
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pesonData.person_lastname"
-                                id="pacient_lastname"
+                                wire:model="pacienteForm.personData.person_lastname"
+                                id="paci_apellido"
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
                                 isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('person_lastname')"
+                                required
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
                     </div>
@@ -128,16 +139,18 @@
                     <div class="relative">
                         <x-inputs.selectgroup
                             label="Genero"
-                            for="patien_gender"
+                            for="paci_gender"
                             required="yes"
+                            isdisabled="{{$isdisabled}}"
                         >
                             <x-inputs.selectinput
-                                wire:model.defer="pacienteForm.pesonData.gender_id"
-                                id="patien_gender"
+                                wire:model.defer="pacienteForm.personData.gender_id"
+                                id="paci_gender"
                                 isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('gender_id')"
                             >
-                                @foreach ($listGender as $gender)
+                                <option hidden selected></option>
+                                @foreach ($this->gender as $gender)
                                     <option value="{{ $gender->id }}">
                                         {{ $gender->gender_name }}
                                     </option>
@@ -156,19 +169,21 @@
                     <div class="relative">
                         <x-inputs.textgroup
                             label="Fecha de nacimiento"
-                            for="pacient_datebirth"
+                            for="doffbirth"
                             required="yes"
                         >
                             <x-inputs.textinput
                                 x-data
+                                autocomplete="off"
                                 x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
-                                wire:model="pacienteForm.pesonData.person_datebirth"
-                                id="pacient_datebirth"
+                                wire:model="pacienteForm.personData.person_datebirth"
+                                id="doffbirth"
                                 autocomplete="off"
                                 maxlength="200"
                                 placeholder=" "
                                 isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('person_datebirth')"
+                                required
                             ></x-inputs.textinput>
                         </x-inputs.textgroup>
 
@@ -183,17 +198,19 @@
                     <div class="relative">
                         <x-inputs.selectgroup
                             label="Estado civil"
-                            for="patien_estcivil"
+                            for="paci_estcivil"
                             required="yes"
+                            isdisabled="{{$isdisabled}}"
                         >
                             <x-inputs.selectinput
-                                wire:model.defer="pacienteForm.pesonData.marital_status_id"
-                                id="patien_estcivil"
+                                wire:model.defer="pacienteForm.personData.marital_status_id"
+                                id="paci_estcivil"
                                 isdisabled="{{$isdisabled}}"
                                 :error="$errors->first('marital_status_id')"
+
                             >
-                                <option label=" "></option>
-                                @foreach ($listMaritalStatus as $maritalStatus)
+                                <option hidden selected></option>
+                                @foreach ($this->maritalStatus as $maritalStatus)
                                     <option value="{{ $maritalStatus->id }}">
                                         {{ $maritalStatus->maritalstatus_name }}
                                     </option>
@@ -210,7 +227,7 @@
 
                 <div class="relative sm:col-span-3">
                     <x-inputs.dropdown.dropdownconfig
-                        wireidvalue="pacienteForm.pesonData.occupation_id"
+                        wireidvalue="pacienteForm.personData.occupation_id"
                         :jsonvalues="json_encode($this->occupation->map(fn($o) => ['id' => $o->id, 'name' => $o->occupation_name])->values())"
                     >
                         <x-inputs.dropdown.labelautocomplet
@@ -249,13 +266,13 @@
                         <div class="relative">
                             <x-inputs.textgroup
                                 label="Teléfono"
-                                for="patien_phone"
+                                for="paci_phone"
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pesonData.person_phone"
+                                    wire:model="pacienteForm.personData.person_phone"
                                     x-mask="99999999999999999999"
-                                    id="patien_phone"
+                                    id="paci_phone"
                                     autocomplete="off"
                                     maxlength="20"
                                     placeholder=" "
@@ -275,17 +292,18 @@
                         <div class="relative">
                             <x-inputs.textgroup
                                 label="Correo"
-                                for="patien_email"
+                                for="paci_mail"
                                 required="yes"
                             >
                                 <x-inputs.textinput
-                                    wire:model="pacienteForm.pesonData.person_email"
-                                    id="patien_email"
+                                    wire:model="pacienteForm.personData.person_email"
+                                    id="paci_mail"
                                     autocomplete="off"
                                     maxlength="150"
                                     placeholder=" "
                                     isdisabled="{{$isdisabled}}"
                                     :error="$errors->first('person_email')"
+
                                 ></x-inputs.textinput>
                             </x-inputs.textgroup>
                         </div>
@@ -298,7 +316,7 @@
                 </div>
                 <div class="relative sm:col-span-2">
                     <x-inputs.dropdown.dropdownconfig
-                        wireidvalue="pacienteForm.pesonData.nationality_id"
+                        wireidvalue="pacienteForm.personData.nationality_id"
                         :jsonvalues="json_encode($this->nationality->map(fn($o) => ['id' => $o->id, 'name' => $o->nationality_name])->values())"
                     >
                         <x-inputs.dropdown.labelautocomplet
@@ -341,7 +359,7 @@
                             required="yes"
                         >
                             <x-inputs.textinput
-                                wire:model="pacienteForm.pesonData.person_address"
+                                wire:model="pacienteForm.personData.person_address"
                                 id="patien_addres"
                                 autocomplete="off"
                                 maxlength="150"
@@ -360,20 +378,20 @@
             </div>
             @if(!session("isdisabled"))
                 <form
-                    id="especialista"
+                    id="paciente"
                     wire:submit.prevent="submit"
-                    x-init="$refs.ini.focus()"
                 >
                     @csrf
                     <x-headerform.button-group>
                         <x-buttons.cancel
                             wire:click="clearForm"
+                            @click="window.dispatchEvent(new Event('clear-errors'));"
                             label="Cancelar"
                         ></x-buttons.cancel>
 
                         <x-buttons.save
-                            wire:submit.prevent="queryPaciente"
-                            wire:click.prevent="queryPaciente"
+                            wire:submit.prevent="submitPatient"
+                            wire:click.prevent="submitPatient"
                             namefucion=""
                             label="Guardar"
                             isdisabled="{{$isdisabled}}"
@@ -385,5 +403,5 @@
             @endif
         </div>
     </div>
-    @livewire("servicios.list-paciente", ["show" => false])
+    @livewire("clinico.list-paciente", ["show" => false])
 </div>

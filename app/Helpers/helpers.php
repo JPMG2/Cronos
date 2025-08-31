@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Crypt;
 function exploBreadcrum($breadcrum)
 {
 
-    return explode('/', $breadcrum);
+    return explode('/', (string) $breadcrum);
 }
 
 /* return a string from an array */
@@ -19,8 +19,9 @@ function arrayString(array $arraKeys): string
     [$keys] = Arr::divide($arraKeys);
     $keysString = '';
     $delimiter = ',';
+    $counter = count($keys);
 
-    for ($i = 0; $i < count($keys); $i++) {
+    for ($i = 0; $i < $counter; $i++) {
         if ($i === array_key_last($keys)) {
             $delimiter = '';
         }
@@ -54,12 +55,28 @@ function iconName(string $icon): array
     ];
 }
 
-function encryptString(int $value)
+function encryptString(int $value): string
 {
     return Crypt::encryptString($value);
 }
 
-function decryptString($value)
+function decryptString($value): false|string
 {
     return Crypt::decryptString($value);
+}
+
+function searchKeyArray(array $array, string $keyName): ?string
+{
+    return array_find_key($array, fn ($value) => str_contains((string) $value, $keyName));
+
+}
+
+function copyKeysArray(array $arrayData, array $arrayKeys): array
+{
+    return array_intersect_key($arrayData, $arrayKeys);
+}
+
+function arrayMerge(array $array1, array $array2): array
+{
+    return array_merge($array1, $array2);
 }

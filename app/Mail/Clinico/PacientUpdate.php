@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Mail\Mservicios;
+namespace App\Mail\Clinico;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-final class PacientUpdateEmail extends Mailable
+final class PacientUpdate extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $person;
+    public $patiente;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($person)
+    public function __construct($patiente)
     {
-        $this->person = $person;
+        $this->patiente = $patiente;
 
     }
 
@@ -30,7 +30,7 @@ final class PacientUpdateEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Actualización de datos para '.$this->person->fullname,
+            subject: 'Actualización de datos '.$this->patiente->person->fullName,
         );
     }
 
@@ -38,7 +38,7 @@ final class PacientUpdateEmail extends Mailable
     {
         return $this->markdown('emails.mservicios.patientupdateemail')
             ->with([
-                'patient' => $this->person,
+                'patient' => $this->patiente,
             ]);
     }
 }

@@ -1,7 +1,7 @@
 <x-mail::message>
 # Bienvenido.
 
-¡Hola,  {{$patient->fullName}} ! 
+¡Hola,  {{$patient->person->fullName}} ! 
 
 Queríamos informarte que hemos actualizado correctamente tus datos personales en nuestro sistema.
 

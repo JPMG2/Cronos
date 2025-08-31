@@ -18,13 +18,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait TableFilter
 {
-    private function applyFilter(Builder $query, string $relationName, string $columnName, string $searchValue, array $withRelations): Builder
-    {
-        return $query->whereHas($relationName, function ($query) use ($columnName, $searchValue) {
-            $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%']);
-        })->with($withRelations);
-    }
-
     /**
      * Filters the query results based on the state name of a related model.
      *
@@ -41,6 +34,28 @@ trait TableFilter
     private function state_id($query, string $relationName, string $searchvalue, array $withRelations)
     {
         return $this->applyFilter($query, $relationName, 'state_name', $searchvalue, $withRelations);
+    }
+
+    private function applyFilter(Builder $query, string $relationName, string $columnName, string $searchValue, array $withRelations, $table): Builder
+    {
+        return empty($searchValue) ? $query->whereHas($relationName)
+            ->join($table, 'medicals.person_id', '=', $table.'.id')
+            ->orderBy($table.'.'.$columnName, 'asc')->with($withRelations)
+            :
+        $query->whereHas($relationName, function ($query) use ($columnName, $searchValue) {
+            $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%'])
+                ->orderBy($columnName, 'desc');
+        })->with($withRelations);
+    }
+
+    private function person_name($query, string $relationName, string $searchvalue, array $withRelations)
+    {
+        return $this->applyFilter($query, $relationName, 'person_name', $searchvalue, $withRelations, 'people');
+    }
+
+    private function person_lastname($query, string $relationName, string $searchvalue, array $withRelations)
+    {
+        return $this->applyFilter($query, $relationName, 'person_lastname', $searchvalue, $withRelations);
     }
 
     /**

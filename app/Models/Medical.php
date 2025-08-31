@@ -4,71 +4,52 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Interfaces\Filterable;
 use App\Traits\DbTraits\TableFilter;
 use App\Traits\RecordActivity;
 use Database\Factories\MedicalFactory;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Arr;
 
-final class Medical extends Model
+final class Medical extends Model implements Filterable
 {
     /** @use HasFactory<MedicalFactory> */
     use HasFactory, RecordActivity, TableFilter;
 
-    public static string $startFilterBay = 'medical_name';
-
     protected $fillable = [
+        'person_id',
         'state_id',
         'credential_id',
         'specialty_id',
         'degree_id',
-        'medical_name',
-        'medical_lastname',
-        'medical_address',
-        'medical_phone',
-        'medical_email',
-        'medical_dni',
     ];
 
-    public static function getFilterableAttributes(): array
+    public static function getDefaultFilterField(): string
+    {
+        return 'person_name';
+    }
+
+    public static function getRelationModel(): array
     {
         return [
-            'medical_name' => 'Nombre',
-            'medical_lastname' => 'Apellido',
-            'credential_id' => 'Matricula',
-            'specialty_id' => 'Espacialidad',
-            'state_id' => 'Estatus',
+            'person:id,person_name,person_lastname,num_document,document_id,person_address,person_phone,person_email',
+            'person.document:id,document_name',
+            'specialty:id,specialty_name',
+            'degree:id,degree_name',
+            'state:id,state_name',
+            'credentials' => function ($query): void {
+                $query->select('credentials.id', 'credentials.credential_name', 'credentials.credential_code')
+                    ->withPivot('credential_number');
+            },
+
         ];
     }
 
-    public static function countMedicals(): int
+    public function person(): BelongsTo
     {
-        return self::count();
-    }
-
-    public function mainName(): string
-    {
-        return $this->medical_name;
-    }
-
-    public function setCredentialIdAttribute($value): void
-    {
-        $this->attributes['credential_id'] = $value ?: null;
-    }
-
-    public function setSpecialtyIdAttribute($value): void
-    {
-        $this->attributes['specialty_id'] = $value ?: null;
-    }
-
-    public function setDegreeIdAttribute($value): void
-    {
-        $this->attributes['degree_id'] = $value ?: null;
+        return $this->belongsTo(Person::class);
     }
 
     public function state(): BelongsTo
@@ -86,36 +67,12 @@ final class Medical extends Model
         return $this->belongsTo(Specialty::class);
     }
 
-    public function scopeListMedicals(Builder $query, ?string $stringsearch = null, ?string $relashion = null): Builder
-    {
-        $with = [
-            'specialty:id,specialty_name',
-            'degree:id,degree_name',
-            'state:id,state_name',
-            'credentials' => fn ($query) => $query->select('credentials.id', 'credential_name', 'credential_code', 'credential_number'),
-        ];
-
-        if ($relashion && method_exists($this, $relashion)) {
-            $relationName = $this->getRelashionName($relashion);
-
-            return $this->{$relashion}($query, $relationName, $stringsearch, $with);
-        }
-
-        return $query->with($with);
-    }
-
-    public function getRelashionName(string $relashionvalue): string
-    {
-        return Arr::get([
-            'state_id' => 'state',
-            'credential_id' => 'credentials',
-            'specialty_id' => 'specialty',
-            'degree_id' => 'degree',
-        ], $relashionvalue, '');
-    }
-
     public function getFirstCredentialNumberAttribute(): ?string
     {
+        if (! $this->relationLoaded('credentials')) {
+            $this->loadMissing('credentials');
+        }
+
         return $this->credentials->first()?->pivot->credential_number;
     }
 
@@ -133,47 +90,5 @@ final class Medical extends Model
             'specialty_id' => 'integer',
             'degree_id' => 'integer',
         ];
-    }
-
-    protected function medicalName(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value)))
-        );
-    }
-
-    protected function medicalLastname(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value)))
-        );
-    }
-
-    protected function medicalAddress(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value)))
-        );
-    }
-
-    protected function medicalPhone(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => trim($value)
-        );
-    }
-
-    protected function medicalEmail(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value))
-        );
-    }
-
-    protected function medicalDni(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => trim($value)
-        );
     }
 }

@@ -37,9 +37,9 @@ final class AccesoForm extends Form
             ]
         )->validate();
 
-        $role = Role::find($this->dataacceso['role_id']);
+        $role = Role::query()->find($this->dataacceso['role_id']);
         $uniqueMenuIds = [];
-        $menuId = Menu::whereIn('id', $this->dataacceso['menu_id'])->select('menu_id')->get();
+        $menuId = Menu::query()->whereIn('id', $this->dataacceso['menu_id'])->select('menu_id')->get();
         foreach ($menuId as $key => $value) {
             if (! in_array($value->menu_id, $uniqueMenuIds, true)) {
                 $uniqueMenuIds[] = $value->menu_id;
@@ -50,7 +50,7 @@ final class AccesoForm extends Form
         $services = $this->iniService();
 
         return NotifyQuerys::msgCreateUpdateMany($services
-            ->addWithRelastionship((int) $this->dataacceso['role_id'],
+            ->addWithRelationship((int) $this->dataacceso['role_id'],
                 $allMenuIds,
                 'menus'
             ));
@@ -61,7 +61,7 @@ final class AccesoForm extends Form
     {
         $menusId = [];
         $menuOptions = [];
-        $role = Role::find($this->dataacceso['role_id']);
+        $role = Role::query()->find($this->dataacceso['role_id']);
         if ($role->menus->count() > 0) {
             foreach ($role->menus as $key => $value) {
                 if (is_null($value->header_menu) && $value->menu_id > 0) {

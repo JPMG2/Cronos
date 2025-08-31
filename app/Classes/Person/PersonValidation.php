@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Classes\MainPerson;
+namespace App\Classes\Person;
 
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
@@ -35,6 +35,40 @@ final class PersonValidation
         )->validate();
     }
 
+    public function inicialiciteAtributes(array $person): array
+    {
+
+        return [
+            'person_name' => ucwords(mb_strtolower(mb_trim((string) $person['person_name']))),
+            'person_lastname' => ucwords(mb_strtolower(mb_trim((string) $person['person_lastname']))),
+            'gender_id' => mb_trim((string) $person['gender_id']),
+            'person_datebirth' => mb_trim((string) $person['person_datebirth']),
+            'marital_status_id' => mb_trim((string) $person['marital_status_id']),
+            'occupation_id' => mb_trim((string) $person['occupation_id']),
+            'person_phone' => mb_trim((string) $person['person_phone']),
+            'person_email' => mb_strtolower(mb_trim((string) $person['person_email'])),
+            'nationality_id' => mb_trim((string) $person['nationality_id']),
+            'person_address' => mb_trim((string) $person['person_address']),
+        ];
+
+    }
+
+    public function niceNames(): array
+    {
+        return [
+            'person_name' => config('nicename.name'),
+            'person_lastname' => config('nicename.apellido'),
+            'gender_id' => config('nicename.gender'),
+            'person_datebirth' => config('nicename.datebirth'),
+            'marital_status_id' => config('nicename.maritalstatus'),
+            'occupation_id' => config('nicename.occupation'),
+            'person_phone' => config('nicename.telefono'),
+            'person_email' => config('nicename.correo'),
+            'nationality_id' => config('nicename.nacionalidad'),
+            'person_address' => config('nicename.direccion'),
+        ];
+    }
+
     public function onPersonUpdate(array $person, int $id)
     {
         return Validator::make(
@@ -58,39 +92,5 @@ final class PersonValidation
             $this->niceNames()
 
         )->validate();
-    }
-
-    public function inicialiciteAtributes(array $person): array
-    {
-
-        return [
-            'person_name' => ucwords(mb_strtolower(trim((string) $person['person_name']))),
-            'person_lastname' => ucwords(mb_strtolower(trim((string) $person['person_lastname']))),
-            'gender_id' => trim((string) $person['gender_id']),
-            'person_datebirth' => trim((string) $person['person_datebirth']),
-            'marital_status_id' => trim((string) $person['marital_status_id']),
-            'occupation_id' => trim((string) $person['occupation_id']),
-            'person_phone' => trim((string) $person['person_phone']),
-            'person_email' => mb_strtolower(trim((string) $person['person_email'])),
-            'nationality_id' => trim((string) $person['nationality_id']),
-            'person_address' => trim((string) $person['person_address']),
-        ];
-
-    }
-
-    public function niceNames(): array
-    {
-        return [
-            'person_name' => config('nicename.name'),
-            'person_lastname' => config('nicename.apellido'),
-            'gender_id' => config('nicename.gender'),
-            'person_datebirth' => config('nicename.datebirth'),
-            'marital_status_id' => config('nicename.maritalstatus'),
-            'occupation_id' => config('nicename.occupation'),
-            'person_phone' => config('nicename.telefono'),
-            'person_email' => config('nicename.correo'),
-            'nationality_id' => config('nicename.nacionalidad'),
-            'person_address' => config('nicename.direccion'),
-        ];
     }
 }

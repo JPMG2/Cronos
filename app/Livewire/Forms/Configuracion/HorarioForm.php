@@ -36,8 +36,24 @@ final class HorarioForm extends Form
             5 => '',
             6 => '',
         ],
-        'afternoon_start' => [],
-        'afternoon_end' => [],
+        'afternoon_start' => [
+            0 => '',
+            1 => '',
+            2 => '',
+            3 => '',
+            4 => '',
+            5 => '',
+            6 => '',
+        ],
+        'afternoon_end' => [
+            0 => '',
+            1 => '',
+            2 => '',
+            3 => '',
+            4 => '',
+            5 => '',
+            6 => '',
+        ],
     ];
 
     public function scheduleStoreUpdate(ScheduleValidation $scheduleValidation)

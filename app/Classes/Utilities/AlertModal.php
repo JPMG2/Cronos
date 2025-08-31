@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Classes\Utilities;
 
-final class AlertModal
+final readonly class AlertModal
 {
     public function __construct(
         public int $exception,
@@ -13,7 +13,6 @@ final class AlertModal
         public string $buttonName,
         public string $event,
         public string $message,
-        public int $idToDelete,
-
+        public int $idModel,
     ) {}
 }

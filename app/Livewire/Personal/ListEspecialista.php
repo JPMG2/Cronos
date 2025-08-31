@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Personal;
 
+use App\Classes\Services\QueryPerson\MedicListService;
 use App\Models\Medical;
 use App\Traits\TableSorting;
 use Livewire\Attributes\Computed;
@@ -17,45 +18,43 @@ final class ListEspecialista extends Component
 
     public $show = false;
 
+    public array $columnFilter = [
+        'person_name' => '',
+        'person_lastname' => '',
+        'num_document' => '',
+        'specialty_name' => '',
+        'credential_number' => '',
+    ];
+
     public function mount($show)
     {
         $this->show = $show;
-
     }
 
     public function render()
     {
-        $queryIncial = $this->especialistList();
-
-        $query = $this->makeQueryByColumn($queryIncial)->orderBy('medical_name');
-
-        if (! empty($this->sortField)) {
-            $this->nameRelashion = 'listMedicals';
-            $query = $this->makeQueryBySearch($this->sortField, $queryIncial);
-        }
-
         return view('livewire.personal.list-especialista', [
-            'listMedical' => $query->paginate(10),
+            'listMedical' => $this->getMedicService()->listSearch($this->columnFilter)->paginate(15),
         ]);
-    }
-
-    #[Computed]
-    public function especialistList()
-    {
-        return Medical::listMedicals();
     }
 
     #[On('showModalMedical')]
     public function updateShow($show)
     {
         $this->show = $show;
-        $this->inicializteTableSorting('Medical');
-
+        $this->reset('columnFilter');
+        $this->setupTableSorting('Medical');
     }
 
     public function dataMedic($medicId)
     {
         $this->dispatch('dataMedical', $medicId);
         $this->show = false;
+    }
+
+    #[Computed]
+    private function getMedicService(): MedicListService
+    {
+        return new MedicListService(new Medical(), $this->sortDirection, $this->clickColumn);
     }
 }

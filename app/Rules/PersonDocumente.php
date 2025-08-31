@@ -11,11 +11,11 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 
 final class PersonDocumente implements ValidationRule
 {
-    private $idTypeDocument;
+    private int $idTypeDocument;
 
-    private $numDocument;
+    private ?string $numDocument;
 
-    private $idPerson;
+    private ?int $idPerson;
 
     public function __construct($idTypeDocument, $numDocument, $idPerson)
     {

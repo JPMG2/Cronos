@@ -32,7 +32,16 @@ final class OpcionMenu extends Component
     #[On('showOptionsForms')]
     public function optionsOn($show)
     {
+        if ($show === false) {
+            $this->resetColor();
+        }
         $this->showbutton = $show;
+    }
+
+    #[On('clearColorOpcionMenu')]
+    public function resetColor()
+    {
+        $this->optioncolor = ['show' => false, 'new' => false, 'edit' => false, 'print' => false, 'export' => false, 'history' => false];
     }
 
     public function changeColor($option)
@@ -48,11 +57,5 @@ final class OpcionMenu extends Component
             return $value;
         });
 
-    }
-
-    #[On('clearColorOpcionMenu')]
-    public function resetColor()
-    {
-        $this->optioncolor = ['show' => false, 'new' => false, 'edit' => false, 'print' => false, 'export' => false, 'history' => false];
     }
 }

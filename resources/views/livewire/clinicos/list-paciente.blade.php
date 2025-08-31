@@ -25,7 +25,7 @@
                     </button>
                 </div>
                 <div class="overflow-y-auto p-4">
-                    <x-table.boxsearch :listFilterValues="$listFilterValues"></x-table.boxsearch>
+
                     @if(count($listPatients) > 0)
                         <div
                             class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
@@ -34,61 +34,14 @@
                             <table
                                 class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                             >
-                                <x-table.thead>
-                                    <tr>
-                                        <x-table.th>
-                                            ID
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('num_document')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="num_document" :$columName
-                                                                :$sortDirection>
-                                                <div>Num documento</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('person_name')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="person_name" :$columName
-                                                                :$sortDirection>
-                                                <div>Nombre</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('person_lastname')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="person_lastname" :$columName
-                                                                :$sortDirection>
-                                                <div>Apellido</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-
-                                        <x-table.th
-                                            wire:click="orderColumBy('gender_id')"
-                                        >
-                                            Genero
-                                        </x-table.th>
-                                        <x-table.th>
-                                            Fecha Nacimiento
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('person_phone')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="person_phone" :$columName
-                                                                :$sortDirection>
-                                                <div>Teléfono</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th>
-                                            Correo
-                                        </x-table.th>
-                                        <x-table.th>
-
-                                        </x-table.th>
-                                    </tr>
-                                </x-table.thead>
+                                <x-table.config-header 
+                                    table="patients"
+                                    :columName="$columName"
+                                    :sortDirection="$sortDirection"
+                                    :searchable="false"
+                                />
                                 <x-table.tablebody>
+
                                     @foreach ($listPatients as $patiente)
                                         <tr
                                             class="even:bg-gray-100"
@@ -98,25 +51,25 @@
                                                 {{ $loop->iteration }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->num_document }}
+                                                {{$patiente->person->num_document }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->person_name }}
+                                                {{$patiente->person->person_name }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->person_lastname }}
+                                                {{$patiente->person->person_lastname }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->gender?->gender_name }}
+
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->person_datebirth }}
+                                                {{$patiente->person->person_datebirth }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->person_phone }}
+                                                {{$patiente->person->person_phone }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->person_email }}
+                                                {{$patiente->person->person_email }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                                 <div

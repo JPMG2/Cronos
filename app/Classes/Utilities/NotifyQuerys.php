@@ -21,7 +21,7 @@ final class NotifyQuerys
     public static function msgUpadte($model): array
     {
 
-        if ($model->getChanges() > 0) {
+        if (count($model->getChanges()) > 0) {
             $message = ['Actualización exitosa !!', 1];
         } else {
             $message = ['Sin cambios !!', 0];
@@ -79,6 +79,20 @@ final class NotifyQuerys
             $message = ['Se ha borrado exitosamente !!', 1];
         } else {
             $message = ['No se ha borrado el registro !!', 0];
+        }
+
+        return $message;
+    }
+
+    public static function msgUpdateCreate($model): array
+    {
+
+        if ($model->wasRecentlyCreated) {
+            $message = ['Registro exitoso !!', 1];
+        } elseif ($model->getChanges() > 0) {
+            $message = ['Actualización exitosa !!', 1];
+        } else {
+            $message = ['Sin cambios !!', 0];
         }
 
         return $message;

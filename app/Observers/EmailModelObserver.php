@@ -16,10 +16,10 @@ use App\Models\Company;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
-final class EmailModelObserver
+final readonly class EmailModelObserver
 {
     public function __construct(
-        private readonly SendEmail $sendEmail
+        private SendEmail $sendEmail
     ) {}
 
     public function created(Model $model): void
@@ -30,7 +30,8 @@ final class EmailModelObserver
             $model,
             SendEmail::ACTION_CREATE,
             $emailClasses['baseClass'],
-            $emailClasses['createMailClass']
+            $emailClasses['createMailClass'],
+            $emailClasses['receptor']
         );
     }
 
@@ -43,7 +44,8 @@ final class EmailModelObserver
                 $model,
                 SendEmail::ACTION_UPDATE,
                 $emailClasses['baseClass'],
-                $emailClasses['updateMailClass']
+                $emailClasses['updateMailClass'],
+                $emailClasses['receptor']
             );
         }
     }
@@ -58,11 +60,13 @@ final class EmailModelObserver
                 'baseClass' => BranchEmail::class,
                 'createMailClass' => BranchCreateMail::class,
                 'updateMailClass' => BranchUpdateMail::class,
+                'receptor' => $model->branch_email,
             ],
             $model instanceof Company => [
                 'baseClass' => CompanyEmail::class,
                 'createMailClass' => CompanyCreateMail::class,
                 'updateMailClass' => CompanyUpdateMail::class,
+                'receptor' => $model->company_email,
             ],
             default => throw new InvalidArgumentException('Unsupported model type for email notification'),
         };

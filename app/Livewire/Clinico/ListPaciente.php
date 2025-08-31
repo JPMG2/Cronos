@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Servicios;
+namespace App\Livewire\Clinico;
 
+use App\Classes\Services\QueryPerson\PatientListService;
+use App\Models\Patient;
 use App\Models\Person;
 use App\Traits\TableSorting;
 use Livewire\Attributes\Computed;
@@ -17,20 +19,21 @@ final class ListPaciente extends Component
 
     public $show = false;
 
+    public array $columnFilter = [
+        'person_name' => '',
+        'person_lastname' => '',
+        'num_document' => '',
+        'specialty_name' => '',
+        'credential_number' => '',
+    ];
+
     public function render()
     {
-        $queryIncial = $this->patientlistList();
 
-        $query = $this->makeQueryByColumn($queryIncial)->orderBy('num_document');
-
-        if (! empty($this->sortField)) {
-            $this->nameRelashion = 'listPatients';
-            $query = $this->makeQueryBySearch($this->sortField, $queryIncial);
-        }
-
-        return view('livewire.servicios.list-paciente', [
-            'listPatients' => $query->paginate(10),
+        return view('livewire.clinicos.list-paciente', [
+            'listPatients' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
         ]);
+
     }
 
     #[Computed]
@@ -49,12 +52,19 @@ final class ListPaciente extends Component
     public function updateShow($show)
     {
         $this->show = $show;
-        $this->inicializteTableSorting('Person');
+        $this->reset('columnFilter');
+        $this->setupTableSorting('Patient');
     }
 
     public function patientId($patientId)
     {
         $this->dispatch('dataPatient', $patientId);
         $this->show = false;
+    }
+
+    #[Computed]
+    private function getPatientService(): PatientListService
+    {
+        return new PatientListService(new Patient(), $this->sortDirection, $this->clickColumn);
     }
 }

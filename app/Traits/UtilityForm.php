@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Classes\Utilities\NotifyQuerys;
 use Illuminate\Support\Facades\App;
 
 trait UtilityForm
@@ -14,7 +15,7 @@ trait UtilityForm
 
     public function cleanFormValues()
     {
-
+        $this->isdisabled = '';
         $this->resetValidation();
         $this->resetErrorBag();
     }
@@ -36,5 +37,16 @@ trait UtilityForm
     {
         $this->isdisabled = '';
         $this->isupdate = true;
+    }
+
+    public function showToastAndClear($result): void
+    {
+        $this->dispatch('show-toast', $result);
+        $this->clearForm();
+    }
+
+    public function showQueryMessage($model, $accion)
+    {
+        return NotifyQuerys::{$accion}($model);
     }
 }

@@ -106,6 +106,14 @@
             @livewire("utility.form-activity")
             @livewire("utility.history-modal")
             @livewire("utility.alert-form")
+            <div x-data="{personInfoData: false}"
+                 @open-modal-data.window="personInfoData = true"
+                 @close-modal-data.window="personInfoData = false">
+                <div id="modal-personData" x-show="personInfoData" x-cloak>
+                </div>
+            </div>
+
+
         </div>
         <!-- end:Page content -->
     </div>

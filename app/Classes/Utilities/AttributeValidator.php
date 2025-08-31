@@ -38,43 +38,39 @@ final class AttributeValidator
 
     public static function emailValid($model, $uniqueField, $id = null)
     {
-        if ($id) {
-            return 'sometimes|unique:'.$model.','.$uniqueField.','.$id.'|email|regex:/^([^<>]*)$/|max:255';
-        }
-
-        return 'sometimes|unique:'.$model.','.$uniqueField.'|email|regex:/^([^<>]*)$/|max:255';
+        return $id ?
+            ['sometimes', 'unique:'.$model.','.$uniqueField.','.$id, 'email', 'regex:/^([^<>]*)$/', 'max:255'] :
+           ['sometimes', 'unique:'.$model.','.$uniqueField, 'email', 'regex:/^([^<>]*)$/', 'max:255'];
     }
 
     public static function emailValidById($id, $model, $uniqueField)
     {
-        return 'sometimes|unique:'.$model.','.$uniqueField.','.$id.'|email|regex:/^([^<>]*)$/|max:255';
+        return ['sometimes',
+            'unique:'.$model.','.$uniqueField.','.$id,
+            'email', 'regex:/^([^<>]*)$/', 'max:255'];
     }
 
     public static function stringValid($required, $length)
     {
-        if ($required) {
-            return 'required|min:'.$length.'|regex:/^([^<>]*)$/|max:255';
-        }
+        return $required ?
+            ['required', 'min:'.$length, 'regex:/^([^<>]*)$/', 'max:255'] :
+            ['sometimes', 'min:'.$length, 'regex:/^([^<>]*)$/', 'max:255'];
 
-        return 'sometimes|min:'.$length.'|regex:/^([^<>]*)$/|max:255';
     }
 
     public static function stringValidUnique($model, $uniqueField, $length, $id = null)
     {
-        if ($id) {
-            return 'sometimes|min:'.$length.'|unique:'.$model.','.$uniqueField.','.$id.'|regex:/^([^<>]*)$/|max:255';
-        }
-
-        return 'sometimes|min:'.$length.'|unique:'.$model.','.$uniqueField.'|regex:/^([^<>]*)$/|max:255';
+        return $id ?
+            ['sometimes', 'min:'.$length, 'unique:'.$model.','.$uniqueField.','.$id, 'regex:/^([^<>]*)$/', 'max:255'] :
+            ['sometimes', 'min:'.$length, 'unique:'.$model.','.$uniqueField, 'regex:/^([^<>]*)$/', 'max:255'];
     }
 
     public static function webValid($required)
     {
-        if ($required) {
-            return 'required|url|regex:/^([^<>]*)$/|max:255';
-        }
+        return $required
+            ? ['required', 'url',  'active_url', 'regex:/^([^<>]*)$/', 'max:255']
+            : ['sometimes', 'url', 'active_url', 'regex:/^([^<>]*)$/', 'max:255'];
 
-        return 'sometimes|url|regex:/^([^<>]*)$/|max:255';
     }
 
     public static function mayorValid()
@@ -82,19 +78,17 @@ final class AttributeValidator
         return 'gt:0';
     }
 
-    public static function medicalCredential(int $idcredential, $credential, $id = null)
+    public static function medicalCredential(int $idcredential, $credentialNumber, $id = null)
     {
 
-        return new MedicalCredential($idcredential, $credential, $id);
+        return new MedicalCredential($idcredential, $credentialNumber, $id);
     }
 
     public static function dateValid($required)
     {
-        if ($required) {
-            return 'required|regex:/^([^<>]*)$/|max:255|date_format:d-m-Y';
-        }
-
-        return 'sometimes|regex:/^([^<>]*)$/|max:255|date_format:d-m-Y';
+        return $required
+            ? ['required', 'date_format:d-m-Y', 'max:255', 'regex:/^([^<>]*)$/'] :
+              ['sometimes', 'date_format:d-m-Y', 'max:255', 'regex:/^([^<>]*)$/'];
     }
 
     public static function hasTobeArray($length)
@@ -102,8 +96,15 @@ final class AttributeValidator
         return 'array|min:'.$length;
     }
 
-    public static function scheduleArray(array $schedule)
+    public static function scheduleArray(array $schedule): ArraySchedule
     {
         return new ArraySchedule($schedule);
+    }
+
+    public static function requireAndExists($model, $uniqueField, $column, $require = null): array
+    {
+        return $require ? ['required',  'integer', 'exists:'.$model.','.$uniqueField]
+            : ['nullable', 'exclude_if:'.$column.',0', 'integer'];
+
     }
 }

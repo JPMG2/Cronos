@@ -58,9 +58,7 @@
                                 </x-table.th>
                             </tr>
                         </x-table.thead>
-                        <x-table.tablebody
-
-                        >
+                        <x-table.tablebody>
 
                             @foreach ($this->days as $day)
                                 <tr
@@ -96,7 +94,7 @@
                                             />
                                         </div>
 
-                                        @error("morning_start.{$loop->index}")
+                                        @error("morning_start.$loop->index")
                                         <div class="text-red-500 text-xs">{{ $message }}</div>
                                         @enderror
                                     </x-table.tdtable>
@@ -120,7 +118,9 @@
                                             <div class="text-red-500 text-xs"
                                                  x-text="errorMorning['{{$loop->index}}']"></div>
                                         </template>
-
+                                        @error("morning_end.{$loop->index}")
+                                        <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
 
                                     </x-table.tdtable>
                                     <x-table.tdtable
@@ -141,6 +141,9 @@
                                             <div class="text-red-500 text-xs"
                                                  x-text="errorMorningAfternoon['{{$loop->index}}']"></div>
                                         </template>
+                                        @error("afternoon_start.{$loop->index}")
+                                        <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
                                     </x-table.tdtable>
                                     <x-table.tdtable
                                         x-data="checkClosetimeAfternoon()"
@@ -161,6 +164,9 @@
                                             <div class="text-red-500 text-xs"
                                                  x-text="errorAfternoon['{{$loop->index}}']"></div>
                                         </template>
+                                        @error("afternoon_end.{$loop->index}")
+                                        <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
                                     </x-table.tdtable>
                                 </tr>
                             @endforeach
@@ -177,7 +183,6 @@
                 <form
                     id="scheduleForm"
                     wire:submit.prevent="submit"
-
                 >
                     @csrf
                     <x-headerform.button-group>
@@ -217,15 +222,11 @@
             },
 
             checkInitialState(isChecked) {
-
-                if (!isChecked) {
-                    const inputs = this.getInputElements();
-
-                    if (Object.values(inputs).every(input => input)) {
-                        Object.values(inputs).forEach(input => {
-                            input.disabled = !isChecked;
-                        });
-                    }
+                const inputs = this.getInputElements();
+                if (Object.values(inputs).every(input => input)) {
+                    Object.values(inputs).forEach(input => {
+                        input.disabled = !isChecked;
+                    });
                 }
             },
 
@@ -318,5 +319,4 @@
         return hours * 60 + minutes;
     }
 </script>
-
 @endscript

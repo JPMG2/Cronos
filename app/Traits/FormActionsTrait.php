@@ -76,4 +76,10 @@ trait FormActionsTrait
         $model = $parameter['model'];
         $this->dispatch('showModalHistory', ['model' => $model, 'id' => $id]);
     }
+
+    private function showMenuAction(): void
+    {
+        $this->dispatch('showOptionsForms', show: true);
+        $this->isdisabled = 'disabled';
+    }
 }

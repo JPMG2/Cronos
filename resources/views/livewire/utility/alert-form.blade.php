@@ -18,7 +18,7 @@
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                         <h3 class="text-base font-semibold text-gray-900" id="modal-title">{{$title}}</h3>
                         <div class="mt-2">
-                            <p class="text-sm text-gray-600">{{$message}}.</p>
+                            <p class="text-sm text-gray-600">{!!$message!!}</p>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                             {{$buttonName}}
                         </button>
                     @endif
-                    <x-modalalert.modalbuttoncancel></x-modalalert.modalbuttoncancel>
+                    <x-modalalert.modalbuttoncancel :buttonName="$buttonName"></x-modalalert.modalbuttoncancel>
                 </div>
             </div>
         </div>

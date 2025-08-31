@@ -8,7 +8,7 @@ use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\NotifyQuerys;
 use App\Livewire\Forms\Configuracion\RoleForm;
 use App\Models\Role;
-use App\Traits\HandleDeleteId;
+use App\Traits\HandleMenuAction;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -16,7 +16,7 @@ use Livewire\Component;
 
 final class ReRoles extends Component
 {
-    use HandleDeleteId, UtilityForm;
+    use HandleMenuAction, UtilityForm;
 
     public RoleForm $roleForm;
 
@@ -72,15 +72,30 @@ final class ReRoles extends Component
 
     public function deleteRole(Role $role)
     {
-        $this->deleteModel($role, function ($role) {
+        $this->messageWindow($role, function ($role) {
             if ($role->users()->count() > 0) {
-                return new AlertModal(exception: 0, type: 'error', title: 'Error', buttonName: '', event: '',
-                    message: 'No se puede eliminar el rol, tiene usuarios asignados', idToDelete: 0);
+                return new AlertModal(
+                    exception: 0,
+                    type: 'error',
+                    title: 'Error',
+                    buttonName: '',
+                    event: '',
+                    message: 'No se puede eliminar el rol, tiene usuarios asignados',
+                    idModel: 0
+                );
+
             }
 
-            return new AlertModal(exception: 1,
-                type: 'warning', title: 'Advertencia', buttonName: 'Borrar', event: 'roleRemove',
-                message: 'Realmente desea borrar el rol ?', idToDelete: $role->id);
+            return new AlertModal(
+                exception: 1,
+                type: 'warning',
+                title: 'Advertencia',
+                buttonName: 'Borrar',
+                event: 'roleRemove',
+                message: 'Realmente desea borrar el rol ?',
+                idModel: $role->id
+            );
+
         });
 
     }
@@ -89,6 +104,5 @@ final class ReRoles extends Component
     public function remove()
     {
         $this->endRoles(NotifyQuerys::msgDestroy(Role::destroy($this->idRemove)));
-
     }
 }

@@ -9,17 +9,14 @@ use App\Classes\Utilities\CommonQuerys;
 use App\Listeners\LogSuccess;
 use App\Models\Branch;
 use App\Models\Company;
-use App\Models\Patient;
-use App\Models\Person;
 use App\Observers\EmailModelObserver;
-use App\Observers\PatientObserver;
-use App\Observers\PersonObserver;
 use Carbon\CarbonImmutable;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use InvalidArgumentException;
@@ -31,12 +28,10 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('commonquery', function ($app) {
-            return new CommonQuerys;
-        });
+        $this->app->singleton('commonquery', fn ($app): CommonQuerys => new CommonQuerys);
 
         $this->app->bind(ModelService::class, /** @throws InvalidArgumentException */
-            function ($app, array $params) {
+            function ($app, array $params): ModelService {
                 if (! array_key_exists('model', $params) || ! $params['model'] instanceof Model) {
                     throw new InvalidArgumentException('A valid Eloquent model must be passed to ModelService.');
                 }
@@ -56,14 +51,12 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureModels();
         $this->configureDates();
         $this->configureVite();
+        $this->configureRequests();
         Model::preventLazyLoading(! $this->app->isProduction());
         Model::preventSilentlyDiscardingAttributes(! $this->app->isProduction());
         Model::preventAccessingMissingAttributes(! $this->app->isProduction());
-
         Branch::observe(EmailModelObserver::class);
         Company::observe(EmailModelObserver::class);
-        Person::observe(PersonObserver::class);
-        Patient::observe(PatientObserver::class);
         Event::listen(Login::class, LogSuccess::class);
     }
 
@@ -87,5 +80,10 @@ final class AppServiceProvider extends ServiceProvider
     private function configureVite(): void
     {
         Vite::prefetch(concurrency: 3);
+    }
+
+    private function configureRequests(): void
+    {
+        Http::preventStrayRequests();
     }
 }

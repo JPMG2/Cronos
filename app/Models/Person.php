@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Interfaces\Filterable;
 use App\Traits\DbTraits\TableFilter;
 use Carbon\CarbonImmutable;
 use Database\Factories\PersonFactory;
@@ -13,20 +14,47 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Arr;
 
-final class Person extends Model
+/**
+ * @property int $document_id
+ * @property ?int $city_id
+ * @property ?int $gender_id
+ * @property ?int $marital_status_id
+ * @property ?int $occupation_id
+ * @property ?int $nationality_id
+ * @property string $num_document
+ * @property string $person_name
+ * @property string $person_lastname
+ * @property ?string $person_address
+ * @property ?string $person_phone
+ * @property ?string $person_email
+ * @property CarbonImmutable $person_datebirth
+ */
+final class Person extends Model implements Filterable
 {
     /** @use HasFactory<PersonFactory> */
     use HasFactory,TableFilter;
-
-    public static string $startFilterBay = 'num_document';
 
     protected $fillable = [
         'document_id', 'city_id', 'gender_id', 'marital_status_id', 'occupation_id',
         'nationality_id', 'num_document', 'person_name', 'person_lastname',
         'person_address', 'person_phone', 'person_email', 'person_datebirth',
     ];
+
+    protected $casts = [
+        'document_id' => 'integer',
+        'city_id' => 'integer',
+        'gender_id' => 'integer',
+        'marital_status_id' => 'integer',
+        'occupation_id' => 'integer',
+        'nationality_id' => 'integer',
+        'person_datebirth' => 'date',
+    ];
+
+    public static function getDefaultFilterField(): string
+    {
+        return 'num_document';
+    }
 
     public static function getFilterableAttributes(): array
     {
@@ -38,18 +66,17 @@ final class Person extends Model
         ];
     }
 
-    public static function documentExist(int $documentType, string $numdocument, $personId = null): bool
+    public static function documentExist(int $documentType, string $numDocument, $personId = null): bool
     {
+        $query = self::query()->where('document_id', $documentType)
+            ->where('num_document', $numDocument);
+
         if ($personId) {
-            return self::where('document_id', $documentType)
-                ->where('num_document', $numdocument)
-                ->where('id', '!=', $personId)
-                ->exists();
+            $query->where('id', '!=', $personId);
         }
 
-        return self::where('num_document', $numdocument)
-            ->where('document_id', $documentType)
-            ->exists();
+        return $query->exists();
+
     }
 
     public function document(): BelongsTo
@@ -92,6 +119,11 @@ final class Person extends Model
         return $this->hasOne(Patient::class);
     }
 
+    public function medical(): HasOne
+    {
+        return $this->hasOne(Medical::class);
+    }
+
     public function saveRelation(array $data, string $relation): Model
     {
         return $this->$relation()->create($data);
@@ -127,14 +159,14 @@ final class Person extends Model
         $this->attributes['nationality_id'] = $value ?: null;
     }
 
-    public function scopeListPatients(Builder $query, $stringsearch = null, $relashion = null): Builder
+    public function scopeListPatients(Builder $query, $searchTerm = null, $relationship = null): Builder
     {
-        if (! is_null($relashion)) {
+        if (! is_null($relationship)) {
 
-            $relationName = $this->getRelashionName($relashion);
+            $relationName = $this->getRelashionName($relationship);
 
-            if (method_exists($this, $relashion)) {
-                return $this->{$relashion}($query, $relationName, $stringsearch, ['gender', 'maritalStatus', 'occupation', 'nationality', 'city']);
+            if (method_exists($this, $relationship)) {
+                return $this->{$relationship}($query, $relationName, $searchTerm, ['gender', 'maritalStatus', 'occupation', 'nationality', 'city']);
             }
         }
 
@@ -151,7 +183,7 @@ final class Person extends Model
             'occupation_id' => 'occupation',
             'nationality_id' => 'nationality', ];
 
-        return Arr::get($relashionarray, $relashionvalue);
+        return $relashionarray[$relashionvalue];
 
     }
 
@@ -167,17 +199,16 @@ final class Person extends Model
             ->findOrFail($id);
     }
 
-    protected function casts(): array
+    public function hasEmail(): bool
     {
-        return [
-            'document_id' => 'integer',
-            'city_id' => 'integer',
-            'gender_id' => 'integer',
-            'marital_status_id' => 'integer',
-            'occupation_id' => 'integer',
-            'nationality_id' => 'integer',
-            'person_datebirth' => 'date',
-        ];
+        return $this->person_email !== '';
+    }
+
+    public function getdocumentInfoAttribute(): string
+    {
+        $typeDocument = $this->document->document_name;
+
+        return "$typeDocument. ".$this->num_document;
     }
 
     protected function getfullNameAttribute(): string
@@ -188,28 +219,28 @@ final class Person extends Model
     protected function personName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => str(str(str($value)->squish())->lower())->title(),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function personLastname(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => str(str(str($value)->squish())->lower())->title(),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function email(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => str(str($value)->squish())->lower(),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function personEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
 
         );
     }
@@ -218,21 +249,21 @@ final class Person extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucfirst(mb_strtolower(trim($value))),
+            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function personPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
     protected function numDocument(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
@@ -240,7 +271,7 @@ final class Person extends Model
     {
         return Attribute::make(
             get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
-            set: fn ($value) => $value,
+            set: fn ($value) => CarbonImmutable::parse($value)->format('Y-m-d'),
         );
     }
 }

@@ -26,73 +26,132 @@
                     </button>
                 </div>
                 <div class="overflow-y-auto p-4">
-                    <x-table.boxsearch :listFilterValues="$listFilterValues"></x-table.boxsearch>
-                    @if(count($listMedical) > 0)
 
+                    <div
+                        class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                    >
 
-                        <div
-                            class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                        <table
+                            class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                         >
+                            <x-table.thead>
+                                <tr class="h-2 p-0">
+                                    <x-table.th>
+                                        ID
+                                    </x-table.th>
+                                    <x-table.th
+                                        wire:click="orderColumBy('num_document')"
+                                    >
+                                        <x-table.sortcolumn currentColumn="num_document" :$columName
+                                                            :$sortDirection>
+                                            <div>Documento</div>
+                                        </x-table.sortcolumn>
+                                    </x-table.th>
+                                    <x-table.th
+                                        wire:click="orderColumBy('person_name')"
+                                    >
+                                        <x-table.sortcolumn currentColumn="person_name" :$columName
+                                                            :$sortDirection>
+                                            <div>Nombre</div>
+                                        </x-table.sortcolumn>
+                                    </x-table.th>
+                                    <x-table.th
+                                        wire:click="orderColumBy('person_lastname')"
+                                    >
+                                        <x-table.sortcolumn currentColumn="person_lastname" :$columName
+                                                            :$sortDirection>
+                                            <div>Apellido</div>
+                                        </x-table.sortcolumn>
+                                    </x-table.th>
+                                    <x-table.th
+                                        wire:click="orderColumBy('credential_number')">
+                                        <x-table.sortcolumn currentColumn="credential_number" :$columName
+                                                            :$sortDirection>
+                                            <div> Matrícula</div>
+                                        </x-table.sortcolumn>
+                                    </x-table.th>
+                                    <x-table.th
+                                        wire:click="orderColumBy('specialty_name')">
+                                        <x-table.sortcolumn currentColumn="specialty_name" :$columName
+                                                            :$sortDirection>
+                                            <div>Especialidad</div>
+                                        </x-table.sortcolumn>
+                                    </x-table.th>
+                                    <x-table.th
+                                        wire:click="orderColumBy('state_name')">
+                                        <x-table.sortcolumn currentColumn="state_name" :$columName
+                                                            :$sortDirection>
+                                            <div>Estatus</div>
+                                        </x-table.sortcolumn>
+                                    </x-table.th>
+                                    <x-table.th></x-table.th>
+                                </tr>
+                                <tr class="h-1 p-0 ">
+                                    <td></td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-32"
+                                            maxlength="10"
+                                            x-mask="9999999999"
+                                            wire:model.live.debounce="columnFilter.num_document"/>
+                                    </td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-36"
+                                            maxlength="10"
+                                            x-mask="aaaaaaaaaa"
+                                            wire:model.live.debounce="columnFilter.person_name"/>
+                                    </td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            maxlength="10"
+                                            x-mask="aaaaaaaaaa"
+                                            wire:model.live.debounce="columnFilter.person_lastname"/>
+                                    </td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-32"
+                                            maxlength="10"
+                                            x-mask="9999999999"
+                                            wire:model.live.debounce="columnFilter.credential_number"/>
+                                    </td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-32"
+                                            maxlength="10"
+                                            x-mask="aaaaaaaaaa"
+                                            wire:model.live.debounce="columnFilter.specialty_name"/>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </x-table.thead>
 
-                            <table
-                                class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                            >
-                                <x-table.thead>
-                                    <tr>
-                                        <x-table.th>
-                                            ID
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('medical_name')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="medical_name" :$columName
-                                                                :$sortDirection>
-                                                <div>Nombre</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('medical_lastname')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="medical_lastname" :$columName
-                                                                :$sortDirection>
-                                                <div>Apellido</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th>
-                                            Matrícula
-                                        </x-table.th>
-                                        <x-table.th>
-                                            Especialidad
-                                        </x-table.th>
-                                        <x-table.th>
-                                            Estatus
-                                        </x-table.th>
-                                        <x-table.th>
-
-                                        </x-table.th>
-                                    </tr>
-                                </x-table.thead>
-                                <x-table.tablebody>
-                                    @foreach ($listMedical as $medical)
-
+                            <x-table.tablebody>
+                                @if(count($listMedical) > 0)
+                                    @foreach($listMedical as $medical)
                                         <tr
-                                            class="even:bg-gray-100"
+                                            class="even:bg-gray-100 "
                                             wire:key="{{ $medical->id }}"
                                         >
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable
+                                                typetext="txtimportant" whitespace-nowrap>
                                                 {{ $loop->iteration }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{ $medical->medical_name }}
+                                                {{ $medical->person->documentInfo }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{ $medical->medical_lastname }}
+                                                {{ $medical->person->person_name }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{ $medical->person->person_lastname }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" break-words>
                                                 @php
                                                     $firstCredential = $medical->credentials->first();
-                                                    $credential = $firstCredential ? $firstCredential->credential_code : '-';
-                                                    $numatricula = $medical->firstCredentialNumber;
+                                                      $credential = $firstCredential ? $firstCredential->credential_code : '-';
+                                                      $numatricula = $medical->firstCredentialNumber;
                                                 @endphp
                                                 {{ $credential !== '-' && $numatricula !== '-' ? "$credential-$numatricula" : '-' }}
                                             </x-table.tdtable>
@@ -118,28 +177,33 @@
                                             </x-table.tdtable>
                                         </tr>
                                     @endforeach
-                                </x-table.tablebody>
-                            </table>
-                            <div class="mt-2 mb-2 justify-end mx-2">
-                                {{ $listMedical->links() }}
-                            </div>
-                            @else
-                                <x-alert windowtype="error">
-                                    No existen especialistas registrados.
-                                </x-alert>
-                            @endif
+                                @else
+                                    <tr>
+                                        <td colspan="8" class="py-4">
+                                            <x-alert windowtype="error">
+                                                No existen especialistas registrados.
+                                            </x-alert>
+                                        </td>
+                                    </tr>
+                                @endif
+                            </x-table.tablebody>
+                        </table>
+                        <div class="mt-2 mb-2 justify-end mx-2">
+                            {{ $listMedical->links() }}
                         </div>
 
+                    </div>
 
-                        <div
-                            class="flex items-center justify-end gap-x-2 border-t px-4 py-2 dark:border-neutral-700"
+
+                    <div
+                        class="flex items-center justify-end gap-x-2 border-t px-4 py-2 dark:border-neutral-700"
+                    >
+                        <x-buttons.close
+                            wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
                         >
-                            <x-buttons.close
-                                wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
-                            >
-                                {{ __("Cerrar") }}
-                            </x-buttons.close>
-                        </div>
+                            {{ __("Cerrar") }}
+                        </x-buttons.close>
+                    </div>
                 </div>
             </div>
         </div>

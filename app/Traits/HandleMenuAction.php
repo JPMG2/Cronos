@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-trait HandleDeleteId
+trait HandleMenuAction
 {
     public $idRemove;
 
-    public function deleteModel(mixed $model, ?callable $customValidation = null)
+    public function messageWindow(mixed $model, ?callable $customValidation = null): void
     {
         if ($customValidation && is_callable($customValidation)) {
             $modalAttributes = $customValidation($model);
@@ -18,7 +18,7 @@ trait HandleDeleteId
             $message = $modalAttributes->message;
             $buttonName = $modalAttributes->buttonName;
             $event = $modalAttributes->event;
-            $this->idRemove = $modalAttributes->idToDelete;
+            $this->idRemove = $modalAttributes->idModel;
             $this->triggerAlert($exception, $tye, $message, $title, $buttonName, $event);
         }
     }

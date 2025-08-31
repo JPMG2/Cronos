@@ -42,7 +42,7 @@ final class ListObraSocial extends Component
     public function updateShow($show)
     {
         $this->show = $show;
-        $this->inicializteTableSorting('Insurance');
+        $this->initializeTableSorting('Insurance');
     }
 
     public function dataInsurance($InsuranceId)

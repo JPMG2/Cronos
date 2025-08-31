@@ -6,7 +6,7 @@ namespace App\Interfaces;
 
 interface ModelEmail
 {
-    public function sendEmailCreate($model);
+    public function sendEmailCreate($model, $receptor);
 
-    public function sendEmailUpdate($model);
+    public function sendEmailUpdate($model, $receptor);
 }

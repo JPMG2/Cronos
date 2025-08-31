@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Action;
 
 use App\Classes\Services\EmailsModel;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 final class SendEmail
@@ -18,17 +17,13 @@ final class SendEmail
         private readonly EmailsModel $emailsModel = new EmailsModel()
     ) {}
 
-    public function handle(Model $model, string $action, string $baseclass, string $emailclass): void
+    public function handle($model, string $action, string $baseClass, $mailClass, $receptor): void
     {
         match ($action) {
             self::ACTION_CREATE => $this->emailsModel->sendEmailCreate(
-                new $baseclass($emailclass),
-                $model
-            ),
+                new $baseClass($mailClass), $model, $receptor),
             self::ACTION_UPDATE => $this->emailsModel->sendEmailUpdate(
-                new $baseclass($emailclass),
-                $model
-            ),
+                new $baseClass($mailClass), $model, $receptor),
             default => throw new InvalidArgumentException("Invalid action: {$action}")
         };
     }

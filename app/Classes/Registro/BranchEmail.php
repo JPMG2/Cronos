@@ -11,13 +11,13 @@ final class BranchEmail implements ModelEmail
 {
     public function __construct(private $emailClass) {}
 
-    public function sendEmailCreate($model)
+    public function sendEmailCreate($model, $receptor)
     {
-        Mail::to($model->branch_email)->send(new $this->emailClass($model));
+        Mail::to($model->branch_email)->queue(new $this->emailClass($model));
     }
 
-    public function sendEmailUpdate($model)
+    public function sendEmailUpdate($model, $receptor)
     {
-        Mail::to($model->branch_email)->send(new $this->emailClass($model));
+        Mail::to($model->branch_email)->queue(new $this->emailClass($model));
     }
 }

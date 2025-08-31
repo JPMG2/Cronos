@@ -28,7 +28,7 @@ final class MedicalCredential implements ValidationRule
 
         $credentialExist = Credential::credentialExist($this->credentialID, $this->credentialNumber, $this->credentialModelId);
         if ($credentialExist) {
-            $fail('Matricula y Número. Ya existen');
+            $fail('matricula y número. Ya existen');
         }
     }
 }

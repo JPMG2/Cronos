@@ -29,16 +29,15 @@ final class AlertForm extends Component
     }
 
     #[On('showModalAlert')]
-    public function showMessage(array $parametes)
+    public function showMessage(array $parameters)
     {
-
-        $this->showAlert = $parametes['show'];
-        $this->title = $parametes['title'];
-        $this->type = $parametes['type'];
-        $this->message = $parametes['message'];
-        $this->button = $parametes['button'];
-        $this->buttonName = $parametes['buttonName'];
-        $this->event = $parametes['event'];
+        $this->showAlert = $parameters['show'];
+        $this->title = $parameters['title'];
+        $this->type = $parameters['type'];
+        $this->message = $parameters['message'];
+        $this->button = $parameters['button'];
+        $this->buttonName = $parameters['buttonName'];
+        $this->event = $parameters['event'];
     }
 
     public function closeModal()

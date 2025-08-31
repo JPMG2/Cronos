@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Livewire\Servicios\ListPaciente;
+use App\Livewire\Clinico\ListPaciente;
 use Livewire\Livewire;
 
 it('renders successfully', function () {

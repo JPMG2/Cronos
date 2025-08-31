@@ -11,13 +11,13 @@ use Illuminate\Support\Facades\Mail;
 
 final class CompanyEmail implements ModelEmail
 {
-    public function sendEmailCreate($model)
+    public function sendEmailCreate($model, $receptor)
     {
-        Mail::to($model->company_email)->send(new CompanyCreateMail($model));
+        Mail::to($model->company_email)->queue(new CompanyCreateMail($model));
     }
 
-    public function sendEmailUpdate($model)
+    public function sendEmailUpdate($model, $receptor)
     {
-        Mail::to($model->company_email)->send(new CompanyUpdateMail($model));
+        Mail::to($model->company_email)->queue(new CompanyUpdateMail($model));
     }
 }

@@ -8,13 +8,13 @@ use App\Interfaces\ModelEmail;
 
 final class EmailsModel
 {
-    public function sendEmailCreate(ModelEmail $modelEmail, $model): void
+    public function sendEmailCreate(ModelEmail $modelEmail, $model, $receptor): void
     {
-        $modelEmail->sendEmailCreate($model);
+        $modelEmail->sendEmailCreate($model, $receptor);
     }
 
-    public function sendEmailUpdate(ModelEmail $modelEmail, $model): void
+    public function sendEmailUpdate(ModelEmail $modelEmail, $model, $receptor): void
     {
-        $modelEmail->sendEmailUpdate($model);
+        $modelEmail->sendEmailUpdate($model, $receptor);
     }
 }
