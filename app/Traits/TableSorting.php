@@ -20,11 +20,7 @@ trait TableSorting
 {
     public ?string $sortField = null;
 
-    public $columName;
-
     public mixed $filterValue = null;
-
-    public $clickColumn;
 
     public bool $sortDirection = true;
 
@@ -68,6 +64,18 @@ trait TableSorting
     }
 
     /**
+     * Resets the order values to their default state.
+     *
+     * This method sets the column name, sort direction, and sort field to their default values.
+     * It is typically used to clear any existing sorting configurations.
+     */
+    private function resetOrdersValues(): void
+    {
+        $this->sortDirection = true;
+        $this->sortField = null;
+    }
+
+    /**
      * Gets the default filter field for a model.
      * First tries to get from config, then falls back to interface method.
      *
@@ -90,19 +98,5 @@ trait TableSorting
 
         // Ultimate fallback
         return 'id';
-    }
-
-    /**
-     * Resets the order values to their default state.
-     *
-     * This method sets the column name, sort direction, and sort field to their default values.
-     * It is typically used to clear any existing sorting configurations.
-     */
-    private function resetOrdersValues(): void
-    {
-        $this->clickColumn = null;
-        $this->columName = null;
-        $this->sortDirection = true;
-        $this->sortField = null;
     }
 }

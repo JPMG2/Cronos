@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Clinico;
 
 use App\Classes\Services\QueryPerson\PatientListService;
+use App\Livewire\Forms\Clinico\ListPatientForm;
 use App\Models\Patient;
 use App\Models\Person;
 use App\Traits\TableSorting;
@@ -19,12 +20,15 @@ final class ListPaciente extends Component
 
     public $show = false;
 
+    public ListPatientForm $listForm;
+
     public array $columnFilter = [
+        'num_document' => '',
         'person_name' => '',
         'person_lastname' => '',
-        'num_document' => '',
-        'specialty_name' => '',
-        'credential_number' => '',
+        'gender_id' => '',
+        'person_phone' => '',
+        'person_email' => '',
     ];
 
     public function render()
@@ -65,6 +69,6 @@ final class ListPaciente extends Component
     #[Computed]
     private function getPatientService(): PatientListService
     {
-        return new PatientListService(new Patient(), $this->sortDirection, $this->clickColumn);
+        return new PatientListService(new Patient(), $this->sortDirection, $this->sortField);
     }
 }

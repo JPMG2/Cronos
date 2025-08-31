@@ -111,7 +111,7 @@ final readonly class PersonSearchService
      */
     private function iniOrder(): void
     {
-        $this->orderDirection = $this->order ? 'desc' : 'asc';
+        $this->orderDirection = $this->order ? 'asc' : 'desc';
     }
 
     /**

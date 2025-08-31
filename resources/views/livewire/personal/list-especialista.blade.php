@@ -35,95 +35,39 @@
                             class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                         >
                             <x-table.thead>
+
                                 <tr class="h-2 p-0">
-                                    <x-table.th>
-                                        ID
-                                    </x-table.th>
-                                    <x-table.th
-                                        wire:click="orderColumBy('num_document')"
-                                    >
-                                        <x-table.sortcolumn currentColumn="num_document" :$columName
-                                                            :$sortDirection>
-                                            <div>Documento</div>
-                                        </x-table.sortcolumn>
-                                    </x-table.th>
-                                    <x-table.th
-                                        wire:click="orderColumBy('person_name')"
-                                    >
-                                        <x-table.sortcolumn currentColumn="person_name" :$columName
-                                                            :$sortDirection>
-                                            <div>Nombre</div>
-                                        </x-table.sortcolumn>
-                                    </x-table.th>
-                                    <x-table.th
-                                        wire:click="orderColumBy('person_lastname')"
-                                    >
-                                        <x-table.sortcolumn currentColumn="person_lastname" :$columName
-                                                            :$sortDirection>
-                                            <div>Apellido</div>
-                                        </x-table.sortcolumn>
-                                    </x-table.th>
-                                    <x-table.th
-                                        wire:click="orderColumBy('credential_number')">
-                                        <x-table.sortcolumn currentColumn="credential_number" :$columName
-                                                            :$sortDirection>
-                                            <div> Matrícula</div>
-                                        </x-table.sortcolumn>
-                                    </x-table.th>
-                                    <x-table.th
-                                        wire:click="orderColumBy('specialty_name')">
-                                        <x-table.sortcolumn currentColumn="specialty_name" :$columName
-                                                            :$sortDirection>
-                                            <div>Especialidad</div>
-                                        </x-table.sortcolumn>
-                                    </x-table.th>
-                                    <x-table.th
-                                        wire:click="orderColumBy('state_name')">
-                                        <x-table.sortcolumn currentColumn="state_name" :$columName
-                                                            :$sortDirection>
-                                            <div>Estatus</div>
-                                        </x-table.sortcolumn>
-                                    </x-table.th>
-                                    <x-table.th></x-table.th>
+                                    @foreach($listForm->tableHeaders as $header)
+                                        @if( (bool) $header['isClickable'] !== false)
+                                            <x-table.th
+                                                wire:click="orderColumBy('{{$header['clickName']}}')">
+                                                <x-table.sortcolumn currentColumn="{{$header['clickName']}}" :$sortField
+                                                                    :$sortDirection>
+                                                    <div> {{ $header['name'] }}</div>
+                                                </x-table.sortcolumn>
+                                            </x-table.th>
+                                        @else
+                                            <x-table.th>
+                                                {{ $header['name'] }}
+                                            </x-table.th>
+                                        @endif
+                                    @endforeach
                                 </tr>
                                 <tr class="h-1 p-0 ">
-                                    <td></td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-32"
-                                            maxlength="10"
-                                            x-mask="9999999999"
-                                            wire:model.live.debounce="columnFilter.num_document"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-36"
-                                            maxlength="10"
-                                            x-mask="aaaaaaaaaa"
-                                            wire:model.live.debounce="columnFilter.person_name"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            maxlength="10"
-                                            x-mask="aaaaaaaaaa"
-                                            wire:model.live.debounce="columnFilter.person_lastname"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-32"
-                                            maxlength="10"
-                                            x-mask="9999999999"
-                                            wire:model.live.debounce="columnFilter.credential_number"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-32"
-                                            maxlength="10"
-                                            x-mask="aaaaaaaaaa"
-                                            wire:model.live.debounce="columnFilter.specialty_name"/>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
+                                    @foreach($listForm->tableHeaders as $header)
+                                        @if( (bool) $header['isClickable'] !== false)
+                                            <td>
+                                                <x-table.input-table-search
+                                                    withd="{{$header['with']}}"
+                                                    maxlength="{{$header['max']}}"
+                                                    x-mask="{{$header['mask']}}"
+                                                    wire:model.live.debounce="columnFilter.{{$header['clickName']}}"/>
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
+                                    @endforeach
+
                                 </tr>
                             </x-table.thead>
 
@@ -131,7 +75,7 @@
                                 @if(count($listMedical) > 0)
                                     @foreach($listMedical as $medical)
                                         <tr
-                                            class="even:bg-gray-100 "
+                                            class="even:bg-gray-100"
                                             wire:key="{{ $medical->id }}"
                                         >
                                             <x-table.tdtable

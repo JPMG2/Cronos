@@ -15,7 +15,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Form;
 
-final class SpecialistForm extends Form
+final class EspecialistaForm extends Form
 {
     public ?SpecialistDto $personData = null;
 

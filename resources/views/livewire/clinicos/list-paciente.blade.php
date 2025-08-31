@@ -25,33 +25,58 @@
                     </button>
                 </div>
                 <div class="overflow-y-auto p-4">
-
-                    @if(count($listPatients) > 0)
-                        <div
-                            class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                    <div
+                        class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                    >
+                        <table
+                            class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                         >
-
-                            <table
-                                class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                            >
-                                <x-table.config-header 
-                                    table="patients"
-                                    :columName="$columName"
-                                    :sortDirection="$sortDirection"
-                                    :searchable="false"
-                                />
-                                <x-table.tablebody>
-
+                            <x-table.thead>
+                                <tr class="h-2 p-0">
+                                    @foreach($listForm->tableHeaders as $header)
+                                        @if( (bool) $header['isClickable'] !== false)
+                                            <x-table.th
+                                                wire:click="orderColumBy('{{$header['clickName']}}')">
+                                                <x-table.sortcolumn currentColumn="{{$header['clickName']}}" :$sortField
+                                                                    :$sortDirection>
+                                                    <div> {{ $header['name'] }}</div>
+                                                </x-table.sortcolumn>
+                                            </x-table.th>
+                                        @else
+                                            <x-table.th>
+                                                {{ $header['name'] }}
+                                            </x-table.th>
+                                        @endif
+                                    @endforeach
+                                </tr>
+                                <tr class="h-1 p-0 ">
+                                    @foreach($listForm->tableHeaders as $header)
+                                        @if( (bool) $header['isClickable'] !== false)
+                                            <td>
+                                                <x-table.input-table-search
+                                                    withd="{{$header['with']}}"
+                                                    maxlength="{{$header['max']}}"
+                                                    x-mask="{{$header['mask']}}"
+                                                    wire:model.live.debounce="columnFilter.{{$header['clickName']}}"/>
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
+                                    @endforeach
+                                </tr>
+                            </x-table.thead>
+                            <x-table.tablebody>
+                                @if(count($listPatients) > 0)
                                     @foreach ($listPatients as $patiente)
                                         <tr
-                                            class="even:bg-gray-100"
+                                            class="even:bg-gray-100 w-4"
                                             wire:key="{{ $patiente->id }}"
                                         >
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ $loop->iteration }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->person->num_document }}
+                                                {{$patiente->person->documentInfo }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{$patiente->person->person_name }}
@@ -60,10 +85,7 @@
                                                 {{$patiente->person->person_lastname }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-
-                                            </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$patiente->person->person_datebirth }}
+                                                {{$patiente->person->gender?->gender_name }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{$patiente->person->person_phone }}
@@ -83,17 +105,23 @@
                                             </x-table.tdtable>
                                         </tr>
                                     @endforeach
-                                </x-table.tablebody>
-                            </table>
-                            <div class="mt-2 mb-2 justify-end mx-2">
-                                {{ $listPatients->links() }}
-                            </div>
-                            @else
-                                <x-alert windowtype="error">
-                                    No existen especialistas registrados.
-                                </x-alert>
-                            @endif
+                                @else
+                                    <tr>
+                                        <td colspan="8" class="py-4">
+                                            <x-alert windowtype="error">
+                                                No existen pacientes registrados.
+                                            </x-alert>
+                                        </td>
+                                    </tr>
+                                @endif
+                            </x-table.tablebody>
+
+                        </table>
+                        <div class="mt-2 mb-2 justify-end mx-2">
+                            {{ $listPatients->links() }}
                         </div>
+                    </div>
+
                 </div>
                 <div
                     class="flex items-center justify-end gap-x-2 border-t px-4 py-3 dark:border-neutral-700"

@@ -8,7 +8,7 @@ use App\Classes\Person\MainPerson;
 use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQuerys;
 use App\Dto\SpecialistDto;
-use App\Livewire\Forms\Personal\SpecialistForm;
+use App\Livewire\Forms\Personal\EspecialistaForm;
 use App\Models\Medical;
 use App\Traits\FormHandling;
 use App\Traits\HandlesActionPolicy;
@@ -22,7 +22,7 @@ final class ReEspecialista extends Component
 {
     use FormHandling, HandlesActionPolicy;
 
-    public SpecialistForm $formHandler;
+    public EspecialistaForm $formHandler;
 
     public function mount(): void
     {

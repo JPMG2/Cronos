@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Personal;
 
 use App\Classes\Services\QueryPerson\MedicListService;
+use App\Livewire\Forms\Personal\ListEspecialistaForm;
 use App\Models\Medical;
 use App\Traits\TableSorting;
 use Livewire\Attributes\Computed;
@@ -15,6 +16,8 @@ use Livewire\WithPagination;
 final class ListEspecialista extends Component
 {
     use TableSorting, WithPagination;
+
+    public ListEspecialistaForm $listForm;
 
     public $show = false;
 
@@ -55,6 +58,6 @@ final class ListEspecialista extends Component
     #[Computed]
     private function getMedicService(): MedicListService
     {
-        return new MedicListService(new Medical(), $this->sortDirection, $this->clickColumn);
+        return new MedicListService(new Medical(), $this->sortDirection, $this->sortField);
     }
 }
