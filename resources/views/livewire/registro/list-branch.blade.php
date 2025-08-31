@@ -65,7 +65,7 @@
                                     @foreach ($listCompanyBranch as $branch)
                                         @foreach ($branch->branches as $branches)
                                             <tr
-                                                class="even:bg-gray-100"
+                                                class="hover:bg-blue-50 transition-colors duration-150 even:bg-gray-50 dark:even:bg-gray-700 dark:hover:bg-gray-600"
                                                 wire:key="{{ $branches->id }}"
                                             >
                                                 <x-table.tdtable typetext="txtimportant" whitespace-nowrap>

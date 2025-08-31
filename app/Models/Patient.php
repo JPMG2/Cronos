@@ -33,6 +33,7 @@ final class Patient extends Model implements Filterable
         return [
             'person:*',
             'person.document:id,document_name',
+            'person.gender:id,gender_name',
         ];
     }
 

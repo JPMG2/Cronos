@@ -99,7 +99,7 @@
                                     @foreach ($listOptionMenu as $menuoption)
 
                                         <tr
-                                            class=" even:bg-gray-100"
+                                            class="hover:bg-blue-50 transition-colors duration-150 even:bg-gray-50 dark:even:bg-gray-700 dark:hover:bg-gray-600"
                                             wire:key="{{ $menuoption->id }}"
                                         >
                                             <x-table.tdtable typetext="txtimportant">

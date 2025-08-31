@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <div>
     <x-breadcrum breadcrumbs="Departamentos"></x-breadcrum>
     <x-company-watcher></x-company-watcher>
@@ -50,7 +51,10 @@
                                 class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900"
                             >
                             @foreach ($this->departments as $depa)
-                                <tr class="even:bg-gray-100">
+                                <tr
+                                    class="hover:bg-blue-50 transition-colors duration-150 even:bg-gray-50 dark:even:bg-gray-700 dark:hover:bg-gray-600"
+                                    wire:key="{{ $depa->id }}"
+                                >
                                     <td
                                         class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200"
                                     >
@@ -75,7 +79,7 @@
                                     <td
                                         class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
                                     >
-                                        {{ \Carbon\Carbon::parse($depa->created_at)->format("d/m/Y") }}
+                                        {{ Carbon::parse($depa->created_at)->format("d/m/Y") }}
                                     </td>
                                     <td
                                         class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"

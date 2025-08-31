@@ -72,18 +72,20 @@ final readonly class PersonSearchService
             $nonEmptyValues = array_filter($filterConditions);
 
             foreach ($nonEmptyValues as $key => $value) {
-                $tableName = $this->tableName($key);
-                $indexName = $this->indexName($tableName);
-
                 if (array_key_exists($key, $this->pivotRelations)) {
                     $query = $this->createQueryPivot($query, $this->pivotRelations[$key], $value);
-                } elseif (
-                    is_string($tableName) &&
-                    is_string($indexName) &&
-                    $tableName !== '' &&
-                    $indexName !== ''
-                ) {
-                    $query = $this->createQuery($query, $tableName, $indexName, $key, $value);
+                } else {
+                    $tableName = $this->tableName($key);
+                    $indexName = $this->indexName($tableName);
+
+                    if (
+                        is_string($tableName) &&
+                        is_string($indexName) &&
+                        $tableName !== '' &&
+                        $indexName !== ''
+                    ) {
+                        $query = $this->createQuery($query, $tableName, $indexName, $key, $value);
+                    }
                 }
             }
 
@@ -104,6 +106,21 @@ final readonly class PersonSearchService
         return $query->withAggregate('person', 'person_name')
             ->orderBy('person_person_name', $this->orderDirection)
             ->with($this->model::getRelationModel());
+    }
+
+    /**
+     * Merges provided searchable fields with default person fields.
+     *
+     * @param  array  $customFields  Custom searchable fields configuration.
+     * @return array The merged searchable fields.
+     */
+    private function mergeWithDefaults(array $customFields): array
+    {
+        $defaults = [
+            'person' => 'person_name,person_lastname,num_document,person_email,person_phone',
+        ];
+
+        return array_merge($defaults, $customFields);
     }
 
     /**
@@ -161,6 +178,22 @@ final readonly class PersonSearchService
     }
 
     /**
+     * Converts relation name to table name.
+     *
+     * @param  string  $relation  The relation name.
+     * @return string The corresponding table name.
+     */
+    private function getTableNameFromRelation(string $relation): string
+    {
+        return match ($relation) {
+            'person' => 'people',
+            'specialty' => 'specialties',
+            'blood_type' => 'blood_types',
+            default => $relation
+        };
+    }
+
+    /**
      * Determines the index name based on the provided table name.
      *
      * @param  string|null  $string  The table name to map to an index.
@@ -189,10 +222,39 @@ final readonly class PersonSearchService
     {
         $stringsearch = mb_strtolower((string) $stringsearch);
 
+        // Handle nested relations like 'person.gender'
+        if (str_contains($relation, '.')) {
+            $relations = explode('.', $relation);
+            $finalRelation = array_pop($relations);
+            $nestedRelation = implode('.', $relations);
+
+            return $query->whereHas($nestedRelation, function ($query) use ($stringsearch, $finalRelation) {
+                $query->whereHas($finalRelation, function ($subQuery) use ($stringsearch, $finalRelation) {
+                    $searchField = $this->getPivotSearchField($finalRelation);
+                    $subQuery->where(DB::raw('LOWER('.$searchField.')'), 'like', "%{$stringsearch}%");
+                });
+            });
+        }
+
         return $query->whereHas($relation, function ($query) use ($stringsearch, $relation) {
             $searchField = $this->getPivotSearchField($relation);
             $query->where(DB::raw('LOWER('.$searchField.')'), 'like', "%{$stringsearch}%");
         });
+    }
+
+    /**
+     * Gets the search field for pivot relations.
+     *
+     * @param  string  $relation  The pivot relation name.
+     * @return string The field to search in the pivot relation.
+     */
+    private function getPivotSearchField(string $relation): string
+    {
+        return match ($relation) {
+            'credentials' => 'credential_number',
+            'gender' => 'gender_name',
+            default => 'name'
+        };
     }
 
     /**
@@ -218,50 +280,5 @@ final readonly class PersonSearchService
                 ->from($tableName)
                 ->where(DB::raw('LOWER('.$column.')'), 'like', "%{$stringsearch}%");
         });
-    }
-
-    /**
-     * Merges provided searchable fields with default person fields.
-     *
-     * @param  array  $customFields  Custom searchable fields configuration.
-     * @return array The merged searchable fields.
-     */
-    private function mergeWithDefaults(array $customFields): array
-    {
-        $defaults = [
-            'person' => 'person_name,person_lastname,num_document',
-        ];
-
-        return array_merge($defaults, $customFields);
-    }
-
-    /**
-     * Converts relation name to table name.
-     *
-     * @param  string  $relation  The relation name.
-     * @return string The corresponding table name.
-     */
-    private function getTableNameFromRelation(string $relation): string
-    {
-        return match ($relation) {
-            'person' => 'people',
-            'specialty' => 'specialties',
-            'blood_type' => 'blood_types',
-            default => $relation
-        };
-    }
-
-    /**
-     * Gets the search field for pivot relations.
-     *
-     * @param  string  $relation  The pivot relation name.
-     * @return string The field to search in the pivot relation.
-     */
-    private function getPivotSearchField(string $relation): string
-    {
-        return match ($relation) {
-            'credentials' => 'credential_number',
-            default => 'name'
-        };
     }
 }

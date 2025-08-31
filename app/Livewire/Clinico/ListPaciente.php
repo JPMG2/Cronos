@@ -26,7 +26,7 @@ final class ListPaciente extends Component
         'num_document' => '',
         'person_name' => '',
         'person_lastname' => '',
-        'gender_id' => '',
+        'gender_name' => '',
         'person_phone' => '',
         'person_email' => '',
     ];

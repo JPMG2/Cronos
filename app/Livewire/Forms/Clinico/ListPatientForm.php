@@ -44,7 +44,7 @@ final class ListPatientForm extends Form
         [
             'name' => 'Genero',
             'isClickable' => true,
-            'clickName' => 'gender_id',
+            'clickName' => 'gender_name',
             'with' => 'w-32',
             'max' => '4',
             'mask' => 'aaaa',

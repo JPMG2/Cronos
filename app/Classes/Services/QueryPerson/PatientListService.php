@@ -56,7 +56,7 @@ final readonly class PatientListService
     private function getSearchableFields(): array
     {
         return [
-            'person' => 'person_name,person_lastname,num_document',
+            'person' => 'person_name,person_lastname,num_document,person_email,person_phone',
             'blood_type' => 'blood_type_name',
         ];
     }
@@ -68,6 +68,8 @@ final readonly class PatientListService
      */
     private function getPivotRelations(): array
     {
-        return [];
+        return [
+            'gender_name' => 'person.gender',
+        ];
     }
 }
