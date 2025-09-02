@@ -20,7 +20,6 @@ final class Medical extends Model implements Filterable
 
     protected $fillable = [
         'person_id',
-        'state_id',
         'credential_id',
         'specialty_id',
         'degree_id',
@@ -38,7 +37,6 @@ final class Medical extends Model implements Filterable
             'person.document:id,document_name',
             'specialty:id,specialty_name',
             'degree:id,degree_name',
-            'state:id,state_name',
             'credentials' => function ($query): void {
                 $query->select('credentials.id', 'credentials.credential_name', 'credentials.credential_code')
                     ->withPivot('credential_number');
@@ -50,11 +48,6 @@ final class Medical extends Model implements Filterable
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
-    }
-
-    public function state(): BelongsTo
-    {
-        return $this->belongsTo(State::class);
     }
 
     public function degree(): BelongsTo
@@ -85,7 +78,6 @@ final class Medical extends Model implements Filterable
     protected function casts(): array
     {
         return [
-            'state_id' => 'integer',
             'credential_id' => 'integer',
             'specialty_id' => 'integer',
             'degree_id' => 'integer',

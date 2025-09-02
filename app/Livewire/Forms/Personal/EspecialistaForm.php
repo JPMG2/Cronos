@@ -32,7 +32,6 @@ final class EspecialistaForm extends Form
      * }
      */
     public array $dataespecialist = [
-        'state_id' => 1,
         'credential_id' => null,
         'specialty_id' => null,
         'degree_id' => null,

@@ -61,44 +61,19 @@
                                     @endforeach
                                 </tr>
                                 <tr class="h-1 p-0 ">
-                                <tr class="h-1 p-0 ">
-                                    <td></td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-32"
-                                            maxlength="10"
-                                            x-mask="9999999999"
-                                            wire:model.live.debounce="columnFilter.num_document"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-36"
-                                            maxlength="10"
-                                            x-mask="aaaaaaaaaa"
-                                            wire:model.live.debounce="columnFilter.person_name"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            maxlength="10"
-                                            x-mask="aaaaaaaaaa"
-                                            wire:model.live.debounce="columnFilter.person_lastname"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-32"
-                                            maxlength="10"
-                                            x-mask="9999999999"
-                                            wire:model.live.debounce="columnFilter.credential_number"/>
-                                    </td>
-                                    <td>
-                                        <x-table.input-table-search
-                                            withd="w-32"
-                                            maxlength="10"
-                                            x-mask="aaaaaaaaaa"
-                                            wire:model.live.debounce="columnFilter.specialty_name"/>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
+                                    @foreach($listForm->tableHeaders as $header)
+                                        @if( (bool) $header['isClickable'] !== false)
+                                            <td>
+                                                <x-table.input-table-search
+                                                    withd="{{$header['with']}}"
+                                                    maxlength="{{$header['max']}}"
+                                                    x-mask="{{$header['mask']}}"
+                                                    wire:model.live.debounce="columnFilter.{{$header['clickName']}}"/>
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
+                                    @endforeach
                                 </tr>
                             </x-table.thead>
 
@@ -133,12 +108,8 @@
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ optional($medical->specialty)->specialty_name ?? '-'}}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
-                                                <x-statescolor
-                                                    idstatecolor="{{ $medical->state->id }}"
-                                                >
-                                                    {{ $medical->state->state_name }}
-                                                </x-statescolor>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{ $medical->person->person_phone }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                                 <div

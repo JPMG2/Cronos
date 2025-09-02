@@ -56,7 +56,7 @@ final readonly class MedicListService
     private function getSearchableFields(): array
     {
         return [
-            'person' => 'person_name,person_lastname,num_document',
+            'person' => 'person_name,person_lastname,num_document,person_phone',
             'specialty' => 'specialty_name',
             'state' => 'state_name',
             'credentials' => 'credential_number',

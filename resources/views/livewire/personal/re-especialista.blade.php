@@ -249,58 +249,7 @@
                     </x-inputs.error-validate>
                     @enderror
                 </div>
-                <div class="relative sm:col-span-3">
-                    <div class="relative">
-                        <x-inputs.selectgroup
-                            label="Estatus"
-                            for="esp_estatus"
-                            required="yes"
-                        >
-                            <x-inputs.selectinput
-                                wire:model.defer="formHandler.dataespecialist.state_id"
-                                id="esp_estatus"
-                                isdisabled="{{$isdisabled}}"
-                            >
-                                @foreach ($this->listState as $state)
-                                    <option value="{{ $state->id }}">
-                                        {{ $state->state_name }}
-                                    </option>
-                                @endforeach
-                            </x-inputs.selectinput>
-
-                        </x-inputs.selectgroup>
-                    </div>
-                    @error("state_id")
-                    <x-inputs.error-validate>
-                        {{ $message }}
-                    </x-inputs.error-validate>
-                    @enderror
-                </div>
-                <div class="relative sm:col-span-3">
-                    <div class="relative">
-                        <x-inputs.textgroup
-                            label="Correo"
-                            for="esp_email"
-                            required="yes"
-                        >
-                            <x-inputs.textinput
-                                wire:model="formHandler.personData.person_email"
-                                id="esp_email"
-                                autocomplete="off"
-                                maxlength="150"
-                                placeholder=" "
-                                isdisabled="{{$isdisabled}}"
-                                :error="$errors->first('person_email')"
-                            ></x-inputs.textinput>
-                        </x-inputs.textgroup>
-                    </div>
-                    @error("person_email")
-                    <x-inputs.error-validate>
-                        {{ $message }}
-                    </x-inputs.error-validate>
-                    @enderror
-                </div>
-                <div class="relative  sm:col-span-2">
+                <div class="relative  sm:col-span-3">
                     <div class="relative">
                         <x-inputs.textgroup
                             label="Teléfono"
@@ -325,7 +274,32 @@
                     </x-inputs.error-validate>
                     @enderror
                 </div>
-                <div class="relative w-full sm:col-span-4">
+                <div class="relative sm:col-span-4">
+                    <div class="relative">
+                        <x-inputs.textgroup
+                            label="Correo"
+                            for="esp_email"
+                            required="yes"
+                        >
+                            <x-inputs.textinput
+                                wire:model="formHandler.personData.person_email"
+                                id="esp_email"
+                                autocomplete="off"
+                                maxlength="150"
+                                placeholder=" "
+                                isdisabled="{{$isdisabled}}"
+                                :error="$errors->first('person_email')"
+                            ></x-inputs.textinput>
+                        </x-inputs.textgroup>
+                    </div>
+                    @error("person_email")
+                    <x-inputs.error-validate>
+                        {{ $message }}
+                    </x-inputs.error-validate>
+                    @enderror
+                </div>
+
+                <div class="relative w-full sm:col-span-5">
                     <div class="relative">
                         <x-inputs.textgroup
                             label="Dirección"

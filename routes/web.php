@@ -51,6 +51,8 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 });
 /* Route for Servicios */
 Route::group(['middleware' => 'auth', 'verified'], function () {
+    Route::get('/re_service', App\Livewire\Clinico\ReServices::class)
+        ->name('re_service')->middleware(['rolemenu:re_service']);
     Route::get('/re_paciente', App\Livewire\Clinico\RePaciente::class)
         ->name('re_paciente')->middleware(['rolemenu:re_paciente']);
 

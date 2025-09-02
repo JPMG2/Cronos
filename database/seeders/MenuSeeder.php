@@ -14,7 +14,7 @@ final class MenuSeeder extends Seeder
      */
     public function run(): void
     {
-        $mainmenus = ['Registro', 'Gestión', 'Servicios', 'Reportes', 'Configuración'];
+        $mainmenus = ['Registro', 'Convenios', 'Servicios', 'Reportes', 'Configuración'];
 
         $registro = [
             [
@@ -25,15 +25,15 @@ final class MenuSeeder extends Seeder
                 'descripcion' => 'Usuarios del sistema',
             ],
             [
-                'grup_menu' => 'Personal',
+                'grup_menu' => 'Maestros',
                 'title_menu' => false,
-                'icon_menu' => 'M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z',
+                'icon_menu' => 'M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z',
                 'linkto' => '#',
                 'descripcion' => 'Doctor del sistema',
             ],
         ];
 
-        $gestión = [
+        $convenios = [
             [
                 'grup_menu' => 'Obra Social',
                 'title_menu' => false,
@@ -116,22 +116,31 @@ final class MenuSeeder extends Seeder
 
         ];
 
-        $personal = [
+        $maestros = [
             [
                 'grup_menu' => 'Usuarios',
                 'title_menu' => false,
                 'icon_menu' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
                 'linkto' => 're_user',
-                'header_menu' => 'Registro/Personal/Usuarios',
+                'header_menu' => 'Registro/Maestro/Usuarios',
                 'descripcion' => 'Doctor del sistema',
             ],
             [
                 'grup_menu' => 'Especialistas',
                 'title_menu' => false,
                 'icon_menu' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
-                'header_menu' => 'Registro/Personal/Especialistas',
+                'header_menu' => 'Registro/Maestro/Especialistas',
                 'linkto' => 're_especialist',
                 'descripcion' => 'Doctor del sistema',
+            ],
+            [
+                'grup_menu' => 'Servicios',
+                'title_menu' => false,
+                'icon_menu' => 'M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z',
+                'linkto' => 're_service',
+                'header_menu' => 'Registro/Maestro/Servicios',
+                'descripcion' => 'Registro de servicio ',
+
             ],
         ];
 
@@ -142,7 +151,7 @@ final class MenuSeeder extends Seeder
                 'title_menu' => false,
                 'icon_menu' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
                 'linkto' => 're_obrasocial',
-                'header_menu' => 'Gestión/Obra Social/Registro',
+                'header_menu' => 'Convenios/Obra Social/Registro',
                 'descripcion' => 'Planes de Obras Sociales del sistema',
             ],
 
