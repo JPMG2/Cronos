@@ -2,11 +2,15 @@
 
     <div
         x-show="open"
-        x-transition.opacity
-        x-transition:enter.duration.100ms
-        x-transition:leave.duration.300ms
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
         x-cloak
-        class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70 overflow-auto"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm overflow-auto p-4"
+
     >
         <div class="m-3 mx-auto mt-11 size-4/5">
             <div
@@ -35,15 +39,14 @@
                 <div class="overflow-y-auto p-4">
 
                     <div
-                        class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                        class="overflow-hidden rounded-xl border border-gray-200/50 shadow-lg ring-1 ring-gray-200/20 dark:border-gray-700/50 dark:ring-gray-700/20 dark:shadow-black/10"
                     >
-
                         <table
-                            class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                            class="table-xs min-w-full divide-y divide-gray-200/80 dark:divide-gray-700/80"
                         >
                             <x-table.thead>
 
-                                <tr class="h-2 p-0">
+                                <tr class="sticky top-0 z-10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-gray-800/90 dark:supports-[backdrop-filter]:bg-gray-800/70">
                                     @foreach($listForm->tableHeaders as $header)
                                         @if( (bool) $header['isClickable'] !== false)
                                             <x-table.th
@@ -81,7 +84,7 @@
                                 @if(count($listMedical) > 0)
                                     @foreach($listMedical as $medical)
                                         <tr
-                                            class="hover:bg-blue-50 transition-colors duration-150 even:bg-gray-50 dark:even:bg-gray-700 dark:hover:bg-gray-600"
+                                            class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
                                             wire:key="{{ $medical->id }}"
                                         >
                                             <x-table.tdtable

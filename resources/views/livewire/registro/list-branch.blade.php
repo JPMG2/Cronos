@@ -2,20 +2,30 @@
 
     <div
         x-show="open"
-        x-transition.opacity
-        x-transition:enter.duration.100ms
-        x-transition:leave.duration.300ms
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
         x-cloak
-        class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70 overflow-auto"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm overflow-auto p-4"
     >
         <div class="m-3 mx-auto mt-11 size-4/5">
             <div
-                class="pointer-events-auto flex flex-col rounded-xl border bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-neutral-700/70"
+                class="pointer-events-auto flex flex-col rounded-xl border bg-white shadow-2xl dark:border-gray-600 dark:bg-gray-800 dark:shadow-2xl "
             >
                 <div
-                    class="flex items-center justify-between border-b px-4 py-3 dark:border-neutral-700"
+                    class="flex items-center justify-between border-b border-gray-200 px-6 py-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-t-xl dark:border-gray-600 dark:from-gray-700 dark:to-gray-600"
                 >
-                    <x-formcomponent.modaltitle>Sucursales.</x-formcomponent.modaltitle>
+                    <x-formcomponent.modaltitle>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                  d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.464 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                        Sucursales.
+                    </x-formcomponent.modaltitle>
                     <button
                         wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
                         type="button"
@@ -28,13 +38,13 @@
                 <div class="overflow-y-auto p-4">
                     @if (count($listCompanyBranch) > 0)
                         <div
-                            class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                            class="overflow-hidden rounded-xl border border-gray-200/50 shadow-lg ring-1 ring-gray-200/20 dark:border-gray-700/50 dark:ring-gray-700/20 dark:shadow-black/10"
                         >
                             <table
-                                class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                                class="table-xs min-w-full divide-y divide-gray-200/80 dark:divide-gray-700/80"
                             >
                                 <x-table.thead>
-                                    <tr>
+                                    <tr class="sticky top-0 z-10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-gray-800/90 dark:supports-[backdrop-filter]:bg-gray-800/70">
                                         <x-table.th>
                                             ID
                                         </x-table.th>
@@ -65,7 +75,7 @@
                                     @foreach ($listCompanyBranch as $branch)
                                         @foreach ($branch->branches as $branches)
                                             <tr
-                                                class="hover:bg-blue-50 transition-colors duration-150 even:bg-gray-50 dark:even:bg-gray-700 dark:hover:bg-gray-600"
+                                                class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
                                                 wire:key="{{ $branches->id }}"
                                             >
                                                 <x-table.tdtable typetext="txtimportant" whitespace-nowrap>

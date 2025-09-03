@@ -21,7 +21,7 @@
             <div class="overflow-y-auto p-4">
                 @if (count($this->departments) > 0)
                     <div
-                        class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                        class="overflow-hidden rounded-xl border border-gray-200/50 shadow-lg ring-1 ring-gray-200/20 dark:border-gray-700/50 dark:ring-gray-700/20 dark:shadow-black/10"
                     >
                         <table
                             class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
@@ -52,7 +52,7 @@
                             >
                             @foreach ($this->departments as $depa)
                                 <tr
-                                    class="hover:bg-blue-50 transition-colors duration-150 even:bg-gray-50 dark:even:bg-gray-700 dark:hover:bg-gray-600"
+                                    class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
                                     wire:key="{{ $depa->id }}"
                                 >
                                     <td
@@ -116,10 +116,16 @@
             @if(!session("isdisabled"))
                 <x-butonbutton wire:click="$toggle('opendepartment')  "></x-butonbutton>
                 <!-- Modal -->
-                <div x-data="{ open: @entangle("opendepartment") }">
+                <div x-data="{ open: @entangle('opendepartment') }">
                     <x-rightmodal
                         style="display: none"
                         x-show="open"
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
                         closemodal="opendepartment"
                     >
                         <x-slot:title>Registro</x-slot>
@@ -201,7 +207,6 @@
                     </x-rightmodal>
                 </div>
             @endif
-            <!-- End Modal -->
         </div>
     </div>
 </div>

@@ -134,31 +134,6 @@ final class Person extends Model implements Filterable
         return $this->$relation()->update($data);
     }
 
-    public function setCityIdAttribute($value)
-    {
-        $this->attributes['city_id'] = $value ?: null;
-    }
-
-    public function setGenderIdAttribute($value)
-    {
-        $this->attributes['gender_id'] = $value ?: null;
-    }
-
-    public function setOccupationIdAttribute($value)
-    {
-        $this->attributes['occupation_id'] = $value ?: null;
-    }
-
-    public function setMaritalStatusIdAttribute($value)
-    {
-        $this->attributes['marital_status_id'] = $value ?: null;
-    }
-
-    public function setNationalityIdAttribute($value)
-    {
-        $this->attributes['nationality_id'] = $value ?: null;
-    }
-
     public function scopeListPatients(Builder $query, $searchTerm = null, $relationship = null): Builder
     {
         if (! is_null($relationship)) {
@@ -201,19 +176,56 @@ final class Person extends Model implements Filterable
 
     public function hasEmail(): bool
     {
-        return $this->person_email !== '';
+        return ! empty($this->person_email);
     }
 
-    public function getdocumentInfoAttribute(): string
+    protected function cityId(): Attribute
     {
-        $typeDocument = $this->document->document_name;
-
-        return "$typeDocument. ".$this->num_document;
+        return Attribute::make(
+            set: fn ($value) => $value ?: null,
+        );
     }
 
-    protected function getfullNameAttribute(): string
+    protected function genderId(): Attribute
     {
-        return $this->person_name.' '.$this->person_lastname;
+        return Attribute::make(
+            set: fn ($value) => $value ?: null,
+        );
+    }
+
+    protected function occupationId(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => $value ?: null,
+        );
+    }
+
+    protected function maritalStatusId(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => $value ?: null,
+        );
+    }
+
+    protected function nationalityId(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => $value ?: null,
+        );
+    }
+
+    protected function documentInfo(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->document->document_name.'. '.$this->num_document,
+        );
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->person_name.' '.$this->person_lastname,
+        );
     }
 
     protected function personName(): Attribute

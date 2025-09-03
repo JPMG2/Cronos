@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('service_name');
             $table->text('service_description');
             $table->string('service_code')->unique();
-            $table->foreignId('state_id')->constrained('states');
             $table->timestamps();
         });
     }

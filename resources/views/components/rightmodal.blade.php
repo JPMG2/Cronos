@@ -6,9 +6,15 @@
 >
     <div
         id="drawer-right-example"
-        class="fixed right-0 top-0 z-40 h-screen w-96 bg-white p-4 transition-transform"
+        class="fixed right-0 top-0 z-40 h-screen w-96 bg-white p-4 shadow-2xl"
         tabindex="-1"
         aria-labelledby="drawer-right-label"
+        x-transition:enter="transform transition ease-out duration-300"
+        x-transition:enter-start="translate-x-full"
+        x-transition:enter-end="translate-x-0"
+        x-transition:leave="transform transition ease-in duration-200"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="translate-x-full"
     >
         <h5
             id="drawer-right-label"
