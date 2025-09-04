@@ -61,7 +61,7 @@ final class ListEspecialistaForm extends Form
             'name' => 'Télefono',
             'isClickable' => true,
             'clickName' => 'person_phone',
-            'with' => 'w-36',
+            'with' => 'w-32',
             'max' => '6',
             'mask' => '999999',
         ],

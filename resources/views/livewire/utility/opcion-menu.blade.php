@@ -1,6 +1,6 @@
 <div
     x-data="{ tooltip: false }"
-    class="absolute -top-2 right-2 flex items-center justify-center divide-x"
+    class="flex items-center justify-center divide-x rounded-lg bg-gradient-to-r from-blue-100 to-blue-50 backdrop-blur-sm shadow-lg ring-1 ring-blue-200 p-2"
 >
     @if ($showbutton)
         @can("history", $this->actions)
@@ -13,14 +13,14 @@
                     @mouseleave="tooltip = false"
                     wire:click="$parent.{{ $namecomponent . "HandleMenuAction" }}('history')"
                     @click="$wire.changeColor('history')"
-                    class="{{ ! $optioncolor["history"] ? "bg-blue-300" : "bg-yellow-50" }} rounded p-1.5 py-1.5 text-center text-gray-100 shadow-xl"
+                    class="{{ ! $optioncolor["history"] ? "bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 text-slate-600" : "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300" }} rounded p-1.5 py-1.5 text-center transition-all duration-300 hover:shadow-md"
                 >
                     <x-headerform.historyoption/>
                 </button>
                 <div
                     x-show="tooltip"
                     x-cloak
-                    class="absolute right-full z-10 mr-1 rounded bg-black px-2 py-1 text-center text-xs text-white"
+                    class="absolute right-full z-10 mr-1 rounded bg-slate-800/90 backdrop-blur-sm px-2 py-1 text-center text-xs text-white shadow-lg"
                 >
                     Historial
                 </div>
@@ -37,14 +37,14 @@
                     @mouseleave="tooltip = false"
                     wire:click="$parent.{{ $namecomponent . "HandleMenuAction" }}('export')"
                     @click="$wire.changeColor('export')"
-                    class="{{ ! $optioncolor["export"] ? "bg-blue-300" : "bg-yellow-50" }} rounded p-1.5 py-1.5 text-center text-gray-100 shadow-xl"
+                    class="{{ ! $optioncolor["export"] ? "bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 text-slate-600" : "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300" }} rounded p-1.5 py-1.5 text-center transition-all duration-300 hover:shadow-md"
                 >
                     <x-headerform.exportoption/>
                 </button>
                 <div
                     x-show="tooltip"
                     x-cloak
-                    class="absolute right-full z-10 mr-1 rounded bg-black px-2 py-1 text-center text-xs text-white"
+                    class="absolute right-full z-10 mr-1 rounded bg-slate-800/90 backdrop-blur-sm px-2 py-1 text-center text-xs text-white shadow-lg"
                 >
                     Exportar
                 </div>
@@ -61,14 +61,14 @@
                     @mouseleave="tooltip = false"
                     wire:click="$parent.{{ $namecomponent . "HandleMenuAction" }}('print')"
                     @click="$wire.changeColor('print')"
-                    class="{{ ! $optioncolor["print"] ? "bg-blue-300" : "bg-yellow-50" }} rounded p-1.5 py-1.5 text-center text-gray-100 shadow-xl"
+                    class="{{ ! $optioncolor["print"] ? "bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 text-slate-600" : "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300" }} rounded p-1.5 py-1.5 text-center transition-all duration-300 hover:shadow-md"
                 >
                     <x-headerform.printoption/>
                 </button>
                 <div
                     x-show="tooltip"
                     x-cloak
-                    class="absolute right-full z-10 mr-1 rounded bg-black px-2 py-1 text-center text-xs text-white"
+                    class="absolute right-full z-10 mr-1 rounded bg-slate-800/90 backdrop-blur-sm px-2 py-1 text-center text-xs text-white shadow-lg"
                 >
                     Imprimir
                 </div>
@@ -85,14 +85,14 @@
                     @mouseleave="tooltip = false"
                     wire:click="$parent.{{ $namecomponent . "HandleMenuAction" }}('edit')"
                     @click="$wire.changeColor('edit')"
-                    class="{{ ! $optioncolor["edit"] ? "bg-blue-300" : "bg-yellow-50" }} rounded p-1.5 py-1.5 text-center text-gray-100 shadow-xl"
+                    class="{{ ! $optioncolor["edit"] ? "bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 text-slate-600" : "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300" }} rounded p-1.5 py-1.5 text-center transition-all duration-300 hover:shadow-md"
                 >
                     <x-headerform.editoption/>
                 </button>
                 <div
                     x-show="tooltip"
                     x-cloak
-                    class="absolute right-full z-10 mr-1 rounded bg-black px-2 py-1 text-center text-xs text-white"
+                    class="absolute right-full z-10 mr-1 rounded bg-slate-800/90 backdrop-blur-sm px-2 py-1 text-center text-xs text-white shadow-lg"
                 >
                     Editar
                 </div>
@@ -108,14 +108,14 @@
                     @mouseenter="tooltip = true"
                     @mouseleave="tooltip = false"
                     wire:click="$parent.{{ $namecomponent . "HandleMenuAction" }}('new')"
-                    class="rounded bg-blue-300 p-1.5 py-1.5 text-center text-gray-100 shadow-xl"
+                    class="bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 text-slate-600 rounded p-1.5 py-1.5 text-center transition-all duration-300 hover:shadow-md"
                 >
                     <x-headerform.newoption/>
                 </button>
                 <div
                     x-show="tooltip"
                     x-cloak
-                    class="absolute right-full z-10 mr-1 rounded bg-black px-2 py-1 text-center text-xs text-white"
+                    class="absolute right-full z-10 mr-1 rounded bg-slate-800/90 backdrop-blur-sm px-2 py-1 text-center text-xs text-white shadow-lg"
                 >
                     Nuevo
                 </div>
@@ -132,14 +132,14 @@
             @mouseleave="tooltip = false"
             wire:click="$parent.{{ $namecomponent . "HandleMenuAction" }}('show')"
             @click="$wire.changeColor('show')"
-            class="{{ ! $optioncolor["show"] ? "bg-blue-300" : "bg-yellow-50" }} rounded p-1.5 py-1.5 text-center text-gray-100 shadow-xl"
+            class="{{ ! $optioncolor["show"] ? "bg-gradient-to-r from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 text-slate-600" : "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300" }} rounded p-1.5 py-1.5 text-center transition-all duration-300 hover:shadow-md"
         >
             <x-headerform.showoption/>
         </button>
         <div
             x-show="tooltip"
             x-cloak
-            class="absolute right-full z-10 mr-1 rounded bg-black px-2 py-1 text-center text-xs text-white"
+            class="absolute right-full z-10 mr-1 rounded bg-slate-800/90 backdrop-blur-sm px-2 py-1 text-center text-xs text-white shadow-lg"
         >
             Buscar
         </div>
