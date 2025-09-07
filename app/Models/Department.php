@@ -35,14 +35,14 @@ final class Department extends Model
     protected function departmentName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function departmentCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 }

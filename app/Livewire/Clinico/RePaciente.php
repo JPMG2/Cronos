@@ -8,7 +8,7 @@ use App\Classes\Person\MainPerson;
 use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQuerys;
 use App\Dto\PatientDto;
-use App\Livewire\Forms\Clinicos\PacienteForm;
+use App\Livewire\Forms\Clinico\PacienteForm;
 use App\Models\Patient;
 use App\Traits\FormHandling;
 use Livewire\Attributes\Computed;

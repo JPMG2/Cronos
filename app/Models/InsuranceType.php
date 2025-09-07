@@ -30,7 +30,7 @@ final class InsuranceType extends Model
     protected function insuratypeName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 }

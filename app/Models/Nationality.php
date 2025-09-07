@@ -19,7 +19,7 @@ final class Nationality extends Model
     protected function nationalityName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
 
         );
     }

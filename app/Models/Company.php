@@ -48,7 +48,7 @@ final class Company extends Model
     protected function companyName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
 
         );
     }
@@ -56,7 +56,7 @@ final class Company extends Model
     protected function companyCuit(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
@@ -64,56 +64,56 @@ final class Company extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function companyPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
     protected function companyZipcode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
     protected function companyEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function companyWeb(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function companyPersonContact(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function companyPersonPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function companyPersonEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 }

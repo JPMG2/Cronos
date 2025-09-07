@@ -22,7 +22,7 @@ final class Degree extends Model
     protected function degreeName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
 
         );
     }
@@ -30,7 +30,7 @@ final class Degree extends Model
     protected function degreeCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(trim($value))),
+            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
 
         );
     }

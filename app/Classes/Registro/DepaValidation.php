@@ -31,8 +31,8 @@ final class DepaValidation
     {
 
         return [
-            'department_name' => ucwords(mb_strtolower(trim($dept['department_name']))),
-            'department_code' => mb_strtoupper(trim($dept['department_code'])),
+            'department_name' => ucwords(mb_strtolower(mb_trim($dept['department_name']))),
+            'department_code' => mb_strtoupper(mb_trim($dept['department_code'])),
         ];
 
     }

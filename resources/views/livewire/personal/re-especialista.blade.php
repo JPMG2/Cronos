@@ -5,15 +5,15 @@
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 relative">
         @if(!session("isdisabled"))
             @if ($this->medicals > 0)
-                <div class="absolute top-2 right-10 z-20">
+                <x-formcomponent.optionheaderform>
                     @livewire("utility.opcion-menu", ["namecomponent" => "especialist"])
-                </div>
+                </x-formcomponent.optionheaderform>
             @endif
         @endif
 
         <div class="relative overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-200 backdrop-blur-sm">
             <!-- Decorative header accent -->
-            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-500 via-teal-500 to-blue-600"></div>
+            <x-headerform.borderheader></x-headerform.borderheader>
 
             @teleport('#modal-personData')
             <x-Person.data-person :$name_person :$lastname_person :$documentType_person
@@ -22,46 +22,28 @@
             @endteleport
 
             <div class="px-6 py-6">
-                <x-headerform.borderheader></x-headerform.borderheader>
-
                 <!-- Enhanced Title Section -->
                 <div class="mb-4">
-                    <div class="flex items-center gap-4">
-                        <div
-                            class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 ring-4 ring-blue-50">
-                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <x-formcomponent.titleform>Datos de especialista</x-formcomponent.titleform>
-                            <p class="mt-1 text-sm text-slate-600">Complete la información del especialista.</p>
-                        </div>
+                    <x-formcomponent.headerformtitla>
+                        <x-slot:title>Datos Especialista</x-slot:title>
+                        <x-slot:subtitle>Complete información del especialista.</x-slot:subtitle>
                         <x-formcomponent.titleindicator
                             wire:loading
                             wire:target="submitSpecialist,especialistHandleMenuAction,validatePersonExis"></x-formcomponent.titleindicator>
-                    </div>
+                    </x-formcomponent.headerformtitla>
                 </div>
-
-                <!-- Enhanced Form Grid with better spacing -->
                 <div class="space-y-3 ">
                     <!-- Personal Information Section -->
-                    <div
-                        class="rounded-xl bg-gradient-to-r from-slate-50 to-white p-4 ring-1 ring-slate-200 transition-all duration-300 hover:from-slate-100 hover:to-slate-50 hover:shadow-md focus-within:from-slate-100 focus-within:to-slate-50 focus-within:shadow-md">
-                        <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-800">
-                            <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V4a2 2 0 114 0v2m-4 0a2 2 0 104 0m-4 0h4"></path>
-                            </svg>
+                    <x-formcomponent.formdivcontent
+                        dstyle="from-slate-50  ring-slate-200  hover:from-slate-100 hover:to-slate-50 focus-within:from-slate-100 focus-within:to-slate-50">
+                        <x-formcomponent.h3divtitle iconname="personinfo">
                             Información Personal
-                        </h3>
+                        </x-formcomponent.h3divtitle>
                         <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 xl:gap-8">
-
                             <!-- Document Information -->
                             <div class="lg:col-span-4">
-                                <div class="grid grid-cols-3 gap-4">
-                                    <div class="relative">
+                                <div class="grid grid-cols-5 gap-3">
+                                    <div class="relative col-span-2">
                                         <div class="relative">
                                             <x-inputs.selectgroup
                                                 label="Documento"
@@ -90,7 +72,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="relative w-full col-span-2">
+                                    <div class="relative w-full col-span-3">
                                         <div class="relative">
                                             <x-inputs.textgroup
                                                 label="Número"
@@ -153,7 +135,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <!-- Full Name -->
                             <div class="lg:col-span-6">
                                 <div class="grid grid-cols-2 gap-6">
@@ -211,18 +192,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </x-formcomponent.formdivcontent>
                     <!-- Professional Information Section -->
-                    <div
-                        class="rounded-xl bg-gradient-to-r from-blue-50 to-white p-4 ring-1 ring-blue-200 transition-all duration-300 hover:from-blue-75 hover:to-blue-25 hover:shadow-md focus-within:from-blue-75 focus-within:to-blue-25 focus-within:shadow-md">
-                        <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-800">
-                            <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
+                    <x-formcomponent.formdivcontent
+                        dstyle="from-blue-50 ring-blue-200 hover:from-blue-75 hover:to-blue-25 focus-within:from-blue-75 focus-within:to-blue-25">
+                        <x-formcomponent.h3divtitle iconname="professioninfo">
                             Información Profesional
-                        </h3>
+                        </x-formcomponent.h3divtitle>
                         <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 xl:gap-8">
                             <!-- License Information -->
                             <div class="lg:col-span-6">
@@ -316,21 +292,16 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </x-formcomponent.formdivcontent>
                     <!-- Contact Information Section -->
-                    <div
-                        class="rounded-xl bg-gradient-to-r from-teal-50 to-white p-4 ring-1 ring-teal-200 transition-all duration-300 hover:from-teal-75 hover:to-teal-25 hover:shadow-md focus-within:from-teal-75 focus-within:to-teal-25 focus-within:shadow-md">
-                        <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-800">
-                            <svg class="h-5 w-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
+                    <x-formcomponent.formdivcontent
+                        dstyle="from-teal-50 ring-teal-200 hover:from-teal-75 hover:to-teal-25 focus-within:from-teal-75 focus-within:to-teal-25">
+                        <x-formcomponent.h3divtitle iconname="email">
                             Información de Contacto
-                        </h3>
+                        </x-formcomponent.h3divtitle>
                         <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 xl:gap-8">
                             <!-- Phone -->
-                            <div class="lg:col-span-4">
+                            <div class="lg:col-span-3">
                                 <div class="relative">
                                     <div class="relative">
                                         <x-inputs.textgroup
@@ -359,7 +330,7 @@
                             </div>
 
                             <!-- Email -->
-                            <div class="lg:col-span-8">
+                            <div class="lg:col-span-4">
                                 <div class="relative">
                                     <div class="relative">
                                         <x-inputs.textgroup
@@ -387,7 +358,7 @@
                             </div>
 
                             <!-- Address -->
-                            <div class="lg:col-span-12">
+                            <div class="lg:col-span-5">
                                 <div class="relative">
                                     <div class="relative">
                                         <x-inputs.textgroup
@@ -414,7 +385,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </x-formcomponent.formdivcontent>
                 </div>
 
                 <!-- Enhanced Button Section -->

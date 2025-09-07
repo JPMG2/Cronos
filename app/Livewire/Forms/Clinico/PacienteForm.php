@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Forms\Clinicos;
+namespace App\Livewire\Forms\Clinico;
 
 use App\Action\Patient\CreatePatiente;
 use App\Action\Patient\UpdatePatiente;

@@ -127,28 +127,28 @@ final class Insurance extends Model
     protected function insuranceName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function insuranceAcronym(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function insuranceCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function insuranceCuit(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
@@ -156,35 +156,35 @@ final class Insurance extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function insurancePhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function insuranceZipcode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function insuranceEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function insuranceWeb(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
 
     }

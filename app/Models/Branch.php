@@ -87,7 +87,7 @@ final class Branch extends Model
     protected function branchName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(trim($value))),
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
 
         );
     }
@@ -95,7 +95,7 @@ final class Branch extends Model
     protected function branchCuit(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
@@ -103,56 +103,56 @@ final class Branch extends Model
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function branchPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
     protected function branchZipcode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => trim($value),
+            set: fn ($value) => mb_trim($value),
         );
     }
 
     protected function branchEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function branchWeb(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function branchPersonContact(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function branchPersonPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
     protected function branchPersonEmail(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtolower(trim($value)),
+            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 }

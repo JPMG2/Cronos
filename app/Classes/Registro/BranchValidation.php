@@ -45,20 +45,20 @@ final class BranchValidation
     {
 
         return [
-            'company_id' => trim((string) $branch['company_id']),
-            'state_id' => trim((string) $branch['state_id']),
-            'city_id' => trim((string) $branch['city_id']),
-            'province_id' => trim((string) $branch['province_id']),
-            'branch_name' => mb_strtoupper(mb_strtolower(trim($branch['branch_name']))),
-            'branch_code' => trim($branch['branch_code']),
-            'branch_address' => trim($branch['branch_address']),
-            'branch_phone' => trim($branch['branch_phone']),
-            'branch_zipcode' => trim($branch['branch_zipcode']),
-            'branch_email' => mb_strtolower(trim($branch['branch_email'])),
-            'branch_web' => mb_strtolower(trim($branch['branch_web'])),
-            'branch_person_contact' => trim($branch['branch_person_contact']),
-            'branch_person_phone' => trim($branch['branch_person_phone']),
-            'branch_person_email' => mb_strtolower(trim($branch['branch_person_email'])),
+            'company_id' => mb_trim((string) $branch['company_id']),
+            'state_id' => mb_trim((string) $branch['state_id']),
+            'city_id' => mb_trim((string) $branch['city_id']),
+            'province_id' => mb_trim((string) $branch['province_id']),
+            'branch_name' => mb_strtoupper(mb_strtolower(mb_trim($branch['branch_name']))),
+            'branch_code' => mb_trim($branch['branch_code']),
+            'branch_address' => mb_trim($branch['branch_address']),
+            'branch_phone' => mb_trim($branch['branch_phone']),
+            'branch_zipcode' => mb_trim($branch['branch_zipcode']),
+            'branch_email' => mb_strtolower(mb_trim($branch['branch_email'])),
+            'branch_web' => mb_strtolower(mb_trim($branch['branch_web'])),
+            'branch_person_contact' => mb_trim($branch['branch_person_contact']),
+            'branch_person_phone' => mb_trim($branch['branch_person_phone']),
+            'branch_person_email' => mb_strtolower(mb_trim($branch['branch_person_email'])),
 
         ];
 

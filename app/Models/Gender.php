@@ -19,7 +19,7 @@ final class Gender extends Model
     protected function genderName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(trim($value))),
+            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
 
         );
     }

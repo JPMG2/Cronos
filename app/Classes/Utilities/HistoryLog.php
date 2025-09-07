@@ -34,7 +34,7 @@ final class HistoryLog
 
     public function getModel()
     {
-        return trim('App\Models\ ').$this->model;
+        return mb_trim('App\Models\ ').$this->model;
     }
 
     public function getId(): int

@@ -22,7 +22,7 @@ final class Document extends Model
     protected function documentName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(trim($value))),
+            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
 
         );
     }

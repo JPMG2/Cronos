@@ -46,19 +46,19 @@ final class CompanyValidation
     {
 
         return [
-            'company_name' => mb_strtoupper(mb_strtolower(trim($company['company_name']))),
-            'company_cuit' => trim($company['company_cuit']),
-            'company_phone' => trim($company['company_phone']),
-            'company_email' => mb_strtolower(trim($company['company_email'])),
-            'company_address' => trim($company['company_address']),
-            'company_zipcode' => trim($company['company_zipcode']),
-            'company_person_contact' => trim($company['company_person_contact']),
-            'company_person_phone' => trim($company['company_person_phone']),
-            'company_person_email' => mb_strtolower(trim($company['company_person_email'])),
-            'company_web' => mb_strtolower(trim($company['company_web'])),
-            'province_id' => trim((string) $company['province_id']),
-            'city_id' => trim((string) $company['city_id']),
-            'state_id' => trim((string) $company['state_id']),
+            'company_name' => mb_strtoupper(mb_strtolower(mb_trim($company['company_name']))),
+            'company_cuit' => mb_trim($company['company_cuit']),
+            'company_phone' => mb_trim($company['company_phone']),
+            'company_email' => mb_strtolower(mb_trim($company['company_email'])),
+            'company_address' => mb_trim($company['company_address']),
+            'company_zipcode' => mb_trim($company['company_zipcode']),
+            'company_person_contact' => mb_trim($company['company_person_contact']),
+            'company_person_phone' => mb_trim($company['company_person_phone']),
+            'company_person_email' => mb_strtolower(mb_trim($company['company_person_email'])),
+            'company_web' => mb_strtolower(mb_trim($company['company_web'])),
+            'province_id' => mb_trim((string) $company['province_id']),
+            'city_id' => mb_trim((string) $company['city_id']),
+            'state_id' => mb_trim((string) $company['state_id']),
         ];
 
     }

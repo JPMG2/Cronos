@@ -46,19 +46,19 @@ final class InsuranceValidation
 
         return [
 
-            'insurance_name' => mb_strtoupper(trim($insurance['insurance_name'])),
-            'insurance_acronym' => mb_strtoupper(trim($insurance['insurance_acronym'])),
-            'insurance_type_id' => trim((string) $insurance['insurance_type_id']),
-            'province_id' => trim((string) $insurance['province_id']),
-            'city_id' => trim((string) $insurance['city_id']),
-            'state_id' => trim((string) $insurance['state_id']),
-            'insurance_code' => mb_strtoupper(trim($insurance['insurance_code'])),
-            'insurance_cuit' => mb_strtoupper(trim($insurance['insurance_cuit'])),
-            'insurance_address' => trim($insurance['insurance_address']),
-            'insurance_phone' => trim($insurance['insurance_phone']),
-            'insurance_zipcode' => trim($insurance['insurance_zipcode']),
-            'insurance_email' => mb_strtolower(trim($insurance['insurance_email'])),
-            'insurance_web' => mb_strtolower(trim($insurance['insurance_web'])),
+            'insurance_name' => mb_strtoupper(mb_trim($insurance['insurance_name'])),
+            'insurance_acronym' => mb_strtoupper(mb_trim($insurance['insurance_acronym'])),
+            'insurance_type_id' => mb_trim((string) $insurance['insurance_type_id']),
+            'province_id' => mb_trim((string) $insurance['province_id']),
+            'city_id' => mb_trim((string) $insurance['city_id']),
+            'state_id' => mb_trim((string) $insurance['state_id']),
+            'insurance_code' => mb_strtoupper(mb_trim($insurance['insurance_code'])),
+            'insurance_cuit' => mb_strtoupper(mb_trim($insurance['insurance_cuit'])),
+            'insurance_address' => mb_trim($insurance['insurance_address']),
+            'insurance_phone' => mb_trim($insurance['insurance_phone']),
+            'insurance_zipcode' => mb_trim($insurance['insurance_zipcode']),
+            'insurance_email' => mb_strtolower(mb_trim($insurance['insurance_email'])),
+            'insurance_web' => mb_strtolower(mb_trim($insurance['insurance_web'])),
         ];
 
     }
