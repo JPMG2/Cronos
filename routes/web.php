@@ -31,9 +31,9 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         ->name('re_especialist')->middleware(['rolemenu:re_especialist']);
 });
 
-/* Route for Gestión */
+/* Route for Convenio */
 Route::group(['middleware' => 'auth', 'verified'], function () {
-    Route::get('/re_obrasocial', App\Livewire\Gestion\ReObraSocail::class)
+    Route::get('/re_obrasocial', App\Livewire\Convenio\ReObraSocail::class)
         ->name('re_obrasocial')->middleware(['rolemenu:re_obrasocial']);
 });
 

@@ -42,7 +42,7 @@ function prepareData($arrayTemp, $arrayOriginal): array
 
 function stringToTitle(string $stringValue): string
 {
-    return str(str($stringValue)->lower())->title();
+    return str(str($stringValue)->lower())->title()->toString();
 }
 
 function iconName(string $icon): array

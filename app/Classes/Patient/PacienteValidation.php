@@ -33,11 +33,12 @@ final class PacienteValidation
                 'person_phone' => AttributeValidator::stringValid(false, 5),
                 'person_datebirth' => AttributeValidator::dateValid(true),
                 'person_email' => AttributeValidator::emailValid('people', 'person_email'),
-                'city_id' => AttributeValidator::requireAndExists('cities', 'id', 'city_id'),
+                'province_id' => AttributeValidator::requireAndExists('provinces', 'id', 'province_id'),
                 'gender_id' => AttributeValidator::requireAndExists('genders', 'id', 'gender_id'),
                 'marital_status_id' => AttributeValidator::requireAndExists('marital_statuses', 'id', 'marital_status_id'),
                 'occupation_id' => AttributeValidator::requireAndExists('occupations', 'id', 'occupation_id'),
                 'nationality_id' => AttributeValidator::requireAndExists('nationalities', 'id', 'nationality_id'),
+                'person_cpcode' => AttributeValidator::stringValid(false, 3),
             ],
             [
                 'num_document.prohibited' => 'se requiere tipo de documento.',
@@ -63,6 +64,8 @@ final class PacienteValidation
             'gender_id' => mb_trim((string) $arrayPatient['gender_id']),
             'marital_status_id' => mb_trim((string) $arrayPatient['marital_status_id']),
             'occupation_id' => mb_trim((string) $arrayPatient['occupation_id']),
+            'person_cpcode' => mb_trim((string) $arrayPatient['person_cpcode']),
+            'province_id' => mb_trim((string) $arrayPatient['province_id']),
         ];
 
     }
@@ -82,6 +85,8 @@ final class PacienteValidation
             'gender_id' => config('nicename.gender'),
             'marital_status_id' => config('nicename.maritalstatus'),
             'occupation_id' => config('nicename.occupation'),
+            'province_id' => config('nicename.provincia'),
+            'person_cpcode' => config('nicename.cp'),
         ];
     }
 
@@ -108,11 +113,12 @@ final class PacienteValidation
                 'person_phone' => AttributeValidator::stringValid(false, 5),
                 'person_datebirth' => AttributeValidator::dateValid(true),
                 'person_email' => AttributeValidator::emailValidById($id, 'people', 'person_email'),
-                'city_id' => AttributeValidator::requireAndExists('cities', 'id', 'city_id'),
+                'province_id' => AttributeValidator::requireAndExists('provinces', 'id', 'province_id'),
                 'gender_id' => AttributeValidator::requireAndExists('genders', 'id', 'gender_id'),
                 'marital_status_id' => AttributeValidator::requireAndExists('marital_statuses', 'id', 'marital_status_id'),
                 'occupation_id' => AttributeValidator::requireAndExists('occupations', 'id', 'occupation_id'),
                 'nationality_id' => AttributeValidator::requireAndExists('nationalities', 'id', 'nationality_id'),
+                'person_cpcode' => AttributeValidator::stringValid(false, 3),
             ],
             [
                 'num_document.prohibited' => 'se requiere tipo de documento.',

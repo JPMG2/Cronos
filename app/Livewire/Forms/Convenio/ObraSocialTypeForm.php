@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Forms\Gestion;
+namespace App\Livewire\Forms\Convenio;
 
 use App\Classes\Services\ModelService;
 use App\Classes\Utilities\AttributeValidator;
@@ -20,7 +20,7 @@ final class ObraSocialTypeForm extends Form
     public function insuratypeStore()
     {
         $validated = Validator::make(
-            ['insuratype_name' => ucwords(mb_strtolower(trim($this->insuratypedata['insuratype_name']))),
+            ['insuratype_name' => ucwords(mb_strtolower(mb_trim($this->insuratypedata['insuratype_name']))),
             ],
             ['insuratype_name' => AttributeValidator::uniqueIdNameLength(5, 'insurance_types', 'insuratype_name', null),
             ],
@@ -36,7 +36,7 @@ final class ObraSocialTypeForm extends Form
     public function insuratypeUpdate()
     {
         $validated = Validator::make(
-            ['insuratype_name' => ucwords(mb_strtolower(trim($this->insuratypedata['insuratype_name']))),
+            ['insuratype_name' => ucwords(mb_strtolower(mb_trim($this->insuratypedata['insuratype_name']))),
             ],
             ['insuratype_name' => AttributeValidator::uniqueIdNameLength(5, 'insurance_types', 'insuratype_name', $this->insuratypedata['id']),
             ],

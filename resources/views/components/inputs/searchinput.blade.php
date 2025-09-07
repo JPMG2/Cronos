@@ -19,7 +19,7 @@
         {{ $attributes }}
         {{ $isdisabled }}
         type="text"
-        class="border-1 {{ $errorColor }} {{ $disableatributs }} peer block w-full appearance-none rounded-lg bg-transparent px-2.5 pb-2.5 py-2 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
+        class="border-1 {{ $errorColor }} {{ $disableatributs }} peer block w-full appearance-none rounded-lg bg-transparent px-2.5 pb-1 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
     />
 
     <div class="absolute inset-y-0 right-0 flex items-center pr-3">

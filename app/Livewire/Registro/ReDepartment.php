@@ -22,17 +22,10 @@ final class ReDepartment extends Component
 
     public $listdeparment;
 
-    protected $commonQuerys;
-
     #[Title(' - Departamentos')]
     public function render()
     {
-        $this->commonQuerys = app('commonquery');
-
-        return view('livewire.registro.re-department', [
-            'listBranches' => $this->commonQuerys::companyBranchQuery([1], [1]),
-            'listState' => $this->commonQuerys::stateQuery([1, 2]),
-        ]);
+        return view('livewire.registro.re-department');
     }
 
     public function queryDeparmente()

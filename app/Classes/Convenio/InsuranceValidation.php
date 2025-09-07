@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Classes\Gestion;
+namespace App\Classes\Convenio;
 
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Gestion;
+namespace App\Livewire\Convenio;
 
-use App\Livewire\Forms\Gestion\ObraSocialForm;
+use App\Livewire\Forms\Convenio\ObraSocialForm;
 use App\Models\Insurance;
 use App\Models\InsuranceType;
 use App\Traits\FormActionsTrait;
@@ -28,7 +28,7 @@ final class ReObraSocail extends Component
     {
         $this->commonQuerys = app('commonquery');
 
-        return view('livewire.gestion.re-obra-social', [
+        return view('livewire.convenio.re-obra-social', [
             'listState' => $this->commonQuerys::stateQuery([1, 2]),
         ]);
     }
@@ -47,26 +47,11 @@ final class ReObraSocail extends Component
 
     }
 
-    public function openTypes()
+    public function endInsurance($result)
     {
-        $this->dispatch('showTypesModal');
-    }
-
-    #[On('reloadInsuraceType')]
-    public function reloadInsuraceType()
-    {
-        $this->getTypesProperty();
-
-    }
-
-    public function getCountInsuranceProperty()
-    {
-        return Insurance::countInsurance();
-    }
-
-    public function getTypesProperty()
-    {
-        return InsuranceType::listType()->get();
+        $this->dispatch('show-toast', $result);
+        $this->resetAllProvince();
+        $this->clearForm();
     }
 
     public function clearForm()
@@ -79,11 +64,26 @@ final class ReObraSocail extends Component
 
     }
 
-    public function endInsurance($result)
+    public function openTypes()
     {
-        $this->dispatch('show-toast', $result);
-        $this->resetAllProvince();
-        $this->clearForm();
+        $this->dispatch('showTypesModal');
+    }
+
+    #[On('reloadInsuraceType')]
+    public function reloadInsuraceType()
+    {
+        $this->getTypesProperty();
+
+    }
+
+    public function getTypesProperty()
+    {
+        return InsuranceType::listType()->get();
+    }
+
+    public function getCountInsuranceProperty()
+    {
+        return Insurance::countInsurance();
     }
 
     #[On('dataInsurance')]

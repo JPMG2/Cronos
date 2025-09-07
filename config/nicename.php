@@ -13,7 +13,7 @@ return [
     'correo' => 'correo',
     'web' => 'web',
     'direccion' => 'dirección',
-    'cp' => 'c.p',
+    'cp' => 'cp',
     'departamento' => 'departamento',
     'codigo' => 'código',
     'contacto' => 'contacto',
@@ -43,4 +43,5 @@ return [
     'occupation' => 'ocupación',
     'nacionalidad' => 'nacionalidad',
     'day_of_week' => 'horario',
+    'service' => 'servicio',
 ];

@@ -5,38 +5,43 @@ declare(strict_types=1);
 namespace App\Livewire\Forms\Clinico;
 
 use App\Classes\Services\ModelService;
+use App\Classes\Utilities\AttributeValidator;
 use App\Classes\Utilities\NotifyQuerys;
 use App\Models\Service;
-use Livewire\Attributes\Rule;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
 
 final class ServiceForm extends Form
 {
-    #[Rule('required|string|max:255')]
-    public string $service_name = '';
-
-    #[Rule('required|string')]
-    public string $service_description = '';
-
-    #[Rule('required|string|max:50|unique:services,service_code')]
-    public string $service_code = '';
-
-    #[Rule('required|integer|exists:states,id')]
-    public int $state_id = 0;
-
     public array $dataservice = [
         'service_name' => '',
         'service_description' => '',
         'service_code' => '',
-        'state_id' => 0,
     ];
 
     public function serviceStore(): array
     {
-        $this->validate();
+        $validated = Validator::make(
+            [
+                'service_name' => ucwords(mb_strtolower(mb_trim($this->dataservice['service_name']))),
+                'service_code' => mb_strtoupper(mb_trim($this->dataservice['service_code'])),
+                'service_description' => ucfirst(mb_strtolower(mb_trim($this->dataservice['service_description']))),
+            ],
+            [
+                'service_name' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_name', null),
+                'service_code' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_code', null),
+                'service_description' => AttributeValidator::stringValid(false, 4),
+            ],
+            [],
+            [
+                'service_name' => config('nicename.service'),
+                'service_code' => config('nicename.codigo'),
+                'service_description' => config('nicename.description'), ]
+        )->validate();
+
         $services = $this->iniService();
 
-        return NotifyQuerys::msgCreate($services->store($this->dataservice));
+        return NotifyQuerys::msgCreate($services->store($validated));
     }
 
     public function serviceUpdate($modelService): array

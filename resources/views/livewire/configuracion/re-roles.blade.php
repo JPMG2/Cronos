@@ -145,10 +145,10 @@
 
 
                             </div>
+                            <x-slot:buttons>
+                                <form id="departamento" wire:submit.prevent="submit">
+                                    @csrf
 
-                            <form id="departamento" wire:submit.prevent="submit">
-                                @csrf
-                                <div class="absolute bottom-6 right-4">
                                     <x-headerform.button-group>
                                         <x-buttons.close wire:click="$toggle('showRoleModal')"
                                                          @click="$wire.clearForm()"
@@ -168,9 +168,9 @@
                                             :error="count($errors)"
                                         ></x-buttons.save>
                                     </x-headerform.button-group>
-                                </div>
-                            </form>
 
+                                </form>
+                            </x-slot:buttons>
                         </x-rightmodal>
                     </div>
                 </div>

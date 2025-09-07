@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Forms\Gestion;
+namespace App\Livewire\Forms\Convenio;
 
-use App\Classes\Gestion\InsuranceObj;
-use App\Classes\Gestion\InsuranceValidation;
+use App\Classes\Convenio\InsuranceObj;
+use App\Classes\Convenio\InsuranceValidation;
 use App\Classes\Services\ModelService;
 use App\Classes\Utilities\NotifyQuerys;
 use App\Models\Insurance;

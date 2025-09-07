@@ -20,18 +20,12 @@ final class ReServices extends Component
 
     public $serviceobject;
 
-    public $listservice;
-
     protected $commonQuerys;
 
     #[Title(' - Servicios')]
     public function render()
     {
-        $this->commonQuerys = app('commonquery');
-
-        return view('livewire.clinicos.re-services', [
-            'listState' => $this->commonQuerys::stateQuery([1, 2]),
-        ]);
+        return view('livewire.clinicos.re-services');
     }
 
     public function queryService(): void
@@ -62,5 +56,10 @@ final class ReServices extends Component
         $this->openservice = true;
         $this->isupdate = true;
         $this->serviceobject = $service;
+    }
+
+    public function getServicesProperty()
+    {
+        return Service::query()->orderBy('service_name')->get();
     }
 }

@@ -34,6 +34,7 @@ final class Patient extends Model implements Filterable
             'person:*',
             'person.document:id,document_name',
             'person.gender:id,gender_name',
+            'person.province:id,province_name',
         ];
     }
 

@@ -9,5 +9,6 @@ trait FormHandling
     use FormActionsTrait;
     use HandleMenuAction;
     use PersonData;
+    use ProvinceCity;
     use UtilityForm;
 }

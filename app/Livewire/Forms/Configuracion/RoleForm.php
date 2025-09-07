@@ -22,8 +22,8 @@ final class RoleForm extends Form
     {
         $validated = Validator::make(
             [
-                'name_role' => ucwords(mb_strtolower(trim($this->dataRole['name_role']))),
-                'description' => ucfirst(mb_strtolower(trim($this->dataRole['description']))),
+                'name_role' => ucwords(mb_strtolower(mb_trim($this->dataRole['name_role']))),
+                'description' => ucfirst(mb_strtolower(mb_trim($this->dataRole['description']))),
             ],
             [
                 'name_role' => AttributeValidator::uniqueIdNameLength(4, 'roles', 'name_role', null),
@@ -44,8 +44,8 @@ final class RoleForm extends Form
     {
         $validated = Validator::make(
             [
-                'name_role' => ucwords(mb_strtolower(trim($this->dataRole['name_role']))),
-                'description' => ucfirst(mb_strtolower(trim($this->dataRole['description']))),
+                'name_role' => ucwords(mb_strtolower(mb_trim($this->dataRole['name_role']))),
+                'description' => ucfirst(mb_strtolower(mb_trim($this->dataRole['description']))),
             ],
             [
                 'name_role' => AttributeValidator::uniqueIdNameLength(5, 'roles', 'name_role', $this->dataRole['id']),
@@ -72,6 +72,6 @@ final class RoleForm extends Form
 
     protected function iniService()
     {
-        return app()->make(ModelService::class, ['model' => new Role]);
+        return new ModelService(new Role);
     }
 }

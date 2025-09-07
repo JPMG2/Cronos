@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $document_id
- * @property ?int $city_id
+ * @property ?int $province_id
  * @property ?int $gender_id
  * @property ?int $marital_status_id
  * @property ?int $occupation_id
@@ -36,14 +36,15 @@ final class Person extends Model implements Filterable
     use HasFactory,TableFilter;
 
     protected $fillable = [
-        'document_id', 'city_id', 'gender_id', 'marital_status_id', 'occupation_id',
+        'document_id', 'province_id', 'gender_id', 'marital_status_id', 'occupation_id',
         'nationality_id', 'num_document', 'person_name', 'person_lastname',
         'person_address', 'person_phone', 'person_email', 'person_datebirth',
+        'person_cpcode',
     ];
 
     protected $casts = [
         'document_id' => 'integer',
-        'city_id' => 'integer',
+        'province_id' => 'integer',
         'gender_id' => 'integer',
         'marital_status_id' => 'integer',
         'occupation_id' => 'integer',
@@ -84,9 +85,9 @@ final class Person extends Model implements Filterable
         return $this->belongsTo(Document::class);
     }
 
-    public function city(): BelongsTo
+    public function province(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(Province::class);
     }
 
     public function gender(): BelongsTo
@@ -152,7 +153,7 @@ final class Person extends Model implements Filterable
     public function getRelashionName(string $relashionvalue): string
     {
         $relashionarray = [
-            'city_id' => 'city',
+            'province_id' => 'province',
             'gender_id' => 'gender',
             'marital_status_id' => 'maritalStatus',
             'occupation_id' => 'occupation',
@@ -170,7 +171,7 @@ final class Person extends Model implements Filterable
 
     public function showDataPatient(int $id)
     {
-        return self::whereHas('patiente')->with(['gender', 'maritalStatus', 'occupation', 'nationality', 'city'])
+        return self::whereHas('patiente')->with(['gender', 'maritalStatus', 'occupation', 'nationality', 'province'])
             ->findOrFail($id);
     }
 
@@ -179,7 +180,7 @@ final class Person extends Model implements Filterable
         return ! empty($this->person_email);
     }
 
-    protected function cityId(): Attribute
+    protected function provinceId(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => $value ?: null,
@@ -269,6 +270,13 @@ final class Person extends Model implements Filterable
     {
         return Attribute::make(
             set: fn ($value) => mb_trim($value),
+        );
+    }
+
+    protected function personCpcode(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => mb_strtoupper(mb_trim($value)),
         );
     }
 

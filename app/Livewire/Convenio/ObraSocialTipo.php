@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Gestion;
+namespace App\Livewire\Convenio;
 
-use App\Livewire\Forms\Gestion\ObraSocialTypeForm;
+use App\Livewire\Forms\Convenio\ObraSocialTypeForm;
 use App\Models\InsuranceType;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\On;
@@ -25,7 +25,7 @@ final class ObraSocialTipo extends Component
 
     public function render()
     {
-        return view('livewire.gestion.obra-social-tipo');
+        return view('livewire.convenio.obra-social-tipo');
     }
 
     public function queryInsuraceType()

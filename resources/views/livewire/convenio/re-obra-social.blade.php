@@ -479,7 +479,7 @@
             </form>
         @endif
     </div>
-    @livewire("gestion.obra-social-tipo")
-    @livewire("gestion.list-obra-social", ["show" => false])
+    @livewire("convenio.obra-social-tipo")
+    @livewire("convenio.list-obra-social", ["show" => false])
 
 </div>

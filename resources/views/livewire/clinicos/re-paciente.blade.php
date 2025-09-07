@@ -385,89 +385,146 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="lg:col-span-5">
+                                <div class="relative ">
+                                    <div class="relative">
+                                        <x-inputs.containautocomplete
+                                            modelString="stringProvince"
+                                            showModel="showProvince"
+                                            modelId="id_province"
+                                        >
+                                            <div class="relative">
+                                                <x-inputs.searchinput
+                                                    :error="$errors->first('province_id')"
+                                                    x-on:keyup="findProinvence()"
+                                                    wire:model="stringProvince"
+                                                    @keydown.escape.prevent.stop="closeList()"
+                                                    @click.away="closeAway()"
+                                                    @click="seeValues()"
+                                                    placeholder="buscar..."
+                                                    resetValues="$wire.resetValuesCity()"
+                                                ></x-inputs.searchinput>
+                                                <x-inputs.labelsearch required="yes">
+                                                    Provincia
+                                                </x-inputs.labelsearch>
+                                                @if (count($listProvince) > 0)
+                                                    <x-inputs.ligroup>
+                                                        @foreach ($listProvince as $province)
+                                                            <x-inputs.lioption
+                                                                x-on:click="setValuesProvince('{{$province->id}}','{{$province->province_name}}')"
+                                                            >
+                                                                {{ $province->province_name }}
+                                                            </x-inputs.lioption>
+                                                        @endforeach
+                                                    </x-inputs.ligroup>
+                                                @endif
+                                            </div>
+                                        </x-inputs.containautocomplete>
+                                    </div>
+                                    @error("province_id")
+                                    <x-inputs.error-validate>
+                                        {{ $message }}
+                                    </x-inputs.error-validate>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2">
+                                <div class="relative ">
+                                    <div class="relative">
+                                        <x-inputs.textgroup
+                                            label="CP"
+                                            for="patien_cpcode"
+                                            required="yes"
+                                        >
+                                            <x-inputs.textinput
+                                                wire:model="pacienteForm.personData.person_cpcode"
+                                                id="patien_cpcode"
+                                                autocomplete="off"
+                                                maxlength="7"
+                                                placeholder=" "
+                                                isdisabled="{{$isdisabled}}"
+                                                :error="$errors->first('person_cpcode')"
+                                            ></x-inputs.textinput>
+                                        </x-inputs.textgroup>
+                                    </div>
+                                    @error("person_cpcode")
+                                    <x-inputs.error-validate>
+                                        {{ $message }}
+                                    </x-inputs.error-validate>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="lg:col-span-5">
+                                <div class="relative ">
+                                    <div class="relative">
+                                        <x-inputs.dropdown.dropdownconfig
+                                            wireidvalue="pacienteForm.personData.nationality_id"
+                                            :jsonvalues="json_encode($this->nationality->map(fn($o) => ['id' => $o->id, 'name' => $o->nationality_name])->values())"
+                                        >
+                                            <x-inputs.dropdown.labelautocomplet
+                                                label="Nacionalidad"
+                                                for="pacient_nacionalidad"
+                                                required="yes"
+                                            >
+                                                <x-inputs.dropdown.buttondropdown
+                                                    isdisabled="{{$isdisabled}}"
+                                                />
+                                            </x-inputs.dropdown.labelautocomplet>
+                                            <x-inputs.dropdown.uldropdown
+                                                ulname="nationality"
+                                            >
+                                                <li class="px-2 py-1">
+                                                    <x-inputs.dropdown.inputtextfilter
+                                                        placeholder="Buscar nacionalidad..."
+                                                    />
+                                                </li>
+
+                                                <template x-for="(nationality, index) in filteredOptions()"
+                                                          :key="nationality.id">
+                                                    <x-inputs.dropdown.lidropdown
+                                                        optionname="nationality"
+                                                    />
+                                                </template>
+                                            </x-inputs.dropdown.uldropdown>
+                                        </x-inputs.dropdown.dropdownconfig>
+                                    </div>
+                                    @error("nationality_id")
+                                    <x-inputs.error-validate>
+                                        {{ $message }}
+                                    </x-inputs.error-validate>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                     </x-formcomponent.formdivcontent>
                 </div>
-                <div class="mt-3 grid grid-cols-1 gap-x-2  gap-y-2 sm:grid-cols-9">
 
+                @if(!session("isdisabled"))
+                    <div class="mt-8 border-t border-slate-200 pt-4">
+                        <form
+                            id="paciente"
+                            wire:submit.prevent="submit"
+                        >
+                            @csrf
+                            <div class="flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-6">
+                                <x-buttons.cancel
+                                    wire:click="clearForm"
+                                    @click="window.dispatchEvent(new Event('clear-errors'));"
+                                    label="Cancelar"
+                                ></x-buttons.cancel>
 
-                    <div class="flex gap-x-1 sm:col-span-4">
-
-                        <div class="relative sm:col-span-2 w-full">
-                            <div class="relative">
+                                <x-buttons.save
+                                    wire:submit.prevent="submitPatient"
+                                    wire:click.prevent="submitPatient"
+                                    namefucion=""
+                                    label="Guardar"
+                                    isdisabled="{{$isdisabled}}"
+                                    :error="count($errors)"
+                                ></x-buttons.save>
 
                             </div>
-
-                        </div>
+                        </form>
                     </div>
-                    <div class="relative sm:col-span-2">
-                        <x-inputs.dropdown.dropdownconfig
-                            wireidvalue="pacienteForm.personData.nationality_id"
-                            :jsonvalues="json_encode($this->nationality->map(fn($o) => ['id' => $o->id, 'name' => $o->nationality_name])->values())"
-                        >
-                            <x-inputs.dropdown.labelautocomplet
-                                label="Nacionalidad"
-                                for="pacient_nacionalidad"
-                                required="yes"
-                            >
-                                <x-inputs.dropdown.buttondropdown
-                                    isdisabled="{{$isdisabled}}"
-                                />
-                            </x-inputs.dropdown.labelautocomplet>
-                            <x-inputs.dropdown.uldropdown
-                                ulname="nationality"
-                            >
-                                <li class="px-2 py-1">
-                                    <x-inputs.dropdown.inputtextfilter
-                                        placeholder="Buscar nacionalidad..."
-                                    />
-                                </li>
-
-                                <template x-for="(nationality, index) in filteredOptions()" :key="nationality.id">
-                                    <x-inputs.dropdown.lidropdown
-                                        optionname="nationality"
-                                    />
-                                </template>
-                            </x-inputs.dropdown.uldropdown>
-                        </x-inputs.dropdown.dropdownconfig>
-                        @error("nationality_id")
-                        <x-inputs.error-validate>
-                            {{ $message }}
-                        </x-inputs.error-validate>
-                        @enderror
-                    </div>
-
-                    <div class="relative w-full sm:col-span-3">
-                        <div class="relative">
-
-                        </div>
-
-                    </div>
-                </div>
-                @if(!session("isdisabled"))
-                    <form
-                        id="paciente"
-                        wire:submit.prevent="submit"
-                    >
-                        @csrf
-                        <x-headerform.button-group>
-                            <x-buttons.cancel
-                                wire:click="clearForm"
-                                @click="window.dispatchEvent(new Event('clear-errors'));"
-                                label="Cancelar"
-                            ></x-buttons.cancel>
-
-                            <x-buttons.save
-                                wire:submit.prevent="submitPatient"
-                                wire:click.prevent="submitPatient"
-                                namefucion=""
-                                label="Guardar"
-                                isdisabled="{{$isdisabled}}"
-                                :error="count($errors)"
-                            ></x-buttons.save>
-
-                        </x-headerform.button-group>
-                    </form>
                 @endif
             </div>
         </div>

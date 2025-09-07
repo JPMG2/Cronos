@@ -87,6 +87,7 @@ final class RePaciente extends Component
         $this->pacienteForm->setUp();
         $this->dispatch('showOptionsForms', show: false);
         $this->cleanFormValues();
+        $this->resetAllProvince();
     }
 
     public function validatePersonExits(MainPerson $mainPerson): void
@@ -126,7 +127,24 @@ final class RePaciente extends Component
         $this->pacienteForm->reset();
         $this->isupdate = true;
         $this->pacienteForm->infoPatient($patientId);
+        $this->loadProvinceData();
+    }
 
+    public function selectProvince(int $provinceId): void
+    {
+        $this->setProvinceCity($provinceId, 0);
+        $this->pacienteForm->personData->province_id = $provinceId;
+        $this->showProvince = false;
+    }
+
+    private function loadProvinceData(): void
+    {
+        if ($this->pacienteForm->personData->province_id) {
+            $this->setProvinceCity($this->pacienteForm->personData->province_id, 0);
+            $this->setnameProvinceCity(
+                $this->dataProvince($this->pacienteForm->personData->province_id)->province_name->toString(), null);
+
+        }
     }
 
     private function patientPerson(int $patientId): void

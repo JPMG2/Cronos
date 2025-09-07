@@ -501,3 +501,8 @@ it('has emails', function (string $email) {
 - The system should be easy to understand
 - The system should be easy to use
 - The system is focused on being a hospital system
+- Container: bg-gradient-to-r from-blue-100 to-blue-50 backdrop-blur-sm shadow-lg ring-1 ring-blue-200
+- Inactive buttons: from-slate-50 to-white hover:from-slate-100 hover:to-slate-50 text-slate-600
+- Active buttons: from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300
+- Form sections: soft hover effects with transition-all duration-300
+

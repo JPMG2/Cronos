@@ -24,6 +24,8 @@ trait PersonData
 
     public string $person_address = '';
 
+    public ?string $person_cpcode = null;
+
     public ?int $gender_id;
 
     public function setPersonInfo($data): void
@@ -39,6 +41,7 @@ trait PersonData
         $this->phone_person = $data->person_phone;
         $this->documentTypeId_person = $data->document_id;
         $this->person_address = $data->person_address;
+        $this->person_cpcode = $data->person_cpcode;
     }
 
     public function getPersonInfo(): array
@@ -53,6 +56,7 @@ trait PersonData
             'person_email' => $this->email_person,
             'person_phone' => $this->phone_person,
             'person_address' => $this->person_address,
+            'person_cpcode' => $this->person_cpcode,
         ];
     }
 

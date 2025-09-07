@@ -18,98 +18,211 @@
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
             </div>
-            <x-butonbutton wire:click="$toggle('openservice')  "></x-butonbutton>
-            <!-- Modal -->
-            <div x-data="{ open: @entangle('openservice') }">
-                <x-rightmodal
-                    style="display: none"
-                    x-show="open"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0"
-                    closemodal="openservice"
-                >
-                    <x-slot:title>Registro</x-slot>
+            <div class="overflow-y-auto p-4">
+                @if (count($this->services) > 0)
+                    <div
+                        class="overflow-hidden rounded-xl border border-gray-200/50 shadow-lg ring-1 ring-gray-200/20 dark:border-gray-700/50 dark:ring-gray-700/20 dark:shadow-black/10"
+                    >
+                        <table
+                            class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                        >
+                            <x-table.thead>
+                                <tr>
+                                    <x-table.th>
+                                        ID
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Servicio
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Código
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Descripción
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Creado
+                                    </x-table.th>
+                                    <x-table.th></x-table.th>
+                                </tr>
+                            </x-table.thead>
+                            <x-table.tablebody>
+                                @foreach ($this->services as $service)
+                                    <tr
+                                        class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
+                                        wire:key="{{ $service->id }}"
+                                    >
+                                        <td
+                                            class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200"
+                                        >
+                                            <div
+                                                class="inline-flex items-center gap-x-3"
+                                            >
+                                                <span>
+                                                    {{ $loop->iteration }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700"
+                                        >
+                                            {{ $service->service_name }}
+                                        </td>
+                                        <td
+                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                        >
+                                            {{ $service->service_code }}
+                                        </td>
+                                        <td
+                                            class="truncate px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300 max-w-xs">
 
-                    <div class="mt-2 grid grid-cols-1 gap-4">
-                        <div class="relative sm:col-span-1">
-                            <div class="relative">
-                                <x-inputs.textgroup
-                                    label="Departamento"
-                                    for="depaname"
-                                    required="yes"
-                                >
-                                    <x-inputs.textinput
-                                        wire:model="form.datadeparment.department_name"
-                                        id="depaname"
-                                        autocomplete="off"
-                                        maxlength="100"
-                                        placeholder=" "
-                                        isdisabled="{{$isdisabled}}"
-                                        :error="$errors->first('department_name')"
-                                    ></x-inputs.textinput>
-                                </x-inputs.textgroup>
-                            </div>
-                            @error("department_name")
-                            <x-inputs.error-validate>
-                                {{ $message }}
-                            </x-inputs.error-validate>
-                            @enderror
-                        </div>
-                        <div class="relative sm:col-span-1">
-                            <div class="relative">
-                                <x-inputs.textgroup
-                                    label="Código"
-                                    for="depacodi"
-                                    required="yes"
-                                >
-                                    <x-inputs.textinput
-                                        wire:model="form.datadeparment.department_code"
-                                        id="depacodi"
-                                        autocomplete="off"
-                                        maxlength="10"
-                                        placeholder=" "
-                                        isdisabled="{{$isdisabled}}"
-                                        :error="$errors->first('department_code')"
-                                    ></x-inputs.textinput>
-                                </x-inputs.textgroup>
-                            </div>
-                            @error("department_code")
-                            <x-inputs.error-validate>
-                                {{ $message }}
-                            </x-inputs.error-validate>
-                            @enderror
-                        </div>
+                                            {{ $service->service_description}}
+                                        </td>
+                                        <td
+                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                        >
+                                            {{ Carbon::parse($service->created_at)->format("d/m/Y") }}
+                                        </td>
+                                        <td
+                                            class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                        >
+                                            <div>
+                                                <x-table.accionopcion
+                                                    wire:key="{{ $service->id }}"
+                                                    wire:click.prevent="editDepartment({{ $service }})"
+                                                    wire:target="editDepartment"
+                                                    iconname="edit"
+                                                ></x-table.accionopcion>
+                                            </div>
+                                            <div>
+                                                <x-table.accionopcion
+                                                    wire:key="{{ $service->id }}"
+                                                    wire:click.prevent="deleteDepartment({{ $service }})"
+                                                    wire:target="deleteDepartment"
+                                                    iconname="delete"
+                                                    isDelete="isDelete"
+                                                ></x-table.accionopcion>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </x-table.tablebody>
+                        </table>
                     </div>
-
-                    <form id="departamento" wire:submit.prevent="submit">
-                        @csrf
-                        <div class="absolute bottom-6 right-4">
-                            <x-headerform.button-group>
-                                <x-buttons.close wire:click="clearForm">
-                                    {{ __("Cerrar") }}
-                                </x-buttons.close>
-                                <x-buttons.cancel
-                                    wire:click="clearForm"
-                                    label="Cancelar"
-                                ></x-buttons.cancel>
-                                <x-buttons.save
-                                    wire:submit.prevent="queryDeparmente"
-                                    wire:click.prevent="queryDeparmente"
-                                    namefucion="queryDeparmente"
-                                    label="Guardar"
-                                    isdisabled="{{$isdisabled}}"
-                                    :error="count($errors)"
-                                ></x-buttons.save>
-                            </x-headerform.button-group>
-                        </div>
-                    </form>
-
-                </x-rightmodal>
+                @else
+                    <x-alert windowtype="error">
+                        No existen servicios registrados.
+                    </x-alert>
+                @endif
             </div>
+            @if(!session("isdisabled"))
+                <x-butonbutton wire:click="$toggle('openservice')  "></x-butonbutton>
+                <!-- Modal -->
+                <div x-data="{ open: @entangle('openservice') }">
+                    <x-rightmodal
+                        style="display: none"
+                        x-show="open"
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        closemodal="openservice"
+                    >
+                        <x-slot:title>Registro</x-slot>
+
+                        <div class="mt-2 grid grid-cols-1 gap-4">
+                            <div class="relative sm:col-span-1">
+                                <div class="relative">
+                                    <x-inputs.textgroup
+                                        label="Servicio"
+                                        for="servname"
+                                        required="yes"
+                                    >
+                                        <x-inputs.textinput
+                                            wire:model="form.dataservice.service_name"
+                                            id="servname"
+                                            autocomplete="off"
+                                            maxlength="100"
+                                            placeholder=" "
+                                            isdisabled="{{$isdisabled}}"
+                                            :error="$errors->first('service_name')"
+                                        ></x-inputs.textinput>
+                                    </x-inputs.textgroup>
+                                </div>
+                                @error("service_name")
+                                <x-inputs.error-validate>
+                                    {{ $message }}
+                                </x-inputs.error-validate>
+                                @enderror
+                            </div>
+                            <div class="relative sm:col-span-1">
+                                <div class="relative">
+                                    <x-inputs.textgroup
+                                        label="Código"
+                                        for="depacodi"
+                                        required="yes"
+                                    >
+                                        <x-inputs.textinput
+                                            wire:model="form.dataservice.service_code"
+                                            id="depacodi"
+                                            autocomplete="off"
+                                            maxlength="10"
+                                            placeholder=" "
+                                            isdisabled="{{$isdisabled}}"
+                                            :error="$errors->first('service_code')"
+                                        ></x-inputs.textinput>
+                                    </x-inputs.textgroup>
+                                </div>
+                                @error("service_code")
+                                <x-inputs.error-validate>
+                                    {{ $message }}
+                                </x-inputs.error-validate>
+                                @enderror
+                            </div>
+                            <div class="relative w-full ">
+                                <x-inputs.labeltextarea
+                                    label="Descripción"
+                                    for="descriprole"
+                                    required="yes"
+                                >
+                                    <x-inputs.textarea
+                                        wire:model="form.dataservice.service_description"
+                                        id="descriprole"
+                                        rows="5"
+                                    ></x-inputs.textarea>
+                                </x-inputs.labeltextarea>
+
+                            </div>
+                        </div>
+
+                        <x-slot:buttons>
+                            <form id="departamento" wire:submit.prevent="submit">
+                                @csrf
+                                <x-headerform.button-group>
+                                    <x-buttons.close wire:click="clearForm">
+                                        {{ __("Cerrar") }}
+                                    </x-buttons.close>
+                                    <x-buttons.cancel
+                                        wire:click="clearForm"
+                                        label="Cancelar"
+                                    ></x-buttons.cancel>
+                                    <x-buttons.save
+                                        wire:submit.prevent="queryService"
+                                        wire:click.prevent="queryService"
+                                        namefucion="queryService"
+                                        label="Guardar"
+                                        isdisabled="{{$isdisabled}}"
+                                        :error="count($errors)"
+                                    ></x-buttons.save>
+                                </x-headerform.button-group>
+                            </form>
+                        </x-slot:buttons>
+
+                    </x-rightmodal>
+                </div>
+            @endif
         </div>
     </div>
 </div>

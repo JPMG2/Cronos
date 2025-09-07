@@ -61,7 +61,7 @@ final class ListPatientForm extends Form
             'name' => 'Correo',
             'isClickable' => true,
             'clickName' => 'person_email',
-            'with' => 'w-32',
+            'with' => 'w-40',
             'max' => '6',
             'mask' => 'aaaaaa',
         ],

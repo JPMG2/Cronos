@@ -113,21 +113,6 @@ trait ProvinceCity
         $this->stringCity = '';
     }
 
-    public function setProvinceCity(int $provinceId, int $cityId): void
-    {
-
-        $this->setProvinceId($provinceId);
-        $this->setCityId($cityId);
-    }
-
-    public function setnameProvinceCity(string $province, string $city): void
-    {
-
-        $this->stringProvince = $province;
-        $this->stringCity = $city;
-
-    }
-
     public function getCityId(): int
     {
         return is_null($this->id_city) ? 0 : $this->id_city;
@@ -149,6 +134,26 @@ trait ProvinceCity
         $this->setnameProvinceCity($provinceName, $cityName);
     }
 
+    public function setProvinceCity(?int $provinceId, ?int $cityId): void
+    {
+        if ($provinceId > 0) {
+            $this->setProvinceId($provinceId);
+        }
+        if ($cityId > 0) {
+            $this->setCityId($cityId);
+        }
+    }
+
+    public function setnameProvinceCity(?string $province, ?string $city): void
+    {
+        if (! is_null($province)) {
+            $this->stringProvince = $province;
+        }
+        if (! is_null($city)) {
+            $this->stringCity = $city;
+        }
+    }
+
     private function setProvinceId(int $id): void
     {
         $this->id_province = $id;
@@ -158,5 +163,10 @@ trait ProvinceCity
     private function setCityId(int $id): void
     {
         $this->id_city = $id;
+    }
+
+    private function dataProvince(int $id): Province
+    {
+        return Province::find($id);
     }
 }

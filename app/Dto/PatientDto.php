@@ -20,12 +20,13 @@ final class PatientDto implements Wireable
         public string $person_email = '',
         public int $document_id = 1,
         public string $num_document = '',
-        public ?int $city_id = null,
+        public ?int $province_id = null,
         public ?int $gender_id = null,
         public ?int $marital_status_id = null,
         public ?int $occupation_id = null,
         public ?int $nationality_id = null,
         public ?string $person_datebirth = null,
+        public string $person_cpcode = '',
     ) {}
 
     public static function fromLivewire($value): self
@@ -46,12 +47,13 @@ final class PatientDto implements Wireable
             person_email: (string) ($data['person_email'] ?? ''),
             document_id: (int) ($data['document_id'] ?? 1),
             num_document: (string) ($data['num_document'] ?? ''),
-            city_id: (int) ($data['city_id'] ?? null),
+            province_id: (int) ($data['province_id'] ?? null),
             gender_id: (int) ($data['gender_id'] ?? null),
             marital_status_id: (int) ($data['marital_status_id'] ?? null),
             occupation_id: (int) ($data['occupation_id'] ?? null),
             nationality_id: (int) ($data['nationality_id'] ?? null),
             person_datebirth: (string) ($data['person_datebirth'] ?? null),
+            person_cpcode: (string) ($data['person_cpcode'] ?? ''),
         );
     }
 
@@ -72,12 +74,13 @@ final class PatientDto implements Wireable
             'person_email' => $this->person_email,
             'document_id' => $this->document_id,
             'num_document' => $this->num_document,
-            'city_id' => $this->city_id,
+            'province_id' => $this->province_id,
             'gender_id' => $this->gender_id,
             'marital_status_id' => $this->marital_status_id,
             'occupation_id' => $this->occupation_id,
             'nationality_id' => $this->nationality_id,
             'person_datebirth' => $this->person_datebirth,
+            'person_cpcode' => $this->person_cpcode,
         ];
     }
 }

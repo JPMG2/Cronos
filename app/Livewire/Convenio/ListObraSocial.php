@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Gestion;
+namespace App\Livewire\Convenio;
 
 use App\Models\Insurance;
 use App\Traits\TableSorting;
@@ -33,7 +33,7 @@ final class ListObraSocial extends Component
             $query = $this->makeQueryBySearch($this->sortField, $queryIncial);
         }
 
-        return view('livewire.gestion.list-obra-social', [
+        return view('livewire.convenio.list-obra-social', [
             'listInsurances' => $query->paginate(10),
         ]);
     }

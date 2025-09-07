@@ -10,6 +10,13 @@
             if (this.stringtofind.length >= 2 && this.modelId == null) {
                 $wire.searchProvince()
                 this.show = true
+                this.$nextTick(() => {
+                    // Trigger position check in dropdown
+                    const dropdown = this.$el.querySelector('ul[x-data]');
+                    if (dropdown && dropdown._x_dataStack) {
+                        dropdown._x_dataStack[0].checkPosition();
+                    }
+                });
             } else {
                 this.open = false
                 this.modelId = null

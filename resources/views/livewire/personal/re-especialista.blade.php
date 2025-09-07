@@ -390,28 +390,27 @@
 
                 <!-- Enhanced Button Section -->
                 @if(!session("isdisabled"))
-                    <div class="mt-8 border-t border-slate-200 pt-8">
+                    <div class="mt-8 border-t border-slate-200 pt-4">
                         <form
                             id="especialista"
                             wire:submit.prevent="submit"
                         >
                             @csrf
-                            <div class="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
+                            <div class="flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-6">
                                 <x-buttons.cancel
                                     wire:click="clearForm"
                                     @click="window.dispatchEvent(new Event('clear-errors'));"
                                     label="Cancelar"
-                                    class="transform transition-all duration-200 hover:scale-105"
                                 ></x-buttons.cancel>
                                 @can("created", $this->actions)
                                     <x-buttons.save
                                         wire:submit.prevent="submitSpecialist"
                                         wire:click.prevent="submitSpecialist"
                                         namefucion=""
-                                        label="Guardar Especialista"
+                                        label="Guardar"
                                         isdisabled="{{$isdisabled}}"
                                         :error="count($errors)"
-                                        class="transform bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-3 font-semibold text-white transition-all duration-200 hover:scale-105 hover:from-blue-700 hover:to-blue-800 focus:ring-4 focus:ring-blue-200"
+
                                     ></x-buttons.save>
                                 @endcan
                             </div>

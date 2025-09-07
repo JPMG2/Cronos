@@ -24,6 +24,7 @@ export default {
         'w-32',
         'w-36',
         'w-28',
+        'w-40',
         {
             pattern: /w-(4|8|12|16|20|24|28|32|36|40|44|48|52|56|60|64)/,
         },
@@ -48,6 +49,10 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 titles: ['Nunito'],
+            },
+            maxHeight: {
+                75: '18.75rem',
+                80: '20rem',
             },
         },
     },
