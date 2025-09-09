@@ -8,7 +8,7 @@ use App\Models\Action;
 
 trait HandlesActionPolicy
 {
-    public function getActionsProperty()
+    public function getActionsProperty(): Action
     {
         return new Action;
     }

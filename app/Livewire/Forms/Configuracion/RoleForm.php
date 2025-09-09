@@ -18,7 +18,7 @@ final class RoleForm extends Form
         'description' => '',
     ];
 
-    public function roleStore()
+    public function roleStore(): array
     {
         $validated = Validator::make(
             [
@@ -40,9 +40,9 @@ final class RoleForm extends Form
 
     }
 
-    public function roleUpdate()
+    public function roleUpdate(): array
     {
-        $validated = Validator::make(
+        Validator::make(
             [
                 'name_role' => ucwords(mb_strtolower(mb_trim($this->dataRole['name_role']))),
                 'description' => ucfirst(mb_strtolower(mb_trim($this->dataRole['description']))),
@@ -62,7 +62,7 @@ final class RoleForm extends Form
         return NotifyQuerys::msgUpadte($services->update($this->dataRole, $this->dataRole['id']));
     }
 
-    public function roleData($intRole)
+    public function roleData($intRole): void
     {
 
         $services = $this->iniService();
@@ -70,7 +70,7 @@ final class RoleForm extends Form
         $this->dataRole = $dataRole->toArray();
     }
 
-    protected function iniService()
+    private function iniService()
     {
         return new ModelService(new Role);
     }

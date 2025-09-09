@@ -18,10 +18,6 @@ final class ReServices extends Component
 
     public $openservice = false;
 
-    public $serviceobject;
-
-    protected $commonQuerys;
-
     #[Title(' - Servicios')]
     public function render()
     {
@@ -33,7 +29,7 @@ final class ReServices extends Component
         if (! ($this->isupdate)) {
             $result = app()->call([$this->form, 'serviceStore']);
         } else {
-            $result = app()->call([$this->form, 'serviceUpdate'], ['modelService' => $this->serviceobject]);
+            $result = app()->call([$this->form, 'serviceUpdate']);
         }
 
         $this->dispatch('show-toast', $result);
@@ -47,15 +43,11 @@ final class ReServices extends Component
         $this->openservice = false;
     }
 
-    public function editService(Service $service): void
+    public function infoService(Service $service): void
     {
-        $this->form->dataservice['service_name'] = $service->service_name;
-        $this->form->dataservice['service_description'] = $service->service_description;
-        $this->form->dataservice['service_code'] = $service->service_code;
-        $this->form->dataservice['state_id'] = $service->state_id;
+        $this->form->loadDataServices($service);
         $this->openservice = true;
         $this->isupdate = true;
-        $this->serviceobject = $service;
     }
 
     public function getServicesProperty()

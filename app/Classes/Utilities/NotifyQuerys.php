@@ -20,8 +20,7 @@ final class NotifyQuerys
      */
     public static function msgUpadte($model): array
     {
-
-        if (count($model->getChanges()) > 0) {
+        if ($model->getChanges() && count($model->getChanges())) {
             $message = ['Actualización exitosa !!', 1];
         } else {
             $message = ['Sin cambios !!', 0];

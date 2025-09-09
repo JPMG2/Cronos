@@ -13,7 +13,7 @@ trait UtilityForm
 
     public bool $isupdate = false;
 
-    public function cleanFormValues()
+    public function cleanFormValues(): void
     {
         $this->isdisabled = '';
         $this->resetValidation();
@@ -25,7 +25,7 @@ trait UtilityForm
         return prepareData($arrayvalues, $this->getObjetProperties($modelName));
     }
 
-    public function getObjetProperties($classname): array
+    public function getObjetProperties(string $classname): array
     {
         $model = 'App\\Models\\'.$classname;
 
@@ -33,7 +33,7 @@ trait UtilityForm
 
     }
 
-    public function editActivate()
+    public function editActivate(): void
     {
         $this->isdisabled = '';
         $this->isupdate = true;

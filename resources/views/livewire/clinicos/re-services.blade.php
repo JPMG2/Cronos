@@ -14,7 +14,7 @@
                         Servicios
                     </h4>
                 </div>
-                <div class="ml-2" wire:loading wire:target="queryService, openservice">
+                <div class="ml-2" wire:loading wire:target="queryService, openservice, infoService">
                     <span class="loading loading-bars loading-xs"></span>
                 </div>
             </div>
@@ -89,8 +89,8 @@
                                             <div>
                                                 <x-table.accionopcion
                                                     wire:key="{{ $service->id }}"
-                                                    wire:click.prevent="editDepartment({{ $service }})"
-                                                    wire:target="editDepartment"
+                                                    wire:click.prevent="infoService({{ $service }})"
+                                                    wire:target="infoService"
                                                     iconname="edit"
                                                 ></x-table.accionopcion>
                                             </div>

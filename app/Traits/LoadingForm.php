@@ -6,7 +6,7 @@ namespace App\Traits;
 
 trait LoadingForm
 {
-    public function placeholder()
+    public function placeholder(): string
     {
         return <<<'HTML'
         <div >

@@ -21,40 +21,65 @@ final class ServiceForm extends Form
 
     public function serviceStore(): array
     {
-        $validated = Validator::make(
-            [
-                'service_name' => ucwords(mb_strtolower(mb_trim($this->dataservice['service_name']))),
-                'service_code' => mb_strtoupper(mb_trim($this->dataservice['service_code'])),
-                'service_description' => ucfirst(mb_strtolower(mb_trim($this->dataservice['service_description']))),
-            ],
-            [
-                'service_name' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_name', null),
-                'service_code' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_code', null),
-                'service_description' => AttributeValidator::stringValid(false, 4),
-            ],
-            [],
-            [
-                'service_name' => config('nicename.service'),
-                'service_code' => config('nicename.codigo'),
-                'service_description' => config('nicename.description'), ]
-        )->validate();
+        $validated = $this->validateServiceData();
 
         $services = $this->iniService();
 
         return NotifyQuerys::msgCreate($services->store($validated));
     }
 
-    public function serviceUpdate($modelService): array
+    public function serviceUpdate(): array
     {
-        $this->rules()['service_code'] = 'required|string|max:50|unique:services,service_code,'.$modelService->id;
-        $this->validate();
+        $validated = $this->validateServiceData($this->dataservice['id']);
 
         $services = $this->iniService();
 
-        return NotifyQuerys::msgUpadte($services->update($this->dataservice, $modelService->id));
+        return NotifyQuerys::msgUpadte($services->update($validated, $this->dataservice['id']));
     }
 
-    protected function iniService(): ModelService
+    public function loadDataServices($services): void
+    {
+        $this->dataservice = $services->toArray();
+    }
+
+    protected function getValidationAttributes(): array
+    {
+        return [
+            'service_name' => config('nicename.service'),
+            'service_code' => config('nicename.codigo'),
+            'service_description' => config('nicename.description'),
+        ];
+    }
+
+    private function validateServiceData(?int $excludeId = null): array
+    {
+        return Validator::make(
+            $this->transformServiceData(),
+            $this->getValidationRules($excludeId),
+            [],
+            $this->getValidationAttributes()
+        )->validate();
+    }
+
+    private function transformServiceData(): array
+    {
+        return [
+            'service_name' => ucwords(mb_strtolower(mb_trim((string) ($this->dataservice['service_name'] ?? '')))),
+            'service_code' => mb_strtoupper(mb_trim((string) ($this->dataservice['service_code'] ?? ''))),
+            'service_description' => ucfirst(mb_strtolower(mb_trim((string) ($this->dataservice['service_description'] ?? '')))),
+        ];
+    }
+
+    private function getValidationRules(?int $excludeId = null): array
+    {
+        return [
+            'service_name' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_name', $excludeId),
+            'service_code' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_code', $excludeId),
+            'service_description' => AttributeValidator::stringValid(false, 4),
+        ];
+    }
+
+    private function iniService(): ModelService
     {
         return new ModelService(new Service);
     }

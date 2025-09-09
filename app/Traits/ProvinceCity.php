@@ -56,7 +56,7 @@ trait ProvinceCity
     public function searchCity()
     {
 
-        if ($this->getProvinceId() > 0 and (! empty($this->stringCity))) {
+        if ($this->getProvinceId() > 0 && ! empty($this->stringCity)) {
 
             $this->stringCity = stringToTitle($this->stringCity);
 
@@ -128,7 +128,7 @@ trait ProvinceCity
         return $this->stringCity;
     }
 
-    public function setLocactionNameID($provinceId, $cityId, $provinceName, $cityName)
+    public function setLocactionNameID($provinceId, $cityId, $provinceName, $cityName): void
     {
         $this->setProvinceCity($provinceId, $cityId);
         $this->setnameProvinceCity($provinceName, $cityName);

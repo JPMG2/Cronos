@@ -21,7 +21,7 @@ final class AccesoForm extends Form
 
     public function checkAccesRoles()
     {
-        $validated = Validator::make(
+        Validator::make(
             [
                 'role_id' => $this->dataacceso['role_id'],
                 'menu_options' => $this->dataacceso['menu_options'],
@@ -37,10 +37,10 @@ final class AccesoForm extends Form
             ]
         )->validate();
 
-        $role = Role::query()->find($this->dataacceso['role_id']);
+        Role::query()->find($this->dataacceso['role_id']);
         $uniqueMenuIds = [];
         $menuId = Menu::query()->whereIn('id', $this->dataacceso['menu_id'])->select('menu_id')->get();
-        foreach ($menuId as $key => $value) {
+        foreach ($menuId as $value) {
             if (! in_array($value->menu_id, $uniqueMenuIds, true)) {
                 $uniqueMenuIds[] = $value->menu_id;
             }
@@ -63,7 +63,7 @@ final class AccesoForm extends Form
         $menuOptions = [];
         $role = Role::query()->find($this->dataacceso['role_id']);
         if ($role->menus->count() > 0) {
-            foreach ($role->menus as $key => $value) {
+            foreach ($role->menus as $value) {
                 if (is_null($value->header_menu) && $value->menu_id > 0) {
                     $menusId[] = $value->id;
                 }
@@ -84,7 +84,7 @@ final class AccesoForm extends Form
 
     }
 
-    protected function iniService()
+    private function iniService()
     {
         return new ModelService(new Role);
     }

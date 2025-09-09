@@ -36,13 +36,13 @@ trait TableFilter
         return $this->applyFilter($query, $relationName, 'state_name', $searchvalue, $withRelations);
     }
 
-    private function applyFilter(Builder $query, string $relationName, string $columnName, string $searchValue, array $withRelations, $table): Builder
+    private function applyFilter(Builder $query, string $relationName, string $columnName, string $searchValue, array $withRelations, string $table): Builder
     {
-        return empty($searchValue) ? $query->whereHas($relationName)
+        return $searchValue === '' || $searchValue === '0' ? $query->whereHas($relationName)
             ->join($table, 'medicals.person_id', '=', $table.'.id')
             ->orderBy($table.'.'.$columnName, 'asc')->with($withRelations)
             :
-        $query->whereHas($relationName, function ($query) use ($columnName, $searchValue) {
+        $query->whereHas($relationName, function ($query) use ($columnName, $searchValue): void {
             $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%'])
                 ->orderBy($columnName, 'desc');
         })->with($withRelations);

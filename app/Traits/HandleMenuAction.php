@@ -24,7 +24,7 @@ trait HandleMenuAction
     }
 
     public function triggerAlert(int $exception, string $type, string $message, string $title,
-        string $buttonName, string $event)
+        string $buttonName, string $event): void
     {
         $this->dispatch('showModalAlert', [
             'show' => 'true',

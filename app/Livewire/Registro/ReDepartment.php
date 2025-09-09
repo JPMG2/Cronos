@@ -18,8 +18,6 @@ final class ReDepartment extends Component
 
     public $opendepartment = false;
 
-    public $departmentobject;
-
     public $listdeparment;
 
     #[Title(' - Departamentos')]
@@ -36,20 +34,18 @@ final class ReDepartment extends Component
             $result = app()->call([$this->form, 'departmentStore']);
 
         } else {
-            $result = app()->call([$this->form, 'departmentUpdate'], ['modelDepartment' => $this->departmentobject]);
+            $result = app()->call([$this->form, 'departmentUpdate']);
 
         }
         $this->dispatch('show-toast', $result);
         $this->isupdate = false;
         $this->clearForm();
-
     }
 
     public function clearForm()
     {
         $this->form->reset();
         $this->opendepartment = false;
-
     }
 
     public function getDepartmentsProperty()
@@ -59,10 +55,9 @@ final class ReDepartment extends Component
 
     public function editDepartment(Department $department)
     {
-        $this->form->datadeparment['department_name'] = $department->department_name;
-        $this->form->datadeparment['department_code'] = $department->department_code;
+        $this->form->loadDataDepartment($department);
         $this->opendepartment = true;
         $this->isupdate = true;
-        $this->departmentobject = $department;
+
     }
 }
