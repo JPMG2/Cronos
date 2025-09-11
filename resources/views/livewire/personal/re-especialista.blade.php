@@ -24,7 +24,7 @@
             <div class="px-6 py-6">
                 <!-- Enhanced Title Section -->
                 <div class="mb-4">
-                    <x-formcomponent.headerformtitla>
+                    <x-formcomponent.headerformtitla iconname="person">
                         <x-slot:title>Datos Especialista</x-slot:title>
                         <x-slot:subtitle>Complete información del especialista.</x-slot:subtitle>
                         <x-formcomponent.titleindicator

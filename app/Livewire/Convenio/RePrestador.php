@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Livewire\Convenio;
 
-use App\Livewire\Forms\Convenio\ObraSocialForm;
+use App\Dto\PrestadorDto;
+use App\Livewire\Forms\Convenio\PrestadorForm;
 use App\Models\Insurance;
 use App\Models\InsuranceType;
 use App\Traits\FormActionsTrait;
@@ -15,11 +16,11 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-final class ReObraSocail extends Component
+final class RePrestador extends Component
 {
     use FormActionsTrait, HandlesActionPolicy, ProvinceCity,UtilityForm;
 
-    public ObraSocialForm $form;
+    public PrestadorForm $form;
 
     protected $commonQuerys;
 
@@ -28,21 +29,23 @@ final class ReObraSocail extends Component
     {
         $this->commonQuerys = app('commonquery');
 
-        return view('livewire.convenio.re-obra-social', [
+        return view('livewire.convenio.re-prestador', [
             'listState' => $this->commonQuerys::stateQuery([1, 2]),
         ]);
+    }
+
+    public function mount(): void
+    {
+        $this->form->dataobrasocial ??= new PrestadorDto();
     }
 
     public function insuraceQuery()
     {
         $this->setIdPronvinceCity();
+        $result = $this->isupdate ?
+            app()->call([$this->form, 'insuranceUpdate']) :
+            $this->form->insuranceStore();
 
-        if (! $this->isupdate) {
-            $result = app()->call([$this->form, 'insuranceStore']);
-        }
-        if ($this->isupdate) {
-            $result = app()->call([$this->form, 'insuranceUpdate']);
-        }
         $this->endInsurance($result);
 
     }
@@ -113,11 +116,5 @@ final class ReObraSocail extends Component
         ]);
     }
 
-    protected function setIdPronvinceCity()
-    {
-
-        $this->form->dataobrasocial['city_id'] = max($this->getCityId(), 0);
-        $this->form->dataobrasocial['province_id'] = max($this->getProvinceId(),
-            0);
-    }
+    protected function setIdPronvinceCity() {}
 }

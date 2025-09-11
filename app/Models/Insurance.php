@@ -89,16 +89,6 @@ final class Insurance extends Model
 
     }
 
-    public function setCityIdAttribute($value)
-    {
-
-        if ((int) $value === 0) {
-            $value = null;
-        }
-
-        $this->attributes['city_id'] = $value;
-    }
-
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
@@ -124,64 +114,64 @@ final class Insurance extends Model
         ];
     }
 
-    protected function insuranceName(): Attribute
+    private function insuranceName(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
-    protected function insuranceAcronym(): Attribute
+    private function insuranceAcronym(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
-    protected function insuranceCode(): Attribute
+    private function insuranceCode(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
-    protected function insuranceCuit(): Attribute
+    private function insuranceCuit(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
-    protected function insuranceAddress(): Attribute
+    private function insuranceAddress(): Attribute
     {
         return Attribute::make(
 
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
-    protected function insurancePhone(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
-        );
-    }
-
-    protected function insuranceZipcode(): Attribute
+    private function insurancePhone(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
         );
     }
 
-    protected function insuranceEmail(): Attribute
+    private function insuranceZipcode(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
+        );
+    }
+
+    private function insuranceEmail(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 
-    protected function insuranceWeb(): Attribute
+    private function insuranceWeb(): Attribute
     {
         return Attribute::make(
             set: fn ($value) => mb_strtolower(mb_trim($value)),

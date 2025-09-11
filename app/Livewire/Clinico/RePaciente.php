@@ -128,6 +128,7 @@ final class RePaciente extends Component
         $this->isupdate = true;
         $this->pacienteForm->infoPatient($patientId);
         $this->loadProvinceData();
+        $this->isdisabled = 'disabled';
     }
 
     public function selectProvince(int $provinceId): void

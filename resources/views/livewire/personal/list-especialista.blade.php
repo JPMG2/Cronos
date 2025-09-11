@@ -50,6 +50,7 @@
                                     @foreach($listForm->tableHeaders as $header)
                                         @if( (bool) $header['isClickable'] !== false)
                                             <x-table.th
+                                                style="{{ $header['style'] }}"
                                                 wire:click="orderColumBy('{{$header['clickName']}}')">
                                                 <x-table.sortcolumn currentColumn="{{$header['clickName']}}" :$sortField
                                                                     :$sortDirection>
@@ -57,7 +58,7 @@
                                                 </x-table.sortcolumn>
                                             </x-table.th>
                                         @else
-                                            <x-table.th>
+                                            <x-table.th style="{{ $header['style'] }}">
                                                 {{ $header['name'] }}
                                             </x-table.th>
                                         @endif

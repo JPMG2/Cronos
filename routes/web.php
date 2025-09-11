@@ -33,8 +33,8 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 
 /* Route for Convenio */
 Route::group(['middleware' => 'auth', 'verified'], function () {
-    Route::get('/re_obrasocial', App\Livewire\Convenio\ReObraSocail::class)
-        ->name('re_obrasocial')->middleware(['rolemenu:re_obrasocial']);
+    Route::get('/re_prestador', App\Livewire\Convenio\RePrestador::class)
+        ->name('re_prestador')->middleware(['rolemenu:re_prestador']);
 });
 
 /* Route for Configuración */

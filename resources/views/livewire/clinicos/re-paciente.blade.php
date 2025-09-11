@@ -19,7 +19,7 @@
             @endteleport
             <div class="px-6 py-6 ">
                 <div class="mb-4">
-                    <x-formcomponent.headerformtitla>
+                    <x-formcomponent.headerformtitla iconname="person">
                         <x-slot:title>Datos de paciente</x-slot:title>
                         <x-slot:subtitle>Complete información del paciente.</x-slot:subtitle>
                         <x-formcomponent.titleindicator
@@ -401,6 +401,7 @@
                                                     @keydown.escape.prevent.stop="closeList()"
                                                     @click.away="closeAway()"
                                                     @click="seeValues()"
+                                                    isdisabled="{{$isdisabled}}"
                                                     placeholder="buscar..."
                                                     resetValues="$wire.resetValuesCity()"
                                                 ></x-inputs.searchinput>

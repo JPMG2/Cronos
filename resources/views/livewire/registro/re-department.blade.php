@@ -33,10 +33,10 @@
                                     <x-table.th>
                                         Departamento
                                     </x-table.th>
-                                    <x-table.th>
+                                    <x-table.th class="hidden md:table-cell">
                                         Código
                                     </x-table.th>
-                                    <x-table.th>
+                                    <x-table.th class="hidden md:table-cell">
                                         Creado
                                     </x-table.th>
                                     <x-table.th></x-table.th>
@@ -67,12 +67,12 @@
                                             {{ $depa->department_name }}
                                         </td>
                                         <td
-                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                            class="hidden md:table-cell break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
                                         >
                                             {{ $depa->department_code }}
                                         </td>
                                         <td
-                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                            class="hidden md:table-cell break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
                                         >
                                             {{ Carbon::parse($depa->created_at)->format("d/m/Y") }}
                                         </td>

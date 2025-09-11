@@ -16,6 +16,7 @@ final class ListEspecialistaForm extends Form
             'with' => '',
             'max' => '',
             'mask' => '',
+            'style' => '',
         ],
         [
             'name' => 'Documento',
@@ -24,6 +25,7 @@ final class ListEspecialistaForm extends Form
             'with' => 'w-32',
             'max' => '6',
             'mask' => '999999',
+            'style' => '',
         ],
         [
             'name' => 'Nombre',
@@ -32,6 +34,7 @@ final class ListEspecialistaForm extends Form
             'with' => 'w-36',
             'max' => '10',
             'mask' => 'aaaaaaaaaa',
+            'style' => '',
         ],
         [
             'name' => 'Apellido',
@@ -40,6 +43,7 @@ final class ListEspecialistaForm extends Form
             'with' => 'w-36',
             'max' => '10',
             'mask' => 'aaaaaaaaaa',
+            'style' => '',
         ],
         [
             'name' => 'Matrícula',
@@ -48,6 +52,7 @@ final class ListEspecialistaForm extends Form
             'with' => 'w-32',
             'max' => '10',
             'mask' => '9999999999',
+            'style' => 'hidden md:table-cell',
         ],
         [
             'name' => 'Especialidad',
@@ -56,6 +61,7 @@ final class ListEspecialistaForm extends Form
             'with' => 'w-32',
             'max' => '10',
             'mask' => 'aaaaaaaaaa',
+            'style' => 'hidden md:table-cell',
         ],
         [
             'name' => 'Télefono',
@@ -64,6 +70,7 @@ final class ListEspecialistaForm extends Form
             'with' => 'w-32',
             'max' => '6',
             'mask' => '999999',
+            'style' => 'hidden md:table-cell',
         ],
         [
             'name' => '',
@@ -72,6 +79,7 @@ final class ListEspecialistaForm extends Form
             'with' => '',
             'max' => '',
             'mask' => '',
+            'style' => '',
         ],
     ];
 }
