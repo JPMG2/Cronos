@@ -233,6 +233,7 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 - Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing
   conventions from other models.
+- **Eloquent Attribute Methods**: All attribute methods (mutators, accessors, casts) must be `protected` or `public`, never `private`. Laravel's Eloquent uses reflection to access these methods and cannot access private methods.
 
 === livewire/core rules ===
 

@@ -10,7 +10,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-final class ListObraSocial extends Component
+final class ListPrestador extends Component
 {
     use TableSorting, WithPagination;
 
@@ -33,7 +33,7 @@ final class ListObraSocial extends Component
             $query = $this->makeQueryBySearch($this->sortField, $queryIncial);
         }
 
-        return view('livewire.convenio.list-obra-social', [
+        return view('livewire.convenio.list-prestador', [
             'listInsurances' => $query->paginate(10),
         ]);
     }

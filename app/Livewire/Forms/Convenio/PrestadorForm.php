@@ -6,10 +6,10 @@ namespace App\Livewire\Forms\Convenio;
 
 use App\Classes\Convenio\InsuranceValidation;
 use App\Classes\Services\ModelService;
-use App\Classes\Utilities\NotifyQuerys;
 use App\Dto\PrestadorDto;
 use App\Models\Insurance;
 use App\Traits\ProvinceCity;
+use Illuminate\Database\Eloquent\Model;
 use Livewire\Form;
 
 final class PrestadorForm extends Form
@@ -25,13 +25,11 @@ final class PrestadorForm extends Form
         $this->dataobrasocial ??= new PrestadorDto();
     }
 
-    public function insuranceStore(): array
+    public function insuranceStore(): Model
     {
-        $data = $this->validation()->onInsuranceCreate($this->dataobrasocial->toArray());
+        $data = $this->validation()->validateServiceData(null, ($this->dataobrasocial->toArray()));
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgCreate($services->store($data));
+        return $this->iniService()->store($data);
     }
 
     public function insuranceUpdate(InsuranceValidation $insuranceValidation): array

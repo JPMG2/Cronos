@@ -8,17 +8,15 @@ use App\Dto\PrestadorDto;
 use App\Livewire\Forms\Convenio\PrestadorForm;
 use App\Models\Insurance;
 use App\Models\InsuranceType;
-use App\Traits\FormActionsTrait;
+use App\Traits\FormHandling;
 use App\Traits\HandlesActionPolicy;
-use App\Traits\ProvinceCity;
-use App\Traits\UtilityForm;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 final class RePrestador extends Component
 {
-    use FormActionsTrait, HandlesActionPolicy, ProvinceCity,UtilityForm;
+    use FormHandling, HandlesActionPolicy;
 
     public PrestadorForm $form;
 
@@ -45,19 +43,14 @@ final class RePrestador extends Component
         $result = $this->isupdate ?
             app()->call([$this->form, 'insuranceUpdate']) :
             $this->form->insuranceStore();
-
-        $this->endInsurance($result);
-
-    }
-
-    public function endInsurance($result)
-    {
-        $this->dispatch('show-toast', $result);
-        $this->resetAllProvince();
+        $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
+        $message = $this->showQueryMessage($result, $messageType);
+        $this->showToastAndClear($message);
         $this->clearForm();
+
     }
 
-    public function clearForm()
+    public function clearForm(): void
     {
         $this->isupdate = false;
         $this->form->reset();
@@ -116,5 +109,9 @@ final class RePrestador extends Component
         ]);
     }
 
-    protected function setIdPronvinceCity() {}
+    protected function setIdPronvinceCity(): void
+    {
+        $this->form->dataobrasocial->province_id = $this->getProvinceId();
+        $this->form->dataobrasocial->city_id = $this->getCityId();
+    }
 }

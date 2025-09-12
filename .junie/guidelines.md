@@ -204,6 +204,8 @@ protected function isAccessible(User $user, ?string $path = null): bool
   them.
 - Generate code that prevents N+1 query problems by using eager loading.
 - Use Laravel's query builder for very complex database operations.
+- **Eloquent Attribute Methods**: All attribute methods (mutators, accessors, casts) must be `protected` or `public`,
+  never `private`. Laravel's Eloquent uses reflection to access these methods and cannot access private methods.
 
 ### Model Creation
 
