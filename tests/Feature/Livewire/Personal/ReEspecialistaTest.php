@@ -47,7 +47,7 @@ it('creates a new Medic successfully', function (Closure $dataFactory): void {
     $component = livewire(ReEspecialista::class);
     $component->set('formesp.dataespecialist', $data);
 
-    $expectedName = ucwords(mb_strtolower(trim((string) $data['medical_name'])));
+    $expectedName = ucwords(mb_strtolower(mb_trim((string) $data['medical_name'])));
 
     $component->call('getEspecialis');
     $nameCreate = Medical::latest()->first()->medical_name;

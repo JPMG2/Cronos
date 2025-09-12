@@ -12,7 +12,7 @@ final class PDFController extends Controller
     {
         $modelId = decryptString($id);
 
-        $baseclass = trim('App\Classes\PdfGenerator\ ').class_basename($type);
+        $baseclass = mb_trim('App\Classes\PdfGenerator\ ').class_basename($type);
 
         return (new ModelPdfService)->generatePdfById(new $baseclass, $modelId);
 
