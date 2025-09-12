@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Classes\Utilities;
 
 use App\Traits\UtilityForm;
+use BadMethodCallException;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -53,7 +54,11 @@ abstract class ModelsQuerys
      */
     final public function showWithRelationship(int $id, string $relationName): ?Model
     {
-        return $this->model->showData($id, $relationName);
+        if (method_exists($this->model, 'showData')) {
+            return $this->model->showData($id, $relationName);
+        }
+
+        return $this->model->with($relationName)->findOrFail($id);
     }
 
     /**
@@ -68,6 +73,11 @@ abstract class ModelsQuerys
      */
     final public function addWithRelationship(int $id, array $data, string $relationName)
     {
+        $parentModel = $this->model->findOrFail($id);
+
+        if (! method_exists($parentModel, 'saveRelation')) {
+            throw new BadMethodCallException("Metodo saveRelation no existe en el modelo {$this->modelName}");
+        }
 
         return $this->model->findOrFail($id)->saveRelation($data, $relationName);
     }
