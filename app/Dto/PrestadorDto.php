@@ -33,10 +33,10 @@ final class PrestadorDto implements Wireable
     public static function fromArray(array $data): self
     {
         return new self(
-            insurance_type_id: (int) ($data['insurance_type_id'] ?? null),
+            insurance_type_id: ! empty($data['insurance_type_id']) ? (int) $data['insurance_type_id'] : null,
             state_id: (int) ($data['state_id'] ?? ''),
-            province_id: (int) ($data['province_id'] ?? null),
-            city_id: (int) ($data['city_id'] ?? null),
+            province_id: ! empty($data['province_id']) ? (int) $data['province_id'] : null,
+            city_id: ! empty($data['city_id']) ? (int) $data['city_id'] : null,
             insurance_name: (string) ($data['insurance_name'] ?? ''),
             insurance_acronym: (string) ($data['insurance_acronym'] ?? ''),
             insurance_code: (string) ($data['insurance_code'] ?? ''),

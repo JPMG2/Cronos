@@ -23,17 +23,25 @@ trait HandleMenuAction
         }
     }
 
-    public function triggerAlert(int $exception, string $type, string $message, string $title,
-        string $buttonName, string $event): void
-    {
-        $this->dispatch('showModalAlert', [
-            'show' => 'true',
-            'title' => $title,
-            'type' => $type,
-            'message' => $message,
-            'button' => $exception,
-            'buttonName' => $buttonName,
-            'event' => $event,
-        ]);
+    public function triggerAlert(
+        int $exception,
+        string $type,
+        string $message,
+        string $title,
+        string $buttonName,
+        string $event
+    ): void {
+        $this->dispatch(
+            'showModalAlert',
+            [
+                'show' => 'true',
+                'title' => $title,
+                'type' => $type,
+                'message' => $message,
+                'button' => $exception,
+                'buttonName' => $buttonName,
+                'event' => $event,
+            ]
+        );
     }
 }

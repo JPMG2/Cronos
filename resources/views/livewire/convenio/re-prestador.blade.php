@@ -495,29 +495,33 @@
 
 
                 @if(!session("isdisabled"))
-                    <form
-                        id="obrasocial"
-                        wire:submit.prevent="submit"
-                    >
-                        @csrf
-                        <x-headerform.button-group>
-                            <x-buttons.cancel
-                                wire:click="clearForm"
-                                label="Cancelar"
-                            ></x-buttons.cancel>
-                            @can("created", $this->actions)
-                                <x-buttons.save
-                                    wire:submit.prevent="insuraceQuery"
-                                    wire:click.prevent="insuraceQuery"
-                                    label="Guardar"
-                                    isdisabled="{{$isdisabled}}"
-                                    :error="count($errors)"
-                                ></x-buttons.save>
-                            @endcan
-                        </x-headerform.button-group>
-                    </form>
+                    <div class="mt-6 border-t border-slate-200 pt-4">
+                        <form
+                            id="obrasocial"
+                            wire:submit.prevent="submit"
+                        >
+                            @csrf
+                            <div class="flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-6">
+                                <x-buttons.cancel
+                                    wire:click="clearForm"
+                                    label="Cancelar"
+                                ></x-buttons.cancel>
+                                @can("created", $this->actions)
+                                    <x-buttons.save
+                                        wire:submit.prevent="insuraceQuery"
+                                        wire:click.prevent="insuraceQuery"
+                                        label="Guardar"
+                                        isdisabled="{{$isdisabled}}"
+                                        :error="count($errors)"
+                                    ></x-buttons.save>
+                                @endcan
+                            </div>
+                        </form>
+                    </div>
                 @endif
             </div>
         </div>
     </div>
+    
+    @livewire("convenio.list-prestador", ["show" => false])
 </div>

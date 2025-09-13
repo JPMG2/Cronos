@@ -27,9 +27,9 @@ final class InsuranceValidation
         return [
             'insurance_name' => mb_strtoupper(mb_trim($data['insurance_name'])),
             'insurance_acronym' => mb_strtoupper(mb_trim($data['insurance_acronym'])),
-            'insurance_type_id' => mb_trim((string) $data['insurance_type_id']),
-            'province_id' => mb_trim((string) $data['province_id']),
-            'city_id' => mb_trim((string) $data['city_id']),
+            'insurance_type_id' => $data['insurance_type_id'],
+            'province_id' => $data['province_id'],
+            'city_id' => $data['city_id'],
             'state_id' => mb_trim((string) $data['state_id']),
             'insurance_code' => mb_strtoupper(mb_trim($data['insurance_code'])),
             'insurance_cuit' => mb_strtoupper(mb_trim($data['insurance_cuit'])),

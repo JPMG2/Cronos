@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Interfaces\Filterable;
 use App\Traits\DbTraits\TableFilter;
 use App\Traits\RecordActivity;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Arr;
 
-final class Insurance extends Model
+final class Insurance extends Model implements Filterable
 {
     use HasFactory, RecordActivity, TableFilter;
 
@@ -34,22 +33,22 @@ final class Insurance extends Model
         'insurance_web',
     ];
 
-    public static function getFilterableAttributes(): array
-    {
-        return [
-            'insurance_name' => 'Nombre',
-            'insurance_acronym' => 'Siglas',
-            'insurance_type_id' => 'Tipo',
-            'insurance_cuit' => 'CUIT',
-            'insurance_code' => 'Código',
-            'state_id' => 'Estatus',
-
-        ];
-    }
-
     public static function countInsurance(): ?int
     {
         return self::count();
+    }
+
+    public static function getDefaultFilterField(): string
+    {
+        return 'insurance_name';
+    }
+
+    public static function getRelationModel(): array
+    {
+        return [
+            'state:id,state_name',
+            'insuranceType:id,insuratype_name',
+        ];
     }
 
     public function mainName(): string
@@ -65,28 +64,6 @@ final class Insurance extends Model
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
-    }
-
-    public function scopeListInsurances(Builder $query, $stringsearch = null, $relashion = null): Builder
-    {
-        if (! is_null($relashion)) {
-            $relationName = $this->getRelashionName($relashion);
-            if (method_exists($this, $relashion)) {
-                return $this->{$relashion}($query, $relationName, $stringsearch, ['insuranceType', 'state', 'city.province']);
-            }
-        }
-
-        return $query->with(['insuranceType', 'state', 'city.province']);
-    }
-
-    public function getRelashionName(string $relashionvalue): string
-    {
-        $relashionarray = [
-            'state_id' => 'state',
-            'insurance_type_id' => 'insuranceType'];
-
-        return Arr::get($relashionarray, $relashionvalue);
-
     }
 
     public function city(): BelongsTo

@@ -1,21 +1,30 @@
-<div x-data="{ open: $wire.entangle('show') }">
+<div wire:show="show">
 
     <div
-        x-show="open"
-        x-transition.opacity
-        x-transition:enter.duration.100ms
-        x-transition:leave.duration.300ms
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
         x-cloak
-        class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-70 overflow-auto"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm overflow-auto p-4"
     >
         <div class="m-3 mx-auto mt-11 size-4/5">
             <div
-                class="pointer-events-auto flex flex-col rounded-xl border bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800 dark:shadow-neutral-700/70"
+                class="pointer-events-auto flex flex-col rounded-xl border bg-white shadow-2xl dark:border-gray-600 dark:bg-gray-800 dark:shadow-2xl "
             >
                 <div
-                    class="flex items-center justify-between border-b px-4 py-3 dark:border-neutral-700"
+                    class="flex items-center justify-between border-b border-gray-200 px-6 py-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-t-xl dark:border-gray-600 dark:from-gray-700 dark:to-gray-600"
                 >
-                    <x-formcomponent.modaltitle>Obra Sociales.</x-formcomponent.modaltitle>
+                    <x-formcomponent.modaltitle>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                  d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.464 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                        Prestadores.
+                    </x-formcomponent.modaltitle>
                     <button
                         wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
                         type="button"
@@ -25,136 +34,101 @@
                         <x-close-modal></x-close-modal>
                     </button>
                 </div>
-                <div class="overflow-y-auto overflow-x-auto p-4">
-                    <x-table.boxsearch :listFilterValues="$listFilterValues"></x-table.boxsearch>
-                    @if(count($listInsurances) > 0)
-
-                        <div
-                            class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                <div class="overflow-y-auto p-4">
+                    <div
+                        class="overflow-hidden rounded-xl border border-gray-200/50 shadow-lg ring-1 ring-gray-200/20 dark:border-gray-700/50 dark:ring-gray-700/20 dark:shadow-black/10"
+                    >
+                        <table
+                            class="table-xs min-w-full divide-y divide-gray-200/80 dark:divide-gray-700/80"
                         >
-
-                            <table
-                                class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                            >
-                                <x-table.thead>
-                                    <tr>
-                                        <x-table.th>
-                                            ID
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('insurance_name')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="insurance_name" :$columName
-                                                                :$sortDirection>
-                                                <div>Nombre</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('insurance_acronym')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="insurance_acronym" :$columName
-                                                                :$sortDirection>
-                                                <div>Siglas</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('insurance_type_id')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="insurance_type_id" :$columName
-                                                                :$sortDirection>
-                                                <div>Tipo</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('insurance_cuit')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="insurance_cuit" :$columName
-                                                                :$sortDirection>
-                                                <div>Cuit</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('insurance_code')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="insurance_code" :$columName
-                                                                :$sortDirection>
-                                                <div>Código</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th
-                                            wire:click="orderColumBy('state_id')"
-                                        >
-                                            <x-table.sortcolumn currentColumn="state_id" :$columName
-                                                                :$sortDirection>
-                                                <div>Estatus</div>
-                                            </x-table.sortcolumn>
-                                        </x-table.th>
-                                        <x-table.th></x-table.th>
-                                    </tr>
-                                </x-table.thead>
-                                <x-table.tablebody>
-                                    @foreach ($listInsurances as $insurance)
-
+                            <x-table.thead>
+                                <tr class="sticky top-0 z-10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-gray-800/90 dark:supports-[backdrop-filter]:bg-gray-800/70">
+                                    @foreach($form->tableHeaders as $header)
+                                        @if( (bool) $header['isClickable'] !== false)
+                                            <x-table.th
+                                                wire:click="orderColumBy('{{$header['clickName']}}')">
+                                                <x-table.sortcolumn currentColumn="{{$header['clickName']}}" :$sortField
+                                                                    :$sortDirection>
+                                                    <div> {{ $header['name'] }}</div>
+                                                </x-table.sortcolumn>
+                                            </x-table.th>
+                                        @else
+                                            <x-table.th>
+                                                {{ $header['name'] }}
+                                            </x-table.th>
+                                        @endif
+                                    @endforeach
+                                </tr>
+                                <tr class="h-1 p-0 ">
+                                    @foreach($form->tableHeaders as $header)
+                                        @if( (bool) $header['isClickable'] !== false)
+                                            <td>
+                                                <x-table.input-table-search
+                                                    withd="{{$header['with']}}"
+                                                    maxlength="{{$header['max']}}"
+                                                    x-mask="{{$header['mask']}}"
+                                                    wire:model.live.debounce="columnFilter.{{$header['clickName']}}"/>
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
+                                    @endforeach
+                                </tr>
+                            </x-table.thead>
+                            <x-table.tablebody>
+                                @if(count($listPestador) > 0)
+                                    @foreach ($listPestador as $prestador)
                                         <tr
-                                            class="even:bg-gray-100"
-                                            wire:key="{{ $insurance->id }}"
+                                            class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
+                                            wire:key="{{ $prestador->id }}"
                                         >
-                                            <x-table.tdtable typetext="txtimportant">
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ $loop->iteration }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" break-words>
-                                                {{ $insurance->insurance_name }}
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$prestador->insurance_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" break-words>
-                                                {{ $insurance->insurance_acronym }}
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$prestador->insurance_acronym }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal" break-words>
-                                                {{ $insurance->insuranceType->insuratype_name }}
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$prestador->insuranceType->insuratype_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal" break-words>
-                                                {{ $insurance->insurance_cuit }}
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{$prestador->insurance_code }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal" break-words>
-                                                {{ $insurance->insurance_code }}
-                                            </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal">
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 <x-statescolor
-                                                    idstatecolor="{{ $insurance->state->id }}"
+                                                    idstatecolor="{{$prestador->state->id }}"
                                                 >
-                                                    {{ $insurance->state->state_name }}
+                                                    {{$prestador->state->state_name }}
                                                 </x-statescolor>
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtnormal">
+                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                                 <div
                                                     class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
                                                 >
                                                     <x-headerform.eyeoption
-                                                        wire:key="{{ $insurance->id }}"
-                                                        wire:click.prevent="dataInsurance({{ $insurance->id }})"
-
+                                                        wire:key="{{ $prestador->id }}"
+                                                        wire:click.prevent="patientId({{ $prestador->id }})"
                                                     ></x-headerform.eyeoption>
                                                 </div>
                                             </x-table.tdtable>
                                         </tr>
                                     @endforeach
-                                </x-table.tablebody>
-                            </table>
-                            @else
-                                <x-alert windowtype="error">
-                                    No existen obras sociales.
-                                </x-alert>
-                            @endif
-                        </div>
+                                @else
+                                    <tr>
+                                        <td colspan="7" class="py-4">
+                                            <x-alert windowtype="error">
+                                                No existen prestadores registrados.
+                                            </x-alert>
+                                        </td>
+                                    </tr>
+                                @endif
+                            </x-table.tablebody>
+                        </table>
+                    </div>
 
-                        <div
-                            class="flex items-center justify-end gap-x-2 border-t px-4 py-2 dark:border-neutral-700"
-                        >
-                            <x-buttons.close
-                                wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
-                            >
-                                {{ __("Cerrar") }}
-                            </x-buttons.close>
-                        </div>
                 </div>
             </div>
         </div>

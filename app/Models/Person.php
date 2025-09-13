@@ -8,7 +8,6 @@ use App\Interfaces\Filterable;
 use App\Traits\DbTraits\TableFilter;
 use Carbon\CarbonImmutable;
 use Database\Factories\PersonFactory;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -133,21 +132,6 @@ final class Person extends Model implements Filterable
     public function updateRelation(array $data, string $relation): int
     {
         return $this->$relation()->update($data);
-    }
-
-    public function scopeListPatients(Builder $query, $searchTerm = null, $relationship = null): Builder
-    {
-        if (! is_null($relationship)) {
-
-            $relationName = $this->getRelashionName($relationship);
-
-            if (method_exists($this, $relationship)) {
-                return $this->{$relationship}($query, $relationName, $searchTerm, ['gender', 'maritalStatus', 'occupation', 'nationality', 'city']);
-            }
-        }
-
-        return $query->whereHas('patiente')->with(['gender', 'maritalStatus', 'occupation', 'nationality', 'city']);
-
     }
 
     public function getRelashionName(string $relashionvalue): string

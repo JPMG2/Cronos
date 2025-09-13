@@ -20,7 +20,7 @@ final class RePrestador extends Component
 
     public PrestadorForm $form;
 
-    protected $commonQuerys;
+    private $commonQuerys;
 
     #[Title(' - Obra social')]
     public function render()
@@ -37,7 +37,7 @@ final class RePrestador extends Component
         $this->form->dataobrasocial ??= new PrestadorDto();
     }
 
-    public function insuraceQuery()
+    public function insuraceQuery(): void
     {
         $this->setIdPronvinceCity();
         $result = $this->isupdate ?
@@ -60,13 +60,13 @@ final class RePrestador extends Component
 
     }
 
-    public function openTypes()
+    public function openTypes(): void
     {
         $this->dispatch('showTypesModal');
     }
 
     #[On('reloadInsuraceType')]
-    public function reloadInsuraceType()
+    public function reloadInsuraceType(): void
     {
         $this->getTypesProperty();
 
@@ -98,9 +98,9 @@ final class RePrestador extends Component
         $this->dispatch('showOptionsForms', show: true);
     }
 
-    public function obrasocialHandleMenuAction(string $nameoption)
+    public function obrasocialHandleMenuAction(string $nameoption): void
     {
-        $id = $this->form->dataobrasocial['id'] ?? 0;
+        $id = 0;
         $this->handleAction($nameoption, [
             'id' => $id,
             'pdfClass' => 'InsurancePdf',
@@ -109,9 +109,9 @@ final class RePrestador extends Component
         ]);
     }
 
-    protected function setIdPronvinceCity(): void
+    private function setIdPronvinceCity(): void
     {
-        $this->form->dataobrasocial->province_id = $this->getProvinceId();
-        $this->form->dataobrasocial->city_id = $this->getCityId();
+        $this->form->dataobrasocial->province_id = $this->getProvinceId() === 0 ? null : $this->getProvinceId();
+        $this->form->dataobrasocial->city_id = $this->getCityId() === 0 ? null : $this->getCityId();
     }
 }

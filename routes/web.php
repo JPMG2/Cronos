@@ -32,13 +32,13 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 });
 
 /* Route for Convenio */
-Route::group(['middleware' => 'auth', 'verified'], function () {
+Route::group(['middleware' => 'auth', 'verified'], static function () {
     Route::get('/re_prestador', App\Livewire\Convenio\RePrestador::class)
         ->name('re_prestador')->middleware(['rolemenu:re_prestador']);
 });
 
 /* Route for Configuración */
-Route::group(['middleware' => 'auth', 'verified'], function () {
+Route::group(['middleware' => 'auth', 'verified'], static function () {
     Route::get('/re_confrole', App\Livewire\Configuracion\ReRoles::class)
         ->name('re_confrole')->middleware(['rolemenu:re_confrole']);
     Route::get('/re_confper', App\Livewire\Configuracion\ReActions::class)
@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 
 });
 /* Route for Servicios */
-Route::group(['middleware' => 'auth', 'verified'], function () {
+Route::group(['middleware' => 'auth', 'verified'], static function () {
     Route::get('/re_service', App\Livewire\Clinico\ReServices::class)
         ->name('re_service')->middleware(['rolemenu:re_service']);
     Route::get('/re_paciente', App\Livewire\Clinico\RePaciente::class)

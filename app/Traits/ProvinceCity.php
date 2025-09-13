@@ -27,22 +27,16 @@ trait ProvinceCity
 
     public function searchProvince()
     {
-
-        if (! empty($this->stringProvince)) {
-
-            $this->stringProvince = stringToTitle($this->stringProvince);
-
-            $this->listProvince = Province::proviceSearch($this->stringProvince)
-                ->get();
-
+        if (empty($this->stringProvince)) {
             $this->showProvince = ! empty($this->listProvince);
-
-            return $this->listProvince;
+            return null;
         }
+
+        $this->stringProvince = stringToTitle($this->stringProvince);
+        $this->listProvince = Province::proviceSearch($this->stringProvince)->get();
         $this->showProvince = ! empty($this->listProvince);
 
-        return null;
-
+        return $this->listProvince;
     }
 
     public function selectProvince(Province $province): void
@@ -55,22 +49,16 @@ trait ProvinceCity
 
     public function searchCity()
     {
-
-        if ($this->getProvinceId() > 0 && ! empty($this->stringCity)) {
-
-            $this->stringCity = stringToTitle($this->stringCity);
-
-            $this->listCities = City::citySearch($this->getProvinceId(),
-                $this->stringCity)->get();
-
+        if ($this->getProvinceId() <= 0 || empty($this->stringCity)) {
             $this->showCity = count($this->listCities) > 0;
-
-            return $this->listCities;
+            return null;
         }
 
+        $this->stringCity = stringToTitle($this->stringCity);
+        $this->listCities = City::citySearch($this->getProvinceId(), $this->stringCity)->get();
         $this->showCity = count($this->listCities) > 0;
 
-        return null;
+        return $this->listCities;
     }
 
     public function getProvinceId(): int
@@ -89,19 +77,22 @@ trait ProvinceCity
 
     public function resetValuesProvince(): void
     {
-        if (str($this->stringCity)->length() > 0) {
-            $this->setProvinceId(0);
-            $this->stringCity = '';
+        if (str($this->stringCity)->length() <= 0) {
+            return;
         }
+        
+        $this->setProvinceId(0);
+        $this->stringCity = '';
     }
 
     public function resetValuesCity(): void
     {
-
-        if ($this->id_city > 0) {
-            $this->setCityId(0);
-            $this->stringCity = '';
+        if ($this->id_city <= 0) {
+            return;
         }
+        
+        $this->setCityId(0);
+        $this->stringCity = '';
     }
 
     public function resetAllProvince(): void
@@ -146,10 +137,10 @@ trait ProvinceCity
 
     public function setnameProvinceCity(?string $province, ?string $city): void
     {
-        if (! is_null($province)) {
+        if ($province !== null) {
             $this->stringProvince = $province;
         }
-        if (! is_null($city)) {
+        if ($city !== null) {
             $this->stringCity = $city;
         }
     }

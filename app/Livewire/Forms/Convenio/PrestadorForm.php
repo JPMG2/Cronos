@@ -27,9 +27,20 @@ final class PrestadorForm extends Form
 
     public function insuranceStore(): Model
     {
+
         $data = $this->validation()->validateServiceData(null, ($this->dataobrasocial->toArray()));
 
         return $this->iniService()->store($data);
+    }
+
+    private function validation(): InsuranceValidation
+    {
+        return $this->validation ??= new InsuranceValidation();
+    }
+
+    private function iniService()
+    {
+        return new ModelService(new Insurance);
     }
 
     public function insuranceUpdate(InsuranceValidation $insuranceValidation): array
@@ -54,15 +65,5 @@ final class PrestadorForm extends Form
             $this->setProvinceCity($dataInsurance->city->province->id, $dataInsurance->city->id);
             $this->setnameProvinceCity($dataInsurance->city->province->province_name->value, $dataInsurance->city->city_name);
         }
-    }
-
-    private function validation(): InsuranceValidation
-    {
-        return $this->validation ??= new InsuranceValidation();
-    }
-
-    private function iniService()
-    {
-        return new ModelService(new Insurance);
     }
 }

@@ -57,7 +57,7 @@ trait TableSorting
      */
     public function setupTableSorting(string $modelName): void
     {
-        $this->modelName = "\\App\\Models\\$modelName";
+        $this->modelName = "\\App\\Models\\{$modelName}";
         $this->resetPage();
         $this->resetOrdersValues();
         $this->filterValue = $this->getModelDefaultFilter($modelName);
@@ -91,7 +91,7 @@ trait TableSorting
         }
 
         // Fallback to interface method if model implements Filterable
-        $modelClass = "\\App\\Models\\$modelName";
+        $modelClass = "\\App\\Models\\{$modelName}";
         if (method_exists($modelClass, 'getDefaultFilterField')) {
             return $modelClass::getDefaultFilterField();
         }

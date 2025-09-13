@@ -28,7 +28,7 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('commonquery', fn ($app): CommonQuerys => new CommonQuerys);
+        $this->app->singleton('commonquery', fn ($app): CommonQuerys => new CommonQuerys());
 
         $this->app->bind(ModelService::class, /** @throws InvalidArgumentException */
             function ($app, array $params): ModelService {

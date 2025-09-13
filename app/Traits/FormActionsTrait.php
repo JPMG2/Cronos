@@ -21,24 +21,16 @@ trait FormActionsTrait
 {
     protected function handleAction($action, array $parameter)
     {
-        switch ($action) {
-            case 'edit':
-                $this->edit();
-                break;
-            case 'new':
-                $this->new($parameter);
-                break;
-            case 'print':
-                $this->print($parameter);
-                break;
-            case 'show':
-                $this->show($parameter);
-                break;
-            case 'history':
-                $this->history($parameter);
-                break;
-            default:
-                break;
+        $actions = [
+            'edit' => fn() => $this->edit(),
+            'new' => fn() => $this->new($parameter),
+            'print' => fn() => $this->print($parameter),
+            'show' => fn() => $this->show($parameter),
+            'history' => fn() => $this->history($parameter),
+        ];
+
+        if (isset($actions[$action])) {
+            $actions[$action]();
         }
     }
 

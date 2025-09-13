@@ -78,6 +78,6 @@ final class DepartmentForm extends Form
 
     private function iniService()
     {
-        return new ModelService(new Department);
+        return new ModelService(new Department());
     }
 }

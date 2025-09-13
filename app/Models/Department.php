@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 final class Department extends Model
 {
-    use HasFactory, RecordActivity;
+    use HasFactory;
+    use RecordActivity;
 
     public string $checkchange = 'department_name';
 
@@ -28,7 +29,7 @@ final class Department extends Model
 
     public function scopeListDepartment(Builder $query, $department = null): Builder
     {
-        return $query->where('department_name', 'like', "%$department%")
+        return $query->where('department_name', 'like', "%{$department}%")
             ->orderBy('department_name');
     }
 

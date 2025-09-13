@@ -10,6 +10,6 @@ trait HandlesActionPolicy
 {
     public function getActionsProperty(): Action
     {
-        return new Action;
+        return new Action();
     }
 }

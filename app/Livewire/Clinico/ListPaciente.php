@@ -7,7 +7,6 @@ namespace App\Livewire\Clinico;
 use App\Classes\Services\QueryPerson\PatientListService;
 use App\Livewire\Forms\Clinico\ListPatientForm;
 use App\Models\Patient;
-use App\Models\Person;
 use App\Traits\TableSorting;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
@@ -38,12 +37,6 @@ final class ListPaciente extends Component
             'listPatients' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
         ]);
 
-    }
-
-    #[Computed]
-    public function patientlistList()
-    {
-        return Person::listPatients();
     }
 
     public function mount($show)

@@ -13,8 +13,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 final class Role extends Model
 {
-    /** @use HasFactory<RoleFactory> */
-    use HasFactory, RecordActivity;
+    /**
+     * @use HasFactory<RoleFactory>
+     */
+    use HasFactory;
+
+    use RecordActivity;
 
     protected $fillable = ['name_role', 'description'];
 
@@ -63,7 +67,6 @@ final class Role extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
-
         );
     }
 
@@ -71,7 +74,6 @@ final class Role extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
-
         );
     }
 }
