@@ -29,10 +29,9 @@ final class PersonDocumente implements ValidationRule
      *
      * @param  Closure(string, ?string=): PotentiallyTranslatedString  $fail
      */
-    public function validate(string $attribute, mixed $value, Closure $fail): void
+    public function validate(string $_attribute, mixed $value, Closure $fail): void
     {
-
-        $documentExist = Person::documentExist($this->idTypeDocument, $this->numDocument, $this->idPerson);
+        $documentExist = Person::documentExist($this->idTypeDocument, $value, $this->idPerson);
         if ($documentExist) {
             $fail('El documento ya existe');
         }
