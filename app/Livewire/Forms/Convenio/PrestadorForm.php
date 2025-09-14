@@ -33,16 +33,6 @@ final class PrestadorForm extends Form
         return $this->iniService()->store($data);
     }
 
-    private function validation(): InsuranceValidation
-    {
-        return $this->validation ??= new InsuranceValidation();
-    }
-
-    private function iniService()
-    {
-        return new ModelService(new Insurance);
-    }
-
     public function insuranceUpdate(InsuranceValidation $insuranceValidation): array
     {
         /*$services = $this->iniService();
@@ -65,5 +55,15 @@ final class PrestadorForm extends Form
             $this->setProvinceCity($dataInsurance->city->province->id, $dataInsurance->city->id);
             $this->setnameProvinceCity($dataInsurance->city->province->province_name->value, $dataInsurance->city->city_name);
         }
+    }
+
+    private function validation(): InsuranceValidation
+    {
+        return $this->validation ??= new InsuranceValidation();
+    }
+
+    private function iniService()
+    {
+        return new ModelService(new Insurance());
     }
 }

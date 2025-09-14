@@ -31,33 +31,41 @@ final class MenuNav extends Component
         $cacheKeyMenu = 'menu-'.$user->id;
         $menuItems = Cache::remember($cacheKeyMenu, 1440, function () use ($user) {
             if ($user->getUserRoleName() === 'Owner') {
-                return Menu::with('optionmenus')
-                    ->whereNull('menu_id')
-                    ->withCount(['optionmenus'])
-                    ->orderBy('id')
-                    ->get();
+                return $this->getMenuItems()->get();
             }
 
             $opcionmenus = $user->roles->flatMap(function ($rol) {
                 return $rol->menus->pluck('id');
             })->filter()->values()->toArray();
 
-            return Menu::with([
-                'optionmenus' => function ($query) use ($opcionmenus) {
-                    $query->whereIn('id', $opcionmenus)
-                        ->with([
-                            'menus' => function ($q) use ($opcionmenus) {
-                                $q->whereIn('id', $opcionmenus);
-                            },
-                        ]);
-                },
-            ])
-                ->whereNull('menu_id')
-                ->withCount(['optionmenus'])
-                ->whereIn('id', $opcionmenus) // filter parents too
+            return $this->getMenuItemsWithChildren($opcionmenus)
                 ->get();
         });
 
         return view('components.mmenu.menu-nav', compact('menuItems'));
+    }
+
+    public function getMenuItems()
+    {
+        return Menu::with('optionmenus')->whereNull('menu_id')
+            ->withcount('optionmenus')
+            ->orderBy('id');
+    }
+
+    public function getMenuItemsWithChildren($opcionmenus)
+    {
+        return Menu::with([
+            'optionmenus' => function ($query) use ($opcionmenus) {
+                $query->whereIn('id', $opcionmenus)
+                    ->with([
+                        'menus' => function ($q) use ($opcionmenus) {
+                            $q->whereIn('id', $opcionmenus);
+                        },
+                    ]);
+            },
+        ])
+            ->whereNull('menu_id')
+            ->withCount(['optionmenus'])
+            ->whereIn('id', $opcionmenus);
     }
 }
