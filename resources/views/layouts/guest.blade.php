@@ -24,7 +24,7 @@
         >
             <div
                 class="my-3 text-4xl font-bold tracking-wider text-center transform transition-transform duration-300 hover:scale-105">
-                <img src="{{asset('img/logoc.png')}}" alt="Cronos Logo"
+                <img src="{{asset('img/logoc2.png')}}" alt="Cronos Logo"
                      class="w-40 h-30 mx-auto object-contain z-20 drop-shadow-lg">
             </div>
             <p class="mt-6 text-lg font-bold text-center text-slate-700 md:mt-0 drop-shadow-md tracking-wide leading-relaxed">
