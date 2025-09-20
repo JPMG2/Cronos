@@ -9,6 +9,7 @@ use Livewire\Wireable;
 final class PrestadorDto implements Wireable
 {
     public function __construct(
+        public ?int $id = null,
         public ?int $insurance_type_id = null,
         public int $state_id = 1,
         public ?int $province_id = null,
@@ -33,6 +34,7 @@ final class PrestadorDto implements Wireable
     public static function fromArray(array $data): self
     {
         return new self(
+            id: ! empty($data['id']) ? (int) $data['id'] : null,
             insurance_type_id: ! empty($data['insurance_type_id']) ? (int) $data['insurance_type_id'] : null,
             state_id: (int) ($data['state_id'] ?? ''),
             province_id: ! empty($data['province_id']) ? (int) $data['province_id'] : null,
@@ -58,6 +60,7 @@ final class PrestadorDto implements Wireable
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'insurance_type_id' => $this->insurance_type_id,
             'state_id' => $this->state_id,
             'province_id' => $this->province_id,

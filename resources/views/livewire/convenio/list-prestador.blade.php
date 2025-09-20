@@ -110,7 +110,7 @@
                                                 >
                                                     <x-headerform.eyeoption
                                                         wire:key="{{ $prestador->id }}"
-                                                        wire:click.prevent="patientId({{ $prestador->id }})"
+                                                        wire:click.prevent="prestadorData({{ $prestador->id }})"
                                                     ></x-headerform.eyeoption>
                                                 </div>
                                             </x-table.tdtable>

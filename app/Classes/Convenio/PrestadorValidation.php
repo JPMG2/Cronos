@@ -7,7 +7,7 @@ namespace App\Classes\Convenio;
 use App\Classes\Utilities\AttributeValidator;
 use Illuminate\Support\Facades\Validator;
 
-final class InsuranceValidation
+final class PrestadorValidation
 {
     public function validateServiceData(?int $excludeId, array $data): array
     {

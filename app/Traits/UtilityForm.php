@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Classes\Utilities\NotifyQuerys;
-use Illuminate\Support\Facades\App;
 
 trait UtilityForm
 {
@@ -25,11 +24,9 @@ trait UtilityForm
         return prepareData($arrayvalues, $this->getObjetProperties($modelName));
     }
 
-    public function getObjetProperties(string $classname): array
+    public function getObjetProperties($classname): array
     {
-        $model = 'App\\Models\\'.$classname;
-
-        return App::make($model)->getFillable();
+        return $classname->getFillable();
 
     }
 

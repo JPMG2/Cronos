@@ -49,9 +49,9 @@ final class ListPrestador extends Component
         $this->show = $show;
     }
 
-    public function dataInsurance($InsuranceId)
+    public function prestadorData($idPrestador)
     {
-        $this->dispatch('dataInsurance', $InsuranceId);
+        $this->dispatch('dataPrestador', $idPrestador);
         $this->show = false;
     }
 

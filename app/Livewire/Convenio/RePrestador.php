@@ -10,13 +10,14 @@ use App\Models\Insurance;
 use App\Models\InsuranceType;
 use App\Traits\FormHandling;
 use App\Traits\HandlesActionPolicy;
+use App\Traits\ProvinceCity;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 final class RePrestador extends Component
 {
-    use FormHandling, HandlesActionPolicy;
+    use FormHandling, HandlesActionPolicy, ProvinceCity;
 
     public PrestadorForm $form;
 
@@ -56,8 +57,8 @@ final class RePrestador extends Component
         $this->form->reset();
         $this->resetAllProvince();
         $this->cleanFormValues();
+        $this->form->setUp();
         $this->dispatch('showOptionsForms', show: false);
-
     }
 
     public function openTypes(): void
@@ -82,29 +83,33 @@ final class RePrestador extends Component
         return Insurance::countInsurance();
     }
 
-    #[On('dataInsurance')]
+    #[On('dataPrestador')]
     public function InfoInsurance($insuranceId): void
     {
-        $this->form->reset();
+        $data = $this->form->infoPrestador($insuranceId);
 
-        app()->call([$this->form, 'infoInsurance'], ['idInsurance' => $insuranceId]);
-
-        $this->setLocactionNameID(
-            $this->form->getProvinceId(), $this->form->getCityId(),
-            $this->form->getProvinceName(), $this->form->getCityName());
+        if ($data->city) {
+            $this->setProvinceCity($data->city->province->id, $data->city->id);
+            $this->setnameProvinceCity(
+                $data->city->province->province_name->value,
+                $data->city->city_name
+            );
+        } else {
+            $this->resetAllProvince();
+        }
 
         $this->isdisabled = 'disabled';
-
+        $this->dispatch('clear-errors');
         $this->dispatch('showOptionsForms', show: true);
     }
 
     public function obrasocialHandleMenuAction(string $nameoption): void
     {
-        $id = 0;
+        $id = $this->form->dataobrasocial->insurance_id ?? 0;
         $this->handleAction($nameoption, [
             'id' => $id,
             'pdfClass' => 'InsurancePdf',
-            'route' => 're_obrasocial',
+            'route' => 're_prestador',
             'model' => 'Insurance',
         ]);
     }

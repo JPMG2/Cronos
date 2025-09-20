@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\Convenio;
 
-use App\Classes\Convenio\InsuranceValidation;
-use App\Classes\Services\ModelService;
+use App\Classes\Convenio\MaindPrestador;
+use App\Classes\Convenio\PrestadorValidation;
 use App\Dto\PrestadorDto;
 use App\Models\Insurance;
-use App\Traits\ProvinceCity;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Form;
 
 final class PrestadorForm extends Form
 {
-    use ProvinceCity;
-
     public ?PrestadorDto $dataobrasocial = null;
 
-    private ?InsuranceValidation $validation = null;
+    private ?PrestadorValidation $validation = null;
 
     public function setUp(): void
     {
@@ -30,10 +27,10 @@ final class PrestadorForm extends Form
 
         $data = $this->validation()->validateServiceData(null, ($this->dataobrasocial->toArray()));
 
-        return $this->iniService()->store($data);
+        return $this->iniService()->create($data);
     }
 
-    public function insuranceUpdate(InsuranceValidation $insuranceValidation): array
+    public function insuranceUpdate(PrestadorValidation $insuranceValidation): array
     {
         /*$services = $this->iniService();
 
@@ -41,29 +38,39 @@ final class PrestadorForm extends Form
             $insuranceValidation->onInsuranceUpdate($this->dataobrasocial), $this->dataobrasocial['id']));*/
     }
 
-    public function infoInsurance($idInsurance): void
+    public function infoPrestador($idInsurance): Model
     {
-        $services = $this->iniService();
-        $dataInsurance = $services->showWithRelationship($idInsurance, 'showInsuraceRelashion');
+        $data = $this->fetchProviderData($idInsurance);
 
-        $this->dataobrasocial = $dataInsurance->toArray();
-        $this->dataobrasocial['insurance_type_id'] = $dataInsurance->insurance_type_id;
-        $this->dataobrasocial['insurance_type_name'] = $dataInsurance->insuranceType->insuratype_name;
-        $this->dataobrasocial['province_id'] = $dataInsurance->city?->province->id;
-        $this->dataobrasocial['city_id'] = $dataInsurance->city_id;
-        if (! is_null($dataInsurance->city)) {
-            $this->setProvinceCity($dataInsurance->city->province->id, $dataInsurance->city->id);
-            $this->setnameProvinceCity($dataInsurance->city->province->province_name->value, $dataInsurance->city->city_name);
-        }
+        $this->loadDataIntoForm($data);
+
+        return $data;
     }
 
-    private function validation(): InsuranceValidation
+    private function validation(): PrestadorValidation
     {
-        return $this->validation ??= new InsuranceValidation();
+        return $this->validation ??= new PrestadorValidation();
     }
 
-    private function iniService()
+    private function iniService(): MaindPrestador
     {
-        return new ModelService(new Insurance());
+        return new MaindPrestador(new Insurance());
+    }
+
+    private function fetchProviderData($idInsurance): Model
+    {
+        return $this->iniService()->showProvedorInfo($idInsurance);
+    }
+
+    private function loadDataIntoForm(Model $data): void
+    {
+        $prepared = prepareData($data->toArray(), array_keys($this->dataobrasocial->toArray()));
+        $dto = PrestadorDto::fromArray($prepared);
+
+        $this->dataobrasocial = $dto;
+
+        $this->dataobrasocial->province_id = $data->city?->province->id;
+        $this->dataobrasocial->city_id = $data->city_id;
+
     }
 }
