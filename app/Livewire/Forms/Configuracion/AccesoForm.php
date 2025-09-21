@@ -50,7 +50,8 @@ final class AccesoForm extends Form
         $services = $this->iniService();
 
         return NotifyQuerys::msgCreateUpdateMany($services
-            ->addWithRelationship((int) $this->dataacceso['role_id'],
+            ->addWithRelationship(
+                (int) $this->dataacceso['role_id'],
                 $allMenuIds,
                 'menus'
             ));
@@ -86,6 +87,6 @@ final class AccesoForm extends Form
 
     private function iniService()
     {
-        return new ModelService(new Role);
+        return new ModelService(new Role());
     }
 }

@@ -37,7 +37,8 @@ final class ActionsForm extends Form
         $services = $this->iniService();
 
         return NotifyQuerys::msgCreateUpdateMany($services
-            ->addWithRelationship((int) $this->dataaction['role_id'],
+            ->addWithRelationship(
+                (int) $this->dataaction['role_id'],
                 $this->dataaction['action_id'],
                 'actions'
             ));
@@ -57,6 +58,6 @@ final class ActionsForm extends Form
 
     protected function iniService()
     {
-        return new ModelService(new Role);
+        return new ModelService(new Role());
     }
 }

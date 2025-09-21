@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\Registro;
 
-use App\Classes\Services\ModelService;
 use App\Classes\Utilities\AttributeValidator;
-use App\Classes\Utilities\NotifyQuerys;
+use App\Classes\Utilities\QueryRepository;
 use App\Models\Department;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
 
@@ -19,22 +19,18 @@ final class DepartmentForm extends Form
 
     ];
 
-    public function departmentStore(): array
+    public function departmentStore(): Model
     {
         $data = $this->validateServiceData();
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgCreate($services->store($data));
+        return $this->iniService()->create($data);
     }
 
-    public function departmentUpdate(): array
+    public function departmentUpdate(): Model
     {
         $data = $this->validateServiceData($this->datadeparment['id']);
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgUpdate($services->update($data, $this->datadeparment['id']));
+        return $this->iniService()->update($this->datadeparment['id'], $data);
     }
 
     public function loadDataDepartment($department): void
@@ -78,6 +74,6 @@ final class DepartmentForm extends Form
 
     private function iniService()
     {
-        return new ModelService(new Department());
+        return new QueryRepository(new Department());
     }
 }

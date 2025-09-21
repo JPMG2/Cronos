@@ -33,9 +33,11 @@ final class ListPaciente extends Component
     public function render()
     {
 
-        return view('livewire.clinicos.list-paciente', [
-            'listPatients' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
-        ]);
+        return view(
+            'livewire.clinicos.list-paciente', [
+                'listPatients' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
+            ]
+        );
 
     }
 

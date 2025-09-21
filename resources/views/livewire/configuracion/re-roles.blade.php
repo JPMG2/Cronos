@@ -61,7 +61,7 @@
                                             <div>
                                                 <x-table.accionopcion
                                                     wire:key="{{ $role->id }}"
-                                                    wire:click.prevent="editRoles({{ $role->id }})"
+                                                    wire:click.prevent="editRoles({{ $role }})"
                                                     wire:target="editRoles"
                                                     iconname="edit"
                                                 ></x-table.accionopcion>

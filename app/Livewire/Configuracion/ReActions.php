@@ -20,10 +20,12 @@ final class ReActions extends Component
     {
         $this->commonQuerys = app('commonquery');
 
-        return view('livewire.configuracion.re-actions', [
-            'listRoles' => $this->commonQuerys::listRoles(['Owner']),
-            'listActions' => $this->commonQuerys::listActions(['login', 'logout']),
-        ]);
+        return view(
+            'livewire.configuracion.re-actions', [
+                'listRoles' => $this->commonQuerys::listRoles(['Owner']),
+                'listActions' => $this->commonQuerys::listActions(['login', 'logout']),
+            ]
+        );
     }
 
     public function queryActionRole()

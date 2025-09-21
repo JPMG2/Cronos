@@ -23,7 +23,9 @@
                     </div>
                 </div>
 
-                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <div class="mt-5 sm:mt-4 sm:flex gap-1 sm:flex-row-reverse">
+                    <x-modalalert.modalbuttoncancel buttonName='Cancelar'></x-modalalert.modalbuttoncancel>
+
                     @if($button>0)
                         <button type="button"
                                 wire:click="closeModal"
@@ -31,7 +33,7 @@
                             {{$buttonName}}
                         </button>
                     @endif
-                    <x-modalalert.modalbuttoncancel :buttonName="$buttonName"></x-modalalert.modalbuttoncancel>
+
                 </div>
             </div>
         </div>

@@ -36,9 +36,11 @@ final class ListEspecialista extends Component
 
     public function render()
     {
-        return view('livewire.personal.list-especialista', [
-            'listMedical' => $this->getMedicService()->listSearch($this->columnFilter)->paginate(15),
-        ]);
+        return view(
+            'livewire.personal.list-especialista', [
+                'listMedical' => $this->getMedicService()->listSearch($this->columnFilter)->paginate(15),
+            ]
+        );
     }
 
     #[On('showModalMedical')]

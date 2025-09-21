@@ -29,22 +29,19 @@ final class ReDepartment extends Component
     public function queryDeparmente()
     {
 
-        if (! ($this->isupdate)) {
-
-            $result = app()->call([$this->form, 'departmentStore']);
-
-        } else {
-            $result = app()->call([$this->form, 'departmentUpdate']);
-
-        }
-        $this->dispatch('show-toast', $result);
-        $this->isupdate = false;
+        $result = $this->isupdate ?
+            $this->form->departmentUpdate() :
+            $this->form->departmentStore();
+        $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
+        $message = $this->showQueryMessage($result, $messageType);
+        $this->showToastAndClear($message);
         $this->clearForm();
     }
 
     public function clearForm()
     {
         $this->form->reset();
+        $this->isupdate = false;
         $this->opendepartment = false;
     }
 

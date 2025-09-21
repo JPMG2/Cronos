@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\Clinico;
 
-use App\Classes\Services\ModelService;
 use App\Classes\Utilities\AttributeValidator;
-use App\Classes\Utilities\NotifyQuerys;
+use App\Classes\Utilities\QueryRepository;
 use App\Models\Service;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
 
@@ -19,22 +19,18 @@ final class ServiceForm extends Form
         'service_code' => '',
     ];
 
-    public function serviceStore(): array
+    public function serviceStore(): Model
     {
         $validated = $this->validateServiceData();
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgCreate($services->store($validated));
+        return $this->iniService()->create($validated);
     }
 
-    public function serviceUpdate(): array
+    public function serviceUpdate(): Model
     {
         $validated = $this->validateServiceData($this->dataservice['id']);
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgUpdate($services->update($validated, $this->dataservice['id']));
+        return $this->iniService()->update($this->dataservice['id'], $validated);
     }
 
     public function loadDataServices($services): void
@@ -79,8 +75,8 @@ final class ServiceForm extends Form
         ];
     }
 
-    private function iniService(): ModelService
+    private function iniService(): QueryRepository
     {
-        return new ModelService(new Service);
+        return new QueryRepository(new Service());
     }
 }

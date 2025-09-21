@@ -20,7 +20,7 @@ final class MainMedic
 
     public function attachCredential(int $credentialId, $medic, string $credentialNumber): void
     {
-        Credential::findOrFail($credentialId);
+        Credential::query()->findOrFail($credentialId);
 
         $medic->credentials()->sync([
             $credentialId => ['credential_number' => $credentialNumber],

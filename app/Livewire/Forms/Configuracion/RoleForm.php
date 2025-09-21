@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\Configuracion;
 
-use App\Classes\Services\ModelService;
 use App\Classes\Utilities\AttributeValidator;
-use App\Classes\Utilities\NotifyQuerys;
+use App\Classes\Utilities\QueryRepository;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
 
@@ -18,60 +18,62 @@ final class RoleForm extends Form
         'description' => '',
     ];
 
-    public function roleStore(): array
+    public function roleStore(): Model
     {
-        $validated = Validator::make(
-            [
-                'name_role' => ucwords(mb_strtolower(mb_trim($this->dataRole['name_role']))),
-                'description' => ucfirst(mb_strtolower(mb_trim($this->dataRole['description']))),
-            ],
-            [
-                'name_role' => AttributeValidator::uniqueIdNameLength(4, 'roles', 'name_role', null),
-                'description' => AttributeValidator::stringValid(false, 4),
-            ],
-            [],
-            [
-                'name_role' => config('nicename.role'),
-                'description' => config('nicename.description'), ]
-        )->validate();
-        $services = $this->iniService();
+        $validated = $this->validateServiceData();
 
-        return NotifyQuerys::msgCreate($services->store($validated));
+        return $this->iniService()->create($validated);
 
     }
 
-    public function roleUpdate(): array
+    public function roleUpdate(): Model
     {
-        Validator::make(
-            [
-                'name_role' => ucwords(mb_strtolower(mb_trim($this->dataRole['name_role']))),
-                'description' => ucfirst(mb_strtolower(mb_trim($this->dataRole['description']))),
-            ],
-            [
-                'name_role' => AttributeValidator::uniqueIdNameLength(5, 'roles', 'name_role', $this->dataRole['id']),
-                'description' => AttributeValidator::stringValid(false, 4),
-            ],
-            [],
-            [
-                'name_role' => config('nicename.role'),
-                'description' => config('nicename.description'), ]
-        )->validate();
+        $validated = $this->validateServiceData($this->dataRole['id']);
 
-        $services = $this->iniService();
-
-        return NotifyQuerys::msgUpdate($services->update($this->dataRole, $this->dataRole['id']));
+        return $this->iniService()->update($this->dataRole['id'], $validated);
     }
 
-    public function roleData($intRole): void
+    public function roleData($dataRole): void
     {
-
-        $services = $this->iniService();
-        $dataRole = $services->show($intRole);
         $this->dataRole = $dataRole->toArray();
+    }
+
+    protected function getValidationAttributes(): array
+    {
+        return [
+            'name_role' => config('nicename.role'),
+            'description' => config('nicename.description'),
+        ];
+    }
+
+    private function validateServiceData(?int $excludeId = null): array
+    {
+        return Validator::make(
+            $this->transformServiceData(),
+            $this->getValidationRules($excludeId),
+            [],
+            $this->getValidationAttributes()
+        )->validate();
+    }
+
+    private function transformServiceData(): array
+    {
+        return [
+            'name_role' => ucwords(mb_strtolower(mb_trim($this->dataRole['name_role']))),
+            'description' => ucfirst(mb_strtolower(mb_trim($this->dataRole['description']))),
+        ];
+    }
+
+    private function getValidationRules(?int $excludeId = null): array
+    {
+        return [
+            'name_role' => AttributeValidator::uniqueIdNameLength(5, 'roles', 'name_role', $excludeId),
+            'description' => AttributeValidator::stringValid(false, 4),
+        ];
     }
 
     private function iniService()
     {
-        return new ModelService(new Role);
+        return new QueryRepository(new Role());
     }
 }

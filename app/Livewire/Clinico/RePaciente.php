@@ -112,12 +112,14 @@ final class RePaciente extends Component
     {
         $this->dispatch('clear-errors');
         $id = $this->pacienteForm->personData->person_id ?? 0;
-        $this->handleAction($nameoption, [
-            'id' => $id,
-            'pdfClass' => 'PatientPdf',
-            'route' => 're_paciente',
-            'model' => 'Patient',
-        ]);
+        $this->handleAction(
+            $nameoption, [
+                'id' => $id,
+                'pdfClass' => 'PatientPdf',
+                'route' => 're_paciente',
+                'model' => 'Patient',
+            ]
+        );
     }
 
     #[On('dataPatient')]
@@ -143,7 +145,8 @@ final class RePaciente extends Component
         if ($this->pacienteForm->personData->province_id) {
             $this->setProvinceCity($this->pacienteForm->personData->province_id, 0);
             $this->setnameProvinceCity(
-                $this->dataProvince($this->pacienteForm->personData->province_id)->province_name->toString(), null);
+                $this->dataProvince($this->pacienteForm->personData->province_id)->province_name->toString(), null
+            );
 
         }
     }
@@ -153,15 +156,17 @@ final class RePaciente extends Component
         $this->pacienteForm->infoPatient($patientId);
         $this->showMenuAction();
         $person = $this->pacienteForm->personData->person_name.' '.$this->pacienteForm->personData->person_lastname;
-        $this->messageWindow($person, fn (string $person): AlertModal => new AlertModal(
-            exception: 0,
-            type: 'advice',
-            title: 'Aviso',
-            buttonName: 'Aceptar',
-            event: '',
-            message: 'Paciente <b>'.$person.'</b> ya registrado !',
-            idModel: 0
-        ));
+        $this->messageWindow(
+            $person, fn (string $person): AlertModal => new AlertModal(
+                exception: 0,
+                type: 'advice',
+                title: 'Aviso',
+                buttonName: 'Aceptar',
+                event: '',
+                message: 'Paciente <b>'.$person.'</b> ya registrado !',
+                idModel: 0
+            )
+        );
 
     }
 }

@@ -99,12 +99,14 @@ final class ReEspecialista extends Component
 
         $this->dispatch('clear-errors');
         $id = $this->formHandler->dataespecialist['id'] ?? 0;
-        $this->handleAction($nameoption, [
-            'id' => $id,
-            'pdfClass' => 'MedicPdf',
-            'route' => 're_especialist',
-            'model' => 'Medical',
-        ]);
+        $this->handleAction(
+            $nameoption, [
+                'id' => $id,
+                'pdfClass' => 'MedicPdf',
+                'route' => 're_especialist',
+                'model' => 'Medical',
+            ]
+        );
     }
 
     public function validatePersonExits(MainPerson $mainPerson): void
@@ -131,15 +133,17 @@ final class ReEspecialista extends Component
         $this->formHandler->infoMedic($medicId);
         $this->showMenuAction();
         $person = $this->formHandler->personData->person_name.' '.$this->formHandler->personData->person_lastname;
-        $this->messageWindow($person, fn (string $person): AlertModal => new AlertModal(
-            exception: 0,
-            type: 'advice',
-            title: 'Aviso',
-            buttonName: 'Aceptar',
-            event: '',
-            message: 'Especialista <b>'.$person.'</b> ya registrada !',
-            idModel: 0
-        ));
+        $this->messageWindow(
+            $person, fn (string $person): AlertModal => new AlertModal(
+                exception: 0,
+                type: 'advice',
+                title: 'Aviso',
+                buttonName: 'Aceptar',
+                event: '',
+                message: 'Especialista <b>'.$person.'</b> ya registrada !',
+                idModel: 0
+            )
+        );
 
     }
 }

@@ -26,20 +26,19 @@ final class ReServices extends Component
 
     public function queryService(): void
     {
-        if (! ($this->isupdate)) {
-            $result = app()->call([$this->form, 'serviceStore']);
-        } else {
-            $result = app()->call([$this->form, 'serviceUpdate']);
-        }
-
-        $this->dispatch('show-toast', $result);
-        $this->isupdate = false;
+        $result = $this->isupdate ?
+                  $this->form->serviceUpdate() :
+                  $this->form->serviceStore();
+        $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
+        $message = $this->showQueryMessage($result, $messageType);
+        $this->showToastAndClear($message);
         $this->clearForm();
     }
 
     public function clearForm(): void
     {
         $this->form->reset();
+        $this->isupdate = false;
         $this->openservice = false;
     }
 
