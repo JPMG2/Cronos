@@ -48,7 +48,7 @@ final class PacienteForm extends Form
 
     public function patientStore(): Patient
     {
-        $this->validation()->onCreate($this->mergeFormData());
+        $this->validation()->validateServiceData(null, $this->mergeFormData());
 
         $patient = $this->createPatientAction()->handle($this->mergeFormData());
 
@@ -60,7 +60,7 @@ final class PacienteForm extends Form
     public function pacienteUpdate(): Person|Patient
     {
 
-        $this->validation()->onUpdate($this->mergeFormData(), (int) $this->personData->person_id);
+        $this->validation()->validateServiceData((int) $this->personData->person_id, $this->mergeFormData());
 
         $person = $this->updatePersonAction()->handle($this->mergeFormData(), (int) $this->personData->person_id);
 

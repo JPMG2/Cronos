@@ -30,24 +30,22 @@ final class AttributeValidator
     public static function uniqueEmail($model, $uniqueField, $id = null)
     {
         if ($id) {
-            return 'required|unique:'.$model.','.$uniqueField.','.$id.'|email|regex:/^([^<>]*)$/|max:255';
+            return 'required|unique:'.$model.','.$uniqueField.','.$id.'|email:rfc,dns|regex:/^([^<>]*)$/|max:255';
         }
 
-        return 'required|unique:'.$model.','.$uniqueField.'|email|regex:/^([^<>]*)$/|max:255';
+        return 'required|unique:'.$model.','.$uniqueField.'|email:rfc,dns|regex:/^([^<>]*)$/|max:255';
     }
 
     public static function emailValid($model, $uniqueField, $id = null)
     {
         return $id ?
-            ['sometimes', 'unique:'.$model.','.$uniqueField.','.$id, 'email', 'regex:/^([^<>]*)$/', 'max:255'] :
-           ['sometimes', 'unique:'.$model.','.$uniqueField, 'email', 'regex:/^([^<>]*)$/', 'max:255'];
+            ['sometimes', 'unique:'.$model.','.$uniqueField.','.$id, 'email:rfc,dns', 'regex:/^([^<>]*)$/', 'max:255'] :
+           ['sometimes', 'unique:'.$model.','.$uniqueField, 'email:rfc,dns', 'regex:/^([^<>]*)$/', 'max:255'];
     }
 
     public static function emailValidById($id, $model, $uniqueField)
     {
-        return ['sometimes',
-            'unique:'.$model.','.$uniqueField.','.$id,
-            'email', 'regex:/^([^<>]*)$/', 'max:255'];
+        return ['sometimes', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField.','.$id, 'regex:/^([^<>]*)$/', 'max:255'];
     }
 
     public static function stringValid($required, $length)

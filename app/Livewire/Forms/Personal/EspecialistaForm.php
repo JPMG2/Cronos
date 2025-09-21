@@ -61,7 +61,7 @@ final class EspecialistaForm extends Form
     public function specialistStore(): Medical
     {
         $formData = $this->mergeFormData();
-        $this->validation()->onCreate($formData);
+        $this->validation()->validateServiceData(null, $formData);
         $medic = $this->createMedicAction()->handle($formData);
         $this->specialistConfiguration($medic);
 
@@ -83,7 +83,7 @@ final class EspecialistaForm extends Form
 
         $formData = $this->mergeFormData();
 
-        $this->validation()->onUpdate($formData, $this->personData->person_id);
+        $this->validation()->validateServiceData($this->personData->person_id, $formData);
 
         $person = $this->updatePersonAction()->handle($formData, $this->personData->person_id);
 
