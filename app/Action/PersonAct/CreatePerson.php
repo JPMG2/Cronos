@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Action\PersonAct;
 
-use App\Classes\Services\ModelService;
+use App\Classes\Utilities\QueryRepository;
 use App\Models\Person;
 
 final class CreatePerson
@@ -12,8 +12,7 @@ final class CreatePerson
     public function handle(array $personData): Person
     {
 
-        return app()->make(ModelService::class, ['model' => new Person])
-            ->store($personData);
+        return new QueryRepository(new Person())->create($personData);
 
     }
 }

@@ -18,10 +18,8 @@ final class CreatePatiente
 
     public function handle(array $dataPatient): Patient
     {
-        $this->modelName = 'Patient';
-
         $person = $this->createPerson->handle($dataPatient);
 
-        return $person->patiente()->create($this->getValuesModel($dataPatient, $this->modelName));
+        return $person->patiente()->create($this->getValuesModel($dataPatient, new Patient()));
     }
 }
