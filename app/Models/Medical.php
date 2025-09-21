@@ -15,8 +15,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 final class Medical extends Model implements Filterable
 {
-    /** @use HasFactory<MedicalFactory> */
-    use HasFactory, RecordActivity, TableFilter;
+    /**
+     * @use HasFactory<MedicalFactory>
+     */
+    use HasFactory;
+
+    use RecordActivity;
+    use TableFilter;
 
     protected $fillable = [
         'person_id',

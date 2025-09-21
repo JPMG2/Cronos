@@ -31,8 +31,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 final class Person extends Model implements Filterable
 {
-    /** @use HasFactory<PersonFactory> */
-    use HasFactory,TableFilter;
+    /**
+     * @use HasFactory<PersonFactory>
+     */
+    use HasFactory;
+
+    use TableFilter;
 
     protected $fillable = [
         'document_id', 'province_id', 'gender_id', 'marital_status_id', 'occupation_id',
@@ -238,14 +242,12 @@ final class Person extends Model implements Filterable
     {
         return Attribute::make(
             set: fn ($value) => mb_strtolower(mb_trim($value)),
-
         );
     }
 
     protected function personAddress(): Attribute
     {
         return Attribute::make(
-
             set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }

@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class InsuranceType extends Model
 {
-    use HasFactory, RecordActivity;
+    use HasFactory;
+    use RecordActivity;
 
     protected $fillable = ['insuratype_name'];
 

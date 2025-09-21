@@ -11,7 +11,7 @@ final class UpdatePerson
 {
     public function handle(array $personData, int $id): Person
     {
-        return app()->make(ModelService::class, ['model' => new Person])
+        return app()->make(ModelService::class, ['model' => new Person()])
             ->update($personData, $id);
 
     }

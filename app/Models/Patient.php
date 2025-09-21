@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class Patient extends Model implements Filterable
 {
-    /** @use HasFactory<PatientFactory> */
+    /**
+     * @use HasFactory<PatientFactory>
+     */
     use HasFactory;
 
     protected $fillable = [

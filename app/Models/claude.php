@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class claude extends Model
+final class Claude extends Model
 {
     //
 }

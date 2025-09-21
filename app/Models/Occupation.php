@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Occupation extends Model
 {
-    /** @use HasFactory<OccupationFactory> */
+    /**
+     * @use HasFactory<OccupationFactory>
+     */
     use HasFactory;
 
     protected $fillable = ['occupation_name'];
@@ -20,7 +22,6 @@ final class Occupation extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
-
         );
     }
 }

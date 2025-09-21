@@ -74,7 +74,7 @@ final class RePaciente extends Component
         $result = $this->isupdate ?
             $this->pacienteForm->pacienteUpdate() :
             $this->pacienteForm->patientStore();
-        $messageType = $this->isupdate ? 'msgUpadte' : 'msgCreate';
+        $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
         $message = $this->showQueryMessage($result, $messageType);
         $this->showToastAndClear($message);
         $this->clearForm();

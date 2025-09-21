@@ -22,11 +22,11 @@ trait FormActionsTrait
     protected function handleAction($action, array $parameter)
     {
         $actions = [
-            'edit' => fn() => $this->edit(),
-            'new' => fn() => $this->new($parameter),
-            'print' => fn() => $this->print($parameter),
-            'show' => fn() => $this->show($parameter),
-            'history' => fn() => $this->history($parameter),
+            'edit' => fn () => $this->edit(),
+            'new' => fn () => $this->new($parameter),
+            'print' => fn () => $this->print($parameter),
+            'show' => fn () => $this->show($parameter),
+            'history' => fn () => $this->history($parameter),
         ];
 
         if (isset($actions[$action])) {

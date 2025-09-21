@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Nationality extends Model
 {
-    /** @use HasFactory<NationalityFactory> */
+    /**
+     * @use HasFactory<NationalityFactory>
+     */
     use HasFactory;
 
     protected $fillable = ['nationality_name'];
@@ -20,7 +22,6 @@ final class Nationality extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
-
         );
     }
 }

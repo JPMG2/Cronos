@@ -18,7 +18,7 @@ final class NotifyQuerys
      * @param  Model  $model  The model instance that was updated.
      * @return array The response message indicating the result of the update operation.
      */
-    public static function msgUpadte($model): array
+    public static function msgUpdate($model): array
     {
         if ($model->getChanges() && count($model->getChanges())) {
             $message = ['Actualización exitosa !!', 1];

@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 
 final class MaritalStatus extends Model
 {
-    /** @use HasFactory<MaritalStatusFactory> */
+    /**
+     * @use HasFactory<MaritalStatusFactory>
+     */
     use HasFactory;
 
     protected $fillable = ['maritalstatus_name'];
@@ -20,7 +22,6 @@ final class MaritalStatus extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
-
         );
     }
 }

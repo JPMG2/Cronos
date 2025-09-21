@@ -34,7 +34,7 @@ final class ServiceForm extends Form
 
         $services = $this->iniService();
 
-        return NotifyQuerys::msgUpadte($services->update($validated, $this->dataservice['id']));
+        return NotifyQuerys::msgUpdate($services->update($validated, $this->dataservice['id']));
     }
 
     public function loadDataServices($services): void

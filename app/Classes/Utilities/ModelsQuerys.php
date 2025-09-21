@@ -111,7 +111,7 @@ abstract class ModelsQuerys
      */
     final public function store(array $data): Model
     {
-        return $this->model->create($this->getValuesModel($data, $this->modelName));
+        return $this->model->create($this->getValuesModel($data, $this->model));
     }
 
     /**
@@ -149,7 +149,7 @@ abstract class ModelsQuerys
     {
         $model = $this->model->findOrFail($id);
 
-        $model->update($this->getValuesModel($data, $this->modelName));
+        $model->update($this->getValuesModel($data, $this->model));
 
         return $model;
     }

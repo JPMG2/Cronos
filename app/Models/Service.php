@@ -12,8 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Service extends Model
 {
-    /** @use HasFactory<ServiceFactory> */
-    use HasFactory, RecordActivity;
+    /**
+     * @use HasFactory<ServiceFactory>
+     */
+    use HasFactory;
+
+    use RecordActivity;
 
     protected $fillable = [
         'service_name',

@@ -42,7 +42,7 @@ final class RePrestador extends Component
     {
         $this->setIdPronvinceCity();
         $result = $this->isupdate ?
-            app()->call([$this->form, 'insuranceUpdate']) :
+            $this->form->insuranceUpdate() :
             $this->form->insuranceStore();
         $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
         $message = $this->showQueryMessage($result, $messageType);

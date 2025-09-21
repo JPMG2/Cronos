@@ -28,10 +28,12 @@ final class Province extends Model
             return null;
         }
 
-        return once(function () use ($query, $value) {
-            return $query->where('province_name', 'like', '%'.$value.'%')
-                ->orderBy('province_name');
-        });
+        return once(
+            function () use ($query, $value) {
+                return $query->where('province_name', 'like', '%'.$value.'%')
+                    ->orderBy('province_name');
+            }
+        );
     }
 
     protected function provinceName(): Attribute

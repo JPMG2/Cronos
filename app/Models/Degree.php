@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Degree extends Model
 {
-    /** @use HasFactory<DegreeFactory> */
+    /**
+     * @use HasFactory<DegreeFactory>
+     */
     use HasFactory;
 
     protected $fillable = [
@@ -23,7 +25,6 @@ final class Degree extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
-
         );
     }
 
@@ -31,7 +32,6 @@ final class Degree extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
-
         );
     }
 }

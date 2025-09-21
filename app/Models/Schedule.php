@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Schedule extends Model
 {
-    /** @use HasFactory<\Database\Factories\ScheduleFactory> */
+    /**
+     * @use HasFactory<\Database\Factories\ScheduleFactory>
+     */
     use HasFactory;
 }

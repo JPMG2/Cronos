@@ -46,7 +46,7 @@ final class ObraSocialTypeForm extends Form
 
         $services = $this->iniService();
 
-        return NotifyQuerys::msgUpadte($services->update($this->insuratypedata, $this->insuratypedata['id']));
+        return NotifyQuerys::msgUpdate($services->update($this->insuratypedata, $this->insuratypedata['id']));
     }
 
     public function insuranceData($idInsuraType)
@@ -60,6 +60,6 @@ final class ObraSocialTypeForm extends Form
 
     protected function iniService()
     {
-        return app()->make(ModelService::class, ['model' => new InsuranceType]);
+        return app()->make(ModelService::class, ['model' => new InsuranceType()]);
     }
 }

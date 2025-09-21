@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class Insurance extends Model implements Filterable
 {
-    use HasFactory, RecordActivity, TableFilter;
+    use HasFactory;
+    use RecordActivity;
+    use TableFilter;
 
     public static string $startFilterBay = 'insurance_name';
 

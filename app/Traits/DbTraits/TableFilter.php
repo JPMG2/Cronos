@@ -42,10 +42,12 @@ trait TableFilter
             ->join($table, 'medicals.person_id', '=', $table.'.id')
             ->orderBy($table.'.'.$columnName, 'asc')->with($withRelations)
             :
-        $query->whereHas($relationName, function ($query) use ($columnName, $searchValue): void {
-            $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%'])
-                ->orderBy($columnName, 'desc');
-        })->with($withRelations);
+        $query->whereHas(
+            $relationName, function ($query) use ($columnName, $searchValue): void {
+                $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%'])
+                    ->orderBy($columnName, 'desc');
+            }
+        )->with($withRelations);
     }
 
     private function person_name($query, string $relationName, string $searchvalue, array $withRelations)

@@ -29,6 +29,7 @@ trait ProvinceCity
     {
         if (empty($this->stringProvince)) {
             $this->showProvince = ! empty($this->listProvince);
+
             return null;
         }
 
@@ -51,6 +52,7 @@ trait ProvinceCity
     {
         if ($this->getProvinceId() <= 0 || empty($this->stringCity)) {
             $this->showCity = count($this->listCities) > 0;
+
             return null;
         }
 
@@ -80,7 +82,7 @@ trait ProvinceCity
         if (str($this->stringCity)->length() <= 0) {
             return;
         }
-        
+
         $this->setProvinceId(0);
         $this->stringCity = '';
     }
@@ -90,7 +92,7 @@ trait ProvinceCity
         if ($this->id_city <= 0) {
             return;
         }
-        
+
         $this->setCityId(0);
         $this->stringCity = '';
     }

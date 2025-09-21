@@ -34,9 +34,11 @@ trait RecordActivity
     {
 
         foreach (self::getRecordEvents() as $event) {
-            static::$event(function ($model) use ($event): void {
-                $model->recordActivity($event);
-            });
+            static::$event(
+                function ($model) use ($event): void {
+                    $model->recordActivity($event);
+                }
+            );
         }
 
     }
@@ -52,12 +54,14 @@ trait RecordActivity
             $this->getChanges = $this->getChanges();
         }
 
-        $this->log()->create([
-            'user_id' => auth()->id(),
-            'action_id' => $this->getActivityId($event),
-            'log_message' => 'ju',
-            'log_change' => empty($this->getChanges) ? null : json_encode($this->getChanges),
-        ]);
+        $this->log()->create(
+            [
+                'user_id' => auth()->id(),
+                'action_id' => $this->getActivityId($event),
+                'log_message' => 'ju',
+                'log_change' => empty($this->getChanges) ? null : json_encode($this->getChanges),
+            ]
+        );
     }
 
     protected function getActivityId($event)

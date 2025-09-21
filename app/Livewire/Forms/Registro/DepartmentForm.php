@@ -34,7 +34,7 @@ final class DepartmentForm extends Form
 
         $services = $this->iniService();
 
-        return NotifyQuerys::msgUpadte($services->update($data, $this->datadeparment['id']));
+        return NotifyQuerys::msgUpdate($services->update($data, $this->datadeparment['id']));
     }
 
     public function loadDataDepartment($department): void

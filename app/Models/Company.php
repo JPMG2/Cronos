@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Company extends Model
 {
-    use HasFactory, RecordActivity, SoftDeletes;
+    use HasFactory;
+    use RecordActivity;
+    use SoftDeletes;
 
     public string $checkchange = 'company_email';
 
@@ -49,7 +51,6 @@ final class Company extends Model
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
-
         );
     }
 
@@ -63,7 +64,6 @@ final class Company extends Model
     protected function companyAddress(): Attribute
     {
         return Attribute::make(
-
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }

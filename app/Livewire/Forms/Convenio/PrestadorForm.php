@@ -30,12 +30,11 @@ final class PrestadorForm extends Form
         return $this->iniService()->create($data);
     }
 
-    public function insuranceUpdate(PrestadorValidation $insuranceValidation): array
+    public function insuranceUpdate(): Model
     {
-        /*$services = $this->iniService();
+        $data = $this->validation()->validateServiceData($this->dataobrasocial->id, ($this->dataobrasocial->toArray()));
 
-        return NotifyQuerys::msgUpadte($services->update(
-            $insuranceValidation->onInsuranceUpdate($this->dataobrasocial), $this->dataobrasocial['id']));*/
+        return $this->iniService()->update($this->dataobrasocial->id, $data);
     }
 
     public function infoPrestador($idInsurance): Model
@@ -71,6 +70,9 @@ final class PrestadorForm extends Form
 
         $this->dataobrasocial->province_id = $data->city?->province->id;
         $this->dataobrasocial->city_id = $data->city_id;
+
+        // Set the insurance type name from the relationship
+        $this->dataobrasocial->insurance_type_name = $data->insuranceType?->insuratype_name ?? '';
 
     }
 }

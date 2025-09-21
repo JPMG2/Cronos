@@ -16,7 +16,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Branch extends Model
 {
-    use HasFactory, RecordActivity, SoftDeletes;
+    use HasFactory;
+    use RecordActivity;
+    use SoftDeletes;
 
     public string $checkchange = 'branch_email';
 
@@ -88,7 +90,6 @@ final class Branch extends Model
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
-
         );
     }
 
@@ -102,7 +103,6 @@ final class Branch extends Model
     protected function branchAddress(): Attribute
     {
         return Attribute::make(
-
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
         );
     }

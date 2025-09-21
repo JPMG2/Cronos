@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class Document extends Model
 {
-    /** @use HasFactory<DocumentFactory> */
+    /**
+     * @use HasFactory<DocumentFactory>
+     */
     use HasFactory;
 
     protected $fillable = ['document_name'];
@@ -23,7 +25,6 @@ final class Document extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
-
         );
     }
 }

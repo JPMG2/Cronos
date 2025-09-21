@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 final class BloodType extends Model
 {
-    /** @use HasFactory<\Database\Factories\BloodTypeFactory> */
+    /**
+     * @use HasFactory<\Database\Factories\BloodTypeFactory>
+     */
     use HasFactory;
 }

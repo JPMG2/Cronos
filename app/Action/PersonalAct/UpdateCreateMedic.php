@@ -11,14 +11,11 @@ final class UpdateCreateMedic
 {
     use UtilityForm;
 
-    protected string $modelName;
-
     public function handle(array $dataMedic, $personModel): Medical
     {
-        $this->modelName = 'Medical';
 
         return $personModel->medical()->updateOrCreate(
             ['person_id' => $personModel->id],
-            $this->getValuesModel($dataMedic, $this->modelName));
+            $this->getValuesModel($dataMedic, new Medical()));
     }
 }

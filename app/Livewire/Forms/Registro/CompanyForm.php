@@ -52,7 +52,7 @@ final class CompanyForm extends Form
 
         if (! is_null($companyObj->show())) {
 
-            $message = NotifyQuerys::msgUpadte(
+            $message = NotifyQuerys::msgUpdate(
                 $companyObj->update(
                     $companyValidation->onCompanyUpdate($this->datacompany, $companyObj->getCompanyvalues()['id'])
                 )

@@ -59,7 +59,7 @@ final class RoleForm extends Form
 
         $services = $this->iniService();
 
-        return NotifyQuerys::msgUpadte($services->update($this->dataRole, $this->dataRole['id']));
+        return NotifyQuerys::msgUpdate($services->update($this->dataRole, $this->dataRole['id']));
     }
 
     public function roleData($intRole): void

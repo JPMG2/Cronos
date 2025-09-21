@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 
 final class Credential extends Model
 {
-    /** @use HasFactory<CredentialFactory> */
+    /**
+     * @use HasFactory<CredentialFactory>
+     */
     use HasFactory;
 
     protected $fillable = [
@@ -24,16 +26,20 @@ final class Credential extends Model
         if ($credentialModelId) {
 
             return self::where('id', $idcredential)
-                ->whereHas('medicals', function ($query) use ($credentialNumber, $credentialModelId) {
-                    $query->where('credential_number', $credentialNumber)
-                        ->whereNotIn('medicals.person_id', [$credentialModelId]);
+                ->whereHas(
+                    'medicals', function ($query) use ($credentialNumber, $credentialModelId) {
+                        $query->where('credential_number', $credentialNumber)
+                            ->whereNotIn('medicals.person_id', [$credentialModelId]);
 
-                })->exists();
+                    }
+                )->exists();
         }
 
-        return self::whereHas('medicals', static function ($query) use ($credentialNumber) {
-            $query->where('credential_number', $credentialNumber);
-        })->where('id', $idcredential)->exists();
+        return self::whereHas(
+            'medicals', static function ($query) use ($credentialNumber) {
+                $query->where('credential_number', $credentialNumber);
+            }
+        )->where('id', $idcredential)->exists();
     }
 
     public function medicals()
@@ -46,7 +52,6 @@ final class Credential extends Model
     {
         return Attribute::make(
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
-
         );
     }
 
@@ -54,7 +59,6 @@ final class Credential extends Model
     {
         return Attribute::make(
             set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim((string) $value))),
-
         );
     }
 }

@@ -12,15 +12,13 @@ final class CreateMedic
 {
     use UtilityForm;
 
-    protected string $modelName;
-
     public function __construct(private readonly CreatePerson $createPerson) {}
 
     public function handle(array $dataMedic): Medical
     {
-        $this->modelName = 'Medical';
+
         $person = $this->createPerson->handle($dataMedic);
 
-        return $person->medical()->create($this->getValuesModel($dataMedic, $this->modelName));
+        return $person->medical()->create($this->getValuesModel($dataMedic, new Medical()));
     }
 }
