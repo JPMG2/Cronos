@@ -44,6 +44,8 @@ Route::group(
     ['middleware' => 'auth', 'verified'], static function () {
         Route::get('/re_prestador', App\Livewire\Convenio\RePrestador::class)
             ->name('re_prestador')->middleware(['rolemenu:re_prestador']);
+        Route::get('re_planes', App\Livewire\Convenio\ReInsurancePlan::class)
+            ->name('re_planes')->middleware(['rolemenu:re_planes']);
     }
 );
 
