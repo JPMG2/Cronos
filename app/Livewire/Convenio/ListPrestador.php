@@ -15,7 +15,8 @@ use Livewire\WithPagination;
 
 final class ListPrestador extends Component
 {
-    use TableSorting, WithPagination;
+    use TableSorting;
+    use WithPagination;
 
     public $show = false;
 
@@ -37,9 +38,11 @@ final class ListPrestador extends Component
 
     public function render()
     {
-        return view('livewire.convenio.list-prestador', [
+        return view(
+            'livewire.convenio.list-prestador', [
             'listPestador' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
-        ]);
+            ]
+        );
     }
 
     #[On('showModalInsurance')]

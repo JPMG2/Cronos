@@ -11,7 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class BranchCreateMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $branch;
 
@@ -36,8 +37,10 @@ final class BranchCreateMail extends Mailable
     public function build(): self
     {
         return $this->markdown('emails.registro.branchcreatemail')
-            ->with([
+            ->with(
+                [
                 'branch' => $this->branch,
-            ]);
+                ]
+            );
     }
 }

@@ -17,7 +17,9 @@ use Livewire\Component;
 
 final class RePrestador extends Component
 {
-    use FormHandling, HandlesActionPolicy, ProvinceCity;
+    use FormHandling;
+    use HandlesActionPolicy;
+    use ProvinceCity;
 
     public PrestadorForm $form;
 
@@ -28,9 +30,11 @@ final class RePrestador extends Component
     {
         $this->commonQuerys = app('commonquery');
 
-        return view('livewire.convenio.re-prestador', [
+        return view(
+            'livewire.convenio.re-prestador', [
             'listState' => $this->commonQuerys::stateQuery([1, 2]),
-        ]);
+            ]
+        );
     }
 
     public function mount(): void
@@ -106,12 +110,14 @@ final class RePrestador extends Component
     public function obrasocialHandleMenuAction(string $nameoption): void
     {
         $id = $this->form->dataobrasocial->insurance_id ?? 0;
-        $this->handleAction($nameoption, [
+        $this->handleAction(
+            $nameoption, [
             'id' => $id,
             'pdfClass' => 'InsurancePdf',
             'route' => 're_prestador',
             'model' => 'Insurance',
-        ]);
+            ]
+        );
     }
 
     private function setIdPronvinceCity(): void

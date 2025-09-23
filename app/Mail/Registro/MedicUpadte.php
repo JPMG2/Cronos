@@ -11,7 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class MedicUpadte extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $medic;
 
@@ -33,8 +34,10 @@ final class MedicUpadte extends Mailable
     public function build(): self
     {
         return $this->markdown('emails.registro.medicupdate')
-            ->with([
+            ->with(
+                [
                 'medic' => $this->medic,
-            ]);
+                ]
+            );
     }
 }

@@ -15,7 +15,8 @@ use Livewire\WithPagination;
 
 final class ListPaciente extends Component
 {
-    use TableSorting,WithPagination;
+    use TableSorting;
+    use WithPagination;
 
     public $show = false;
 
@@ -34,7 +35,8 @@ final class ListPaciente extends Component
     {
 
         return view(
-            'livewire.clinicos.list-paciente', [
+            'livewire.clinicos.list-paciente',
+            [
                 'listPatients' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
             ]
         );

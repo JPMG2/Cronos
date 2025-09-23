@@ -42,7 +42,7 @@ final class BranchForm extends Form
 
     protected function iniService()
     {
-        return app()->make(ModelService::class, ['model' => new Branch]);
+        return app()->make(ModelService::class, ['model' => new Branch()]);
     }
 
     public function branchUpdate(BranchValidation $branchValidation): array

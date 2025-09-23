@@ -25,10 +25,10 @@ trait TableFilter
      * based on the `state_name` attribute of the related model. It also enables eager loading
      * of the specified relations.
      *
-     * @param  Builder  $query  The query builder instance.
+     * @param  Builder $query         The query builder instance.
      * @param  string  $relationName  The name of the relation to apply the filter on.
-     * @param  string  $searchvalue  The value to search for in the `state_name` attribute.
-     * @param  array  $withRelations  The relations to eager load.
+     * @param  string  $searchvalue   The value to search for in the `state_name` attribute.
+     * @param  array   $withRelations The relations to eager load.
      * @return Builder The modified query builder instance.
      */
     private function state_id($query, string $relationName, string $searchvalue, array $withRelations)
@@ -43,7 +43,8 @@ trait TableFilter
             ->orderBy($table.'.'.$columnName, 'asc')->with($withRelations)
             :
         $query->whereHas(
-            $relationName, function ($query) use ($columnName, $searchValue): void {
+            $relationName,
+            function ($query) use ($columnName, $searchValue): void {
                 $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%'])
                     ->orderBy($columnName, 'desc');
             }
@@ -67,10 +68,10 @@ trait TableFilter
      * based on the `specialty_name` attribute of the related model. It also enables eager loading
      * of the specified relations.
      *
-     * @param  Builder  $query  The query builder instance.
+     * @param  Builder $query         The query builder instance.
      * @param  string  $relationName  The name of the relation to apply the filter on.
-     * @param  string  $searchvalue  The value to search for in the `specialty_name` attribute.
-     * @param  array  $withRelations  The relations to eager load.
+     * @param  string  $searchvalue   The value to search for in the `specialty_name` attribute.
+     * @param  array   $withRelations The relations to eager load.
      * @return Builder The modified query builder instance.
      */
     private function specialty_id($query, string $relationName, string $searchvalue, array $withRelations)
@@ -86,10 +87,10 @@ trait TableFilter
      * based on the `credential_number` attribute of the related model. It also enables eager loading
      * of the specified relations.
      *
-     * @param  Builder  $query  The query builder instance.
+     * @param  Builder $query         The query builder instance.
      * @param  string  $relationName  The name of the relation to apply the filter on.
-     * @param  string  $searchvalue  The value to search for in the `credential_number` attribute.
-     * @param  array  $withRelations  The relations to eager load.
+     * @param  string  $searchvalue   The value to search for in the `credential_number` attribute.
+     * @param  array   $withRelations The relations to eager load.
      * @return Builder The modified query builder instance.
      */
     private function credential_id($query, string $relationName, string $searchvalue, array $withRelations)

@@ -51,9 +51,11 @@ final class EspecialistValidation
             'document_id' => AttributeValidator::requireAndExists('documents', 'id', 'document_id'),
             'num_document' => [
                 'bail',
-                Rule::prohibitedIf(function () use ($especialsit) {
-                    return empty($especialsit['document_id']) && ! empty($especialsit['num_document']);
-                }),
+                Rule::prohibitedIf(
+                    function () use ($especialsit) {
+                        return empty($especialsit['document_id']) && ! empty($especialsit['num_document']);
+                    }
+                ),
                 AttributeDocumentValidator::documentTypeUnique((int) $especialsit['document_id'], $especialsit['num_document'], $excludeId),
                 AttributeValidator::stringValid(true, 5),
             ],

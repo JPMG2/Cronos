@@ -16,7 +16,10 @@ use Livewire\Component;
 
 final class ReBranch extends Component
 {
-    use FormActionsTrait, HandlesActionPolicy, ProvinceCity, UtilityForm;
+    use FormActionsTrait;
+    use HandlesActionPolicy;
+    use ProvinceCity;
+    use UtilityForm;
 
     public BranchForm $form;
 
@@ -28,11 +31,13 @@ final class ReBranch extends Component
 
         $this->commonQuerys = app('commonquery');
 
-        return view('livewire.registro.re-branch', [
+        return view(
+            'livewire.registro.re-branch', [
             'listCompanies' => $this->commonQuerys::companyQuery([1]),
             'listState' => $this->commonQuerys::stateQuery([1, 2]),
 
-        ]);
+            ]
+        );
     }
 
     public function queryBranch()
@@ -78,8 +83,11 @@ final class ReBranch extends Component
         app()->call([$this->form, 'infoBranc'], ['branchId' => $branchId]);
 
         $this->setLocactionNameID(
-            $this->form->getProvinceId(), $this->form->getCityId(),
-            $this->form->getProvinceName(), $this->form->getCityName());
+            $this->form->getProvinceId(),
+            $this->form->getCityId(),
+            $this->form->getProvinceName(),
+            $this->form->getCityName()
+        );
 
         $this->isdisabled = 'disabled';
 
@@ -89,11 +97,13 @@ final class ReBranch extends Component
     public function branchHandleMenuAction(string $nameoption)
     {
         $id = $this->form->databranch['id'] ?? 0;
-        $this->handleAction($nameoption, [
+        $this->handleAction(
+            $nameoption, [
             'id' => $id,
             'pdfClass' => 'BranchPdf',
             'route' => 're_sucursal',
             'model' => 'Branch',
-        ]);
+            ]
+        );
     }
 }

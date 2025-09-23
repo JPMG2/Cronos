@@ -11,7 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class CompanyUpdateMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $company;
 
@@ -36,8 +37,10 @@ final class CompanyUpdateMail extends Mailable
     public function build(): self
     {
         return $this->markdown('emails.registro.companyupdatemail')
-            ->with([
+            ->with(
+                [
                 'company' => $this->company,
-            ]);
+                ]
+            );
     }
 }

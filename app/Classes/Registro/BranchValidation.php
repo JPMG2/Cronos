@@ -13,7 +13,6 @@ final class BranchValidation
     {
 
         return Validator::make(
-
             $this->inicialiciteAtributes($branch),
             [
                 'company_id' => 'required',
@@ -37,7 +36,6 @@ final class BranchValidation
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
             $this->niceNames()
-
         )->validate();
     }
 
@@ -88,7 +86,6 @@ final class BranchValidation
     {
 
         return Validator::make(
-
             $this->inicialiciteAtributes($branch),
             [
 
@@ -113,7 +110,6 @@ final class BranchValidation
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
             $this->niceNames()
-
         )->validate();
     }
 }

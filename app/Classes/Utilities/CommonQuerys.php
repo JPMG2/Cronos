@@ -98,7 +98,7 @@ final class CommonQuerys extends Model
     {
         return $occupation
             ? Occupation::query()->whereRaw('LOWER(occupation_name) like ?', ['%'.mb_strtolower($occupation).'%'])
-                ->orderBy('occupation_name')->get()
+            ->orderBy('occupation_name')->get()
             : Occupation::query()->orderBy('occupation_name')->get();
     }
 

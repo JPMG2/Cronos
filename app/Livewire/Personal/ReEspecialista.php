@@ -20,7 +20,8 @@ use Livewire\Component;
 
 final class ReEspecialista extends Component
 {
-    use FormHandling, HandlesActionPolicy;
+    use FormHandling;
+    use HandlesActionPolicy;
 
     public EspecialistaForm $formHandler;
 
@@ -100,7 +101,8 @@ final class ReEspecialista extends Component
         $this->dispatch('clear-errors');
         $id = $this->formHandler->dataespecialist['id'] ?? 0;
         $this->handleAction(
-            $nameoption, [
+            $nameoption,
+            [
                 'id' => $id,
                 'pdfClass' => 'MedicPdf',
                 'route' => 're_especialist',
@@ -134,7 +136,8 @@ final class ReEspecialista extends Component
         $this->showMenuAction();
         $person = $this->formHandler->personData->person_name.' '.$this->formHandler->personData->person_lastname;
         $this->messageWindow(
-            $person, fn (string $person): AlertModal => new AlertModal(
+            $person,
+            fn (string $person): AlertModal => new AlertModal(
                 exception: 0,
                 type: 'advice',
                 title: 'Aviso',

@@ -27,7 +27,8 @@ final class Credential extends Model
 
             return self::where('id', $idcredential)
                 ->whereHas(
-                    'medicals', function ($query) use ($credentialNumber, $credentialModelId) {
+                    'medicals',
+                    function ($query) use ($credentialNumber, $credentialModelId) {
                         $query->where('credential_number', $credentialNumber)
                             ->whereNotIn('medicals.person_id', [$credentialModelId]);
 
@@ -36,7 +37,8 @@ final class Credential extends Model
         }
 
         return self::whereHas(
-            'medicals', static function ($query) use ($credentialNumber) {
+            'medicals',
+            static function ($query) use ($credentialNumber) {
                 $query->where('credential_number', $credentialNumber);
             }
         )->where('id', $idcredential)->exists();

@@ -10,7 +10,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class PersonType
 {
-    use Dispatchable,  SerializesModels;
+    use Dispatchable;
+    use SerializesModels;
 
     public string $personType;
 

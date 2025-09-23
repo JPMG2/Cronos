@@ -14,7 +14,7 @@ final class PDFController extends Controller
 
         $baseclass = mb_trim('App\Classes\PdfGenerator\ ').class_basename($type);
 
-        return (new ModelPdfService)->generatePdfById(new $baseclass, $modelId);
+        return (new ModelPdfService())->generatePdfById(new $baseclass(), $modelId);
 
     }
 }

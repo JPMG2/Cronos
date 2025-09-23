@@ -48,9 +48,11 @@ final class PacienteValidation
         return [
             'num_document' => [
                 'bail',
-                Rule::prohibitedIf(static function () use ($arrayPatient) {
-                    return empty($arrayPatient['document_id']) && ! empty($arrayPatient['num_document']);
-                }),
+                Rule::prohibitedIf(
+                    static function () use ($arrayPatient) {
+                        return empty($arrayPatient['document_id']) && ! empty($arrayPatient['num_document']);
+                    }
+                ),
                 AttributeDocumentValidator::documentTypeUnique((int) $arrayPatient['document_id'], $arrayPatient['num_document'], $excludeId),
                 AttributeValidator::stringValid(true, 5),
             ],

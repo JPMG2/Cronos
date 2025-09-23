@@ -47,15 +47,17 @@ final class OpcionMenu extends Component
     public function changeColor($option)
     {
 
-        $this->optioncolor = Arr::map($this->optioncolor, function (string $value, string $key) use ($option) {
-            if ($key === $option) {
-                $value = true;
-            } else {
-                $value = false;
-            }
+        $this->optioncolor = Arr::map(
+            $this->optioncolor, function (string $value, string $key) use ($option) {
+                if ($key === $option) {
+                    $value = true;
+                } else {
+                    $value = false;
+                }
 
-            return $value;
-        });
+                return $value;
+            }
+        );
 
     }
 }

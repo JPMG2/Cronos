@@ -23,14 +23,18 @@ final class LogSuccess
      */
     public function handle(Login $event): void
     {
-        $welcome = Welcome::create([
+        $welcome = Welcome::create(
+            [
             'activity' => 'login',
-        ]);
+            ]
+        );
 
-        $welcome->logs()->create([
+        $welcome->logs()->create(
+            [
             'user_id' => $event->user->id,
             'action_id' => Action::where('action_name', 'login')->first()->id,
             'log_message' => 'Ingresó al sistema',
-        ]);
+            ]
+        );
     }
 }

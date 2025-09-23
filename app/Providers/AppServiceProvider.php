@@ -30,14 +30,18 @@ final class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('commonquery', fn ($app): CommonQuerys => new CommonQuerys());
 
-        $this->app->bind(ModelService::class, /** @throws InvalidArgumentException */
+        $this->app->bind(
+            ModelService::class, /**
+            * @throws InvalidArgumentException 
+            */
             function ($app, array $params): ModelService {
                 if (! array_key_exists('model', $params) || ! $params['model'] instanceof Model) {
                     throw new InvalidArgumentException('A valid Eloquent model must be passed to ModelService.');
                 }
 
                 return new ModelService($params['model']);
-            });
+            }
+        );
 
     }
 

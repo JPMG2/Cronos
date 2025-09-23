@@ -11,7 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class PacientCreate extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $patiente;
 
@@ -38,8 +39,10 @@ final class PacientCreate extends Mailable
     {
 
         return $this->markdown('emails.mservicios.patientnewemail')
-            ->with([
+            ->with(
+                [
                 'patient' => $this->patiente,
-            ]);
+                ]
+            );
     }
 }

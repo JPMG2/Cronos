@@ -13,7 +13,6 @@ final class PersonValidation
     {
 
         return Validator::make(
-
             $this->inicialiciteAtributes($person),
             [
                 'person_name' => AttributeValidator::stringValid(true, 4),
@@ -31,7 +30,6 @@ final class PersonValidation
 
             ],
             $this->niceNames()
-
         )->validate();
     }
 
@@ -72,7 +70,6 @@ final class PersonValidation
     public function onPersonUpdate(array $person, int $id)
     {
         return Validator::make(
-
             $this->inicialiciteAtributes($person),
             [
                 'person_name' => AttributeValidator::stringValid(true, 4),
@@ -90,7 +87,6 @@ final class PersonValidation
 
             ],
             $this->niceNames()
-
         )->validate();
     }
 }

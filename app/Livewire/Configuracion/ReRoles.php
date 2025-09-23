@@ -16,7 +16,8 @@ use Livewire\Component;
 
 final class ReRoles extends Component
 {
-    use HandleMenuAction, UtilityForm;
+    use HandleMenuAction;
+    use UtilityForm;
 
     public RoleForm $roleForm;
 
@@ -28,7 +29,8 @@ final class ReRoles extends Component
         $this->commonQuerys = app('commonquery');
 
         return view(
-            'livewire.configuracion.re-roles', [
+            'livewire.configuracion.re-roles',
+            [
                 'listRoles' => $this->commonQuerys::listRoles(['Owner']),
             ]
         );
@@ -67,7 +69,8 @@ final class ReRoles extends Component
     public function deleteRole(Role $role)
     {
         $this->messageWindow(
-            $role, function ($role) {
+            $role,
+            function ($role) {
                 if (! empty($this->checkRoleAssignment($role)['message'])) {
                     return new AlertModal(
                         exception: 0,

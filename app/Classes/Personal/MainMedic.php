@@ -22,9 +22,11 @@ final class MainMedic
     {
         Credential::query()->findOrFail($credentialId);
 
-        $medic->credentials()->sync([
+        $medic->credentials()->sync(
+            [
             $credentialId => ['credential_number' => $credentialNumber],
-        ]);
+            ]
+        );
 
     }
 

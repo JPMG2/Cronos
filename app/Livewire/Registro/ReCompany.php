@@ -13,7 +13,8 @@ use Livewire\Component;
 
 final class ReCompany extends Component
 {
-    use ProvinceCity, UtilityForm;
+    use ProvinceCity;
+    use UtilityForm;
 
     public CompanyForm $form;
 
@@ -74,8 +75,10 @@ final class ReCompany extends Component
 
         $this->commonQuerys = app('commonquery');
 
-        return view('livewire.registro.re-company', [
+        return view(
+            'livewire.registro.re-company', [
             'listState' => $this->commonQuerys::stateQuery([1, 2]),
-        ]);
+            ]
+        );
     }
 }

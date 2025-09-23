@@ -15,7 +15,8 @@ use Livewire\WithPagination;
 
 final class ListEspecialista extends Component
 {
-    use TableSorting, WithPagination;
+    use TableSorting;
+    use WithPagination;
 
     public ListEspecialistaForm $listForm;
 
@@ -37,7 +38,8 @@ final class ListEspecialista extends Component
     public function render()
     {
         return view(
-            'livewire.personal.list-especialista', [
+            'livewire.personal.list-especialista',
+            [
                 'listMedical' => $this->getMedicService()->listSearch($this->columnFilter)->paginate(15),
             ]
         );

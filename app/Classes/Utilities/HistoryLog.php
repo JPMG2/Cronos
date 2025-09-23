@@ -22,13 +22,15 @@ final class HistoryLog
 
     public function loadHistoryData()
     {
-        return $this->getModel()::with(['log' => function ($query) {
-            $query->orderBy('created_at', 'desc');
-        }, 'log.user' => function ($query) {
-            $query->select('id', 'name', 'last_name');
-        }, 'log.action' => function ($query) {
-            $query->select('id', 'action_inpass');
-        }])->find($this->getId());
+        return $this->getModel()::with(
+            ['log' => function ($query) {
+                $query->orderBy('created_at', 'desc');
+            }, 'log.user' => function ($query) {
+                $query->select('id', 'name', 'last_name');
+            }, 'log.action' => function ($query) {
+                $query->select('id', 'action_inpass');
+            }]
+        )->find($this->getId());
 
     }
 

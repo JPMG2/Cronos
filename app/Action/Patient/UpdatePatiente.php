@@ -16,6 +16,7 @@ final class UpdatePatiente
 
         return $personModel->patiente()->updateOrCreate(
             ['person_id' => $personModel->id],
-            $this->getValuesModel($patientData, new Patient()));
+            $this->getValuesModel($patientData, new Patient())
+        );
     }
 }

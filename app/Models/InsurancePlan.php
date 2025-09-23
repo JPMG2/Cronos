@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 final class InsurancePlan extends Model
 {
-    /** @use HasFactory<\Database\Factories\InsurancePlanFactory> */
+    /**
+ * @use HasFactory<\Database\Factories\InsurancePlanFactory> 
+*/
     use HasFactory;
 }

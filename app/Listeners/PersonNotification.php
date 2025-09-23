@@ -20,10 +20,12 @@ final class PersonNotification
         $pipeline = app(Pipeline::class);
         $pipeline
             ->send($event)
-            ->through([
+            ->through(
+                [
                 MedicHandler::class,
                 PacienteHandler::class,
-            ])->then(fn ($result) => $result);
+                ]
+            )->then(fn ($result) => $result);
 
     }
 }

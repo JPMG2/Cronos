@@ -15,18 +15,21 @@ final class SendPersonEmail
 
     public function __construct(
         private readonly EmailsModel $emailsModel = new EmailsModel()
-    ) {}
+    ) {
+    }
 
     public function handle($event, string $action, string $baseclass): void
     {
         match ($action) {
             self::ACTION_CREATE => $this->emailsModel->sendEmailCreate(
                 new $baseclass($event->mailClass),
-                $event->model, $event->receptor
+                $event->model,
+                $event->receptor
             ),
             self::ACTION_UPDATE => $this->emailsModel->sendEmailUpdate(
                 new $baseclass($event->mailClass),
-                $event->model, $event->receptor
+                $event->model,
+                $event->receptor
             ),
             default => throw new InvalidArgumentException("Invalid action: {$action}")
         };

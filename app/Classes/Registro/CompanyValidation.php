@@ -13,7 +13,6 @@ final class CompanyValidation
     {
 
         return Validator::make(
-
             $this->inicialiciteAtributes($company),
             [
 
@@ -38,7 +37,6 @@ final class CompanyValidation
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
             $this->niceNames()
-
         )->validate();
     }
 
@@ -84,7 +82,6 @@ final class CompanyValidation
     public function onCompanyUpdate(array $company, $idcompany)
     {
         return Validator::make(
-
             $this->inicialiciteAtributes($company),
             [
                 'company_name' => AttributeValidator::uniqueIdNameLength(3, 'companies', 'company_name', $idcompany),
@@ -107,7 +104,6 @@ final class CompanyValidation
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
             $this->niceNames()
-
         )->validate();
     }
 }

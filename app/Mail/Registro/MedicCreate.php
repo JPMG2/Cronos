@@ -11,7 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 final class MedicCreate extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -36,8 +37,10 @@ final class MedicCreate extends Mailable
     public function build(): self
     {
         return $this->markdown('emails.registro.mediccreate')
-            ->with([
+            ->with(
+                [
                 'medic' => $this->medic,
-            ]);
+                ]
+            );
     }
 }

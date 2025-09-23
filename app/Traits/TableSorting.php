@@ -35,7 +35,7 @@ trait TableSorting
      * otherwise, it sets the sort direction to ascending. It then sets the column name
      * to be used for ordering the query results.
      *
-     * @param  string  $columValue  The name of the column to order by.
+     * @param string $columValue The name of the column to order by.
      */
     public function orderColumBy(string $column): void
     {
@@ -53,7 +53,7 @@ trait TableSorting
      * This method sets up the initial state for table sorting by resetting the page,
      * resetting order values, and setting the filter value based on the model's starting filter.
      *
-     * @param  string  $modelName  The name of the model to initialize table sorting for.
+     * @param string $modelName The name of the model to initialize table sorting for.
      */
     public function setupTableSorting(string $modelName): void
     {
@@ -79,7 +79,7 @@ trait TableSorting
      * Gets the default filter field for a model.
      * First tries to get from config, then falls back to interface method.
      *
-     * @param  string  $modelName  The name of the model.
+     * @param  string $modelName The name of the model.
      * @return string The default filter field.
      */
     private function getModelDefaultFilter(string $modelName): string

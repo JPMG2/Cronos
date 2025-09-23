@@ -19,16 +19,18 @@ final readonly class ArraySchedule implements ValidationRule
     ];
 
     /**
-     * @param  array  $scheduleArray  The schedule data to validate
+     * @param array $scheduleArray The schedule data to validate
      */
-    public function __construct(private array $scheduleArray) {}
+    public function __construct(private array $scheduleArray)
+    {
+    }
 
     /**
      * Validates the schedule array
      *
-     * @param  string  $attribute  The attribute being validated
-     * @param  mixed  $value  The value being validated
-     * @param  Closure  $fail  The callback to invoke on validation failure
+     * @param string  $attribute The attribute being validated
+     * @param mixed   $value     The value being validated
+     * @param Closure $fail      The callback to invoke on validation failure
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -44,7 +46,7 @@ final readonly class ArraySchedule implements ValidationRule
     /**
      * Validates schedules for all active days
      *
-     * @param  array  $indexes  Indexes of active days to validate
+     * @param array $indexes Indexes of active days to validate
      */
     private function validateSchedules(array $indexes): void
     {
@@ -118,7 +120,7 @@ final readonly class ArraySchedule implements ValidationRule
     /**
      * Validates that a time string is in HH:MM format (24-hour)
      *
-     * @param  string  $time  The time string to validate
+     * @param  string $time The time string to validate
      * @return bool True if the time is in valid format
      */
     private function isValidTimeFormat(string $time): bool
@@ -129,7 +131,7 @@ final readonly class ArraySchedule implements ValidationRule
     /**
      * Converts a time string in HH:MM format to total minutes
      *
-     * @param  string  $time  Time in HH:MM format
+     * @param  string $time Time in HH:MM format
      * @return int Total minutes (hours * 60 + minutes)
      */
     private function timeToMinutes(string $time): int
@@ -147,9 +149,9 @@ final readonly class ArraySchedule implements ValidationRule
     /**
      * Throws a validation exception with a specific error message
      *
-     * @param  string  $inputName  The name of the input field with the error
-     * @param  string  $message  The error message to display
-     * @param  int|null  $index  Optional index for array inputs
+     * @param string   $inputName The name of the input field with the error
+     * @param string   $message   The error message to display
+     * @param int|null $index     Optional index for array inputs
      *
      * @throws ValidationException
      */

@@ -36,12 +36,14 @@ final class ActionsForm extends Form
         )->validate();
         $services = $this->iniService();
 
-        return NotifyQuerys::msgCreateUpdateMany($services
-            ->addWithRelationship(
-                (int) $this->dataaction['role_id'],
-                $this->dataaction['action_id'],
-                'actions'
-            ));
+        return NotifyQuerys::msgCreateUpdateMany(
+            $services
+                ->addWithRelationship(
+                    (int) $this->dataaction['role_id'],
+                    $this->dataaction['action_id'],
+                    'actions'
+                )
+        );
     }
 
     public function actionData(int $intRole)

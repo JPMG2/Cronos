@@ -16,6 +16,7 @@ final class UpdateCreateMedic
 
         return $personModel->medical()->updateOrCreate(
             ['person_id' => $personModel->id],
-            $this->getValuesModel($dataMedic, new Medical()));
+            $this->getValuesModel($dataMedic, new Medical())
+        );
     }
 }

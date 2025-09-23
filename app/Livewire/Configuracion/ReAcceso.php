@@ -29,7 +29,8 @@ final class ReAcceso extends Component
         $this->commonQuerys = app('commonquery');
 
         return view(
-            'livewire.configuracion.re-acceso', [
+            'livewire.configuracion.re-acceso',
+            [
                 'listRoles' => $this->commonQuerys::listRoles(['Owner']),
                 'listMenus' => Menu::whereNull('menu_id')->orderBy('id')->get(),
             ]
@@ -97,7 +98,8 @@ final class ReAcceso extends Component
         $this->nameMenu = $menu->grup_menu;
         $this->listOptionMenu = $menu->menus;
         $this->idOptionMenu = Arr::mapWithKeys(
-            $this->listOptionMenu->toArray(), static function (array $item, int $key) {
+            $this->listOptionMenu->toArray(),
+            static function (array $item, int $key) {
                 return [$item['id'] => $item['id']];
             }
         );

@@ -113,7 +113,8 @@ final class RePaciente extends Component
         $this->dispatch('clear-errors');
         $id = $this->pacienteForm->personData->person_id ?? 0;
         $this->handleAction(
-            $nameoption, [
+            $nameoption,
+            [
                 'id' => $id,
                 'pdfClass' => 'PatientPdf',
                 'route' => 're_paciente',
@@ -145,7 +146,8 @@ final class RePaciente extends Component
         if ($this->pacienteForm->personData->province_id) {
             $this->setProvinceCity($this->pacienteForm->personData->province_id, 0);
             $this->setnameProvinceCity(
-                $this->dataProvince($this->pacienteForm->personData->province_id)->province_name->toString(), null
+                $this->dataProvince($this->pacienteForm->personData->province_id)->province_name->toString(),
+                null
             );
 
         }
@@ -157,7 +159,8 @@ final class RePaciente extends Component
         $this->showMenuAction();
         $person = $this->pacienteForm->personData->person_name.' '.$this->pacienteForm->personData->person_lastname;
         $this->messageWindow(
-            $person, fn (string $person): AlertModal => new AlertModal(
+            $person,
+            fn (string $person): AlertModal => new AlertModal(
                 exception: 0,
                 type: 'advice',
                 title: 'Aviso',
