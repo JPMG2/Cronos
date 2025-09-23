@@ -1,0 +1,43 @@
+version: 1
+review:
+  # Directorios principales donde está tu código de aplicación
+  path_includes:
+    - "app/"
+    - "routes/"
+    - "database/"
+    - "resources/views/"
+    - "resources/js/"
+    - "resources/css/"
+
+  # Cosas que no queremos que revise (archivos generados o dependencias externas)
+  path_excludes:
+    - "vendor/"
+    - "node_modules/"
+    - "storage/"
+    - "bootstrap/cache/"
+    - "public/"
+
+  # Lenguajes y tecnologías a revisar
+  languages:
+    - php        # Laravel + Livewire
+    - blade      # Vistas Blade
+    - javascript # Alpine.js
+    - typescript
+    - css        # Tailwind
+    - sql        # Migraciones PostgreSQL
+
+  # Opciones de análisis
+  settings:
+    php_version: "8.4"
+    framework: laravel
+    database: postgres
+    style_checks: true   # Revisar estilo y PSR en PHP
+    security_checks: true # Revisar posibles vulnerabilidades
+
+  # Reglas de comentarios
+  comments:
+    explain_code: true
+    suggest_best_practices: true
+    detect_dead_code: true
+    detect_security_issues: true
+    summarize_pr: true
