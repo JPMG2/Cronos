@@ -62,16 +62,16 @@ final class MenuNav extends Component
     {
         return Menu::with(
             [
-            'optionmenus' => function ($query) use ($opcionmenus) {
-                $query->whereIn('id', $opcionmenus)
-                    ->with(
-                        [
-                        'menus' => function ($q) use ($opcionmenus) {
-                            $q->whereIn('id', $opcionmenus);
-                        },
-                        ]
-                    );
-            },
+                'optionmenus' => function ($query) use ($opcionmenus) {
+                    $query->whereIn('id', $opcionmenus)
+                        ->with(
+                            [
+                                'menus' => function ($q) use ($opcionmenus) {
+                                    $q->whereIn('id', $opcionmenus);
+                                },
+                            ]
+                        );
+                },
             ]
         )
             ->whereNull('menu_id')

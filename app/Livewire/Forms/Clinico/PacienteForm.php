@@ -17,8 +17,8 @@ use Livewire\Form;
 /**
  * Form state and services for patient creation and updates.
  *
- * @property      PatientDto|null $personData DTO holding person/patient fields
- * @property      array{patient_photo:string} $pacienteData Additional patient data shape
+ * @property PatientDto|null $personData DTO holding person/patient fields
+ * @property array{patient_photo:string} $pacienteData Additional patient data shape
  * @property-read MainPatient|null $patient Lazy-resolved service for patient operations
  * @property-read PacienteValidation|null $validation Lazy-resolved validator for patient
  * @property-read CreatePatiente|null $createPatient Lazy-resolved action to create patient

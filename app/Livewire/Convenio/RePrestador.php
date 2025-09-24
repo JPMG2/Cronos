@@ -32,7 +32,7 @@ final class RePrestador extends Component
 
         return view(
             'livewire.convenio.re-prestador', [
-            'listState' => $this->commonQuerys::stateQuery([1, 2]),
+                'listState' => $this->commonQuerys::stateQuery([1, 2]),
             ]
         );
     }
@@ -112,10 +112,10 @@ final class RePrestador extends Component
         $id = $this->form->dataobrasocial->insurance_id ?? 0;
         $this->handleAction(
             $nameoption, [
-            'id' => $id,
-            'pdfClass' => 'InsurancePdf',
-            'route' => 're_prestador',
-            'model' => 'Insurance',
+                'id' => $id,
+                'pdfClass' => 'InsurancePdf',
+                'route' => 're_prestador',
+                'model' => 'Insurance',
             ]
         );
     }

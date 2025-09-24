@@ -25,15 +25,15 @@ final class LogSuccess
     {
         $welcome = Welcome::create(
             [
-            'activity' => 'login',
+                'activity' => 'login',
             ]
         );
 
         $welcome->logs()->create(
             [
-            'user_id' => $event->user->id,
-            'action_id' => Action::where('action_name', 'login')->first()->id,
-            'log_message' => 'Ingresó al sistema',
+                'user_id' => $event->user->id,
+                'action_id' => Action::where('action_name', 'login')->first()->id,
+                'log_message' => 'Ingresó al sistema',
             ]
         );
     }

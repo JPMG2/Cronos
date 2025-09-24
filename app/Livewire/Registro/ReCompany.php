@@ -77,7 +77,7 @@ final class ReCompany extends Component
 
         return view(
             'livewire.registro.re-company', [
-            'listState' => $this->commonQuerys::stateQuery([1, 2]),
+                'listState' => $this->commonQuerys::stateQuery([1, 2]),
             ]
         );
     }

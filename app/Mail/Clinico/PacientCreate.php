@@ -41,7 +41,7 @@ final class PacientCreate extends Mailable
         return $this->markdown('emails.mservicios.patientnewemail')
             ->with(
                 [
-                'patient' => $this->patiente,
+                    'patient' => $this->patiente,
                 ]
             );
     }

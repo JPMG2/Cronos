@@ -39,7 +39,7 @@ final class CompanyUpdateMail extends Mailable
         return $this->markdown('emails.registro.companyupdatemail')
             ->with(
                 [
-                'company' => $this->company,
+                    'company' => $this->company,
                 ]
             );
     }

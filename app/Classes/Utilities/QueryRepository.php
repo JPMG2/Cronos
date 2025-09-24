@@ -6,6 +6,4 @@ namespace App\Classes\Utilities;
 
 use App\Repositories\BaseRepository;
 
-final class QueryRepository extends BaseRepository
-{
-}
+final class QueryRepository extends BaseRepository {}

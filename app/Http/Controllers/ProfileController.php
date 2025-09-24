@@ -20,7 +20,7 @@ final class ProfileController extends Controller
     {
         return view(
             'profile.edit', [
-            'user' => $request->user(),
+                'user' => $request->user(),
             ]
         );
     }
@@ -48,7 +48,7 @@ final class ProfileController extends Controller
     {
         $request->validateWithBag(
             'userDeletion', [
-            'password' => ['required', 'current_password'],
+                'password' => ['required', 'current_password'],
             ]
         );
 

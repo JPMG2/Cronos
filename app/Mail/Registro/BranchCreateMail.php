@@ -39,7 +39,7 @@ final class BranchCreateMail extends Mailable
         return $this->markdown('emails.registro.branchcreatemail')
             ->with(
                 [
-                'branch' => $this->branch,
+                    'branch' => $this->branch,
                 ]
             );
     }

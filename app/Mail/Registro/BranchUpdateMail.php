@@ -39,7 +39,7 @@ final class BranchUpdateMail extends Mailable
         return $this->markdown('emails.registro.branchupdatemail')
             ->with(
                 [
-                'branch' => $this->branch,
+                    'branch' => $this->branch,
                 ]
             );
     }

@@ -40,11 +40,6 @@ final class BranchForm extends Form
         return NotifyQuerys::msgCreate($services->store($branchValidation->onBranchCreate($this->databranch)));
     }
 
-    protected function iniService()
-    {
-        return app()->make(ModelService::class, ['model' => new Branch()]);
-    }
-
     public function branchUpdate(BranchValidation $branchValidation): array
     {
         $services = $this->iniService();
@@ -71,5 +66,10 @@ final class BranchForm extends Form
 
         $this->databranch['province_id'] = $provinceId;
         $this->databranch['city_id'] = $cityId;
+    }
+
+    protected function iniService()
+    {
+        return app()->make(ModelService::class, ['model' => new Branch()]);
     }
 }

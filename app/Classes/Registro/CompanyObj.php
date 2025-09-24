@@ -36,7 +36,7 @@ final class CompanyObj
     /**
      * Store a new company.
      *
-     * @param  array $arrayCompany The array containing the company data.
+     * @param  array  $arrayCompany  The array containing the company data.
      * @return Company The newly created ReCompany instance.
      */
     public function store(array $arrayCompany): Company
@@ -48,7 +48,7 @@ final class CompanyObj
     /**
      * Update a record in the database
      *
-     * @param  array $arrayCompany The array of values to update the record with
+     * @param  array  $arrayCompany  The array of values to update the record with
      * @return Company The updated Company model
      */
     public function update(array $arrayCompany): Company

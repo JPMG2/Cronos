@@ -12,9 +12,7 @@ final class CreateMedic
 {
     use UtilityForm;
 
-    public function __construct(private readonly CreatePerson $createPerson)
-    {
-    }
+    public function __construct(private readonly CreatePerson $createPerson) {}
 
     public function handle(array $dataMedic): Medical
     {

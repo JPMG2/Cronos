@@ -22,8 +22,8 @@ final class PersonNotification
             ->send($event)
             ->through(
                 [
-                MedicHandler::class,
-                PacienteHandler::class,
+                    MedicHandler::class,
+                    PacienteHandler::class,
                 ]
             )->then(fn ($result) => $result);
 

@@ -36,7 +36,7 @@ final class MedicUpadte extends Mailable
         return $this->markdown('emails.registro.medicupdate')
             ->with(
                 [
-                'medic' => $this->medic,
+                    'medic' => $this->medic,
                 ]
             );
     }

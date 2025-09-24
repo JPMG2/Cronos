@@ -39,7 +39,7 @@ final class MedicCreate extends Mailable
         return $this->markdown('emails.registro.mediccreate')
             ->with(
                 [
-                'medic' => $this->medic,
+                    'medic' => $this->medic,
                 ]
             );
     }

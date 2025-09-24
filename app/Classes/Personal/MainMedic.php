@@ -24,7 +24,7 @@ final class MainMedic
 
         $medic->credentials()->sync(
             [
-            $credentialId => ['credential_number' => $credentialNumber],
+                $credentialId => ['credential_number' => $credentialNumber],
             ]
         );
 
