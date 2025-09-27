@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 final class City extends Model
 {
@@ -20,19 +21,25 @@ final class City extends Model
         return $this->belongsTo(Province::class);
     }
 
-    public function scopeCitySearch(Builder $query, $idprovince = null, $citysearc = null): ?Builder
+    public function scopeCitySearch(Builder $query, $idprovince = null, $citysearc = null): Builder
     {
         if ($idprovince > 0) {
-            return once(
-                function () use ($query, $idprovince, $citysearc) {
-                    return $query->where('province_id', $idprovince)
+            $cacheKey = 'city_search_'.md5($idprovince.'_'.$citysearc);
+
+            $cachedIds = Cache::remember(
+                $cacheKey, now()->addHours(24), function () use ($idprovince, $citysearc) {
+                    return static::where('province_id', $idprovince)
                         ->where('city_name', 'like', '%'.$citysearc.'%')
-                        ->orderBy('city_name', 'asc');
+                        ->orderBy('city_name', 'asc')
+                        ->pluck('id')
+                        ->toArray();
                 }
             );
+
+            return $query->whereIn('id', $cachedIds)->orderBy('city_name', 'asc');
         }
 
-        return null;
+        return $query->whereRaw('1 = 0');
     }
 
     protected function cityName(): Attribute

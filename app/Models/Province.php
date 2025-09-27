@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 final class Province extends Model
 {
@@ -21,19 +22,24 @@ final class Province extends Model
         return $this->hasMany(City::class);
     }
 
-    public function scopeProviceSearch(Builder $query, $value): ?Builder
+    public function scopeProviceSearch(Builder $query, $value): Builder
     {
-
         if ($value === '') {
-            return null;
+            return $query->whereRaw('1 = 0');
         }
 
-        return once(
-            function () use ($query, $value) {
-                return $query->where('province_name', 'like', '%'.$value.'%')
-                    ->orderBy('province_name');
+        $cacheKey = 'province_search_'.md5($value);
+
+        $cachedIds = Cache::remember(
+            $cacheKey, now()->addHours(24), function () use ($value) {
+                return static::where('province_name', 'like', '%'.$value.'%')
+                    ->orderBy('province_name')
+                    ->pluck('id')
+                    ->toArray();
             }
         );
+
+        return $query->whereIn('id', $cachedIds)->orderBy('province_name');
     }
 
     protected function provinceName(): Attribute

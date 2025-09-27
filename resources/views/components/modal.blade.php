@@ -1,5 +1,6 @@
 @props([
     "show" => false,
+    "heading" => false
 ])
 
 <div x-data="{ show: $wire.entangle('show') }">

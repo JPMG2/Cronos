@@ -19,7 +19,10 @@ return new class extends Migration
             $table->foreignIdFor(App\Models\State::class);
             $table->string('insurance_plan_name')->unique();
             $table->string('insurance_plan_code')->unique();
+            $table->date('insurance_start_date');
+            $table->date('insurance_end_date');
             $table->text('insurance_plan_description');
+            $table->text('insurance_plan_condition');
             $table->boolean('authorisation')->default(true);
             $table->timestamps();
         });

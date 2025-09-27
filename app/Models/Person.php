@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property ?string $person_phone
  * @property ?string $person_email
  * @property CarbonImmutable $person_datebirth
+ * @property ?string $person_cpcode
  */
 final class Person extends Model implements Filterable
 {
@@ -45,16 +46,6 @@ final class Person extends Model implements Filterable
         'person_cpcode',
     ];
 
-    protected $casts = [
-        'document_id' => 'integer',
-        'province_id' => 'integer',
-        'gender_id' => 'integer',
-        'marital_status_id' => 'integer',
-        'occupation_id' => 'integer',
-        'nationality_id' => 'integer',
-        'person_datebirth' => 'date',
-    ];
-
     public static function getDefaultFilterField(): string
     {
         return 'num_document';
@@ -70,7 +61,7 @@ final class Person extends Model implements Filterable
         ];
     }
 
-    public static function documentExist(int $documentType, string $numDocument, $personId = null): bool
+    public static function documentExist(int $documentType, string $numDocument, ?int $personId = null): bool
     {
         $query = self::query()->where('document_id', $documentType)
             ->where('num_document', $numDocument);
@@ -168,6 +159,19 @@ final class Person extends Model implements Filterable
         return ! empty($this->person_email);
     }
 
+    protected function casts(): array
+    {
+        return [
+            'document_id' => 'integer',
+            'province_id' => 'integer',
+            'gender_id' => 'integer',
+            'marital_status_id' => 'integer',
+            'occupation_id' => 'integer',
+            'nationality_id' => 'integer',
+            'person_datebirth' => 'date',
+        ];
+    }
+
     protected function provinceId(): Attribute
     {
         return Attribute::make(
@@ -228,13 +232,6 @@ final class Person extends Model implements Filterable
     {
         return Attribute::make(
             set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
-        );
-    }
-
-    protected function email(): Attribute
-    {
-        return Attribute::make(
-            set: fn ($value) => mb_strtolower(mb_trim($value)),
         );
     }
 

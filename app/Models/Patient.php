@@ -20,11 +20,6 @@ final class Patient extends Model implements Filterable
     protected $fillable = [
         'person_id', 'blood_type_id', 'patient_photo', 'patient_weight', 'patient_height'];
 
-    protected $casts = [
-        'person_id' => 'integer',
-        'patient_photo' => 'string',
-    ];
-
     public static function getDefaultFilterField(): string
     {
         return 'person_name';
@@ -43,5 +38,13 @@ final class Patient extends Model implements Filterable
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'person_id' => 'integer',
+            'patient_photo' => 'string',
+        ];
     }
 }

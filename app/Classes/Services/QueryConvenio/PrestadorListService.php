@@ -17,7 +17,7 @@ final class PrestadorListService extends AbstractQueryService
 
     protected function getDefaultOrderColumn(): string
     {
-        return 'insurance_name'; // Instead of static property access
+        return 'insurance_name';
     }
 
     protected function getRelationSearchField(string $relation): string
