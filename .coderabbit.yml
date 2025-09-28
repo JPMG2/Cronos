@@ -1,7 +1,12 @@
 version: 1
 review:
   path_includes:
-    - "app/Models/**/*.php"
+    - "app/"
+    - "routes/"
+    - "database/"
+    - "resources/views/"
+    - "resources/js/"
+    - "resources/css/"
   path_excludes:
     - "vendor/"
     - "node_modules/"
