@@ -57,7 +57,7 @@ final class EspecialistValidation
                     }
                 ),
                 function ($attribute, $value, $fail) use ($especialsit, $excludeId) {
-                    if (!empty($especialsit['document_id']) && !empty($value)) {
+                    if (! empty($especialsit['document_id']) && ! empty($value)) {
                         $validator = AttributeDocumentValidator::documentTypeUnique((int) $especialsit['document_id'], $value, $excludeId);
                         $validator->validate($attribute, $value, $fail);
                     }
@@ -68,7 +68,7 @@ final class EspecialistValidation
                 'bail',
                 'required',
                 function ($attribute, $value, $fail) use ($especialsit, $excludeId) {
-                    if (!empty($especialsit['credential_id']) && !empty($value)) {
+                    if (! empty($especialsit['credential_id']) && ! empty($value)) {
                         $validator = AttributeValidator::medicalCredential((int) $especialsit['credential_id'], $value, $excludeId);
                         $validator->validate($attribute, $value, $fail);
                     }

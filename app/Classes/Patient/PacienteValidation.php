@@ -54,7 +54,7 @@ final class PacienteValidation
                     }
                 ),
                 function ($attribute, $value, $fail) use ($arrayPatient, $excludeId) {
-                    if (!empty($arrayPatient['document_id']) && !empty($value)) {
+                    if (! empty($arrayPatient['document_id']) && ! empty($value)) {
                         $validator = AttributeDocumentValidator::documentTypeUnique((int) $arrayPatient['document_id'], $value, $excludeId);
                         $validator->validate($attribute, $value, $fail);
                     }
