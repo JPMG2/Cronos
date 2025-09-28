@@ -53,7 +53,12 @@ final class PacienteValidation
                         return empty($arrayPatient['document_id']) && ! empty($arrayPatient['num_document']);
                     }
                 ),
-                AttributeDocumentValidator::documentTypeUnique((int) $arrayPatient['document_id'], $arrayPatient['num_document'], $excludeId),
+                function ($attribute, $value, $fail) use ($arrayPatient, $excludeId) {
+                    if (!empty($arrayPatient['document_id']) && !empty($value)) {
+                        $validator = AttributeDocumentValidator::documentTypeUnique((int) $arrayPatient['document_id'], $value, $excludeId);
+                        $validator->validate($attribute, $value, $fail);
+                    }
+                },
                 AttributeValidator::stringValid(true, 5),
             ],
             'person_name' => AttributeValidator::stringValid(true, 3),
@@ -64,7 +69,9 @@ final class PacienteValidation
             'person_address' => AttributeValidator::stringValid(false, 4),
             'person_phone' => AttributeValidator::stringValid(false, 5),
             'person_datebirth' => AttributeValidator::dateValid(true),
-            'person_email' => AttributeValidator::emailValidById($excludeId, 'people', 'person_email'),
+            'person_email' => $excludeId
+                ? AttributeValidator::emailValidById($excludeId, 'people', 'person_email')
+                : ['sometimes', 'email:rfc,dns', 'unique:people,person_email', 'regex:/^([^<>]*)$/', 'max:255'],
             'province_id' => AttributeValidator::requireAndExists('provinces', 'id', 'province_id'),
             'gender_id' => AttributeValidator::requireAndExists('genders', 'id', 'gender_id'),
             'marital_status_id' => AttributeValidator::requireAndExists('marital_statuses', 'id', 'marital_status_id'),

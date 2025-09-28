@@ -56,17 +56,29 @@ final class EspecialistValidation
                         return empty($especialsit['document_id']) && ! empty($especialsit['num_document']);
                     }
                 ),
-                AttributeDocumentValidator::documentTypeUnique((int) $especialsit['document_id'], $especialsit['num_document'], $excludeId),
+                function ($attribute, $value, $fail) use ($especialsit, $excludeId) {
+                    if (!empty($especialsit['document_id']) && !empty($value)) {
+                        $validator = AttributeDocumentValidator::documentTypeUnique((int) $especialsit['document_id'], $value, $excludeId);
+                        $validator->validate($attribute, $value, $fail);
+                    }
+                },
                 AttributeValidator::stringValid(true, 5),
             ],
             'medical_codenumber' => [
                 'bail',
                 'required',
-                AttributeValidator::medicalCredential((int) $especialsit['credential_id'], $especialsit['medical_codenumber'], (int) $excludeId),
+                function ($attribute, $value, $fail) use ($especialsit, $excludeId) {
+                    if (!empty($especialsit['credential_id']) && !empty($value)) {
+                        $validator = AttributeValidator::medicalCredential((int) $especialsit['credential_id'], $value, $excludeId);
+                        $validator->validate($attribute, $value, $fail);
+                    }
+                },
             ],
             'person_address' => AttributeValidator::stringValid(false, 4),
             'person_phone' => AttributeValidator::stringValid(false, 5),
-            'person_email' => AttributeValidator::emailValidById($excludeId, 'people', 'person_email'),
+            'person_email' => $excludeId
+                ? AttributeValidator::emailValidById($excludeId, 'people', 'person_email')
+                : ['sometimes', 'email:rfc,dns', 'unique:people,person_email', 'regex:/^([^<>]*)$/', 'max:255'],
         ];
     }
 
