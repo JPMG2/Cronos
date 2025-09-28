@@ -208,6 +208,7 @@
                                                     isdisabled=""
                                                     :error="$errors->first('insurance_end_date')"
                                                     required
+
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>

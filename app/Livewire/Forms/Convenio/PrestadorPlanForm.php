@@ -11,7 +11,7 @@ final class PrestadorPlanForm extends Form
     public array $dataPrestadorPlan = [
         'insurance_id' => null,
         'state_id' => 1,
-        'insurance_plan_name' => '',
+        'insurance_plan_name' => ' ',
         'insurance_plan_code' => '',
         'insurance_start_date' => '',
         'insurance_end_date' => '',

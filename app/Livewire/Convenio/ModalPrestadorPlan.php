@@ -46,7 +46,7 @@ final class ModalPrestadorPlan extends Component
     #[Computed]
     public function states()
     {
-        return CommonQuerys::stateQuery([1, 2]);
+        return CommonQuerys::stateQuery([1, 2, 3]);
     }
 
     public function render()
