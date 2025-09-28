@@ -55,18 +55,18 @@
                                             >
                                                 <x-inputs.textinput
 
-                                                    wire:model="form.dataobrasocial.insurance_name"
+                                                    wire:model="form.dataPrestadorPlan.insurance_plan_code"
                                                     id="codiplan"
                                                     autocomplete="off"
                                                     maxlength="220"
                                                     placeholder=" "
                                                     isdisabled=""
-                                                    :error="$errors->first('insurance_name')"
+                                                    :error="$errors->first('insurance_plan_code')"
                                                     required
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>
-                                        @error("insurance_name")
+                                        @error("insurance_plan_code")
                                         <x-inputs.error-validate>
                                             {{ $message }}
                                         </x-inputs.error-validate>
@@ -83,18 +83,18 @@
                                             >
                                                 <x-inputs.textinput
 
-                                                    wire:model="form.dataobrasocial.insurance_name"
+                                                    wire:model="form.dataPrestadorPlan.insurance_plan_name"
                                                     id="nameplan"
                                                     autocomplete="off"
                                                     maxlength="220"
                                                     placeholder=" "
                                                     isdisabled=""
-                                                    :error="$errors->first('insurance_name')"
+                                                    :error="$errors->first('insurance_plan_name')"
                                                     required
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>
-                                        @error("insurance_name")
+                                        @error("insurance_plan_name")
                                         <x-inputs.error-validate>
                                             {{ $message }}
                                         </x-inputs.error-validate>
@@ -104,25 +104,25 @@
                                 <div class="relative w-full col-span-2">
                                     <div class="relative">
                                         <div class="relative">
-                                            <x-inputs.textgroup
+                                            <x-inputs.selectgroup
                                                 label="Estatus"
-                                                for="estatupaln"
+                                                for="prestaplanesta"
                                                 required="yes"
                                             >
-                                                <x-inputs.textinput
-
-                                                    wire:model="form.dataobrasocial.insurance_name"
-                                                    id="estatupaln"
-                                                    autocomplete="off"
-                                                    maxlength="220"
-                                                    placeholder=" "
+                                                <x-inputs.selectinput
+                                                    wire:model.defer="form.dataPrestadorPlan.state_id"
+                                                    id="prestaplanesta"
                                                     isdisabled=""
-                                                    :error="$errors->first('insurance_name')"
-                                                    required
-                                                ></x-inputs.textinput>
-                                            </x-inputs.textgroup>
+                                                >
+                                                    @foreach ($this->states as $state)
+                                                        <option value="{{ $state->id }}">
+                                                            {{ $state->state_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </x-inputs.selectinput>
+                                            </x-inputs.selectgroup>
                                         </div>
-                                        @error("insurance_name")
+                                        @error("state_id")
                                         <x-inputs.error-validate>
                                             {{ $message }}
                                         </x-inputs.error-validate>
@@ -139,18 +139,18 @@
                                             >
                                                 <x-inputs.textinput
 
-                                                    wire:model="form.dataobrasocial.insurance_name"
+                                                    wire:model="form.dataPrestadorPlan.insurance_id"
                                                     id="prestadon"
                                                     autocomplete="off"
                                                     maxlength="220"
                                                     placeholder=" "
                                                     isdisabled=""
-                                                    :error="$errors->first('insurance_name')"
+                                                    :error="$errors->first('insurance_id')"
                                                     required
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>
-                                        @error("insurance_name")
+                                        @error("insurance_id")
                                         <x-inputs.error-validate>
                                             {{ $message }}
                                         </x-inputs.error-validate>
@@ -162,23 +162,26 @@
                                         <div class="relative">
                                             <x-inputs.textgroup
                                                 label="Fecha inicio"
-                                                for="prestadon"
+                                                for="planstart"
                                                 required="yes"
                                             >
                                                 <x-inputs.textinput
-
-                                                    wire:model="form.dataobrasocial.insurance_name"
-                                                    id="prestadon"
+                                                    x-data
                                                     autocomplete="off"
-                                                    maxlength="220"
+                                                    x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
+                                                    wire:model="form.dataPrestadorPlan.insurance_start_date"
+                                                    id="planstart"
+                                                    autocomplete="off"
+                                                    maxlength="200"
                                                     placeholder=" "
                                                     isdisabled=""
-                                                    :error="$errors->first('insurance_name')"
+                                                    :error="$errors->first('insurance_start_date')"
                                                     required
                                                 ></x-inputs.textinput>
+
                                             </x-inputs.textgroup>
                                         </div>
-                                        @error("insurance_name")
+                                        @error("insurance_start_date")
                                         <x-inputs.error-validate>
                                             {{ $message }}
                                         </x-inputs.error-validate>
@@ -190,23 +193,25 @@
                                         <div class="relative">
                                             <x-inputs.textgroup
                                                 label="Fecha fin"
-                                                for="prestadon"
+                                                for="planends"
                                                 required="yes"
                                             >
                                                 <x-inputs.textinput
-
-                                                    wire:model="form.dataobrasocial.insurance_name"
-                                                    id="prestadon"
+                                                    x-data
                                                     autocomplete="off"
-                                                    maxlength="220"
+                                                    x-init="flatpickr($el, { dateFormat: 'd-m-Y', minDate: 'today' })"
+                                                    wire:model="form.dataPrestadorPlan.insurance_end_date"
+                                                    id="planends"
+                                                    autocomplete="off"
+                                                    maxlength="200"
                                                     placeholder=" "
                                                     isdisabled=""
-                                                    :error="$errors->first('insurance_name')"
+                                                    :error="$errors->first('insurance_end_date')"
                                                     required
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>
-                                        @error("insurance_name")
+                                        @error("insurance_end_date")
                                         <x-inputs.error-validate>
                                             {{ $message }}
                                         </x-inputs.error-validate>
@@ -214,26 +219,17 @@
                                     </div>
                                 </div>
                                 <div class="relative w-full col-span-2">
-                                    <div class="relative">
-                                        <div class="relative">
-                                            <x-inputs.textgroup
-                                                label="Fecha fin"
-                                                for="prestadon"
-                                                required="yes"
-                                            >
-                                                <x-inputs.textinput
+                                    <div class="flex flex-col">
+                                        <x-simple-label label="Requiere Autorización"></x-simple-label>
 
-                                                    wire:model="form.dataobrasocial.insurance_name"
-                                                    id="prestadon"
-                                                    autocomplete="off"
-                                                    maxlength="220"
-                                                    placeholder=" "
-                                                    isdisabled=""
-                                                    :error="$errors->first('insurance_name')"
-                                                    required
-                                                ></x-inputs.textinput>
-                                            </x-inputs.textgroup>
+                                        <div class="relative mt-4">
+                                            <input
+                                                wire:model="form.dataPrestadorPlan.authorisation"
+                                                id="autrization"
+                                                type="checkbox"
+                                                value="">
                                         </div>
+
                                         @error("insurance_name")
                                         <x-inputs.error-validate>
                                             {{ $message }}
@@ -248,7 +244,7 @@
                                         required="yes"
                                     >
                                         <x-inputs.textarea
-                                            wire:model="form.dataservice.service_description"
+                                            wire:model="form.dataPrestadorPlan.insurance_plan_description"
                                             id="descriprole"
                                             rows="3"
                                         ></x-inputs.textarea>
@@ -257,13 +253,13 @@
                                 </div>
                                 <div class="relative w-full col-span-10">
                                     <x-inputs.labeltextarea
-                                        label="Descripción"
-                                        for="descriprole"
+                                        label="Condiciones especiales"
+                                        for="concicioplan"
                                         required="yes"
                                     >
                                         <x-inputs.textarea
-                                            wire:model="form.dataservice.service_description"
-                                            id="descriprole"
+                                            wire:model="form.dataPrestadorPlan.insurance_plan_condition"
+                                            id="concicioplan"
                                             rows="3"
                                         ></x-inputs.textarea>
                                     </x-inputs.labeltextarea>
@@ -272,17 +268,34 @@
                             </div>
                         </x-formcomponent.formdivcontent>
                     </div>
-                    <div
-                        class="flex items-center justify-end gap-x-2 border-t px-4 py-3 dark:border-neutral-700"
+                    <br>
+                    <form
+                        id="prestadorplan"
+                        wire:submit.prevent="submit"
                     >
-                        <x-buttons.close
-                            wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
+                        @csrf
+                        <div
+                            class="flex items-center justify-end gap-x-2 border-t px-4 py-3 dark:border-neutral-700"
                         >
-                            {{ __("Cerrar") }}
-                        </x-buttons.close>
-                    </div>
+                            <x-buttons.close
+                                wire:click="$set('show', false);$dispatch('clearColorOpcionMenu')"
+                            >
+                                {{ __("Cerrar") }}
+                            </x-buttons.close>
+                            <x-buttons.save
+                                wire:submit.prevent="submitPrestadorPlan"
+                                wire:click.prevent="submitPrestadorPlan"
+                                namefucion=""
+                                label="Guardar"
+                                isdisabled=""
+                                :error="count($errors)"
+                            ></x-buttons.save>
+
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
     </div>
+</div>

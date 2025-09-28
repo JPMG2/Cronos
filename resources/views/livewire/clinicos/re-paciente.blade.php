@@ -203,7 +203,7 @@
                                             <x-inputs.textinput
                                                 x-data
                                                 autocomplete="off"
-                                                x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
+                                                x-init="flatpickr($el, { dateFormat: 'd-m-Y',  maxDate: new Date().fp_incr(0) })"
                                                 wire:model="pacienteForm.personData.person_datebirth"
                                                 id="doffbirth"
                                                 autocomplete="off"
