@@ -132,23 +132,13 @@
                                 <div class="relative w-full col-span-4">
                                     <div class="relative">
                                         <div class="relative">
-                                            <x-inputs.textgroup
-                                                label="Prestador"
-                                                for="prestadon"
-                                                required="yes"
-                                            >
-                                                <x-inputs.textinput
-
-                                                    wire:model="form.dataPrestadorPlan.insurance_id"
-                                                    id="prestadon"
-                                                    autocomplete="off"
-                                                    maxlength="220"
-                                                    placeholder=" "
-                                                    isdisabled=""
-                                                    :error="$errors->first('insurance_id')"
-                                                    required
-                                                ></x-inputs.textinput>
-                                            </x-inputs.textgroup>
+                                            <x-simple-label label="Prestador">
+                                                <div class="relative">
+                                                    <x-inputs.searchinput
+                                                        wire:model="form.dataPrestadorPlan.insurance_name"
+                                                    ></x-inputs.searchinput>
+                                                </div>
+                                            </x-simple-label>
                                         </div>
                                         @error("insurance_id")
                                         <x-inputs.error-validate>
@@ -168,7 +158,10 @@
                                                 <x-inputs.textinput
                                                     x-data
                                                     autocomplete="off"
-                                                    x-init="flatpickr($el, { dateFormat: 'd-m-Y' })"
+                                                    x-init="flatpickr($el, {
+                                                        dateFormat: 'd-m-Y',
+                                                        static: true
+                                                    })"
                                                     wire:model="form.dataPrestadorPlan.insurance_start_date"
                                                     id="planstart"
                                                     autocomplete="off"
@@ -199,7 +192,11 @@
                                                 <x-inputs.textinput
                                                     x-data
                                                     autocomplete="off"
-                                                    x-init="flatpickr($el, { dateFormat: 'd-m-Y', minDate: 'today' })"
+                                                    x-init="flatpickr($el, {
+                                                        dateFormat: 'd-m-Y',
+                                                        minDate: 'today',
+                                                        static: true
+                                                    })"
                                                     wire:model="form.dataPrestadorPlan.insurance_end_date"
                                                     id="planends"
                                                     autocomplete="off"
@@ -208,7 +205,6 @@
                                                     isdisabled=""
                                                     :error="$errors->first('insurance_end_date')"
                                                     required
-
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>

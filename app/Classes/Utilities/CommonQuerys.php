@@ -10,6 +10,7 @@ use App\Models\Credential;
 use App\Models\Degree;
 use App\Models\Document;
 use App\Models\Gender;
+use App\Models\Insurance;
 use App\Models\MaritalStatus;
 use App\Models\Nationality;
 use App\Models\Occupation;
@@ -110,5 +111,12 @@ final class CommonQuerys extends Model
     public static function listMaritalStatus(): Collection
     {
         return MaritalStatus::query()->orderBy('maritalstatus_name')->get();
+    }
+
+    public static function Insurances(array $state): Collection
+    {
+        return Insurance::query()->orderBy('insurance_name')
+            ->whereIn('state_id', $state)
+            ->get();
     }
 }
