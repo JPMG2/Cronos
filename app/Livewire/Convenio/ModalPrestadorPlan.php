@@ -28,7 +28,9 @@ final class ModalPrestadorPlan extends Component
         $this->clearForm();
     }
 
-    public function submitPrestadorPlan(): void {}
+    public function submitPrestadorPlan(): void
+    {
+    }
 
     public function closeModal(): void
     {

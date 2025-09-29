@@ -23,5 +23,7 @@ final class MedicPdf implements ModelPdfGenerator
             ->stream('especialista.pdf');
     }
 
-    public function generatePdfByValues() {}
+    public function generatePdfByValues()
+    {
+    }
 }

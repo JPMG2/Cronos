@@ -31,7 +31,9 @@ final class Province extends Model
         $cacheKey = 'province_search_'.md5($value);
 
         $cachedIds = Cache::remember(
-            $cacheKey, now()->addHours(24), function () use ($value) {
+            $cacheKey,
+            now()->addHours(24),
+            function () use ($value) {
                 return static::where('province_name', 'like', '%'.$value.'%')
                     ->orderBy('province_name')
                     ->pluck('id')

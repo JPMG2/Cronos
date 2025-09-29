@@ -27,7 +27,8 @@ final class PatientDto implements Wireable
         public ?int $nationality_id = null,
         public ?string $person_datebirth = null,
         public string $person_cpcode = '',
-    ) {}
+    ) {
+    }
 
     public static function fromLivewire($value): self
     {

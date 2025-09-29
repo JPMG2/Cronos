@@ -32,7 +32,8 @@ final class ReBranch extends Component
         $this->commonQuerys = app('commonquery');
 
         return view(
-            'livewire.registro.re-branch', [
+            'livewire.registro.re-branch',
+            [
                 'listCompanies' => $this->commonQuerys::companyQuery([1]),
                 'listState' => $this->commonQuerys::stateQuery([1, 2]),
 
@@ -98,7 +99,8 @@ final class ReBranch extends Component
     {
         $id = $this->form->databranch['id'] ?? 0;
         $this->handleAction(
-            $nameoption, [
+            $nameoption,
+            [
                 'id' => $id,
                 'pdfClass' => 'BranchPdf',
                 'route' => 're_sucursal',

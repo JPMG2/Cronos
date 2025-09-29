@@ -31,7 +31,8 @@ final class RePrestador extends Component
         $this->commonQuerys = app('commonquery');
 
         return view(
-            'livewire.convenio.re-prestador', [
+            'livewire.convenio.re-prestador',
+            [
                 'listState' => $this->commonQuerys::stateQuery([1, 2]),
             ]
         );
@@ -111,7 +112,8 @@ final class RePrestador extends Component
     {
         $id = $this->form->dataobrasocial->insurance_id ?? 0;
         $this->handleAction(
-            $nameoption, [
+            $nameoption,
+            [
                 'id' => $id,
                 'pdfClass' => 'InsurancePdf',
                 'route' => 're_prestador',
