@@ -6,7 +6,6 @@ namespace App\Livewire\Convenio;
 
 use App\Classes\Utilities\CommonQuerys;
 use App\Livewire\Forms\Convenio\PrestadorPlanForm;
-use App\Models\Insurance;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -26,7 +25,7 @@ final class ModalPrestadorPlan extends Component
     public function openModal(): void
     {
         $this->show = true;
-        $this->resetForm();
+        $this->clearForm();
     }
 
     public function submitPrestadorPlan(): void {}
@@ -34,13 +33,13 @@ final class ModalPrestadorPlan extends Component
     public function closeModal(): void
     {
         $this->show = false;
-        $this->resetForm();
+        $this->clearForm();
     }
 
     #[Computed]
     public function insurances()
     {
-        return Insurance::orderBy('insurance_name')->get();
+        return CommonQuerys::Insurances([1]);
     }
 
     #[Computed]
@@ -54,14 +53,8 @@ final class ModalPrestadorPlan extends Component
         return view('livewire.convenio.modal-prestador-plan');
     }
 
-    private function resetForm(): void
+    private function clearForm(): void
     {
-        $this->insurance_id = 0;
-        $this->state_id = '';
-        $this->insurance_plan_name = '';
-        $this->insurance_plan_code = '';
-        $this->insurance_plan_description = '';
-        $this->authorisation = false;
-        $this->resetErrorBag();
+        $this->form->reset();
     }
 }
