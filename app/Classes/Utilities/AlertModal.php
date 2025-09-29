@@ -14,5 +14,6 @@ final readonly class AlertModal
         public string $event,
         public string $message,
         public int $idModel,
-    ) {}
+    ) {
+    }
 }

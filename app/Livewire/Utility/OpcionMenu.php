@@ -48,7 +48,8 @@ final class OpcionMenu extends Component
     {
 
         $this->optioncolor = Arr::map(
-            $this->optioncolor, function (string $value, string $key) use ($option) {
+            $this->optioncolor,
+            function (string $value, string $key) use ($option) {
                 if ($key === $option) {
                     $value = true;
                 } else {

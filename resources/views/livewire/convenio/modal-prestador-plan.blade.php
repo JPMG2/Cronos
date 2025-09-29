@@ -11,7 +11,7 @@
         x-cloak
         class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm overflow-auto p-4"
     >
-        <div class="m-3 mx-auto mt-11 size-4/5">
+        <div class="m-3 mx-auto size-4/5">
             <div
                 class="pointer-events-auto flex flex-col rounded-xl border bg-white shadow-2xl dark:border-gray-600 dark:bg-gray-800 dark:shadow-2xl "
             >

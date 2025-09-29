@@ -19,7 +19,8 @@ final class ProfileController extends Controller
     public function edit(Request $request): View
     {
         return view(
-            'profile.edit', [
+            'profile.edit',
+            [
                 'user' => $request->user(),
             ]
         );
@@ -47,7 +48,8 @@ final class ProfileController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag(
-            'userDeletion', [
+            'userDeletion',
+            [
                 'password' => ['required', 'current_password'],
             ]
         );

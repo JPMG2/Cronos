@@ -30,13 +30,17 @@ final class RePrestadorPlan extends Component
     #[Title(' - Planes')]
     public function render()
     {
-        return view('livewire.convenio.re-prestador-plan',
+        return view(
+            'livewire.convenio.re-prestador-plan',
             [
                 'listPlanesPrestador' => $this->getPlanesPrestador()->listSearch($this->columnFilter)->paginate(15),
-            ]);
+            ]
+        );
     }
 
-    public function submitPrestadorPlan() {}
+    public function submitPrestadorPlan()
+    {
+    }
 
     public function openModalPrestadorPlan(): void
     {

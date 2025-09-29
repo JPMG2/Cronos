@@ -45,7 +45,7 @@ final class CompanyForm extends Form
     /**
      * Stores or updates a company object.
      *
-     * @param  CompanyObj  $companyObj  The company object to be stored or updated.
+     * @param  CompanyObj $companyObj The company object to be stored or updated.
      * @return array The message indicating the result of the operation.
      */
     public function companyStoreUpdate(CompanyObj $companyObj, CompanyValidation $companyValidation): array
@@ -74,7 +74,7 @@ final class CompanyForm extends Form
      * Retrieves company data, and if available, sets the array values, province-city IDs,
      * and names for the company.
      *
-     * @param  CompanyObj  $companyObj  The company object to be processed.
+     * @param CompanyObj $companyObj The company object to be processed.
      */
     public function showCompany(CompanyObj $companyObj): void
     {
@@ -94,7 +94,7 @@ final class CompanyForm extends Form
     /**
      * Sets the company data array.
      *
-     * @param  array  $companyArray  The array containing company data to be set.
+     * @param array $companyArray The array containing company data to be set.
      */
     public function setArrayValues($companyArray): void
     {

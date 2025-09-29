@@ -8,7 +8,9 @@ use App\Interfaces\PersonValidator;
 
 final class PersonTypeValidator implements PersonValidator
 {
-    public function __construct(private $personType) {}
+    public function __construct(private $personType)
+    {
+    }
 
     public function validateForCreate(array $data): array
     {

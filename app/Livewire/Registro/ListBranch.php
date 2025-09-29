@@ -26,7 +26,8 @@ final class ListBranch extends Component
     public function render(CommonQuerys $commonQuerys)
     {
         return view(
-            'livewire.registro.list-branch', [
+            'livewire.registro.list-branch',
+            [
                 $this->listCompanyBranch = $commonQuerys::companyBranchQuery([1], ['1', '2']),
             ]
         );

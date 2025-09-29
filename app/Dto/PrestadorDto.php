@@ -24,7 +24,8 @@ final class PrestadorDto implements Wireable
         public string $insurance_email = '',
         public string $insurance_web = '',
         public string $insurance_type_name = '',
-    ) {}
+    ) {
+    }
 
     public static function fromLivewire($value)
     {

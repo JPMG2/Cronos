@@ -27,7 +27,9 @@ final class City extends Model
             $cacheKey = 'city_search_'.md5($idprovince.'_'.$citysearc);
 
             $cachedIds = Cache::remember(
-                $cacheKey, now()->addHours(24), function () use ($idprovince, $citysearc) {
+                $cacheKey,
+                now()->addHours(24),
+                function () use ($idprovince, $citysearc) {
                     return static::where('province_id', $idprovince)
                         ->where('city_name', 'like', '%'.$citysearc.'%')
                         ->orderBy('city_name', 'asc')
