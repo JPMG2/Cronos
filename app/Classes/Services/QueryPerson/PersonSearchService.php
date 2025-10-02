@@ -33,11 +33,11 @@ final readonly class PersonSearchService
     /**
      * Constructs a new instance and initializes the provided attributes.
      *
-     * @param Model       $model            The model instance to be used.
-     * @param bool        $order            Determines the order direction.
-     * @param string|null $clickColumn      Specifies the column to be clicked, if any.
-     * @param array       $searchableFields Configuration array defining searchable fields.
-     * @param array       $pivotRelations   Array of relations that use pivot tables.
+     * @param  Model  $model  The model instance to be used.
+     * @param  bool  $order  Determines the order direction.
+     * @param  string|null  $clickColumn  Specifies the column to be clicked, if any.
+     * @param  array  $searchableFields  Configuration array defining searchable fields.
+     * @param  array  $pivotRelations  Array of relations that use pivot tables.
      */
     public function __construct(
         Model $model,
@@ -57,7 +57,7 @@ final readonly class PersonSearchService
     /**
      * Retrieves a filtered and ordered list of records based on the provided conditions.
      *
-     * @param  array $filterConditions An array of column filtering conditions.
+     * @param  array  $filterConditions  An array of column filtering conditions.
      * @return EloquentBuilder A query builder instance with applied filters, sorting, and relationships.
      */
     public function listSearch(array $filterConditions): EloquentBuilder
@@ -97,7 +97,7 @@ final readonly class PersonSearchService
     /**
      * Retrieves the query details with aggregate data, ordering, and related relationships.
      *
-     * @param  EloquentBuilder $query The base query to modify.
+     * @param  EloquentBuilder  $query  The base query to modify.
      * @return EloquentBuilder The modified query with aggregates, order, and relationships.
      */
     public function getQueryDetails(EloquentBuilder $query): EloquentBuilder
@@ -110,7 +110,7 @@ final readonly class PersonSearchService
     /**
      * Merges provided searchable fields with default person fields.
      *
-     * @param  array $customFields Custom searchable fields configuration.
+     * @param  array  $customFields  Custom searchable fields configuration.
      * @return array The merged searchable fields.
      */
     private function mergeWithDefaults(array $customFields): array
@@ -133,7 +133,7 @@ final readonly class PersonSearchService
     /**
      * Orders the query results by a specific column and direction, using an aggregate relation.
      *
-     * @param EloquentBuilder $query The Eloquent query builder instance.
+     * @param  EloquentBuilder  $query  The Eloquent query builder instance.
      */
     private function orderColumnBy(EloquentBuilder $query): void
     {
@@ -146,7 +146,7 @@ final readonly class PersonSearchService
     /**
      * Determines the relational name and associated attributes based on the provided key.
      *
-     * @param  string|null $string The key to map to relational attributes.
+     * @param  string|null  $string  The key to map to relational attributes.
      * @return string|null The relational name or null if no match is found.
      */
     private function getRelationalName(?string $string): ?string
@@ -162,7 +162,7 @@ final readonly class PersonSearchService
     /**
      * Determines the table name based on the provided column name.
      *
-     * @param  int|string $string The column name to map to a table.
+     * @param  int|string  $string  The column name to map to a table.
      * @return string|null The table name or null if no match is found.
      */
     private function tableName(int|string $string): ?string
@@ -179,7 +179,7 @@ final readonly class PersonSearchService
     /**
      * Converts relation name to table name.
      *
-     * @param  string $relation The relation name.
+     * @param  string  $relation  The relation name.
      * @return string The corresponding table name.
      */
     private function getTableNameFromRelation(string $relation): string
@@ -195,7 +195,7 @@ final readonly class PersonSearchService
     /**
      * Determines the index name based on the provided table name.
      *
-     * @param  string|null $string The table name to map to an index.
+     * @param  string|null  $string  The table name to map to an index.
      * @return string|null The index name or null if no match is found.
      */
     private function indexName(?string $string): ?string
@@ -213,9 +213,9 @@ final readonly class PersonSearchService
     /**
      * Creates a query for pivot table relations.
      *
-     * @param EloquentBuilder $query        The main query builder instance.
-     * @param string          $relation     The pivot relation name.
-     * @param mixed           $stringsearch The search term.
+     * @param  EloquentBuilder  $query  The main query builder instance.
+     * @param  string  $relation  The pivot relation name.
+     * @param  mixed  $stringsearch  The search term.
      */
     private function createQueryPivot(EloquentBuilder $query, string $relation, mixed $stringsearch): EloquentBuilder
     {
@@ -253,7 +253,7 @@ final readonly class PersonSearchService
     /**
      * Gets the search field for pivot relations.
      *
-     * @param  string $relation The pivot relation name.
+     * @param  string  $relation  The pivot relation name.
      * @return string The field to search in the pivot relation.
      */
     private function getPivotSearchField(string $relation): string
@@ -268,11 +268,11 @@ final readonly class PersonSearchService
     /**
      * Builds and returns an Eloquent query with a subquery filter.
      *
-     * @param EloquentBuilder $query        The main query builder instance.
-     * @param string|null     $tableName    The table name to search in.
-     * @param string|null     $indexName    The index column name.
-     * @param int|string      $column       The column to search.
-     * @param mixed           $stringsearch The search term.
+     * @param  EloquentBuilder  $query  The main query builder instance.
+     * @param  string|null  $tableName  The table name to search in.
+     * @param  string|null  $indexName  The index column name.
+     * @param  int|string  $column  The column to search.
+     * @param  mixed  $stringsearch  The search term.
      */
     private function createQuery(
         EloquentBuilder $query,

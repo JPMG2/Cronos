@@ -16,6 +16,10 @@ final class ModalPrestadorPlan extends Component
 
     public PrestadorPlanForm $form;
 
+    public $searchPrestador = null;
+
+    public $listPrestadores = [];
+
     #[On('showModalPrestadorPlan')]
     public function handleOpenModal(): void
     {
@@ -28,20 +32,12 @@ final class ModalPrestadorPlan extends Component
         $this->clearForm();
     }
 
-    public function submitPrestadorPlan(): void
-    {
-    }
+    public function submitPrestadorPlan(): void {}
 
     public function closeModal(): void
     {
         $this->show = false;
         $this->clearForm();
-    }
-
-    #[Computed]
-    public function insurances()
-    {
-        return CommonQuerys::Insurances([1]);
     }
 
     #[Computed]
@@ -53,6 +49,25 @@ final class ModalPrestadorPlan extends Component
     public function render()
     {
         return view('livewire.convenio.modal-prestador-plan');
+    }
+
+    public function updatedFormDataPrestadorPlanInsuranceName($value)
+    {
+        if (str()->length($value) >= 2) {
+            $this->searchPrestador = $value;
+
+            $this->listPrestadores = $this->insurances();
+
+        } else {
+            $this->listPrestadores = [];
+        }
+    }
+
+    #[Computed]
+    public function insurances()
+    {
+
+        return CommonQuerys::Insurances([1], $this->searchPrestador);
     }
 
     private function clearForm(): void
