@@ -99,7 +99,7 @@ final class CommonQuerys extends Model
     {
         return $occupation
             ? Occupation::query()->whereRaw('LOWER(occupation_name) like ?', ['%'.mb_strtolower($occupation).'%'])
-            ->orderBy('occupation_name')->get()
+                ->orderBy('occupation_name')->get()
             : Occupation::query()->orderBy('occupation_name')->get();
     }
 
@@ -113,10 +113,12 @@ final class CommonQuerys extends Model
         return MaritalStatus::query()->orderBy('maritalstatus_name')->get();
     }
 
-    public static function Insurances(array $state): Collection
+    public static function Insurances(array $state, ?string $search): Collection
     {
-        return Insurance::query()->orderBy('insurance_name')
+        return $search === null ? Insurance::query()->orderBy('insurance_name')
             ->whereIn('state_id', $state)
+            ->get() : Insurance::query()
+            ->whereRaw('LOWER(insurance_name) LIKE ?', ["%{$search}%"])
             ->get();
     }
 }

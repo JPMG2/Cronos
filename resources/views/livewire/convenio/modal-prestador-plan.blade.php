@@ -130,15 +130,68 @@
                                     </div>
                                 </div>
                                 <div class="relative w-full col-span-4">
-                                    <div class="relative">
+                                    <div class="relative"
+                                         x-data="autocomplete()"
+                                         x-init="isOpen = {{ count($listPrestadores) > 0 ? 'true' : 'false' }}"
+                                         @click.away="close()"
+                                    >
                                         <div class="relative">
                                             <x-simple-label label="Prestador">
                                                 <div class="relative">
-                                                    <x-inputs.searchinput
-                                                        wire:model="form.dataPrestadorPlan.insurance_name"
-                                                    ></x-inputs.searchinput>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="buscar..."
+                                                        autocomplete="off"
+                                                        wire:model.live.debounce.300ms="form.dataPrestadorPlan.insurance_name"
+                                                        @keydown="handleKeydown($event, {{ count($listPrestadores) }})"
+                                                        @focus="isOpen = {{ count($listPrestadores) > 0 ? 'true' : 'false' }}"
+
+                                                    />
+                                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                                        <svg
+                                                            type="button"
+                                                            @click="clear('form.dataPrestadorPlan.insurance_name', 'form.dataPrestadorPlan.insurance_id')"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke-width="1.5"
+                                                            stroke="currentColor"
+                                                            class="mr-1 h-4 w-4 cursor-pointer hover:text-red-500 transition-colors"
+                                                        >
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="M6 18 18 6M6 6l12 12"
+                                                            />
+                                                        </svg>
+                                                        <svg
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            stroke-width="1.5"
+                                                            stroke="currentColor"
+                                                            class="pointer-events-none h-5 w-5"
+                                                        >
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                                                            />
+                                                        </svg>
+                                                    </div>
                                                 </div>
                                             </x-simple-label>
+                                            <div x-show="isOpen && {{ count($listPrestadores) }} > 0" x-cloak>
+                                                <x-autocomplete.ulautocomplete>
+                                                    @foreach ($listPrestadores as $index => $prestador)
+                                                        <x-autocomplete.liautocomplete
+                                                            @click="selectItem('{{ $prestador->id }}', '{{ $prestador->insurance_name }}', 'form.dataPrestadorPlan.insurance_id', 'form.dataPrestadorPlan.insurance_name')"
+                                                            @mouseenter="selectedIndex = {{ $index }}"
+                                                            ::class="isSelected({{ $index }}) ? 'bg-indigo-600 text-white' : 'text-gray-900 hover:bg-indigo-100'"
+                                                        >
+                                                            {{ $prestador->insurance_name }}
+                                                        </x-autocomplete.liautocomplete>
+                                                    @endforeach
+                                                </x-autocomplete.ulautocomplete>
+                                            </div>
                                         </div>
                                         @error("insurance_id")
                                         <x-inputs.error-validate>
@@ -160,7 +213,13 @@
                                                     autocomplete="off"
                                                     x-init="flatpickr($el, {
                                                         dateFormat: 'd-m-Y',
-                                                        static: true
+                                                        static: true,
+                                                        theme: 'light',
+                                                        monthSelectorType: 'static',
+                                                        onReady: function(selectedDates, dateStr, instance) {
+                                                            instance.calendarContainer.style.fontSize = '12px';
+                                                            instance.calendarContainer.style.width = '305px';
+                                                        }
                                                     })"
                                                     wire:model="form.dataPrestadorPlan.insurance_start_date"
                                                     id="planstart"
@@ -195,7 +254,13 @@
                                                     x-init="flatpickr($el, {
                                                         dateFormat: 'd-m-Y',
                                                         minDate: 'today',
-                                                        static: true
+                                                        static: true,
+                                                        theme: 'light',
+                                                        monthSelectorType: 'static',
+                                                        onReady: function(selectedDates, dateStr, instance) {
+                                                            instance.calendarContainer.style.fontSize = '12px';
+                                                            instance.calendarContainer.style.width = '305px';
+                                                        }
                                                     })"
                                                     wire:model="form.dataPrestadorPlan.insurance_end_date"
                                                     id="planends"
@@ -237,12 +302,12 @@
                                 <div class="relative w-full col-span-10">
                                     <x-inputs.labeltextarea
                                         label="Descripción"
-                                        for="descriprole"
+                                        for="descriplan"
                                         required="yes"
                                     >
                                         <x-inputs.textarea
                                             wire:model="form.dataPrestadorPlan.insurance_plan_description"
-                                            id="descriprole"
+                                            id="descriplan"
                                             rows="3"
                                         ></x-inputs.textarea>
                                     </x-inputs.labeltextarea>
