@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('insurance_plan_name');
             $table->string('insurance_plan_code');
             $table->date('insurance_start_date');
-            $table->date('insurance_end_date');
-            $table->text('insurance_plan_description');
-            $table->text('insurance_plan_condition');
+            $table->date('insurance_end_date')->nullable();
+            $table->text('insurance_plan_description')->nullable();
+            $table->text('insurance_plan_condition')->nullable();
             $table->boolean('authorisation')->default(true);
             $table->timestamps();
 

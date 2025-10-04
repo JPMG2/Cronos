@@ -38,7 +38,9 @@ final class RePrestadorPlan extends Component
         );
     }
 
-    public function submitPrestadorPlan() {}
+    public function submitPrestadorPlan()
+    {
+    }
 
     public function openModalPrestadorPlan(): void
     {

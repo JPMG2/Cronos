@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Interfaces\Filterable;
+use Carbon\CarbonImmutable;
 use Database\Factories\InsurancePlanFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,5 +55,49 @@ final class InsurancePlan extends Model implements Filterable
             'insurance_start_date' => 'date',
             'insurance_end_date' => 'date',
         ];
+    }
+
+    protected function insurancePlanCode(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => mb_strtoupper(mb_trim($value)),
+        );
+    }
+
+    protected function insurancePlanName(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => mb_strtoupper(mb_strtolower(mb_trim($value))),
+        );
+    }
+
+    protected function insuranceEndDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
+            set: fn ($value) => is_null($value) ? null : CarbonImmutable::parse($value)->format('Y-m-d'),
+        );
+    }
+
+    protected function insuranceStartDate(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
+            set: fn ($value) => CarbonImmutable::parse($value)->format('Y-m-d'),
+        );
+    }
+
+    protected function insurancePlanDescription(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+        );
+    }
+
+    protected function insurancePlanCondition(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+        );
     }
 }

@@ -22,9 +22,9 @@ final readonly class MedicListService
      * Constructs a new instance and initializes the generic search service
      * with medical-specific configuration.
      *
-     * @param  Medical  $model  The medical model instance to be used.
-     * @param  bool  $order  Determines the order direction.
-     * @param  string|null  $clickColumn  Specifies the column to be clicked, if any.
+     * @param Medical     $model       The medical model instance to be used.
+     * @param bool        $order       Determines the order direction.
+     * @param string|null $clickColumn Specifies the column to be clicked, if any.
      */
     public function __construct(Medical $model, bool $order, ?string $clickColumn)
     {
@@ -40,7 +40,7 @@ final readonly class MedicListService
     /**
      * Retrieves a filtered and ordered list of medical records based on the provided conditions.
      *
-     * @param  array  $filterConditions  An array of column filtering conditions.
+     * @param  array $filterConditions An array of column filtering conditions.
      * @return EloquentBuilder A query builder instance with applied filters, sorting, and relationships.
      */
     public function listSearch(array $filterConditions): EloquentBuilder

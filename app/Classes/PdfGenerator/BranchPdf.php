@@ -25,5 +25,7 @@ final class BranchPdf implements ModelPdfGenerator
 
     }
 
-    public function generatePdfByValues() {}
+    public function generatePdfByValues()
+    {
+    }
 }

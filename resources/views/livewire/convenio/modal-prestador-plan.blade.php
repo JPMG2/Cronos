@@ -269,7 +269,11 @@
                                             rows="3"
                                         ></x-inputs.textarea>
                                     </x-inputs.labeltextarea>
-
+                                    @error("insurance_plan_description")
+                                    <x-inputs.error-validate>
+                                        {{ $message }}
+                                    </x-inputs.error-validate>
+                                    @enderror
                                 </div>
                                 <div class="relative w-full col-span-10">
                                     <x-inputs.labeltextarea
@@ -284,7 +288,11 @@
                                             rows="3"
                                         ></x-inputs.textarea>
                                     </x-inputs.labeltextarea>
-
+                                    @error("insurance_plan_condition")
+                                    <x-inputs.error-validate>
+                                        {{ $message }}
+                                    </x-inputs.error-validate>
+                                    @enderror
                                 </div>
                             </div>
                         </x-formcomponent.formdivcontent>

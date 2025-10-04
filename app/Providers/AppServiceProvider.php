@@ -32,7 +32,7 @@ final class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(
             ModelService::class, /**
-             * @throws InvalidArgumentException
+            * @throws InvalidArgumentException
             */
             function ($app, array $params): ModelService {
                 if (! array_key_exists('model', $params) || ! $params['model'] instanceof Model) {

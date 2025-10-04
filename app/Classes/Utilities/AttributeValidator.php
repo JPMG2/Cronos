@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Classes\Utilities;
 
 use App\Rules\ArraySchedule;
+use App\Rules\IdRelation;
 use App\Rules\MedicalCredential;
 
 final class AttributeValidator
@@ -99,10 +100,40 @@ final class AttributeValidator
         return new ArraySchedule($schedule);
     }
 
+    public static function idRelationUnique($model, ?int $relationId, ?int $id, $columnValidation, $relationColumn, $errorName = null)
+    {
+        return [
+            'bail',
+            'required',
+            'max:255',
+            'regex:/^([^<>]*)$/',
+            new IdRelation(
+                model: $model,
+                relationId: $relationId,
+                id: $id,
+                validColumn: $columnValidation,
+                relation: $relationColumn,
+                errorName: $errorName
+            ),
+        ];
+    }
+
     public static function requireAndExists($model, $uniqueField, $column, $require = null): array
     {
         return $require ? ['required',  'integer', 'exists:'.$model.','.$uniqueField]
             : ['nullable', 'exclude_if:'.$column.',0', 'integer'];
 
+    }
+
+    public static function booleanValue($required)
+    {
+        return $required ? ['required', 'boolean'] : ['sometimes', 'boolean'];
+
+    }
+
+    public static function dateAfther($required, $date)
+    {
+        return $required ? ['required', 'date_format:d-m-Y', 'after:'.$date] :
+            ['sometimes', 'date_format:d-m-Y', 'after:'.$date];
     }
 }

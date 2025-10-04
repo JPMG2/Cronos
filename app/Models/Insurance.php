@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class Insurance extends Model implements Filterable
 {
@@ -58,7 +59,7 @@ final class Insurance extends Model implements Filterable
         return $this->insurance_name;
     }
 
-    public function insuranceType()
+    public function insuranceType(): BelongsTo
     {
         return $this->belongsTo(InsuranceType::class);
     }
@@ -77,6 +78,11 @@ final class Insurance extends Model implements Filterable
     {
 
         return $this->$relashion($id);
+    }
+
+    public function insurancePlans(): HasMany
+    {
+        return $this->hasMany(InsurancePlan::class);
     }
 
     public function showInsuraceRelashion(int $id)
