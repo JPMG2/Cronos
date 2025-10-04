@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Mail;
 
 final class BranchEmail implements ModelEmail
 {
-    public function __construct(private $emailClass)
-    {
-    }
+    public function __construct(private $emailClass) {}
 
     public function sendEmailCreate($model, $receptor)
     {

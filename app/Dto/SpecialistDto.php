@@ -21,8 +21,7 @@ final class SpecialistDto implements Wireable
         public int $document_id = 1,
         public string $num_document = '',
         public ?int $city_id = null,
-    ) {
-    }
+    ) {}
 
     public static function fromLivewire($value): self
     {
