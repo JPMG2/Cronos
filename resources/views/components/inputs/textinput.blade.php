@@ -34,10 +34,17 @@
             window.addEventListener('clear-errors', () => {
                 this.hasError = false;
             });
-           
+
             this.$nextTick(() => {
                 if (this.$refs.ini) {
                     this.$refs.ini.focus();
+                }
+            });
+
+            this.$el.addEventListener('focus-first-input', () => {
+                const input = this.$el.querySelector('input');
+                if (input && input.hasAttribute('x-ref') && input.getAttribute('x-ref') === 'ini') {
+                    input.focus();
                 }
             });
         },

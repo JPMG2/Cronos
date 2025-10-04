@@ -15,8 +15,7 @@ final class SendEmail
 
     public function __construct(
         private readonly EmailsModel $emailsModel = new EmailsModel()
-    ) {
-    }
+    ) {}
 
     public function handle($model, string $action, string $baseClass, $mailClass, $receptor): void
     {

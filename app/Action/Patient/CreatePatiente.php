@@ -14,9 +14,7 @@ final class CreatePatiente
 
     protected string $modelName;
 
-    public function __construct(private readonly CreatePerson $createPerson)
-    {
-    }
+    public function __construct(private readonly CreatePerson $createPerson) {}
 
     public function handle(array $dataPatient): Patient
     {

@@ -37,7 +37,7 @@ final class Insurance extends Model implements Filterable
 
     public static function countInsurance(): ?int
     {
-        return self::count();
+        return self::query()->count();
     }
 
     public static function getDefaultFilterField(): string
