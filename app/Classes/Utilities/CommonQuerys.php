@@ -115,10 +115,15 @@ final class CommonQuerys extends Model
 
     public static function Insurances(array $state, ?string $search): Collection
     {
-        return $search === null ? Insurance::query()->orderBy('insurance_name')
-            ->whereIn('state_id', $state)
-            ->get() : Insurance::query()
-            ->whereRaw('LOWER(insurance_name) LIKE ?', ["%{$search}%"])
-            ->get();
+        $query = Insurance::query()
+            ->when($state !== [] && $state[0] !== '*', fn ($q) => $q->whereIn('state_id', $state))
+            ->orderBy('insurance_name');
+
+        if ($search !== null && $search !== '') {
+            $query->whereRaw('LOWER(insurance_name) LIKE ?', ['%'.mb_strtolower($search).'%']);
+        }
+
+        return $query->get();
+
     }
 }

@@ -13,18 +13,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('insurance_plans', function (Blueprint $table): void {
+        Schema::create('insurance_plans', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(App\Models\Insurance::class)->constrained();
             $table->foreignIdFor(App\Models\State::class)->constrained();
-            $table->string('insurance_plan_name')->unique();
-            $table->string('insurance_plan_code')->unique();
+            $table->string('insurance_plan_name');
+            $table->string('insurance_plan_code');
             $table->date('insurance_start_date');
             $table->date('insurance_end_date');
             $table->text('insurance_plan_description');
             $table->text('insurance_plan_condition');
             $table->boolean('authorisation')->default(true);
             $table->timestamps();
+
+            $table->unique(['insurance_id', 'insurance_plan_name']);
+            $table->unique(['insurance_id', 'insurance_plan_code']);
         });
     }
 

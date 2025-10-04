@@ -24,7 +24,7 @@ abstract class ModelsQuerys
     /**
      * Initialize the query service with a model instance
      *
-     * @param Model $model The model instance to work with
+     * @param  Model  $model  The model instance to work with
      */
     public function __construct(Model $model)
     {
@@ -35,7 +35,7 @@ abstract class ModelsQuerys
     /**
      * Find a model by its primary key
      *
-     * @param  int $id The primary key value
+     * @param  int  $id  The primary key value
      * @return Model The found model instance
      *
      * @throws ModelNotFoundException If model not found
@@ -48,8 +48,8 @@ abstract class ModelsQuerys
     /**
      * Find a model with a specific relationship loaded
      *
-     * @param  int    $id           The primary key value
-     * @param  string $relationName The name of the relationship to load
+     * @param  int  $id  The primary key value
+     * @param  string  $relationName  The name of the relationship to load
      * @return Model|null The model with relationship or null if not found
      */
     final public function showWithRelationship(int $id, string $relationName): ?Model
@@ -64,9 +64,9 @@ abstract class ModelsQuerys
     /**
      * Add related data to an existing model
      *
-     * @param  int    $id           The primary key of the parent model
-     * @param  array  $data         The data for the related model
-     * @param  string $relationName The name of the relationship
+     * @param  int  $id  The primary key of the parent model
+     * @param  array  $data  The data for the related model
+     * @param  string  $relationName  The name of the relationship
      * @return array|Model The result of the saveRelation operation
      *
      * @throws ModelNotFoundException If parent model not found
@@ -86,8 +86,8 @@ abstract class ModelsQuerys
      * Create a parent model and associate child data in a single transaction
      *
      * @param  array  $parentArray  Data for the parent model
-     * @param  array  $childArray   Data for the child/related model
-     * @param  string $relationName Name of the relationship
+     * @param  array  $childArray  Data for the child/related model
+     * @param  string  $relationName  Name of the relationship
      * @return Model|null The created parent model or null if transaction failed
      */
     final public function createAndAssociate(array $parentArray, array $childArray, string $relationName): ?Model
@@ -106,7 +106,7 @@ abstract class ModelsQuerys
     /**
      * Create a new model instance with the given data
      *
-     * @param  array $data The data to create the model with
+     * @param  array  $data  The data to create the model with
      * @return Model The created model instance
      */
     final public function store(array $data): Model
@@ -117,10 +117,10 @@ abstract class ModelsQuerys
     /**
      * Update a parent model and its related data in a single transaction
      *
-     * @param  int    $idParent     The ID of the parent model to update
+     * @param  int  $idParent  The ID of the parent model to update
      * @param  array  $parentArray  Data for updating the parent model
-     * @param  array  $childArray   Data for updating the related model
-     * @param  string $relationName Name of the relationship
+     * @param  array  $childArray  Data for updating the related model
+     * @param  string  $relationName  Name of the relationship
      * @return Model|null The updated parent model or null if transaction failed
      */
     final public function updateAndAssociate(int $idParent, array $parentArray, array $childArray, string $relationName): ?Model
@@ -139,8 +139,8 @@ abstract class ModelsQuerys
     /**
      * Update an existing model with the given data
      *
-     * @param  array $data The data to update the model with
-     * @param  int   $id   The ID of the model to update
+     * @param  array  $data  The data to update the model with
+     * @param  int  $id  The ID of the model to update
      * @return Model The updated model instance
      *
      * @throws ModelNotFoundException If model not found
@@ -157,11 +157,11 @@ abstract class ModelsQuerys
     /**
      * Execute database operations within a transaction
      *
-     * @param  callable $modelOperation Function that returns a model instance
-     * @param  array    $childArray     Data for the relation
-     * @param  string   $relationName   Name of the relation method
-     * @param  string   $relationMethod Method to call on the model for the relation
-     * @param  string   $errorMessage   Message to show on error
+     * @param  callable  $modelOperation  Function that returns a model instance
+     * @param  array  $childArray  Data for the relation
+     * @param  string  $relationName  Name of the relation method
+     * @param  string  $relationMethod  Method to call on the model for the relation
+     * @param  string  $errorMessage  Message to show on error
      * @return Model|null The model instance or null if transaction failed
      */
     protected function executeWithTransaction(
@@ -199,8 +199,8 @@ abstract class ModelsQuerys
     /**
      * Check if a method exists on a model instance
      *
-     * @param  Model  $modelInstance The model instance to check
-     * @param  string $method        The method name to check for
+     * @param  Model  $modelInstance  The model instance to check
+     * @param  string  $method  The method name to check for
      * @return bool True if the method exists, false otherwise
      *
      * @throws HttpException If method doesn't exist
@@ -219,7 +219,7 @@ abstract class ModelsQuerys
     /**
      * Handle errors by aborting the request with a 500 status code
      *
-     * @param string $message The error message
+     * @param  string  $message  The error message
      *
      * @throws HttpException
      */

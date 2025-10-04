@@ -12,9 +12,7 @@ use Illuminate\View\Component;
 
 final class CompanyWatcher extends Component
 {
-    public function __construct(public readonly CommonQuerys $commonQuerys)
-    {
-    }
+    public function __construct(public readonly CommonQuerys $commonQuerys) {}
 
     public function render(): View|Closure|string
     {

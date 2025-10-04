@@ -1,7 +1,12 @@
-<div wire:show="show">
+<div
+    x-data="{ show: @entangle('show').live }"
+    @focus-first-input.window="setTimeout(() => { const input = document.querySelector('#codiplan'); if (input) input.focus(); }, 200)"
+>
 
     <div
-        x-show="open"
+        x-show="show"
+        x-on:keydown.escape.window="show = false"
+        @click.self="show = false"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 scale-95"
         x-transition:enter-end="opacity-100 scale-100"
@@ -43,9 +48,13 @@
                             dstyle="from-slate-50  ring-slate-200  hover:from-slate-100 hover:to-slate-50 focus-within:from-slate-100 focus-within:to-slate-50">
                             <x-formcomponent.h3divtitle iconname="planes">
                                 Información Plan
+                                <x-formcomponent.titleindicator
+                                    wire:loading
+                                    wire:target="submitPrestadorPlan">
+                                </x-formcomponent.titleindicator>
                             </x-formcomponent.h3divtitle>
                             <div class="grid grid-cols-1 gap-4 lg:grid-cols-10 xl:gap-4">
-                                <div class="relative w-full col-span-3">
+                                <div class="relative w-full col-span-2">
                                     <div class="relative">
                                         <div class="relative">
                                             <x-inputs.textgroup
@@ -54,15 +63,16 @@
                                                 required="yes"
                                             >
                                                 <x-inputs.textinput
-
+                                                    x-ref="ini"
                                                     wire:model="form.dataPrestadorPlan.insurance_plan_code"
                                                     id="codiplan"
                                                     autocomplete="off"
                                                     maxlength="220"
                                                     placeholder=" "
-                                                    isdisabled=""
+                                                    isdisabled="{{$isdisabled}}"
                                                     :error="$errors->first('insurance_plan_code')"
                                                     required
+
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>
@@ -73,7 +83,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="relative w-full col-span-5">
+                                <div class="relative w-full col-span-4">
                                     <div class="relative">
                                         <div class="relative">
                                             <x-inputs.textgroup
@@ -82,13 +92,12 @@
                                                 required="yes"
                                             >
                                                 <x-inputs.textinput
-
                                                     wire:model="form.dataPrestadorPlan.insurance_plan_name"
                                                     id="nameplan"
                                                     autocomplete="off"
                                                     maxlength="220"
                                                     placeholder=" "
-                                                    isdisabled=""
+                                                    isdisabled="{{$isdisabled}}"
                                                     :error="$errors->first('insurance_plan_name')"
                                                     required
                                                 ></x-inputs.textinput>
@@ -112,7 +121,7 @@
                                                 <x-inputs.selectinput
                                                     wire:model.defer="form.dataPrestadorPlan.state_id"
                                                     id="prestaplanesta"
-                                                    isdisabled=""
+                                                    isdisabled="{{$isdisabled}}"
                                                 >
                                                     @foreach ($this->states as $state)
                                                         <option value="{{ $state->id }}">
@@ -129,76 +138,41 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="relative w-full col-span-4">
-                                    <div class="relative"
-                                         x-data="autocomplete()"
-                                         x-init="isOpen = {{ count($listPrestadores) > 0 ? 'true' : 'false' }}"
-                                         @click.away="close()"
-                                    >
-                                        <div class="relative">
-                                            <x-simple-label label="Prestador">
-                                                <div class="relative">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="buscar..."
-                                                        autocomplete="off"
-                                                        wire:model.live.debounce.300ms="form.dataPrestadorPlan.insurance_name"
-                                                        @keydown="handleKeydown($event, {{ count($listPrestadores) }})"
-                                                        @focus="isOpen = {{ count($listPrestadores) > 0 ? 'true' : 'false' }}"
+                                <div class="relative w-full col-span-2">
+                                    <div class="flex flex-col">
+                                        <x-simple-label label="Requiere Autorización"></x-simple-label>
 
-                                                    />
-                                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                                        <svg
-                                                            type="button"
-                                                            @click="clear('form.dataPrestadorPlan.insurance_name', 'form.dataPrestadorPlan.insurance_id')"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke-width="1.5"
-                                                            stroke="currentColor"
-                                                            class="mr-1 h-4 w-4 cursor-pointer hover:text-red-500 transition-colors"
-                                                        >
-                                                            <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                d="M6 18 18 6M6 6l12 12"
-                                                            />
-                                                        </svg>
-                                                        <svg
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke-width="1.5"
-                                                            stroke="currentColor"
-                                                            class="pointer-events-none h-5 w-5"
-                                                        >
-                                                            <path
-                                                                stroke-linecap="round"
-                                                                stroke-linejoin="round"
-                                                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                                                            />
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                            </x-simple-label>
-                                            <div x-show="isOpen && {{ count($listPrestadores) }} > 0" x-cloak>
-                                                <x-autocomplete.ulautocomplete>
-                                                    @foreach ($listPrestadores as $index => $prestador)
-                                                        <x-autocomplete.liautocomplete
-                                                            @click="selectItem('{{ $prestador->id }}', '{{ $prestador->insurance_name }}', 'form.dataPrestadorPlan.insurance_id', 'form.dataPrestadorPlan.insurance_name')"
-                                                            @mouseenter="selectedIndex = {{ $index }}"
-                                                            ::class="isSelected({{ $index }}) ? 'bg-indigo-600 text-white' : 'text-gray-900 hover:bg-indigo-100'"
-                                                        >
-                                                            {{ $prestador->insurance_name }}
-                                                        </x-autocomplete.liautocomplete>
-                                                    @endforeach
-                                                </x-autocomplete.ulautocomplete>
-                                            </div>
+                                        <div class="relative mt-4">
+                                            <input
+                                                wire:model="form.dataPrestadorPlan.authorisation"
+                                                id="autrization"
+                                                type="checkbox"
+                                                value="">
                                         </div>
-                                        @error("insurance_id")
+
+                                        @error("insurance_name")
                                         <x-inputs.error-validate>
                                             {{ $message }}
                                         </x-inputs.error-validate>
                                         @enderror
                                     </div>
+                                </div>
+                                <div class="relative w-full col-span-6">
+                                    <x-autocomplete.inputautocomplete
+                                        label="Prestador"
+                                        placeholder="buscar..."
+                                        wire-model="form.dataPrestadorPlan.insurance_name"
+                                        wire-id-model="form.dataPrestadorPlan.insurance_id"
+                                        :items="$listPrestadores"
+                                        display-field="insurance_name"
+                                        value-field="id"
+                                        :required="true"
+                                    />
+                                    @error("insurance_id")
+                                    <x-inputs.error-validate>
+                                        {{ $message }}
+                                    </x-inputs.error-validate>
+                                    @enderror
                                 </div>
                                 <div class="relative w-full col-span-2">
                                     <div class="relative">
@@ -226,7 +200,7 @@
                                                     autocomplete="off"
                                                     maxlength="200"
                                                     placeholder=" "
-                                                    isdisabled=""
+                                                    isdisabled="{{$isdisabled}}"
                                                     :error="$errors->first('insurance_start_date')"
                                                     required
                                                 ></x-inputs.textinput>
@@ -254,9 +228,10 @@
                                                     x-init="flatpickr($el, {
                                                         dateFormat: 'd-m-Y',
                                                         minDate: 'today',
-                                                        static: true,
+                                                        static: false,
                                                         theme: 'light',
                                                         monthSelectorType: 'static',
+                                                        position: 'auto left',
                                                         onReady: function(selectedDates, dateStr, instance) {
                                                             instance.calendarContainer.style.fontSize = '12px';
                                                             instance.calendarContainer.style.width = '305px';
@@ -267,9 +242,9 @@
                                                     autocomplete="off"
                                                     maxlength="200"
                                                     placeholder=" "
-                                                    isdisabled=""
+                                                    isdisabled="{{$isdisabled}}"
                                                     :error="$errors->first('insurance_end_date')"
-                                                    required
+
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
                                         </div>
@@ -280,25 +255,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="relative w-full col-span-2">
-                                    <div class="flex flex-col">
-                                        <x-simple-label label="Requiere Autorización"></x-simple-label>
 
-                                        <div class="relative mt-4">
-                                            <input
-                                                wire:model="form.dataPrestadorPlan.authorisation"
-                                                id="autrization"
-                                                type="checkbox"
-                                                value="">
-                                        </div>
-
-                                        @error("insurance_name")
-                                        <x-inputs.error-validate>
-                                            {{ $message }}
-                                        </x-inputs.error-validate>
-                                        @enderror
-                                    </div>
-                                </div>
                                 <div class="relative w-full col-span-10">
                                     <x-inputs.labeltextarea
                                         label="Descripción"
@@ -308,6 +265,7 @@
                                         <x-inputs.textarea
                                             wire:model="form.dataPrestadorPlan.insurance_plan_description"
                                             id="descriplan"
+                                            isdisabled="{{$isdisabled}}"
                                             rows="3"
                                         ></x-inputs.textarea>
                                     </x-inputs.labeltextarea>
@@ -322,6 +280,7 @@
                                         <x-inputs.textarea
                                             wire:model="form.dataPrestadorPlan.insurance_plan_condition"
                                             id="concicioplan"
+                                            isdisabled="{{$isdisabled}}"
                                             rows="3"
                                         ></x-inputs.textarea>
                                     </x-inputs.labeltextarea>

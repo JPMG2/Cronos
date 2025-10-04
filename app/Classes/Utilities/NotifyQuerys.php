@@ -15,7 +15,7 @@ final class NotifyQuerys
      * If changes are detected, it returns a success message. Otherwise, it returns
      * a message indicating no changes were made.
      *
-     * @param  Model $model The model instance that was updated.
+     * @param  Model  $model  The model instance that was updated.
      * @return array The response message indicating the result of the update operation.
      */
     public static function msgUpdate($model): array
@@ -36,7 +36,7 @@ final class NotifyQuerys
      * If the model was created successfully, it returns a success message.
      * Otherwise, it returns an error message.
      *
-     * @param  Model $model The model instance that was created.
+     * @param  Model  $model  The model instance that was created.
      * @return array The response message indicating the result of the create operation.
      */
     public static function msgCreate($model): array
@@ -57,7 +57,7 @@ final class NotifyQuerys
      * It verifies the existence of the relationship by counting the related records.
      * If the relationship exists, it returns a success message. Otherwise, it returns an error message.
      *
-     * @param  array $relashion An array containing the models involved in the relationship.
+     * @param  array  $relashion  An array containing the models involved in the relationship.
      * @return array The response message indicating the result of the create relationship operation.
      */
     public static function msgCreateUpdateMany(array $relashion): array

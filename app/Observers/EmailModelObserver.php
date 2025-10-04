@@ -20,8 +20,7 @@ final readonly class EmailModelObserver
 {
     public function __construct(
         private SendEmail $sendEmail
-    ) {
-    }
+    ) {}
 
     public function created(Model $model): void
     {
