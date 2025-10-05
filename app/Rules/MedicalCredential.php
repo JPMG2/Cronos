@@ -10,9 +10,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 final class MedicalCredential implements ValidationRule
 {
-    public function __construct(private readonly int $credentialID, private $credentialNumber, private readonly ?int $credentialModelId = null)
-    {
-    }
+    public function __construct(private readonly int $credentialID, private $credentialNumber, private readonly ?int $credentialModelId = null) {}
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

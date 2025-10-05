@@ -11,9 +11,7 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 
 final class PersonDocumente implements ValidationRule
 {
-    public function __construct(private readonly int $idTypeDocument, $numDocument, private readonly ?int $idPerson)
-    {
-    }
+    public function __construct(private readonly int $idTypeDocument, $numDocument, private readonly ?int $idPerson) {}
 
     /**
      * Run the validation rule.
