@@ -77,30 +77,32 @@ final class InsurancePlan extends Model implements Filterable
     protected function insuranceEndDate(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
-            set: fn ($value) => is_null($value) ? null : CarbonImmutable::parse($value)->format('Y-m-d'),
+            get: fn ($value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
+            set: fn ($value): ?string => is_null($value) ? null : CarbonImmutable::parse($value)->format('Y-m-d'),
         );
     }
 
     protected function insuranceStartDate(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
-            set: fn ($value) => CarbonImmutable::parse($value)->format('Y-m-d'),
+            get: fn ($value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
+            set: fn ($value): string => CarbonImmutable::parse($value)->format('Y-m-d'),
         );
     }
 
     protected function insurancePlanDescription(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+            get: fn ($value) => is_null($value) ? '' : $value,
+            set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function insurancePlanCondition(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+            get: fn ($value) => is_null($value) ? '' : $value,
+            set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }
 }

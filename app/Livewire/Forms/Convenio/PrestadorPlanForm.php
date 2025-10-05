@@ -43,6 +43,7 @@ final class PrestadorPlanForm extends Form
 
     public function prestadorPlanStore(): InsurancePlan
     {
+
         $data = $this->validateServiceData();
 
         $insurance = $this->iniService()->find((int) $this->dataPrestadorPlan['insurance_id']);

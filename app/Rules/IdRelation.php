@@ -11,7 +11,13 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 
 final readonly class IdRelation implements ValidationRule
 {
-    public function __construct(private Model $model, private ?int $relationId = null, private ?int $id = null, private ?string $validColumn = null, private ?string $relation = null, private ?string $errorName = null) {}
+    public function __construct(
+        private Model $model,
+        private ?int $relationId = null,
+        private ?int $id = null,
+        private ?string $validColumn = null,
+        private ?string $relation = null,
+        private ?string $errorName = null) {}
 
     /**
      * Run the validation rule.
@@ -39,7 +45,14 @@ final readonly class IdRelation implements ValidationRule
                 $fail('El campo '.$this->errorName.' ya existe');
 
             }
+        } else {
+            $exist = $this->model->query()->where($this->validColumn, $value)
+                ->where($this->relation, $this->relationId)
+                ->where('id', '!=', $this->id)
+                ->exists();
+            if ($exist) {
+                $fail('El campo '.$this->errorName.' ya existe');
+            }
         }
-
     }
 }
