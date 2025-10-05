@@ -38,11 +38,9 @@ final class RePrestadorPlan extends Component
         );
     }
 
-    public function submitPrestadorPlan() {}
-
-    public function openModalPrestadorPlan(): void
+    public function openModalPrestadorPlan(?int $id = null): void
     {
-        $this->dispatch('showModalPrestadorPlan');
+        $this->dispatch('showModalPrestadorPlan', $id);
     }
 
     #[Livewire\Attributes\On('insurance-plan-saved')]

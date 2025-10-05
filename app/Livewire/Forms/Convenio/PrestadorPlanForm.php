@@ -24,13 +24,22 @@ final class PrestadorPlanForm extends Form
         'insurance_plan_code' => '',
         'insurance_start_date' => '',
         'insurance_end_date' => '',
-        'insurance_plan_description' => '',
+        'insurance_plan_description' => ' ',
         'authorisation' => true,
-        'insurance_plan_condition' => '',
+        'insurance_plan_condition' => ' ',
         'insurance_name' => '',
     ];
 
-    public function prestadorPlanUpdate() {}
+    public function prestadorPlanUpdate(): InsurancePlan
+    {
+        $data = $this->validateServiceData();
+
+        $insurancePlan = InsurancePlan::query()->findOrFail((int) $this->dataPrestadorPlan['id']);
+
+        $insurancePlan->update($this->getValues($data));
+
+        return $insurancePlan;
+    }
 
     public function prestadorPlanStore(): InsurancePlan
     {
@@ -40,6 +49,18 @@ final class PrestadorPlanForm extends Form
 
         return $insurance->insurancePlans()->create($this->getValues($data));
 
+    }
+
+    public function prestadorPlanData($dataPrestadorPlan): void
+    {
+
+        $insurancePlan = InsurancePlan::query()->findOrfail($dataPrestadorPlan);
+
+        if ($insurancePlan) {
+            $data = $insurancePlan->load($insurancePlan->getRelationModel());
+            $this->dataPrestadorPlan = prepareData($data->toArray(), array_keys($this->dataPrestadorPlan));
+            $this->dataPrestadorPlan['insurance_name'] = $data->insurance->insurance_name;
+        }
     }
 
     protected function getValidationAttributes(): array
@@ -70,9 +91,9 @@ final class PrestadorPlanForm extends Form
         return [
             'insurance_plan_code' => mb_strtoupper(mb_trim($this->dataPrestadorPlan['insurance_plan_code'])),
             'insurance_plan_name' => mb_strtoupper(mb_trim($this->dataPrestadorPlan['insurance_plan_name'])),
-            'insurance_plan_description' => ucfirst(mb_strtolower(mb_trim($this->dataPrestadorPlan['insurance_plan_description']))),
             'insurance_start_date' => $this->dataPrestadorPlan['insurance_start_date'],
             'insurance_end_date' => $this->dataPrestadorPlan['insurance_end_date'],
+            'insurance_plan_description' => ucfirst(mb_strtolower(mb_trim($this->dataPrestadorPlan['insurance_plan_description']))),
             'insurance_plan_condition' => ucfirst(mb_strtolower(mb_trim($this->dataPrestadorPlan['insurance_plan_condition']))),
             'authorisation' => $this->dataPrestadorPlan['authorisation'],
             'insurance_id' => $this->dataPrestadorPlan['insurance_id'],
@@ -95,13 +116,13 @@ final class PrestadorPlanForm extends Form
         ];
     }
 
-    private function iniService()
-    {
-        return new QueryRepository(new Insurance());
-    }
-
     private function getValues(array $validValues): array
     {
         return $this->getValuesModel($validValues, new InsurancePlan());
+    }
+
+    private function iniService()
+    {
+        return new QueryRepository(new Insurance());
     }
 }

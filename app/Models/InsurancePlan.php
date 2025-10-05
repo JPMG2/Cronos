@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Interfaces\Filterable;
+use App\Traits\RecordActivity;
 use Carbon\CarbonImmutable;
 use Database\Factories\InsurancePlanFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -18,6 +19,8 @@ final class InsurancePlan extends Model implements Filterable
      * @use HasFactory<InsurancePlanFactory>
      */
     use HasFactory;
+
+    use RecordActivity;
 
     protected $fillable = ['insurance_id', 'state_id', 'insurance_plan_name',
         'insurance_plan_code', 'insurance_start_date', 'insurance_end_date', 'insurance_plan_description',

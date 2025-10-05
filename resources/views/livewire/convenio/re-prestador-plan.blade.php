@@ -68,7 +68,7 @@
                             class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                         >
                             <x-table.thead>
-                                <tr>
+                                <tr class="[&>th]:pb-1">
                                     <x-table.th>
                                         ID
                                     </x-table.th>
@@ -103,26 +103,29 @@
 
                                     </x-table.th>
                                     <x-table.th>
-                                        <x-buttons.accept
-                                            label="Nuevo Plan"
-                                            icon="add"
+                                        <button
+                                            type="button"
                                             wire:click="openModalPrestadorPlan"
-                                        ></x-buttons.accept>
+                                            class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 transition-all duration-200 shadow-sm whitespace-nowrap"
+                                        >
+
+                                            <span>Nuevo Plan</span>
+                                        </button>
                                     </x-table.th>
                                 </tr>
-                                <tr class="h-1 p-0 ">
+                                <tr class="-mt-3 [&>td]:pt-0">
                                     <td></td>
                                     <td>
                                         <x-table.input-table-search
-                                            withd="w-16"
-                                            maxlength="4"
+                                            withd="w-20"
+                                            maxlength="5"
                                             x-mask=""
                                             wire:model.live.debounce="columnFilter.insurance_plan_code"/>
                                     </td>
                                     <td>
                                         <x-table.input-table-search
-                                            withd="w-24"
-                                            maxlength="6"
+                                            withd="w-32"
+                                            maxlength="10"
                                             x-mask=""
                                             wire:model.live.debounce="columnFilter.insurance_plan_name"/>
                                     </td>
@@ -171,8 +174,8 @@
                                                 <div>
                                                     <x-table.accionopcion
                                                         wire:key="{{ $listPrestador->id }}"
-                                                        wire:click.prevent="editDepartment({{ $listPrestador }})"
-                                                        wire:target="editDepartment"
+                                                        wire:click.prevent="openModalPrestadorPlan({{ $listPrestador->id  }})"
+                                                        wire:target="openModalPrestadorPlan"
                                                         iconname="edit"
                                                     ></x-table.accionopcion>
                                                 </div>
