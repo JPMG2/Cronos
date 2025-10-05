@@ -11,17 +11,8 @@ use Illuminate\Translation\PotentiallyTranslatedString;
 
 final class PersonDocumente implements ValidationRule
 {
-    private int $idTypeDocument;
-
-    private ?string $numDocument;
-
-    private ?int $idPerson;
-
-    public function __construct($idTypeDocument, $numDocument, $idPerson)
+    public function __construct(private readonly int $idTypeDocument, $numDocument, private readonly ?int $idPerson)
     {
-        $this->idTypeDocument = $idTypeDocument;
-        $this->numDocument = $numDocument;
-        $this->idPerson = $idPerson;
     }
 
     /**

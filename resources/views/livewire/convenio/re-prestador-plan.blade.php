@@ -72,14 +72,26 @@
                                     <x-table.th>
                                         ID
                                     </x-table.th>
-                                    <x-table.th>
-                                        Código
+                                    <x-table.th
+                                        wire:click="orderColumBy('insurance_plan_code')">
+                                        <x-table.sortcolumn currentColumn="insurance_plan_code" :$sortField
+                                                            :$sortDirection>
+                                            <div> Código</div>
+                                        </x-table.sortcolumn>
                                     </x-table.th>
-                                    <x-table.th>
-                                        Plan
+                                    <x-table.th
+                                        wire:click="orderColumBy('insurance_plan_name')">
+                                        <x-table.sortcolumn currentColumn="insurance_plan_name" :$sortField
+                                                            :$sortDirection>
+                                            <div> Plan</div>
+                                        </x-table.sortcolumn>
                                     </x-table.th>
-                                    <x-table.th>
-                                        Prestador
+                                    <x-table.th
+                                        wire:click="orderColumBy('insurance_name')">
+                                        <x-table.sortcolumn currentColumn="insurance_name" :$sortField
+                                                            :$sortDirection>
+                                            <div> Prestador</div>
+                                        </x-table.sortcolumn>
                                     </x-table.th>
                                     <x-table.th>
                                         Estatus
@@ -97,11 +109,76 @@
                                             wire:click="openModalPrestadorPlan"
                                         ></x-buttons.accept>
                                     </x-table.th>
-
+                                </tr>
+                                <tr class="h-1 p-0 ">
+                                    <td></td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-16"
+                                            maxlength="4"
+                                            x-mask=""
+                                            wire:model.live.debounce="columnFilter.insurance_plan_code"/>
+                                    </td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-24"
+                                            maxlength="6"
+                                            x-mask=""
+                                            wire:model.live.debounce="columnFilter.insurance_plan_name"/>
+                                    </td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-36"
+                                            maxlength="10"
+                                            x-mask=""
+                                            wire:model.live.debounce="columnFilter.insurance_name"/>
+                                    </td>
                                 </tr>
                             </x-table.thead>
                             <x-table.tablebody>
                                 @if(count($listPlanesPrestador) > 0)
+                                    @foreach($listPlanesPrestador as $listPrestador)
+                                        <tr
+                                            class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
+                                            wire:key="{{ $listPrestador->id }}"
+                                        >
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{ $listPrestador->id  }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap
+                                                             class="text-blue-600">
+                                                {{ $listPrestador->insurance_plan_code }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{ $listPrestador->insurance_plan_name }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                {{ $listPrestador->insurance->insurance_name }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                                <x-statescolor
+                                                    idstatecolor="{{ $listPrestador->state->id }}"
+                                                >
+                                                    {{ $listPrestador->state->state_name }}
+                                                </x-statescolor>
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap
+                                                             class="text-center">
+                                                {{'0'}}
+                                            </x-table.tdtable>
+                                            <td colspan="2"
+                                                class="flex items-center text-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300">
+                                                <div>
+                                                    <x-table.accionopcion
+                                                        wire:key="{{ $listPrestador->id }}"
+                                                        wire:click.prevent="editDepartment({{ $listPrestador }})"
+                                                        wire:target="editDepartment"
+                                                        iconname="edit"
+                                                    ></x-table.accionopcion>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 @else
                                     <tr>
                                         <td colspan="8" class="py-4">

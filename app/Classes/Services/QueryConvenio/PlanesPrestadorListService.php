@@ -26,7 +26,12 @@ final class PlanesPrestadorListService extends AbstractQueryService
 
     protected function applyRelationshipOrder(EloquentBuilder $query, string $relationship, string $order): void
     {
-        // TODO: Implement applyRelationshipOrder() method.
+        $tableName = $this->getTableName($relationship);
+        $foreignKeyColumn = $this->getForeignKeyColumn($tableName);
+
+        $query->join($tableName, "insurance_plans.{$foreignKeyColumn}", '=', "{$tableName}.id")
+            ->orderBy("{$tableName}.{$this->clickColumn}", $order)
+            ->select('insurance_plans.*');
     }
 
     protected function getDefaultOrderColumn(): string

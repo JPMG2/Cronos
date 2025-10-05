@@ -83,7 +83,7 @@
                                             wire:key="{{ $prestador->id }}"
                                         >
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{ $loop->iteration }}
+                                                {{ $prestador->id }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{$prestador->insurance_name }}

@@ -9,35 +9,9 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
-final class IdRelation implements ValidationRule
+final readonly class IdRelation implements ValidationRule
 {
-    private Model $model;
-
-    private ?int $relationId;
-
-    private ?int $id;
-
-    private ?string $relation;
-
-    private ?string $validColumn;
-
-    private ?string $errorName;
-
-    public function __construct(
-        Model $model,
-        ?int $relationId = null,
-        ?int $id = null,
-        ?string $validColumn = null,
-        ?string $relation = null,
-        ?string $errorName = null
-    ) {
-        $this->model = $model;
-        $this->relationId = $relationId;
-        $this->id = $id;
-        $this->relation = $relation;
-        $this->validColumn = $validColumn;
-        $this->errorName = $errorName;
-    }
+    public function __construct(private Model $model, private ?int $relationId = null, private ?int $id = null, private ?string $validColumn = null, private ?string $relation = null, private ?string $errorName = null) {}
 
     /**
      * Run the validation rule.
@@ -53,6 +27,11 @@ final class IdRelation implements ValidationRule
             return;
         }
         if (is_null($this->id)) {
+            if (is_null($this->validColumn) || is_null($this->relation)) {
+                $fail('El campo con errores');
+
+                return;
+            }
             $exist = $this->model->query()->where($this->validColumn, $value)
                 ->where($this->relation, $this->relationId)
                 ->exists();
