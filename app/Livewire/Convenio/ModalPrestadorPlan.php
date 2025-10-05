@@ -38,12 +38,15 @@ final class ModalPrestadorPlan extends Component
 
     public function submitPrestadorPlan(): void
     {
-<<<<<<< HEAD
-=======
         $result = $this->isupdate ?
-            $this->form->prestadorPlanUpdate() :
-            $this->form->prestadorPlanStore();
->>>>>>> d116200 (Refactor multiple classes to simplify constructor definitions and improve code readability, update validation logic in `PrestadorPlanForm`, and enhance the `ModalPrestadorPlan` component with form handling and input focus management.)
+                $this->form->prestadorPlanUpdate() :
+                $this->form->prestadorPlanStore();
+
+        $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
+        $message = $this->showQueryMessage($result, $messageType);
+        $this->showToastAndClear($message);
+        $this->closeModal();
+
     }
 
     public function closeModal(): void
