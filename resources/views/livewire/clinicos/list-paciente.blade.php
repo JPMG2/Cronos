@@ -88,19 +88,19 @@
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{$patiente->person->documentInfo }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{$patiente->person->person_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{$patiente->person->person_lastname }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{$patiente->person->gender?->gender_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{$patiente->person->person_phone }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{$patiente->person->person_email }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" whitespace-nowrap>

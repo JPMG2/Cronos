@@ -27,7 +27,7 @@ abstract class AbstractQueryService implements QueryListService
 
     abstract protected function applyRelationshipOrder(EloquentBuilder $query, string $relationship, string $order): void;
 
-    abstract protected function getDefaultOrderColumn(): string;
+    abstract protected function getDefaultOrderColumn(): string|array;
 
     final public function listSearch(array $filterConditions): EloquentBuilder
     {
@@ -44,8 +44,22 @@ abstract class AbstractQueryService implements QueryListService
 
     final public function getQueryDetails(EloquentBuilder $query): EloquentBuilder
     {
-        return $query->orderBy($this->getDefaultOrderColumn(), 'asc')
-            ->with($this->model::getRelationModel());
+        $this->checkOrderBy($query);
+
+        return $query->with($this->model::getRelationModel());
+    }
+
+    protected function checkOrderBy(EloquentBuilder $query)
+    {
+        $orderColumns = $this->getDefaultOrderColumn();
+
+        if (is_array($orderColumns)) {
+            foreach ($orderColumns as $column) {
+                $query->orderBy($column, 'asc');
+            }
+        } else {
+            $query->orderBy($orderColumns, 'asc');
+        }
     }
 
     protected function getTableName(string $relation): string

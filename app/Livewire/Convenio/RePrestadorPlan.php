@@ -9,6 +9,7 @@ use App\Livewire\Forms\Convenio\ListPrestadorPlan;
 use App\Models\InsurancePlan;
 use App\Traits\TableSorting;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -43,7 +44,7 @@ final class RePrestadorPlan extends Component
         $this->dispatch('showModalPrestadorPlan', $id);
     }
 
-    #[Livewire\Attributes\On('insurance-plan-saved')]
+    #[On('prestadorRefresh')]
     public function refreshTable(): void
     {
         $this->resetPage();

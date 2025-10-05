@@ -95,10 +95,10 @@
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ $medical->person->documentInfo }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{ $medical->person->person_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{ $medical->person->person_lastname }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" break-words>
@@ -109,10 +109,10 @@
                                                 @endphp
                                                 {{ $credential !== '-' && $numatricula !== '-' ? "$credential-$numatricula" : '-' }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{ optional($medical->specialty)->specialty_name ?? '-'}}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{ $medical->person->person_phone }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtnormal" whitespace-nowrap>

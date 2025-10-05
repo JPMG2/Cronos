@@ -34,8 +34,8 @@ final class PlanesPrestadorListService extends AbstractQueryService
             ->select('insurance_plans.*');
     }
 
-    protected function getDefaultOrderColumn(): string
+    protected function getDefaultOrderColumn(): string|array
     {
-        return 'insurance_plan_code';
+        return ['insurance_id', 'insurance_plan_code'];
     }
 }

@@ -61,6 +61,7 @@ final class ModalPrestadorPlan extends Component
     {
         $this->show = false;
         $this->clearForm();
+        $this->dispatch('prestadorRefresh');
     }
 
     #[Computed]

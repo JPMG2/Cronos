@@ -148,24 +148,23 @@
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ $listPrestador->id  }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap
-                                                             class="text-blue-600">
+                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{ $listPrestador->insurance_plan_code }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{ $listPrestador->insurance_plan_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 {{ $listPrestador->insurance->insurance_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable whitespace-nowrap>
                                                 <x-statescolor
                                                     idstatecolor="{{ $listPrestador->state->id }}"
                                                 >
                                                     {{ $listPrestador->state->state_name }}
                                                 </x-statescolor>
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap
+                                            <x-table.tdtable whitespace-nowrap
                                                              class="text-center">
                                                 {{'0'}}
                                             </x-table.tdtable>
