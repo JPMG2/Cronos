@@ -10,18 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 abstract class AbstractQueryService implements QueryListService
 {
-    protected Model $model;
-
-    protected bool $order;
-
-    protected ?string $clickColumn;
-
-    public function __construct(Model $model, bool $order, ?string $clickColumn)
-    {
-        $this->model = $model;
-        $this->order = $order;
-        $this->clickColumn = $clickColumn;
-    }
+    public function __construct(protected Model $model, protected bool $order, protected ?string $clickColumn) {}
 
     abstract protected function getRelationSearchField(string $relation): string;
 
@@ -113,7 +102,7 @@ abstract class AbstractQueryService implements QueryListService
 
         $query->whereHas(
             $relation,
-            function (EloquentBuilder $query) use ($stringSearch, $filterColumn) {
+            function (EloquentBuilder $query) use ($stringSearch, $filterColumn): void {
                 $query->whereRaw('LOWER('.$filterColumn.') LIKE ?', ["%{$stringSearch}%"]);
             }
         );

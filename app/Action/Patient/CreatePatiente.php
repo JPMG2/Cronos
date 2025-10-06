@@ -12,7 +12,7 @@ final class CreatePatiente
 {
     use UtilityForm;
 
-    protected string $modelName;
+    private string $modelName;
 
     public function __construct(private readonly CreatePerson $createPerson) {}
 
