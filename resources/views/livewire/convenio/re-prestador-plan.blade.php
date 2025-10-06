@@ -50,8 +50,8 @@
                         </x-buttons.tabs.tab-button>
                         <!-- Asignaciones Tab -->
                         <x-buttons.tabs.tab-button
-                            icon="asignacion"
                             @click="switchTab('asignaciones')"
+                            icon="asignacion"
                             buttoname='asignaciones'
                         >
                             Asignaciones
@@ -93,8 +93,12 @@
                                             <div> Prestador</div>
                                         </x-table.sortcolumn>
                                     </x-table.th>
-                                    <x-table.th>
-                                        Estatus
+                                    <x-table.th
+                                        wire:click="orderColumBy('state_name')">
+                                        <x-table.sortcolumn currentColumn="state_name" :$sortField
+                                                            :$sortDirection>
+                                            <div> Estatus</div>
+                                        </x-table.sortcolumn>
                                     </x-table.th>
                                     <x-table.th>
                                         Coberturas
@@ -103,14 +107,12 @@
 
                                     </x-table.th>
                                     <x-table.th>
-                                        <button
-                                            type="button"
+                                        <x-buttons.smallaccept
+                                            label="Nuevo Plan"
+                                            icon="add"
                                             wire:click="openModalPrestadorPlan"
-                                            class="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 rounded-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 transition-all duration-200 shadow-sm whitespace-nowrap"
-                                        >
+                                        />
 
-                                            <span>Nuevo Plan</span>
-                                        </button>
                                     </x-table.th>
                                 </tr>
                                 <tr class="-mt-3 [&>td]:pt-0">
@@ -135,6 +137,13 @@
                                             maxlength="10"
                                             x-mask=""
                                             wire:model.live.debounce="columnFilter.insurance_name"/>
+                                    </td>
+                                    <td>
+                                        <x-table.input-table-search
+                                            withd="w-20"
+                                            maxlength="4"
+                                            x-mask=""
+                                            wire:model.live.debounce="columnFilter.state_name"/>
                                     </td>
                                 </tr>
                             </x-table.thead>
@@ -169,15 +178,35 @@
                                                 {{'0'}}
                                             </x-table.tdtable>
                                             <td colspan="2"
-                                                class="flex items-center text-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300">
-                                                <div>
-                                                    <x-table.accionopcion
+                                                class="inline-flex px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300">
+                                                <div
+                                                    class=" mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                                >
+                                                    <x-headerform.minioptionicon
                                                         wire:key="{{ $listPrestador->id }}"
                                                         wire:click.prevent="openModalPrestadorPlan({{ $listPrestador->id  }})"
                                                         wire:target="openModalPrestadorPlan"
-                                                        iconname="edit"
-                                                    ></x-table.accionopcion>
+                                                        icon="eyeoption"
+                                                    ></x-headerform.minioptionicon>
                                                 </div>
+                                                <div
+                                                    class=" mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                                >
+                                                    <x-headerform.minioptionicon
+                                                        @click="switchTab('coberturas')"
+                                                        icon="cobertura"
+                                                    ></x-headerform.minioptionicon>
+                                                </div>
+                                                <div
+                                                    class=" mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
+                                                >
+                                                    <x-headerform.minioptionicon
+                                                        @click="switchTab('asignaciones')"
+                                                        icon="asignacion"
+                                                    ></x-headerform.minioptionicon>
+                                                </div>
+
+
                                             </td>
                                         </tr>
                                     @endforeach

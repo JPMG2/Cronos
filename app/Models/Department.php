@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\RecordActivity;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +28,8 @@ final class Department extends Model
             ->withTimestamps();
     }
 
-    public function scopeListDepartment(Builder $query, $department = null): Builder
+    #[Scope]
+    protected function listDepartment(Builder $query, $department = null): Builder
     {
         return $query->where('department_name', 'like', "%{$department}%")
             ->orderBy('department_name');
@@ -36,7 +38,7 @@ final class Department extends Model
     protected function departmentName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 

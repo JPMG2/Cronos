@@ -66,7 +66,7 @@ final class Person extends Model implements Filterable
         $query = self::query()->where('document_id', $documentType)
             ->where('num_document', $numDocument);
 
-        if ($personId) {
+        if ($personId !== null && $personId !== 0) {
             $query->where('id', '!=', $personId);
         }
 
@@ -150,7 +150,7 @@ final class Person extends Model implements Filterable
 
     public function showDataPatient(int $id)
     {
-        return self::whereHas('patiente')->with(['gender', 'maritalStatus', 'occupation', 'nationality', 'province'])
+        return self::query()->whereHas('patiente')->with(['gender', 'maritalStatus', 'occupation', 'nationality', 'province'])
             ->findOrFail($id);
     }
 
@@ -210,28 +210,28 @@ final class Person extends Model implements Filterable
     protected function documentInfo(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->document->document_name.'. '.$this->num_document,
+            get: fn (): string => $this->document->document_name.'. '.$this->num_document,
         );
     }
 
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->person_name.' '.$this->person_lastname,
+            get: fn (): string => $this->person_name.' '.$this->person_lastname,
         );
     }
 
     protected function personName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function personLastname(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
@@ -245,36 +245,36 @@ final class Person extends Model implements Filterable
     protected function personAddress(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function personPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_trim($value),
+            set: fn ($value): string => mb_trim($value),
         );
     }
 
     protected function personCpcode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_strtoupper(mb_trim($value)),
+            set: fn ($value): string => mb_strtoupper(mb_trim($value)),
         );
     }
 
     protected function numDocument(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_trim($value),
+            set: fn ($value): string => mb_trim($value),
         );
     }
 
     protected function personDatebirth(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => CarbonImmutable::parse($value)->format('d-m-Y'),
-            set: fn ($value) => CarbonImmutable::parse($value)->format('Y-m-d'),
+            get: fn ($value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
+            set: fn ($value): string => CarbonImmutable::parse($value)->format('Y-m-d'),
         );
     }
 }

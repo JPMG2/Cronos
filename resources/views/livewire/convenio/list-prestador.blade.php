@@ -108,10 +108,11 @@
                                                 <div
                                                     class="mr-2 w-4 transform hover:scale-110 hover:text-blue-700"
                                                 >
-                                                    <x-headerform.eyeoption
+                                                    <x-headerform.minioptionicon
                                                         wire:key="{{ $prestador->id }}"
                                                         wire:click.prevent="prestadorData({{ $prestador->id }})"
-                                                    ></x-headerform.eyeoption>
+                                                        icon="eyeoption"
+                                                    ></x-headerform.minioptionicon>
                                                 </div>
                                             </x-table.tdtable>
                                         </tr>
