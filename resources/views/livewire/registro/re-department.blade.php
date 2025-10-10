@@ -126,6 +126,30 @@
                         <x-slot:title>Registro</x-slot>
 
                         <div class="mt-2 grid grid-cols-1 gap-4">
+                            <div class="relative sm:col-span-1 w-2/5">
+                                <div class="relative">
+                                    <x-inputs.textgroup
+                                        label="Código"
+                                        for="depacodi"
+                                        required="yes"
+                                    >
+                                        <x-inputs.textinput
+                                            wire:model="form.datadeparment.department_code"
+                                            id="depacodi"
+                                            autocomplete="off"
+                                            maxlength="6"
+                                            placeholder=" "
+                                            isdisabled="{{$isdisabled}}"
+                                            :error="$errors->first('department_code')"
+                                        ></x-inputs.textinput>
+                                    </x-inputs.textgroup>
+                                </div>
+                                @error("department_code")
+                                <x-inputs.error-validate>
+                                    {{ $message }}
+                                </x-inputs.error-validate>
+                                @enderror
+                            </div>
                             <div class="relative sm:col-span-1">
                                 <div class="relative">
                                     <x-inputs.textgroup
@@ -145,30 +169,6 @@
                                     </x-inputs.textgroup>
                                 </div>
                                 @error("department_name")
-                                <x-inputs.error-validate>
-                                    {{ $message }}
-                                </x-inputs.error-validate>
-                                @enderror
-                            </div>
-                            <div class="relative sm:col-span-1">
-                                <div class="relative">
-                                    <x-inputs.textgroup
-                                        label="Código"
-                                        for="depacodi"
-                                        required="yes"
-                                    >
-                                        <x-inputs.textinput
-                                            wire:model="form.datadeparment.department_code"
-                                            id="depacodi"
-                                            autocomplete="off"
-                                            maxlength="10"
-                                            placeholder=" "
-                                            isdisabled="{{$isdisabled}}"
-                                            :error="$errors->first('department_code')"
-                                        ></x-inputs.textinput>
-                                    </x-inputs.textgroup>
-                                </div>
-                                @error("department_code")
                                 <x-inputs.error-validate>
                                     {{ $message }}
                                 </x-inputs.error-validate>

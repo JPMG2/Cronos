@@ -53,7 +53,7 @@ final class ReCategory extends Component
 
     public function getCategoriesProperty()
     {
-        return Category::list()->get();
+        return Category::list([1, 2], null)->get();
     }
 
     #[Computed]

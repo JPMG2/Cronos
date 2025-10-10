@@ -129,11 +129,36 @@
                         x-transition:leave-start="opacity-100"
                         x-transition:leave-end="opacity-0"
                         closemodal="openservice"
+                        withmodal="w-[32rem]"
                     >
                         <x-slot:title>Registro</x-slot>
 
-                        <div class="mt-2 grid grid-cols-1 gap-4">
-                            <div class="relative sm:col-span-1">
+                        <div class="mt-2 grid grid-cols-1 lg:grid-cols-8 gap-y-3 gap-x-2">
+                            <div class="relative col-span-3">
+                                <div class="relative">
+                                    <x-inputs.textgroup
+                                        label="Código"
+                                        for="depacodi"
+                                        required="yes"
+                                    >
+                                        <x-inputs.textinput
+                                            wire:model="form.dataservice.service_code"
+                                            id="depacodi"
+                                            autocomplete="off"
+                                            maxlength="6"
+                                            placeholder=" "
+                                            isdisabled="{{$isdisabled}}"
+                                            :error="$errors->first('service_code')"
+                                        ></x-inputs.textinput>
+                                    </x-inputs.textgroup>
+                                </div>
+                                @error("service_code")
+                                <x-inputs.error-validate>
+                                    {{ $message }}
+                                </x-inputs.error-validate>
+                                @enderror
+                            </div>
+                            <div class="relative col-span-5">
                                 <div class="relative">
                                     <x-inputs.textgroup
                                         label="Servicio"
@@ -157,31 +182,7 @@
                                 </x-inputs.error-validate>
                                 @enderror
                             </div>
-                            <div class="relative sm:col-span-1">
-                                <div class="relative">
-                                    <x-inputs.textgroup
-                                        label="Código"
-                                        for="depacodi"
-                                        required="yes"
-                                    >
-                                        <x-inputs.textinput
-                                            wire:model="form.dataservice.service_code"
-                                            id="depacodi"
-                                            autocomplete="off"
-                                            maxlength="10"
-                                            placeholder=" "
-                                            isdisabled="{{$isdisabled}}"
-                                            :error="$errors->first('service_code')"
-                                        ></x-inputs.textinput>
-                                    </x-inputs.textgroup>
-                                </div>
-                                @error("service_code")
-                                <x-inputs.error-validate>
-                                    {{ $message }}
-                                </x-inputs.error-validate>
-                                @enderror
-                            </div>
-                            <div class="relative w-full ">
+                            <div class="relative col-span-8 ">
                                 <x-inputs.labeltextarea
                                     label="Descripción"
                                     for="descriprole"

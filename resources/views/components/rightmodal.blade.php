@@ -1,12 +1,19 @@
-@props(["closemodal" => false,
-'clearform'=>false])
+@props([
+   "closemodal" => false,
+    'clearform'=>false,
+    'withmodal' => false])
+@php
+    if(!$withmodal){
+        $withmodal = 'w-96';
+    }
+@endphp
 <div
     {{ $attributes }}
     class="fixed left-0 top-0 z-50 h-screen w-full items-center justify-center bg-black bg-opacity-45"
 >
     <div
         id="drawer-right-example"
-        class="fixed right-0 top-0 z-40 h-screen w-96 overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50 shadow-2xl ring-1 ring-blue-200"
+        class="fixed right-0 top-0 z-40 h-screen {{$withmodal}} overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50 shadow-2xl ring-1 ring-blue-200"
         tabindex="-1"
         aria-labelledby="drawer-right-label"
         x-transition:enter="transform transition ease-out duration-300"
@@ -17,7 +24,7 @@
         x-transition:leave-end="translate-x-full"
     >
         <!-- Enhanced Header Section -->
-        <div class="relative bg-gradient-to-r from-blue-100 to-blue-200 px-6 py-4 shadow-lg ring-1 ring-blue-300">
+        <div class="relative bg-gradient-to-r from-blue-100 to-blue-200 px-2 py-3 shadow-lg ring-1 ring-blue-300">
             <div class="absolute inset-0 bg-gradient-to-r from-blue-50/30 to-transparent"></div>
             <h5
                 id="drawer-right-label"
@@ -51,15 +58,15 @@
         </div>
 
         <!-- Content Section -->
-        <div class="flex-1 overflow-y-auto px-6 py-6 pb-20">
-            <div class="rounded-lg bg-white/60 backdrop-blur-sm p-4 shadow-sm ring-1 ring-white/20">
+        <div class="flex-1 overflow-y-auto px-4 py-6 pb-20">
+            <div class="rounded-lg bg-white/60 backdrop-blur-sm p-3 shadow-sm ring-1 ring-white/20">
                 {{ $slot }}
             </div>
         </div>
 
         <!-- Bottom Button Section -->
         <div
-            class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-blue-100 to-blue-50 px-6 py-4 shadow-lg ring-1 ring-blue-200">
+            class="absolute bottom-0 left-0 right-0 bg-gradient-to-r from-blue-100 to-blue-50 px-4 py-4 shadow-lg ring-1 ring-blue-200">
             {{ $buttons ?? '' }}
         </div>
     </div>

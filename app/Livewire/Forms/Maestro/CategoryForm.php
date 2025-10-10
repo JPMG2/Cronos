@@ -60,7 +60,7 @@ final class CategoryForm extends Form
     private function transformCategoryData(): array
     {
         return [
-            'categori_name' => ucfirst(mb_strtolower(mb_trim((string) ($this->datacategory['categori_name'] ?? '')))),
+            'categori_name' => ucwords(mb_strtolower(mb_trim((string) ($this->datacategory['categori_name'] ?? '')))),
             'categori_code' => mb_strtoupper(mb_trim((string) ($this->datacategory['categori_code'] ?? ''))),
             'state_id' => $this->datacategory['state_id'],
         ];
