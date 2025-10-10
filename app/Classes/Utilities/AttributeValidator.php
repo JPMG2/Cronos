@@ -18,8 +18,10 @@ final class AttributeValidator
 {
     /** @var int Maximum length for string fields */
     private const MAX_STRING_LENGTH = 255;
+
     /** @var string Regex pattern to prevent XSS attacks */
     private const XSS_PREVENTION_PATTERN = '/^([^<>]*)$/';
+
     /** @var string Regex pattern for digit validation (including phone formats) */
     private const DIGIT_PATTERN = '/^([0-9\s\-\+\(\)]*)$/';
 
