@@ -86,18 +86,19 @@
                                                 {{ $prestador->id }}
                                             </x-table.tdtable>
                                             <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$prestador->insurance_name }}
-                                            </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$prestador->insurance_acronym }}
-                                            </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
-                                                {{$prestador->insuranceType->insuratype_name }}
-                                            </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                                 {{$prestador->insurance_code }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
+                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                                {{$prestador->insurance_name }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                                {{$prestador->insurance_acronym }}
+                                            </x-table.tdtable>
+                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                                {{$prestador->insuranceType->insuratype_name }}
+                                            </x-table.tdtable>
+
+                                            <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                                 <x-statescolor
                                                     idstatecolor="{{$prestador->state->id }}"
                                                 >

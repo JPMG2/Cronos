@@ -40,6 +40,8 @@ Route::group(
     function () {
         Route::get('/re_especialist', App\Livewire\Maestro\ReEspecialista::class)
             ->name('re_especialist')->middleware(['rolemenu:re_especialist']);
+        Route::get('re_category', App\Livewire\Maestro\ReCategory::class)
+            ->name('re_category')->middleware(['rolemenu:re_category']);
         Route::get('/re_service', App\Livewire\Maestro\ReServices::class)
             ->name('re_service')->middleware(['rolemenu:re_service']);
     }

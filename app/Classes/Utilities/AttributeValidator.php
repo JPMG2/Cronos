@@ -8,67 +8,82 @@ use App\Rules\ArraySchedule;
 use App\Rules\IdRelation;
 use App\Rules\MedicalCredential;
 
+/**
+ * Utility class for building reusable Laravel validation rules.
+ *
+ * This class centralizes common validation patterns to maintain consistency
+ * across the application and reduce code duplication.
+ */
 final class AttributeValidator
 {
+    /** @var int Maximum length for string fields */
+    private const MAX_STRING_LENGTH = 255;
+
+    /** @var string Regex pattern to prevent XSS attacks */
+    private const XSS_PREVENTION_PATTERN = '/^([^<>]*)$/';
+
+    /** @var string Regex pattern for digit validation (including phone formats) */
+    private const DIGIT_PATTERN = '/^([0-9\s\-\+\(\)]*)$/';
+
     public static function uniqueIdNameLength($length, $model, $uniqueField, $id = null)
     {
         if ($id) {
-            return ['required', 'unique:'.$model.','.$uniqueField.','.$id, 'min:'.$length, 'regex:/^([^<>]*)$/', 'max:255'];
+            return ['required', 'unique:'.$model.','.$uniqueField.','.$id, 'min:'.$length, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
         }
 
-        return ['required', 'unique:'.$model.','.$uniqueField, 'min:'.$length, 'regex:/^([^<>]*)$/', 'max:255'];
+        return ['required', 'unique:'.$model.','.$uniqueField, 'min:'.$length, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
     }
 
     public static function digitValid($length, $required)
     {
         if ($required) {
-            return ['required', 'min:'.$length, 'regex:/^([0-9\s\-\+\(\)]*)$/', 'max:255'];
+            return ['required', 'min:'.$length, 'regex:'.self::DIGIT_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
         }
 
-        return ['sometimes', 'min:'.$length, 'regex:/^([0-9\s\-\+\(\)]*)$/', 'max:255'];
+        return ['sometimes', 'min:'.$length, 'regex:'.self::DIGIT_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
     }
 
     public static function uniqueEmail($model, $uniqueField, $id = null)
     {
         if ($id) {
-            return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField.','.$id, 'regex:/^([^<>]*)$/', 'max:255'];
+            return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField.','.$id, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
         }
 
-        return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField, 'regex:/^([^<>]*)$/', 'max:255'];
+        return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
     }
 
     public static function emailValid($model, $uniqueField, $id = null)
     {
         return $id ?
-            ['sometimes', 'unique:'.$model.','.$uniqueField.','.$id, 'email:rfc', 'regex:/^([^<>]*)$/', 'max:255'] :
-           ['sometimes', 'unique:'.$model.','.$uniqueField, 'email:rfc', 'regex:/^([^<>]*)$/', 'max:255'];
+            ['sometimes', 'unique:'.$model.','.$uniqueField.','.$id, 'email:rfc', 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH] :
+           ['sometimes', 'unique:'.$model.','.$uniqueField, 'email:rfc', 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
     }
 
     public static function emailValidById($id, $model, $uniqueField)
     {
-        return ['sometimes', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField.','.$id, 'regex:/^([^<>]*)$/', 'max:255'];
+        return ['sometimes', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField.','.$id, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
     }
 
     public static function stringValid($required, $length)
     {
         return $required ?
-            ['required', 'min:'.$length, 'regex:/^([^<>]*)$/', 'max:255'] :
-            ['sometimes', 'min:'.$length, 'regex:/^([^<>]*)$/', 'max:255'];
+            ['required', 'min:'.$length, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH] :
+            ['sometimes', 'min:'.$length, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
 
     }
 
     public static function stringValidUnique($model, $uniqueField, $length, $id = null)
     {
         return $id ?
-            ['sometimes', 'min:'.$length, 'unique:'.$model.','.$uniqueField.','.$id, 'regex:/^([^<>]*)$/', 'max:255'] :
-            ['sometimes', 'min:'.$length, 'unique:'.$model.','.$uniqueField, 'regex:/^([^<>]*)$/', 'max:255'];
+            ['sometimes', 'min:'.$length, 'unique:'.$model.','.$uniqueField.','.$id, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH] :
+            ['sometimes', 'min:'.$length, 'unique:'.$model.','.$uniqueField, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
     }
 
     public static function webValid($required)
     {
         return $required
-            ? ['required', 'url',  'active_url', 'regex:/^([^<>]*)$/', 'max:255']
-            : ['sometimes', 'url', 'active_url', 'regex:/^([^<>]*)$/', 'max:255'];
+            ? ['required', 'url',  'active_url', 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH]
+            : ['sometimes', 'url', 'active_url', 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
 
     }
 
@@ -86,8 +101,8 @@ final class AttributeValidator
     public static function dateValid($required)
     {
         return $required
-            ? ['required', 'date_format:d-m-Y', 'max:255', 'regex:/^([^<>]*)$/'] :
-              ['sometimes', 'date_format:d-m-Y', 'max:255', 'regex:/^([^<>]*)$/'];
+            ? ['required', 'date_format:d-m-Y', 'max:'.self::MAX_STRING_LENGTH, 'regex:'.self::XSS_PREVENTION_PATTERN] :
+              ['sometimes', 'date_format:d-m-Y', 'max:'.self::MAX_STRING_LENGTH, 'regex:'.self::XSS_PREVENTION_PATTERN];
     }
 
     public static function hasTobeArray($length)
@@ -105,8 +120,8 @@ final class AttributeValidator
         return [
             'bail',
             'required',
-            'max:255',
-            'regex:/^([^<>]*)$/',
+            'max:'.self::MAX_STRING_LENGTH,
+            'regex:'.self::XSS_PREVENTION_PATTERN,
             new IdRelation(
                 model: $model,
                 relationId: $relationId,

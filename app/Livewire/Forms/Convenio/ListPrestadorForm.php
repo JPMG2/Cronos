@@ -18,6 +18,14 @@ final class ListPrestadorForm extends Form
             'mask' => '',
         ],
         [
+            'name' => 'Código',
+            'isClickable' => true,
+            'clickName' => 'insurance_code',
+            'with' => 'w-36',
+            'max' => '4',
+            'mask' => '',
+        ],
+        [
             'name' => 'Nombre',
             'isClickable' => true,
             'clickName' => 'insurance_name',
@@ -41,14 +49,7 @@ final class ListPrestadorForm extends Form
             'max' => '10',
             'mask' => 'aaaaaaaaaa',
         ],
-        [
-            'name' => 'Código',
-            'isClickable' => true,
-            'clickName' => 'insurance_code',
-            'with' => 'w-36',
-            'max' => '4',
-            'mask' => '',
-        ],
+
         [
             'name' => 'Estatus',
             'isClickable' => true,
