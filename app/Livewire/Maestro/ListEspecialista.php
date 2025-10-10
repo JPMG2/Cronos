@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Personal;
+namespace App\Livewire\Maestro;
 
 use App\Classes\Services\QueryPerson\MedicListService;
-use App\Livewire\Forms\Personal\ListEspecialistaForm;
+use App\Livewire\Forms\Maestro\ListEspecialistaForm;
 use App\Models\Medical;
 use App\Traits\TableSorting;
 use Livewire\Attributes\Computed;
@@ -38,7 +38,7 @@ final class ListEspecialista extends Component
     public function render()
     {
         return view(
-            'livewire.personal.list-especialista',
+            'livewire.maestro.list-especialista',
             [
                 'listMedical' => $this->getMedicService()->listSearch($this->columnFilter)->paginate(15),
             ]

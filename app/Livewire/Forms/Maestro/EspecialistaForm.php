@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Forms\Personal;
+namespace App\Livewire\Forms\Maestro;
 
 use App\Action\PersonAct\UpdatePerson;
 use App\Action\PersonalAct\CreateMedic;

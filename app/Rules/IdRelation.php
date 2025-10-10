@@ -32,27 +32,22 @@ final readonly class IdRelation implements ValidationRule
 
             return;
         }
-        if (is_null($this->id)) {
-            if (is_null($this->validColumn) || is_null($this->relation)) {
-                $fail('El campo con errores');
 
-                return;
-            }
-            $exist = $this->model->query()->where($this->validColumn, $value)
-                ->where($this->relation, $this->relationId)
-                ->exists();
-            if ($exist) {
-                $fail('El campo '.$this->errorName.' ya existe');
+        if (is_null($this->validColumn) || is_null($this->relation)) {
+            $fail('El campo con errores');
 
-            }
-        } else {
-            $exist = $this->model->query()->where($this->validColumn, $value)
-                ->where($this->relation, $this->relationId)
-                ->where('id', '!=', $this->id)
-                ->exists();
-            if ($exist) {
-                $fail('El campo '.$this->errorName.' ya existe');
-            }
+            return;
+        }
+        $query = $this->model->query()
+            ->where($this->validColumn, $value)
+            ->where($this->relation, $this->relationId);
+
+        if ($this->id !== null) {
+            $query->where('id', '!=', $this->id);
+        }
+
+        if ($query->exists()) {
+            $fail('El campo '.$this->errorName.' ya existe');
         }
     }
 }
