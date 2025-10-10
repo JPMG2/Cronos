@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Livewire\Personal\ReEspecialista;
+use App\Livewire\Maestro\ReEspecialista;
 use App\Models\Medical;
 
 use function Pest\Livewire\livewire;

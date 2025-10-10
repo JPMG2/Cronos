@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Forms\Clinico;
+namespace App\Livewire\Forms\Maestro;
 
 use App\Classes\Utilities\AttributeValidator;
 use App\Classes\Utilities\QueryRepository;

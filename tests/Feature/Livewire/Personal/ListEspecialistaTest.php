@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Livewire\Personal\ListEspecialista;
+use App\Livewire\Maestro\ListEspecialista;
 use Livewire\Livewire;
 
 it('renders successfully', function () {

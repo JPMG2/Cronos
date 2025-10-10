@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Clinico;
+namespace App\Livewire\Maestro;
 
-use App\Livewire\Forms\Clinico\ServiceForm;
+use App\Livewire\Forms\Maestro\ServiceForm;
 use App\Models\Service;
 use App\Traits\UtilityForm;
 use Livewire\Attributes\Title;
@@ -21,7 +21,7 @@ final class ReServices extends Component
     #[Title(' - Servicios')]
     public function render()
     {
-        return view('livewire.clinicos.re-services');
+        return view('livewire.maestro.re-services');
     }
 
     public function queryService(): void

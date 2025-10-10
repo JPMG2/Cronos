@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Personal;
+namespace App\Livewire\Maestro;
 
 use App\Classes\Person\MainPerson;
 use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQuerys;
 use App\Dto\SpecialistDto;
-use App\Livewire\Forms\Personal\EspecialistaForm;
+use App\Livewire\Forms\Maestro\EspecialistaForm;
 use App\Models\Medical;
 use App\Traits\FormHandling;
 use App\Traits\HandlesActionPolicy;
@@ -33,7 +33,7 @@ final class ReEspecialista extends Component
     #[Title(' - Especialista')]
     public function render()
     {
-        return view('livewire.personal.re-especialista');
+        return view('livewire.maestro.re-especialista');
     }
 
     public function getlistDocumentProperty(): Collection

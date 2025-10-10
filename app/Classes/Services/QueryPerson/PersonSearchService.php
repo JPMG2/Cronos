@@ -18,39 +18,18 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  */
 final readonly class PersonSearchService
 {
-    private Model $model;
-
-    private bool $order;
-
     private string $orderDirection;
-
-    private ?string $clickColumn;
 
     private array $searchableFields;
 
-    private array $pivotRelations;
-
-    /**
-     * Constructs a new instance and initializes the provided attributes.
-     *
-     * @param  Model  $model  The model instance to be used.
-     * @param  bool  $order  Determines the order direction.
-     * @param  string|null  $clickColumn  Specifies the column to be clicked, if any.
-     * @param  array  $searchableFields  Configuration array defining searchable fields.
-     * @param  array  $pivotRelations  Array of relations that use pivot tables.
-     */
     public function __construct(
-        Model $model,
-        bool $order,
-        ?string $clickColumn,
+        private Model $model,
+        private bool $order,
+        private ?string $clickColumn,
         array $searchableFields = [],
-        array $pivotRelations = []
+        private array $pivotRelations = []
     ) {
-        $this->model = $model;
-        $this->order = $order;
-        $this->clickColumn = $clickColumn;
         $this->searchableFields = $this->mergeWithDefaults($searchableFields);
-        $this->pivotRelations = $pivotRelations;
         $this->iniOrder();
     }
 
@@ -160,57 +139,6 @@ final readonly class PersonSearchService
     }
 
     /**
-     * Determines the table name based on the provided column name.
-     *
-     * @param  int|string  $string  The column name to map to a table.
-     * @return string|null The table name or null if no match is found.
-     */
-    private function tableName(int|string $string): ?string
-    {
-        $tableMap = [];
-        foreach ($this->searchableFields as $relation => $fields) {
-            $tableName = $this->getTableNameFromRelation($relation);
-            $tableMap[$tableName] = $fields;
-        }
-
-        return searchKeyArray($tableMap, $string);
-    }
-
-    /**
-     * Converts relation name to table name.
-     *
-     * @param  string  $relation  The relation name.
-     * @return string The corresponding table name.
-     */
-    private function getTableNameFromRelation(string $relation): string
-    {
-        return match ($relation) {
-            'person' => 'people',
-            'specialty' => 'specialties',
-            'blood_type' => 'blood_types',
-            default => $relation
-        };
-    }
-
-    /**
-     * Determines the index name based on the provided table name.
-     *
-     * @param  string|null  $string  The table name to map to an index.
-     * @return string|null The index name or null if no match is found.
-     */
-    private function indexName(?string $string): ?string
-    {
-        $indexMap = [];
-        foreach ($this->searchableFields as $relation => $fields) {
-            $tableName = $this->getTableNameFromRelation($relation);
-            $indexName = $relation === 'person' ? 'person_id' : $relation.'_id';
-            $indexMap[$indexName] = $tableName;
-        }
-
-        return searchKeyArray($indexMap, $string);
-    }
-
-    /**
      * Creates a query for pivot table relations.
      *
      * @param  EloquentBuilder  $query  The main query builder instance.
@@ -263,6 +191,57 @@ final readonly class PersonSearchService
             'gender' => 'gender_name',
             default => 'name'
         };
+    }
+
+    /**
+     * Determines the table name based on the provided column name.
+     *
+     * @param  int|string  $string  The column name to map to a table.
+     * @return string|null The table name or null if no match is found.
+     */
+    private function tableName(int|string $string): ?string
+    {
+        $tableMap = [];
+        foreach ($this->searchableFields as $relation => $fields) {
+            $tableName = $this->getTableNameFromRelation($relation);
+            $tableMap[$tableName] = $fields;
+        }
+
+        return searchKeyArray($tableMap, $string);
+    }
+
+    /**
+     * Converts relation name to table name.
+     *
+     * @param  string  $relation  The relation name.
+     * @return string The corresponding table name.
+     */
+    private function getTableNameFromRelation(string $relation): string
+    {
+        return match ($relation) {
+            'person' => 'people',
+            'specialty' => 'specialties',
+            'blood_type' => 'blood_types',
+            default => $relation
+        };
+    }
+
+    /**
+     * Determines the index name based on the provided table name.
+     *
+     * @param  string|null  $string  The table name to map to an index.
+     * @return string|null The index name or null if no match is found.
+     */
+    private function indexName(?string $string): ?string
+    {
+        $indexMap = [];
+        foreach ($this->searchableFields as $relation => $fields) {
+            $tableName = $this->getTableNameFromRelation($relation);
+            $indexName = $relation === 'person' ? 'person_id' : $relation.'_id';
+            $indexMap[$indexName] = $tableName;
+        }
+
+        return searchKeyArray($indexMap, $string);
     }
 
     /**
