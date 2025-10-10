@@ -25,6 +25,24 @@ final class AttributeValidator
     /** @var string Regex pattern for digit validation (including phone formats) */
     private const DIGIT_PATTERN = '/^([0-9\s\-\+\(\)]*)$/';
 
+    /**
+     * Generates a validation rule array for ensuring the uniqueness of an email address
+     * while adhering to specific constraints such as format and length.
+     *
+     * @param  string  $model  The table or model name where the unique check is performed.
+     * @param  string  $uniqueField  The database field to validate uniqueness against.
+     * @param  int|null  $id  Optional ID to exclude from the unique check, typically for updates.
+     * @return array Array of validation rules to be applied on the input.
+     */
+    public static function uniqueEmail($model, $uniqueField, $id = null)
+    {
+        if ($id) {
+            return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField.','.$id, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
+        }
+
+        return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
+    }
+
     public static function uniqueIdNameLength($length, $model, $uniqueField, $id = null)
     {
         if ($id) {
@@ -41,15 +59,6 @@ final class AttributeValidator
         }
 
         return ['sometimes', 'min:'.$length, 'regex:'.self::DIGIT_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
-    }
-
-    public static function uniqueEmail($model, $uniqueField, $id = null)
-    {
-        if ($id) {
-            return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField.','.$id, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
-        }
-
-        return ['required', 'email:rfc,dns', 'unique:'.$model.','.$uniqueField, 'regex:'.self::XSS_PREVENTION_PATTERN, 'max:'.self::MAX_STRING_LENGTH];
     }
 
     public static function emailValid($model, $uniqueField, $id = null)
