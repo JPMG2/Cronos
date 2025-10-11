@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property ?string $person_email
  * @property CarbonImmutable $person_datebirth
  * @property ?string $person_cpcode
+ * @property-read Person $person
  */
 final class Person extends Model implements Filterable
 {
