@@ -12,8 +12,6 @@ final class CreatePatiente
 {
     use UtilityForm;
 
-    private string $modelName;
-
     public function __construct(private readonly CreatePerson $createPerson) {}
 
     public function handle(array $dataPatient): Patient
@@ -21,5 +19,6 @@ final class CreatePatiente
         $person = $this->createPerson->handle($dataPatient);
 
         return $person->patiente()->create($this->getValuesModel($dataPatient, new Patient()));
+
     }
 }

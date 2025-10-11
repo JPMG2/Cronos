@@ -73,16 +73,24 @@ final class CommonQuerys extends Model
 
     public static function listRoles(?array $roles = null): Collection
     {
-        return $roles && $roles !== []
-            ? Role::query()->whereNotIn('name_role', $roles)->orderBy('name_role')->get()
-            : Role::query()->orderBy('name_role')->get();
+        $query = Role::query()->orderBy('name_role');
+
+        if ($roles !== null && $roles !== []) {
+            $query->whereNotIn('name_role', $roles);
+        }
+
+        return $query->get();
     }
 
     public static function listActions(?array $actions = null): Collection
     {
-        return $actions && $actions !== []
-            ? Action::query()->whereNotIn('action_name', $actions)->orderBy('action_sp')->get()
-            : Action::query()->orderBy('action_sp')->get();
+        $query = Action::query()->orderBy('action_sp');
+
+        if ($actions !== null && $actions !== []) {
+            $query->whereNotIn('action_name', $actions);
+        }
+
+        return $query->get();
     }
 
     public static function listDocuments(): Collection

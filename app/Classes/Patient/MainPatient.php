@@ -17,6 +17,9 @@ final class MainPatient
         return Patient::with(Patient::getRelationModel())->findorFail($id);
     }
 
+    /**
+     * @param  Patient  $model
+     */
     public function handleNotification(Model $model, $emailChange = null): void
     {
         $action = '';

@@ -32,10 +32,10 @@
                                         ID
                                     </x-table.th>
                                     <x-table.th>
-                                        Servicio
+                                        Código
                                     </x-table.th>
                                     <x-table.th>
-                                        Código
+                                        Servicio
                                     </x-table.th>
                                     <x-table.th>
                                         Descripción
@@ -52,37 +52,28 @@
                                         class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
                                         wire:key="{{ $service->id }}"
                                     >
-                                        <td
-                                            class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200"
-                                        >
+                                        <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                             <div
                                                 class="inline-flex items-center gap-x-3"
                                             >
                                                 <span>
-                                                    {{ $loop->iteration }}
+                                                    {{ $service->id }}
                                                 </span>
                                             </div>
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap px-3 py-1.5 text-sm font-medium text-gray-700"
-                                        >
-                                            {{ $service->service_name }}
-                                        </td>
-                                        <td
-                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
-                                        >
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                             {{ $service->service_code }}
-                                        </td>
-                                        <td
-                                            class="truncate px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300 max-w-xs">
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                            {{ $service->service_name }}
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
 
                                             {{ $service->service_description}}
-                                        </td>
-                                        <td
-                                            class="break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
-                                        >
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                             {{ Carbon::parse($service->created_at)->format("d/m/Y") }}
-                                        </td>
+                                        </x-table.tdtable>
                                         <td
                                             class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
                                         >
