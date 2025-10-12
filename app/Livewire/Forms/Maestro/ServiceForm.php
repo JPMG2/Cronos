@@ -20,6 +20,7 @@ final class ServiceForm extends Form
         'service_name' => '',
         'service_description' => '',
         'service_code' => '',
+<<<<<<< HEAD
         'state_id' => 1,
         'category_id' => null,
         'categori_name' => '',
@@ -31,6 +32,11 @@ final class ServiceForm extends Form
         'preparation_instructions' => '',
         'allows_subservices' => false,
         'display_order' => 0,
+=======
+        'state_id' => '',
+        'category_id' => null,
+        'categori_name' => '',
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
     ];
 
     public function serviceStore(): Model

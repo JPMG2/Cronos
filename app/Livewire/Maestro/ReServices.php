@@ -4,17 +4,25 @@ declare(strict_types=1);
 
 namespace App\Livewire\Maestro;
 
+<<<<<<< HEAD
 use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQueries;
 use App\Classes\Utilities\NotifyQuerys;
+=======
+use App\Classes\Utilities\CommonQueries;
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 use App\Livewire\Forms\Maestro\ServiceForm;
 use App\Models\Category;
 use App\Models\Service;
 use App\Traits\HandleMenuAction;
 use App\Traits\UtilityForm;
+<<<<<<< HEAD
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+=======
+use Livewire\Attributes\Computed;
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -29,10 +37,13 @@ final class ReServices extends Component
 
     public $listCategory = [];
 
+<<<<<<< HEAD
     public int $currentStep = 1;
 
     public $parentServiceId = null;
 
+=======
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
     #[Title(' - Servicios')]
     public function render()
     {
@@ -165,5 +176,28 @@ final class ReServices extends Component
         }
 
         return [];
+    }
+
+    #[Computed]
+    public function states()
+    {
+        return CommonQueries::stateQuery([1, 2]);
+    }
+
+    public function updatedFormDataserviceCategoriName($value)
+    {
+        if (str()->length($value) >= 2) {
+
+            $this->listCategory = $this->categoryQuery($value);
+
+        } else {
+            $this->listCategory = [];
+        }
+    }
+
+    public function categoryQuery(string $value)
+    {
+        return Category::list([1], $value)
+            ->get();
     }
 }

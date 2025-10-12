@@ -190,7 +190,66 @@
                                 <x-keyshorcut>Esc</x-keyshorcut>
                                 Cerrar
                             </div>
+<<<<<<< HEAD
                         </div>
+=======
+<<<<<<< HEAD
+                            <div class="relative sm:col-span-1">
+                                <div class="relative">
+                                    <x-inputs.textgroup
+                                        label="Código"
+                                        for="depacodi"
+                                        required="yes"
+                                    >
+                                        <x-inputs.textinput
+                                            wire:model="form.dataservice.service_code"
+                                            id="depacodi"
+                                            autocomplete="off"
+                                            maxlength="10"
+                                            placeholder=" "
+                                            isdisabled="{{$isdisabled}}"
+                                            :error="$errors->first('service_code')"
+                                        ></x-inputs.textinput>
+                                    </x-inputs.textgroup>
+                                </div>
+                                @error("service_code")
+=======
+
+                            <div class="relative col-span-8">
+                                <x-autocomplete.inputautocomplete
+                                    label="Categoría"
+                                    placeholder="buscar..."
+                                    wire-model="form.dataservice.categori_name"
+                                    wire-id-model="form.dataservice.category_id"
+                                    :items="$listCategory"
+                                    display-field="categori_name"
+                                    value-field="id"
+                                    :required="true"
+                                />
+                                @error("category_id")
+>>>>>>> 3514fa4 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+                                <x-inputs.error-validate>
+                                    {{ $message }}
+                                </x-inputs.error-validate>
+                                @enderror
+                            </div>
+<<<<<<< HEAD
+                            <div class="relative w-full ">
+=======
+                            <div class="relative col-span-8 ">
+>>>>>>> 3514fa4 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+                                <x-inputs.labeltextarea
+                                    label="Descripción"
+                                    for="descriprole"
+                                    required="yes"
+                                >
+                                    <x-inputs.textarea
+                                        wire:model="form.dataservice.service_description"
+                                        id="descriprole"
+                                        rows="3"
+                                    ></x-inputs.textarea>
+                                </x-inputs.labeltextarea>
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 
                         <!-- Step Indicator -->
                         <div class="mb-4 flex items-center justify-center space-x-2">

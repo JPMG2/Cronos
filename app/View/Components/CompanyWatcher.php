@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\View\Components;
 
 use App\Classes\Utilities\CommonQueries;
+<<<<<<< HEAD
+=======
+use Closure;
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\Component;
