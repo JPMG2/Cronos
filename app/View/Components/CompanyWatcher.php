@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\View\Components;
 
-use App\Classes\Utilities\CommonQuerys;
+use App\Classes\Utilities\CommonQueries;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
@@ -12,7 +12,7 @@ use Illuminate\View\Component;
 
 final class CompanyWatcher extends Component
 {
-    public function __construct(public readonly CommonQuerys $commonQuerys) {}
+    public function __construct(public readonly CommonQueries $commonQuerys) {}
 
     public function render(): View|Closure|string
     {
@@ -37,7 +37,7 @@ final class CompanyWatcher extends Component
 
     public function companyOnPause()
     {
-        if ($this->commonQuerys::CompanyOnPause()) {
+        if ($this->commonQuerys::companyOnPause()) {
             Session::flash('status', ['Compañia BLOQUEADA, notificar al administrador del sistema.', 'warning']);
             Session::flash('isdisabled', 'disabled');
 

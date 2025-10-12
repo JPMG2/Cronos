@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Convenio;
 
-use App\Classes\Utilities\CommonQuerys;
+use App\Classes\Utilities\CommonQueries;
 use App\Livewire\Forms\Convenio\PrestadorPlanForm;
 use App\Traits\FormHandling;
 use Livewire\Attributes\Computed;
@@ -67,7 +67,7 @@ final class ModalPrestadorPlan extends Component
     #[Computed]
     public function states()
     {
-        return CommonQuerys::stateQuery([1, 2]);
+        return CommonQueries::stateQuery([1, 2]);
     }
 
     public function render()
@@ -91,7 +91,7 @@ final class ModalPrestadorPlan extends Component
 
     public function insurances()
     {
-        return CommonQuerys::Insurances([1], $this->searchPrestador);
+        return CommonQueries::Insurances([1], $this->searchPrestador);
     }
 
     private function clearForm(): void

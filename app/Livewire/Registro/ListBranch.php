@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Registro;
 
-use App\Classes\Utilities\CommonQuerys;
+use App\Classes\Utilities\CommonQueries;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -23,7 +23,7 @@ final class ListBranch extends Component
 
     }
 
-    public function render(CommonQuerys $commonQuerys)
+    public function render(CommonQueries $commonQuerys)
     {
         return view(
             'livewire.registro.list-branch',
