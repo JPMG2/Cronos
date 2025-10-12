@@ -6,7 +6,7 @@ namespace App\Livewire\Clinico;
 
 use App\Classes\Person\MainPerson;
 use App\Classes\Utilities\AlertModal;
-use App\Classes\Utilities\CommonQuerys;
+use App\Classes\Utilities\CommonQueries;
 use App\Dto\PatientDto;
 use App\Livewire\Forms\Clinico\PacienteForm;
 use App\Models\Patient;
@@ -36,19 +36,19 @@ final class RePaciente extends Component
     #[Computed]
     public function documentType()
     {
-        return CommonQuerys::listDocuments();
+        return CommonQueries::listDocuments();
     }
 
     #[Computed]
     public function maritalStatus()
     {
-        return CommonQuerys::listMaritalStatus();
+        return CommonQueries::listMaritalStatus();
     }
 
     #[Computed]
     public function gender()
     {
-        return CommonQuerys::listGenders();
+        return CommonQueries::listGenders();
     }
 
     #[Computed]
@@ -60,13 +60,13 @@ final class RePaciente extends Component
     #[Computed]
     public function occupation()
     {
-        return CommonQuerys::listOcupacion();
+        return CommonQueries::listOcupacion();
     }
 
     #[Computed]
     public function nationality()
     {
-        return CommonQuerys::listNacionalidad();
+        return CommonQueries::listNacionalidad();
     }
 
     public function submitPatient(): void

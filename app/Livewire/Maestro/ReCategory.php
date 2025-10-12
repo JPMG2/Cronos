@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Maestro;
 
-use App\Classes\Utilities\CommonQuerys;
+use App\Classes\Utilities\CommonQueries;
 use App\Livewire\Forms\Maestro\CategoryForm;
 use App\Models\Category;
 use App\Traits\UtilityForm;
@@ -59,6 +59,6 @@ final class ReCategory extends Component
     #[Computed]
     public function states()
     {
-        return CommonQuerys::stateQuery([1, 2]);
+        return CommonQueries::stateQuery([1, 2]);
     }
 }

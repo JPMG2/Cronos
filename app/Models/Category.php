@@ -6,7 +6,6 @@ namespace App\Models;
 
 use App\Traits\RecordActivity;
 use Database\Factories\CategoryFactory;
-use DB;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,7 +37,7 @@ final class Category extends Model
     protected function list($query, ?array $states, ?string $search = null)
     {
         if ($search) {
-            $query->where(DB::raw('LOWER(categori_name'), 'like', "%{$search}%");
+            $query->whereRaw('LOWER(categori_name::text) like ?', ["%{$search}%"]);
         }
         if ($states) {
             $query->whereIn('state_id', $states);

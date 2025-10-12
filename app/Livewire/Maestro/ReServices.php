@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\Maestro;
 
+use App\Classes\Utilities\CommonQueries;
 use App\Livewire\Forms\Maestro\ServiceForm;
+use App\Models\Category;
 use App\Models\Service;
 use App\Traits\UtilityForm;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -17,6 +20,8 @@ final class ReServices extends Component
     public ServiceForm $form;
 
     public $openservice = false;
+
+    public $listCategory = [];
 
     #[Title(' - Servicios')]
     public function render()
@@ -52,5 +57,28 @@ final class ReServices extends Component
     public function getServicesProperty()
     {
         return Service::query()->orderBy('service_name')->get();
+    }
+
+    #[Computed]
+    public function states()
+    {
+        return CommonQueries::stateQuery([1, 2]);
+    }
+
+    public function updatedFormDataserviceCategoriName($value)
+    {
+        if (str()->length($value) >= 2) {
+
+            $this->listCategory = $this->categoryQuery($value);
+
+        } else {
+            $this->listCategory = [];
+        }
+    }
+
+    public function categoryQuery(string $value)
+    {
+        return Category::list([1], $value)
+            ->get();
     }
 }

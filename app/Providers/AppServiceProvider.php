@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Classes\Services\ModelService;
-use App\Classes\Utilities\CommonQuerys;
+use App\Classes\Utilities\CommonQueries;
 use App\Listeners\LogSuccess;
 use App\Models\Branch;
 use App\Models\Company;
@@ -28,7 +28,7 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton('commonquery', fn ($app): CommonQuerys => new CommonQuerys());
+        $this->app->singleton('commonquery', fn ($app): CommonQueries => new CommonQueries());
 
         $this->app->bind(
             ModelService::class, /**

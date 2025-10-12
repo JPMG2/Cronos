@@ -173,6 +173,24 @@
                                 </x-inputs.error-validate>
                                 @enderror
                             </div>
+
+                            <div class="relative col-span-8">
+                                <x-autocomplete.inputautocomplete
+                                    label="Categoría"
+                                    placeholder="buscar..."
+                                    wire-model="form.dataservice.categori_name"
+                                    wire-id-model="form.dataservice.category_id"
+                                    :items="$listCategory"
+                                    display-field="categori_name"
+                                    value-field="id"
+                                    :required="true"
+                                />
+                                @error("category_id")
+                                <x-inputs.error-validate>
+                                    {{ $message }}
+                                </x-inputs.error-validate>
+                                @enderror
+                            </div>
                             <div class="relative col-span-8 ">
                                 <x-inputs.labeltextarea
                                     label="Descripción"
@@ -182,7 +200,7 @@
                                     <x-inputs.textarea
                                         wire:model="form.dataservice.service_description"
                                         id="descriprole"
-                                        rows="5"
+                                        rows="3"
                                     ></x-inputs.textarea>
                                 </x-inputs.labeltextarea>
 

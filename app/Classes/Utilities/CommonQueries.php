@@ -20,7 +20,7 @@ use App\Models\State;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-final class CommonQuerys extends Model
+final class CommonQueries extends Model
 {
     public static function stateQuery(array $states): Collection
     {
@@ -51,7 +51,7 @@ final class CommonQuerys extends Model
         return once(fn (): bool => Company::existCompany());
     }
 
-    public static function CompanyOnPause()
+    public static function companyOnPause()
     {
         return once(fn () => Company::query()->where('state_id', 2)->first());
     }

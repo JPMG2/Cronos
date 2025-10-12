@@ -6,7 +6,7 @@ namespace App\Livewire\Maestro;
 
 use App\Classes\Person\MainPerson;
 use App\Classes\Utilities\AlertModal;
-use App\Classes\Utilities\CommonQuerys;
+use App\Classes\Utilities\CommonQueries;
 use App\Dto\SpecialistDto;
 use App\Livewire\Forms\Maestro\EspecialistaForm;
 use App\Models\Medical;
@@ -38,27 +38,27 @@ final class ReEspecialista extends Component
 
     public function getlistDocumentProperty(): Collection
     {
-        return CommonQuerys::listDocuments();
+        return CommonQueries::listDocuments();
     }
 
     public function getlistStateProperty(): Collection
     {
-        return CommonQuerys::stateQuery([1, 2]);
+        return CommonQueries::stateQuery([1, 2]);
     }
 
     public function getlistSpecialtiesProperty(): Collection
     {
-        return CommonQuerys::listSpecialties();
+        return CommonQueries::listSpecialties();
     }
 
     public function getlistDegreeProperty(): Collection
     {
-        return CommonQuerys::listDegrees();
+        return CommonQueries::listDegrees();
     }
 
     public function getlistCredentialProperty(): Collection
     {
-        return CommonQuerys::listCredentials();
+        return CommonQueries::listCredentials();
     }
 
     /**

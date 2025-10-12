@@ -14,9 +14,13 @@ use Livewire\Form;
 final class ServiceForm extends Form
 {
     public array $dataservice = [
+        'id' => null,
         'service_name' => '',
         'service_description' => '',
         'service_code' => '',
+        'state_id' => '',
+        'category_id' => null,
+        'categori_name' => '',
     ];
 
     public function serviceStore(): Model
