@@ -36,13 +36,13 @@ final class ReDepartment extends Component
         $message = $this->showQueryMessage($result, $messageType);
         $this->showToastAndClear($message);
         $this->clearForm();
+        $this->opendepartment = false;
     }
 
     public function clearForm()
     {
         $this->form->reset();
         $this->isupdate = false;
-        $this->opendepartment = false;
     }
 
     public function getDepartmentsProperty()

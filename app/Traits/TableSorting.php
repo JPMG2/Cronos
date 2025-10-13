@@ -34,8 +34,6 @@ trait TableSorting
      * This method toggles the sort direction if the column is already being sorted,
      * otherwise, it sets the sort direction to ascending. It then sets the column name
      * to be used for ordering the query results.
-     *
-     * @param  string  $columValue  The name of the column to order by.
      */
     public function orderColumBy(string $column): void
     {

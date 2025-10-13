@@ -17,7 +17,8 @@ final readonly class IdRelation implements ValidationRule
         private ?int $id = null,
         private ?string $validColumn = null,
         private ?string $relation = null,
-        private ?string $errorName = null) {}
+        private ?string $errorName = null
+    ) {}
 
     /**
      * Run the validation rule.

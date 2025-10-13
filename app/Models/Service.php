@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ServiceType;
 use App\Traits\RecordActivity;
 use Database\Factories\ServiceFactory;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
@@ -27,15 +31,16 @@ final class Service extends Model
         'service_name', 'service_description', 'service_code',
         'parent_service_id', 'level', 'path', 'category_id',
         'type', 'estimated_duration', 'requires_preparation',
-        'preparation_instructions', 'is_group',
-        'allows_subservices', 'state_id', 'display_order',
+        'preparation_instructions', 'state_id', 'display_order',
     ];
 
     protected $appends = [
         'has_children',
         'children_count',
         'is_root',
+        'is_active',
         'full_path',
+        'allows_children',
     ];
 
     /**
@@ -85,10 +90,6 @@ final class Service extends Model
         }
     }
 
-    // ============================================
-    // ACCESSORS (Atributos calculados)
-    // ============================================
-
     /**
      * Relación: Servicio padre
      */
@@ -114,6 +115,10 @@ final class Service extends Model
             ->orderBy('display_order')
             ->orderBy('service_name');
     }
+
+    // ============================================
+    // MÉTODOS DE JERARQUÍA
+    // ============================================
 
     /**
      * Scope: Solo servicios raíz (sin padre)
@@ -148,6 +153,10 @@ final class Service extends Model
     {
         return $query->where('level', $level);
     }
+
+    // ============================================
+    // SCOPES (Filtros de consulta)
+    // ============================================
 
     /**
      * Scope: Solo servicios agrupadores
@@ -212,6 +221,10 @@ final class Service extends Model
         return $names->implode(' > ');
     }
 
+    // ============================================
+    // ACCESSORS (Atributos calculados)
+    // ============================================
+
     /**
      * Obtiene solo los nombres de los ancestros
      */
@@ -256,10 +269,6 @@ final class Service extends Model
             ];
         });
     }
-
-    // ============================================
-    // MÉTODOS DE JERARQUÍA
-    // ============================================
 
     /**
      * Verifica si es descendiente de otro servicio
@@ -309,10 +318,6 @@ final class Service extends Model
         return $this->getDescendants()->count();
     }
 
-    // ============================================
-    // SCOPES (Filtros de consulta)
-    // ============================================
-
     /**
      * Obtiene todos los descendientes (hijos, nietos, etc.)
      */
@@ -353,6 +358,16 @@ final class Service extends Model
         }
 
         return $descendants->max('level') - $this->level;
+    }
+
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -412,16 +427,10 @@ final class Service extends Model
     protected function casts(): array
     {
         return [
-            'service_name' => 'string',
-            'service_description' => 'string',
-            'service_code' => 'string',
+            'type' => ServiceType::class,
             'level' => 'integer',
             'estimated_duration' => 'integer',
             'requires_preparation' => 'boolean',
-            'is_group' => 'boolean',
-            'allows_subservices' => 'boolean',
-            'category_id' => 'integer',
-            'state_id' => 'integer',
             'display_order' => 'integer',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
@@ -444,6 +453,13 @@ final class Service extends Model
     }
 
     protected function serviceDescription(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
+        );
+    }
+
+    protected function preparationInstructions(): Attribute
     {
         return Attribute::make(
             set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
