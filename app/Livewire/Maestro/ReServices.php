@@ -38,12 +38,18 @@ final class ReServices extends Component
     public $listCategory = [];
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     public int $currentStep = 1;
 
     public $parentServiceId = null;
 
+<<<<<<< HEAD
 =======
 >>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     #[Title(' - Servicios')]
     public function render()
     {
@@ -86,7 +92,11 @@ final class ReServices extends Component
         $this->form->loadDataServices($service);
         $this->openservice = true;
         $this->isupdate = true;
+<<<<<<< HEAD
         $this->currentStep = 2;
+=======
+        $this->currentStep = 2; // Auto-show both panels when editing
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     }
 
     #[Computed]
@@ -199,5 +209,15 @@ final class ReServices extends Component
     {
         return Category::list([1], $value)
             ->get();
+    }
+
+    protected function validateCurrentStep(): void
+    {
+        if ($this->currentStep === 1) {
+            $this->validate([
+                'form.dataservice.service_code' => 'required|min:4',
+                'form.dataservice.service_name' => 'required|min:4',
+            ]);
+        }
     }
 }

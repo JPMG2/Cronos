@@ -8,7 +8,10 @@ use App\Enums\ServiceType;
 use App\Traits\RecordActivity;
 use Database\Factories\ServiceFactory;
 use Exception;
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Attributes\Scope;
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +30,7 @@ final class Service extends Model
     use SoftDeletes;
 
     protected $fillable = [
+<<<<<<< HEAD
         'service_code',
         'service_name',
         'service_description',
@@ -40,6 +44,12 @@ final class Service extends Model
         'estimated_duration',
         'requires_preparation',
         'preparation_instructions',
+=======
+        'service_name', 'service_description', 'service_code',
+        'parent_service_id', 'level', 'path', 'category_id',
+        'type', 'estimated_duration', 'requires_preparation',
+        'preparation_instructions', 'state_id', 'display_order',
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     ];
 
     protected $appends = [
@@ -97,6 +107,7 @@ final class Service extends Model
         }
     }
 
+<<<<<<< HEAD
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
@@ -107,6 +118,11 @@ final class Service extends Model
         return $this->belongsTo(Category::class);
     }
 
+=======
+    /**
+     * Relación: Servicio padre
+     */
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_service_id');
@@ -131,6 +147,10 @@ final class Service extends Model
             ->orderBy('service_name');
     }
 
+    // ============================================
+    // MÉTODOS DE JERARQUÍA
+    // ============================================
+
     /**
      * Order by category and display order
      */
@@ -149,6 +169,10 @@ final class Service extends Model
         return $query->where('level', $level);
     }
 
+    // ============================================
+    // SCOPES (Filtros de consulta)
+    // ============================================
+
     /**
      * Only services of type 'group' (can have children)
      */
@@ -157,6 +181,10 @@ final class Service extends Model
     {
         return $query->where('type', ServiceType::GROUP);
     }
+
+    // ============================================
+    // ACCESSORS (Atributos calculados)
+    // ============================================
 
     /**
      * Obtiene solo los nombres de los ancestros
@@ -293,7 +321,24 @@ final class Service extends Model
         return $descendants->max('level') - $this->level;
     }
 
+<<<<<<< HEAD
     protected static function boot(): void
+=======
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     {
         parent::boot();
 

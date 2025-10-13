@@ -21,6 +21,7 @@ final class ServiceForm extends Form
         'service_description' => '',
         'service_code' => '',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'state_id' => 1,
         'category_id' => null,
         'categori_name' => '',
@@ -37,6 +38,19 @@ final class ServiceForm extends Form
         'category_id' => null,
         'categori_name' => '',
 >>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+=======
+        'state_id' => 1,
+        'category_id' => null,
+        'categori_name' => '',
+        'parent_service_id' => null,
+        'parent_service_name' => '',
+        'type' => 'final',
+        'estimated_duration' => null,
+        'requires_preparation' => false,
+        'preparation_instructions' => '',
+        'allows_subservices' => false,
+        'display_order' => 0,
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     ];
 
     public function serviceStore(): Model
@@ -45,7 +59,10 @@ final class ServiceForm extends Form
         $validated = $this->validateServiceData();
 
         $ser = $this->iniService()->create($validated);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
         dd($ser);
     }
 
@@ -70,7 +87,10 @@ final class ServiceForm extends Form
             'state_id' => config('nicename.status'),
             'category_id' => config('nicename.category'),
             'type' => config('nicename.type'),
+<<<<<<< HEAD
             'parent_service_id' => config('nicename.pricipal'),
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
         ];
     }
 
@@ -93,7 +113,10 @@ final class ServiceForm extends Form
             'category_id' => $this->dataservice['category_id'] ?? null,
             'state_id' => $this->dataservice['state_id'] ?? null,
             'type' => $this->dataservice['type'] ?? 'final',
+<<<<<<< HEAD
             'parent_service_id' => $this->dataservice['parent_service_id'] ?? null,
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
         ];
     }
 
@@ -106,7 +129,10 @@ final class ServiceForm extends Form
             'category_id' => AttributeValidator::requireAndExists('categories', 'id', 'id', true),
             'state_id' => AttributeValidator::requireAndExists('states', 'id', 'id', true),
             'type' => ['nullable', new Enum(ServiceType::class)],
+<<<<<<< HEAD
             'parent_service_id' => AttributeValidator::requireAndExists('services', 'id', 'id', null),
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
         ];
     }
 
