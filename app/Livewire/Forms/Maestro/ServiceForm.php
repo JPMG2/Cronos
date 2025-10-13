@@ -6,9 +6,11 @@ namespace App\Livewire\Forms\Maestro;
 
 use App\Classes\Utilities\AttributeValidator;
 use App\Classes\Utilities\QueryRepository;
+use App\Enums\ServiceType;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Enum;
 use Livewire\Form;
 
 final class ServiceForm extends Form
@@ -18,16 +20,26 @@ final class ServiceForm extends Form
         'service_name' => '',
         'service_description' => '',
         'service_code' => '',
-        'state_id' => '',
+        'state_id' => 1,
         'category_id' => null,
         'categori_name' => '',
+        'parent_service_id' => null,
+        'parent_service_name' => '',
+        'type' => 'final',
+        'estimated_duration' => null,
+        'requires_preparation' => false,
+        'preparation_instructions' => '',
+        'allows_subservices' => false,
+        'display_order' => 0,
     ];
 
     public function serviceStore(): Model
     {
+
         $validated = $this->validateServiceData();
 
-        return $this->iniService()->create($validated);
+        $ser = $this->iniService()->create($validated);
+        dd($ser);
     }
 
     public function serviceUpdate(): Model
@@ -48,6 +60,9 @@ final class ServiceForm extends Form
             'service_name' => config('nicename.service'),
             'service_code' => config('nicename.codigo'),
             'service_description' => config('nicename.description'),
+            'state_id' => config('nicename.status'),
+            'category_id' => config('nicename.category'),
+            'type' => config('nicename.type'),
         ];
     }
 
@@ -67,6 +82,9 @@ final class ServiceForm extends Form
             'service_name' => ucwords(mb_strtolower(mb_trim((string) ($this->dataservice['service_name'] ?? '')))),
             'service_code' => mb_strtoupper(mb_trim((string) ($this->dataservice['service_code'] ?? ''))),
             'service_description' => ucfirst(mb_strtolower(mb_trim((string) ($this->dataservice['service_description'] ?? '')))),
+            'category_id' => $this->dataservice['category_id'] ?? null,
+            'state_id' => $this->dataservice['state_id'] ?? null,
+            'type' => $this->dataservice['type'] ?? 'final',
         ];
     }
 
@@ -76,6 +94,9 @@ final class ServiceForm extends Form
             'service_name' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_name', $excludeId),
             'service_code' => AttributeValidator::uniqueIdNameLength(4, 'services', 'service_code', $excludeId),
             'service_description' => AttributeValidator::stringValid(false, 4),
+            'category_id' => AttributeValidator::requireAndExists('categories', 'id', 'id', true),
+            'state_id' => AttributeValidator::requireAndExists('states', 'id', 'id', true),
+            'type' => ['nullable', new Enum(ServiceType::class)],
         ];
     }
 

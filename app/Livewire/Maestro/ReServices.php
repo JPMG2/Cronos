@@ -23,6 +23,10 @@ final class ReServices extends Component
 
     public $listCategory = [];
 
+    public int $currentStep = 1;
+
+    public $parentServiceId = null;
+
     #[Title(' - Servicios')]
     public function render()
     {
@@ -38,13 +42,26 @@ final class ReServices extends Component
         $message = $this->showQueryMessage($result, $messageType);
         $this->showToastAndClear($message);
         $this->clearForm();
+        $this->openservice = false;
     }
 
     public function clearForm(): void
     {
         $this->form->reset();
         $this->isupdate = false;
-        $this->openservice = false;
+        $this->currentStep = 1;
+        $this->parentServiceId = null;
+    }
+
+    public function nextStep(): void
+    {
+        $this->validateCurrentStep();
+        $this->currentStep++;
+    }
+
+    public function previousStep(): void
+    {
+        $this->currentStep--;
     }
 
     public function infoService(Service $service): void
@@ -52,6 +69,7 @@ final class ReServices extends Component
         $this->form->loadDataServices($service);
         $this->openservice = true;
         $this->isupdate = true;
+        $this->currentStep = 2; // Auto-show both panels when editing
     }
 
     public function getServicesProperty()
@@ -80,5 +98,15 @@ final class ReServices extends Component
     {
         return Category::list([1], $value)
             ->get();
+    }
+
+    protected function validateCurrentStep(): void
+    {
+        if ($this->currentStep === 1) {
+            $this->validate([
+                'form.dataservice.service_code' => 'required|min:4',
+                'form.dataservice.service_name' => 'required|min:4',
+            ]);
+        }
     }
 }

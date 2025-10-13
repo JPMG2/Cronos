@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\View\Components;
 
 use App\Classes\Utilities\CommonQueries;
-use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\Component;
@@ -14,7 +13,7 @@ final class CompanyWatcher extends Component
 {
     public function __construct(public readonly CommonQueries $commonQuerys) {}
 
-    public function render(): View|Closure|string
+    public function render(): View
     {
         $this->anyCompany();
         $this->companyOnPause();

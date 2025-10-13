@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\View\Components;
 
 use App\Models\Menu;
+use App\Models\User;
 use Auth;
-use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\Component;
@@ -24,11 +24,11 @@ final class MenuNav extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): View
     {
-
+        /** @var User $user */
         $user = Auth::user();
-        $cacheKeyMenu = 'menu-'.$user->id;
+        $cacheKeyMenu = 'menu-'.Auth::id();
         $menuItems = Cache::remember(
             $cacheKeyMenu,
             1440,

@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Traits;
 
 use App\Classes\Utilities\NotifyQuerys;
+use Livewire\Component;
 
+/**
+ * @mixin Component
+ */
 trait UtilityForm
 {
     public string $isdisabled = '';

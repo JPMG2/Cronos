@@ -173,7 +173,7 @@
                                 @csrf
 
                                 <x-headerform.button-group>
-                                    <x-buttons.close wire:click="clearForm">
+                                    <x-buttons.close wire:click="$set('opendepartment', false)">
                                         {{ __("Cerrar") }}
                                     </x-buttons.close>
                                     <x-buttons.cancel

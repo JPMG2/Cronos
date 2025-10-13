@@ -48,4 +48,6 @@ return [
     'day_of_week' => 'horario',
     'service' => 'servicio',
     'prestador' => 'prestador',
+    'category' => 'categoria',
+    'preparacion' => 'preparación',
 ];
