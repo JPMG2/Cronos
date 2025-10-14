@@ -107,9 +107,6 @@ final class Service extends Model
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Relación: Servicio padre
-     */
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_service_id');
@@ -144,9 +141,6 @@ final class Service extends Model
             ->orderBy('service_name');
     }
 
-    /**
-     * Only services with the state 'Active'
-     */
     #[Scope]
     public function active(Builder $query): Builder
     {
@@ -155,9 +149,6 @@ final class Service extends Model
         });
     }
 
-    /**
-     * Only services with the state 'Inactive'
-     */
     #[Scope]
     public function inactive(Builder $query): Builder
     {
@@ -202,10 +193,6 @@ final class Service extends Model
         return $query->where('type', ServiceType::FINAL);
     }
 
-    // ============================================
-    // BOOT
-    // ============================================
-
     #[Scope]
     public function listServices(Builder $query, array $states): Builder
     {
@@ -216,14 +203,11 @@ final class Service extends Model
         return $query->with(['state', 'category', 'children']);
     }
 
-    // ============================================
-    // MÉTODOS DE JERARQUÍA
-    // ============================================
-
     /**
      * Scope: Buscar servicios por código o nombre
      */
-    public function scopeSearch(Builder $query, string $search): Builder
+    #[Scope]
+    public function search(Builder $query, string $search): Builder
     {
         return $query->where(function ($q) use ($search) {
             $q->where('service_code', 'like', "%{$search}%")
@@ -267,17 +251,6 @@ final class Service extends Model
     /**
      * Accessor: Ruta completa como string
      */
-    public function getFullPathAttribute(): string
-    {
-        $names = $this->getAncestorNames();
-        $names->push($this->service_name);
-
-        return $names->implode(' > ');
-    }
-
-    // ============================================
-    // SCOPES
-    // ============================================
 
     /**
      * Obtiene solo los nombres de los ancestros
@@ -460,7 +433,6 @@ final class Service extends Model
 
             if ($parent) {
                 $this->level = $parent->level + 1;
-                $this->path = $parent->path ? $parent->path.'/'.$this->id : (string) $this->id;
 
                 // Heredar categoría del padre si no tiene
                 if (! $this->category_id && $parent->category_id) {
@@ -469,7 +441,6 @@ final class Service extends Model
             }
         } else {
             $this->level = 0;
-            $this->path = (string) $this->id;
         }
     }
 

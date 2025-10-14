@@ -16,6 +16,10 @@ enum ColorType: string
     case TXTSUCCESS = 'txtsucces';
     case TXTNORMAL = 'txtnormal';
     case TXTSELECTED = 'txtselected';
+    case LEVEL = 'level';
+    case NUMBER = 'number';
+    case TXTPOSITIVE = 'txtpositive';
+    case TXTNEGATIVE = 'txtnegative';
 
     public function getName(): string
     {
@@ -23,6 +27,8 @@ enum ColorType: string
             self::ERROR => 'bg-red-500',
             self::SUCCESS => 'bg-green-500',
             self::WARNING => 'bg-yellow-500',
+            self::LEVEL => 'bg-purple-100',
+            self::NUMBER => 'bg-indigo-100',
             self::TXTIMPORTANTE => 'text-gray-700',
             self::TXTWARNING => 'text-yellow-500',
             self::TXTDANGER => 'text-red-500',

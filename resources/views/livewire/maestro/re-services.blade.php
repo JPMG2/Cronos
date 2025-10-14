@@ -16,7 +16,7 @@
                 </div>
                 <x-formcomponent.titleindicator
                     wire:loading
-                    wire:loading wire:target="queryService, openservice, infoService">
+                    wire:loading wire:target="queryService, openservice, infoService,deleteService">
                 </x-formcomponent.titleindicator>
             </div>
             <div class="overflow-y-auto p-4">
@@ -45,6 +45,9 @@
                                         Estatus
                                     </x-table.th>
                                     <x-table.th>
+                                        Niveles
+                                    </x-table.th>
+                                    <x-table.th>
                                         Sub-servicios
                                     </x-table.th>
                                     <x-table.th>
@@ -71,8 +74,29 @@
                                         <x-table.tdtable typetext="txtimportant" whitespace-nowrap>
                                             {{ $service->service_code }}
                                         </x-table.tdtable>
-                                        <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
-                                            {{ $service->service_name }}
+                                        <x-table.tdtable typetext="txtnormal">
+                                            <div class="flex items-start gap-1">
+                                                @if($service->level > 0)
+                                                    <div class="flex items-center pt-2.5"
+                                                         style="margin-left: {{ ($service->level - 1) * 24 }}px;">
+
+                                                        <div class="relative flex items-center h-6">
+
+                                                            <div
+                                                                class="absolute bottom-0 left-0 w-px h-full bg-gradient-to-b from-blue-300 to-blue-400"></div>
+
+                                                            <div class="relative flex items-center">
+                                                                <div
+                                                                    class="h-px w-4 bg-gradient-to-r from-blue-300 to-blue-400"></div>
+
+                                                                <div
+                                                                    class="h-1.5 w-1.5 rounded-full bg-blue-400 ring-2 ring-blue-100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <span class="ml-1 py-2">{{ $service->service_name }}</span>
+                                            </div>
                                         </x-table.tdtable>
                                         <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                             {{ $service->category->categori_name}}
@@ -85,10 +109,14 @@
                                             </x-statescolor>
                                         </x-table.tdtable>
                                         <x-table.tdtable class="text-center" typetext="txtnormal" whitespace-nowrap>
-                                            <span
-                                                class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-xs font-semibold text-white shadow-sm ring-2 ring-blue-100 transition-all duration-200 hover:shadow-md hover:ring-blue-200">
+                                            <x-bublenumber background='level'>
+                                                {{ $service->level }}
+                                            </x-bublenumber>
+                                        </x-table.tdtable>
+                                        <x-table.tdtable class="text-center" typetext="txtnormal" whitespace-nowrap>
+                                            <x-bublenumber background='number'>
                                                 {{ $service->childrenCount }}
-                                            </span>
+                                            </x-bublenumber>
                                         </x-table.tdtable>
                                         <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                             {{ Carbon::parse($service->created_at)->format("d/m/Y") }}
@@ -107,8 +135,8 @@
                                             <div>
                                                 <x-table.accionopcion
                                                     wire:key="{{ $service->id }}"
-                                                    wire:click.prevent="deleteDepartment({{ $service->id }})"
-                                                    wire:target="deleteDepartment"
+                                                    wire:click.prevent="deleteService({{ $service->id }})"
+                                                    wire:target="deleteService"
                                                     iconname="delete"
                                                     isDelete="isDelete"
                                                 ></x-table.accionopcion>
@@ -154,7 +182,6 @@
                         <div class="mb-2 flex justify-end">
                             <div class="text-xs text-slate-500 bg-slate-50 rounded px-2 py-1 flex items-center gap-2">
                                 <x-keyshorcut>Ctrl+Enter</x-keyshorcut>
-
                                 Siguiente
                                 <span class="mx-1">•</span>
                                 <x-keyshorcut>Ctrl+Shift+Enter</x-keyshorcut>
@@ -360,7 +387,8 @@
 
                                                     @foreach($this->serviceGroup as $servicegroup)
                                                         <option value="{{ $servicegroup->id }}">
-                                                            {{ $servicegroup->service_name }}
+                                                            {{ $servicegroup->service_name }} -
+                                                            ({{ $servicegroup->service_code }})
                                                         </option>
                                                     @endforeach
                                                 </select>

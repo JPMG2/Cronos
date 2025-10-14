@@ -15,20 +15,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property      int $document_id
- * @property      ?int $province_id
- * @property      ?int $gender_id
- * @property      ?int $marital_status_id
- * @property      ?int $occupation_id
- * @property      ?int $nationality_id
- * @property      string $num_document
- * @property      string $person_name
- * @property      string $person_lastname
- * @property      ?string $person_address
- * @property      ?string $person_phone
- * @property      ?string $person_email
- * @property      CarbonImmutable $person_datebirth
- * @property      ?string $person_cpcode
+ * @property int $document_id
+ * @property ?int $province_id
+ * @property ?int $gender_id
+ * @property ?int $marital_status_id
+ * @property ?int $occupation_id
+ * @property ?int $nationality_id
+ * @property string $num_document
+ * @property string $person_name
+ * @property string $person_lastname
+ * @property ?string $person_address
+ * @property ?string $person_phone
+ * @property ?string $person_email
+ * @property CarbonImmutable $person_datebirth
+ * @property ?string $person_cpcode
  * @property-read Person $person
  */
 final class Person extends Model implements Filterable

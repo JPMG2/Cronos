@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace App\Livewire\Maestro;
 
+use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQueries;
+use App\Classes\Utilities\NotifyQuerys;
 use App\Livewire\Forms\Maestro\ServiceForm;
 use App\Models\Category;
 use App\Models\Service;
+use App\Traits\HandleMenuAction;
 use App\Traits\UtilityForm;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 final class ReServices extends Component
 {
+    use HandleMenuAction;
     use UtilityForm;
 
     public ServiceForm $form;
@@ -108,13 +113,93 @@ final class ReServices extends Component
             ->get();
     }
 
+    public function deleteRole(Role $role)
+    {
+        $this->messageWindow(
+            $role,
+            function ($role) {
+                if (! empty($this->checkRoleAssignment($role)['message'])) {
+                    return new AlertModal(
+                        exception: 0,
+                        type: 'error',
+                        title: 'Error',
+                        buttonName: '',
+                        event: '',
+                        message: $this->checkRoleAssignment($role)['message'],
+                        idModel: 0
+                    );
+                }
+
+                return new AlertModal(
+                    exception: 1,
+                    type: 'warning',
+                    title: 'Advertencia',
+                    buttonName: 'Borrar',
+                    event: 'roleRemove',
+                    message: 'Realmente desea borrar el rol ?',
+                    idModel: $role->id
+                );
+            }
+        );
+    }
+
+    public function deleteService(int $idService)
+    {
+        $service = Service::find($idService);
+        $this->messageWindow(
+            $service,
+            function ($service) {
+                if (! empty($this->checkService($service)['message'])) {
+                    return new AlertModal(
+                        exception: 0,
+                        type: 'error',
+                        title: 'Error',
+                        buttonName: '',
+                        event: '',
+                        message: $this->checkService($service)['message'],
+                        idModel: 0
+                    );
+                }
+
+                return new AlertModal(
+                    exception: 1,
+                    type: 'warning',
+                    title: 'Advertencia',
+                    buttonName: 'Borrar',
+                    event: 'serviceRemove',
+                    message: 'Realmente desea borrar el servicio ?',
+                    idModel: $service->id
+                );
+            }
+        );
+    }
+
+    #[On('serviceRemove')]
+    public function remove(): void
+    {
+        NotifyQuerys::msgDestroy(Service::destroy($this->idRemove));
+    }
+
     protected function validateCurrentStep(): void
     {
         if ($this->currentStep === 1) {
-            $this->validate([
-                'form.dataservice.service_code' => 'required|min:4',
-                'form.dataservice.service_name' => 'required|min:4',
-            ]);
+            $this->validate(
+                [
+                    'form.dataservice.service_code' => 'required|min:4',
+                    'form.dataservice.service_name' => 'required|min:4',
+                ]
+            );
         }
+    }
+
+    protected function checkService($service): array
+    {
+        if ($service->childrenCount >= 1) {
+            return [
+                'message' => (string) 'El servicio tiene sub-grupos, no puede ser eliminado',
+            ];
+        }
+
+        return [];
     }
 }
