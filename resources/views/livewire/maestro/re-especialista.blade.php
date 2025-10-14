@@ -29,7 +29,8 @@
                         <x-slot:subtitle>Complete información del especialista.</x-slot:subtitle>
                         <x-formcomponent.titleindicator
                             wire:loading
-                            wire:target="submitSpecialist,especialistHandleMenuAction,validatePersonExis"></x-formcomponent.titleindicator>
+                            wire:target="submitSpecialist,especialistHandleMenuAction,validatePersonExis">
+                        </x-formcomponent.titleindicator>
                     </x-formcomponent.headerformtitla>
                 </div>
                 <div class="space-y-3 ">

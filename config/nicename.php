@@ -50,4 +50,5 @@ return [
     'prestador' => 'prestador',
     'category' => 'categoria',
     'preparacion' => 'preparación',
+    'pricipal' => 'servicio principal',
 ];

@@ -24,9 +24,11 @@ final class Menu extends Model
 
     public function optionmenus(): HasMany
     {
-        return once(fn () => $this->hasMany(self::class, 'menu_id', 'id')
-            ->withCount('menus')
-            ->with('menus'), $this->id);
+        return once(
+            fn () => $this->hasMany(self::class, 'menu_id', 'id')
+                ->withCount('menus')
+                ->with('menus'), $this->id
+        );
     }
 
     public function roles(): BelongsToMany

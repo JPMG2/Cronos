@@ -14,9 +14,10 @@
                         Servicios
                     </h4>
                 </div>
-                <div class="ml-2" wire:loading wire:target="queryService, openservice, infoService">
-                    <span class="loading loading-bars loading-xs"></span>
-                </div>
+                <x-formcomponent.titleindicator
+                    wire:loading
+                    wire:loading wire:target="queryService, openservice, infoService">
+                </x-formcomponent.titleindicator>
             </div>
             <div class="overflow-y-auto p-4">
                 @if (count($this->services) > 0)
@@ -38,7 +39,13 @@
                                         Servicio
                                     </x-table.th>
                                     <x-table.th>
-                                        Descripción
+                                        Categoría
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Estatus
+                                    </x-table.th>
+                                    <x-table.th>
+                                        Sub-servicios
                                     </x-table.th>
                                     <x-table.th>
                                         Creado
@@ -68,8 +75,20 @@
                                             {{ $service->service_name }}
                                         </x-table.tdtable>
                                         <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
-
-                                            {{ $service->service_description}}
+                                            {{ $service->category->categori_name}}
+                                        </x-table.tdtable>
+                                        <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
+                                            <x-statescolor
+                                                idstatecolor="{{$service->state->id }}"
+                                            >
+                                                {{$service->state->state_name }}
+                                            </x-statescolor>
+                                        </x-table.tdtable>
+                                        <x-table.tdtable class="text-center" typetext="txtnormal" whitespace-nowrap>
+                                            <span
+                                                class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-xs font-semibold text-white shadow-sm ring-2 ring-blue-100 transition-all duration-200 hover:shadow-md hover:ring-blue-200">
+                                                {{ $service->childrenCount }}
+                                            </span>
                                         </x-table.tdtable>
                                         <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
                                             {{ Carbon::parse($service->created_at)->format("d/m/Y") }}
@@ -205,7 +224,7 @@
                                                         wire:model="form.dataservice.service_code"
                                                         id="depacodi"
                                                         autocomplete="off"
-                                                        maxlength="6"
+                                                        maxlength="15"
                                                         placeholder=" "
                                                         isdisabled="{{$isdisabled}}"
                                                         :error="$errors->first('service_code')"
@@ -331,16 +350,21 @@
                                     <div class="grid grid-cols-1 lg:grid-cols-8 gap-y-3 gap-x-2">
 
                                         <div class="relative col-span-8">
-                                            <x-autocomplete.inputautocomplete
-                                                label="Servicio Padre (Opcional)"
-                                                placeholder="Buscar servicio padre..."
-                                                wire-model="form.dataservice.parent_service_name"
-                                                wire-id-model="form.dataservice.parent_service_id"
-                                                :items="$this->services"
-                                                display-field="service_name"
-                                                value-field="id"
-                                                :required="false"
-                                            />
+                                            <x-inputs.textgroup label="Servicio Principal" for="fatherservic">
+                                                <select
+                                                    wire:model="form.dataservice.parent_service_id"
+                                                    id="fatherservic"
+                                                    class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                                >
+                                                    <option label=" "></option>
+
+                                                    @foreach($this->serviceGroup as $servicegroup)
+                                                        <option value="{{ $servicegroup->id }}">
+                                                            {{ $servicegroup->service_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </x-inputs.textgroup>
                                         </div>
 
                                         <div class="relative col-span-4">

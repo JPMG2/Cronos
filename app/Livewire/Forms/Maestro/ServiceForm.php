@@ -39,6 +39,7 @@ final class ServiceForm extends Form
         $validated = $this->validateServiceData();
 
         $ser = $this->iniService()->create($validated);
+
         dd($ser);
     }
 
@@ -63,6 +64,7 @@ final class ServiceForm extends Form
             'state_id' => config('nicename.status'),
             'category_id' => config('nicename.category'),
             'type' => config('nicename.type'),
+            'parent_service_id' => config('nicename.pricipal'),
         ];
     }
 
@@ -85,6 +87,7 @@ final class ServiceForm extends Form
             'category_id' => $this->dataservice['category_id'] ?? null,
             'state_id' => $this->dataservice['state_id'] ?? null,
             'type' => $this->dataservice['type'] ?? 'final',
+            'parent_service_id' => $this->dataservice['parent_service_id'] ?? null,
         ];
     }
 
@@ -97,6 +100,7 @@ final class ServiceForm extends Form
             'category_id' => AttributeValidator::requireAndExists('categories', 'id', 'id', true),
             'state_id' => AttributeValidator::requireAndExists('states', 'id', 'id', true),
             'type' => ['nullable', new Enum(ServiceType::class)],
+            'parent_service_id' => AttributeValidator::requireAndExists('services', 'id', 'id', null),
         ];
     }
 

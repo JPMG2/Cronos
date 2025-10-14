@@ -15,7 +15,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Category extends Model
 {
-    /** @use HasFactory<CategoryFactory> */
+    /**
+ * @use HasFactory<CategoryFactory> 
+*/
     use HasFactory;
 
     use RecordActivity;

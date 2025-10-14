@@ -9,6 +9,7 @@ use App\Livewire\Forms\Maestro\ServiceForm;
 use App\Models\Category;
 use App\Models\Service;
 use App\Traits\UtilityForm;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -36,8 +37,8 @@ final class ReServices extends Component
     public function queryService(): void
     {
         $result = $this->isupdate ?
-                  $this->form->serviceUpdate() :
-                  $this->form->serviceStore();
+            $this->form->serviceUpdate() :
+            $this->form->serviceStore();
         $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
         $message = $this->showQueryMessage($result, $messageType);
         $this->showToastAndClear($message);
@@ -72,15 +73,22 @@ final class ReServices extends Component
         $this->currentStep = 2; // Auto-show both panels when editing
     }
 
-    public function getServicesProperty()
+    #[Computed]
+    public function services(): Collection
     {
-        return Service::query()->orderBy('service_name')->get();
+        return Service::query()->listServices([1, 2])->get();
     }
 
     #[Computed]
-    public function states()
+    public function states(): Collection
     {
         return CommonQueries::stateQuery([1, 2]);
+    }
+
+    #[Computed]
+    public function serviceGroup(): Collection
+    {
+        return Service::query()->groups()->active()->orderBy('level')->get();
     }
 
     public function updatedFormDataserviceCategoriName($value)

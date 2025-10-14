@@ -8,6 +8,7 @@ use App\Enums\ServiceType;
 use App\Traits\RecordActivity;
 use Database\Factories\ServiceFactory;
 use Exception;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,19 +20,26 @@ use Illuminate\Support\Collection;
 
 final class Service extends Model
 {
+    /** @use HasFactory<ServiceFactory> */
     use HasFactory;
-    use RecordActivity;
 
-    /**
-     * @use HasFactory<ServiceFactory>
-     */
+    use RecordActivity;
     use SoftDeletes;
 
     protected $fillable = [
-        'service_name', 'service_description', 'service_code',
-        'parent_service_id', 'level', 'path', 'category_id',
-        'type', 'estimated_duration', 'requires_preparation',
-        'preparation_instructions', 'state_id', 'display_order',
+        'service_code',
+        'service_name',
+        'service_description',
+        'state_id',
+        'category_id',
+        'parent_service_id',
+        'level',
+        'path',
+        'type',
+        'display_order',
+        'estimated_duration',
+        'requires_preparation',
+        'preparation_instructions',
     ];
 
     protected $appends = [
@@ -49,7 +57,6 @@ final class Service extends Model
      */
     public function canBeChildOf(?int $parentId): bool
     {
-        // Si no tiene padre, puede ser raíz
         if (is_null($parentId)) {
             return true;
         }
@@ -60,8 +67,8 @@ final class Service extends Model
             return false;
         }
 
-        // El padre debe permitir sub-servicios
-        if (! $parent->allows_subservices) {
+        // El padre debe ser tipo 'group'
+        if ($parent->type !== ServiceType::GROUP) {
             return false;
         }
 
@@ -70,7 +77,7 @@ final class Service extends Model
             return false;
         }
 
-        // No puede ser hijo de uno de sus descendientes (evita ciclos)
+        // No puede ser hijo de uno de sus descendientes
         if ($this->exists && $this->isAncestorOf($parent)) {
             return false;
         }
@@ -85,9 +92,19 @@ final class Service extends Model
     {
         foreach ($this->children as $child) {
             $child->updateHierarchyData();
-            $child->saveQuietly(); // Sin disparar eventos
-            $child->updateChildrenPaths(); // Recursivo
+            $child->saveQuietly();
+            $child->updateChildrenPaths();
         }
+    }
+
+    public function state(): BelongsTo
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
     }
 
     /**
@@ -103,7 +120,9 @@ final class Service extends Model
      */
     public function activeChildren(): HasMany
     {
-        return $this->children()->where('active', true);
+        return $this->children()->whereHas('state', function ($query) {
+            $query->where('state_name', 'Activo');
+        });
     }
 
     /**
@@ -112,13 +131,8 @@ final class Service extends Model
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_service_id')
-            ->orderBy('display_order')
             ->orderBy('service_name');
     }
-
-    // ============================================
-    // MÉTODOS DE JERARQUÍA
-    // ============================================
 
     /**
      * Scope: Solo servicios raíz (sin padre)
@@ -131,48 +145,80 @@ final class Service extends Model
     }
 
     /**
-     * Scope: Solo servicios activos
+     * Only services with the state 'Active'
      */
-    public function scopeActive(Builder $query): Builder
+    #[Scope]
+    public function active(Builder $query): Builder
     {
-        return $query->where('active', true);
+        return $query->whereHas('state', function ($q) {
+            $q->where('id', 1);
+        });
     }
 
     /**
-     * Scope: Filtrar por categoría
+     * Only services with the state 'Inactive'
      */
-    public function scopeByCategory(Builder $query, string $category): Builder
+    #[Scope]
+    public function inactive(Builder $query): Builder
     {
-        return $query->where('category', $category);
+        return $query->whereHas('state', function ($q) {
+            $q->where('id', 2);
+        });
     }
 
     /**
-     * Scope: Filtrar por nivel jerárquico
+     * Order by category and display order
      */
-    public function scopeByLevel(Builder $query, int $level): Builder
+    #[Scope]
+    public function byCategory(Builder $query, int $categoryId): Builder
+    {
+        return $query->where('category_id', $categoryId);
+    }
+
+    /**
+     * Filter by level
+     */
+    #[Scope]
+    public function byLevel(Builder $query, int $level): Builder
     {
         return $query->where('level', $level);
     }
 
-    // ============================================
-    // SCOPES (Filtros de consulta)
-    // ============================================
-
     /**
-     * Scope: Solo servicios agrupadores
+     * Only services of type 'group' (can have children)
      */
-    public function scopeGroups(Builder $query): Builder
+    #[Scope]
+    public function groups(Builder $query): Builder
     {
-        return $query->where('is_group', true);
+        return $query->where('type', ServiceType::GROUP);
     }
 
     /**
-     * Scope: Solo servicios finales (no agrupadores)
+     * Only services of type 'final' (no children)
      */
-    public function scopeFinal(Builder $query): Builder
+    #[Scope]
+    public function final(Builder $query): Builder
     {
-        return $query->where('is_group', false);
+        return $query->where('type', ServiceType::FINAL);
     }
+
+    // ============================================
+    // BOOT
+    // ============================================
+
+    #[Scope]
+    public function listServices(Builder $query, array $states): Builder
+    {
+        if ($states) {
+            $query->whereIn('state_id', $states);
+        }
+
+        return $query->with(['state', 'category', 'children']);
+    }
+
+    // ============================================
+    // MÉTODOS DE JERARQUÍA
+    // ============================================
 
     /**
      * Scope: Buscar servicios por código o nombre
@@ -195,7 +241,7 @@ final class Service extends Model
     }
 
     /**
-     * Accessor: Cuenta total de hijos directos
+     * Count numbers of children
      */
     public function getChildrenCountAttribute(): int
     {
@@ -211,6 +257,14 @@ final class Service extends Model
     }
 
     /**
+     * Accessor: Verifica si está activo
+     */
+    public function getIsActiveAttribute(): bool
+    {
+        return $this->state && $this->state->state_name === 'Activo';
+    }
+
+    /**
      * Accessor: Ruta completa como string
      */
     public function getFullPathAttribute(): string
@@ -222,7 +276,7 @@ final class Service extends Model
     }
 
     // ============================================
-    // ACCESSORS (Atributos calculados)
+    // SCOPES
     // ============================================
 
     /**
@@ -250,6 +304,14 @@ final class Service extends Model
     }
 
     /**
+     * Accessor: Verifica si permite hijos (basado en type)
+     */
+    public function getAllowsChildrenAttribute(): bool
+    {
+        return $this->type === ServiceType::GROUP;
+    }
+
+    /**
      * Obtiene el árbol completo de sub-servicios
      */
     public function getServiceTree(bool $activeOnly = false): Collection
@@ -263,8 +325,8 @@ final class Service extends Model
                 'name' => $child->service_name,
                 'description' => $child->service_description,
                 'level' => $child->level,
-                'is_group' => $child->is_group,
-                'state' => $child->state->id,
+                'type' => $child->type->value,
+                'is_active' => $child->is_active,
                 'children' => $child->getServiceTree($activeOnly),
             ];
         });
@@ -339,11 +401,11 @@ final class Service extends Model
      */
     public function isFullyActive(): bool
     {
-        if (! $this->active) {
+        if (! $this->is_active) {
             return false;
         }
 
-        return $this->getAncestors()->every(fn ($ancestor) => $ancestor->active);
+        return $this->getAncestors()->every(fn ($ancestor) => $ancestor->is_active);
     }
 
     /**
@@ -360,19 +422,6 @@ final class Service extends Model
         return $descendants->max('level') - $this->level;
     }
 
-    public function state(): BelongsTo
-    {
-        return $this->belongsTo(State::class);
-    }
-
-    public function category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class);
-    }
-
-    /**
-     * Boot the model.
-     */
     protected static function boot()
     {
         parent::boot();
@@ -414,8 +463,8 @@ final class Service extends Model
                 $this->path = $parent->path ? $parent->path.'/'.$this->id : (string) $this->id;
 
                 // Heredar categoría del padre si no tiene
-                if (! $this->category && $parent->category) {
-                    $this->category = $parent->category;
+                if (! $this->category_id && $parent->category_id) {
+                    $this->category_id = $parent->category_id;
                 }
             }
         } else {
@@ -423,6 +472,10 @@ final class Service extends Model
             $this->path = (string) $this->id;
         }
     }
+
+    // ============================================
+    // CASTS Y MUTATORS
+    // ============================================
 
     protected function casts(): array
     {
