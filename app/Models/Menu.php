@@ -27,7 +27,7 @@ final class Menu extends Model
         return once(
             fn () => $this->hasMany(self::class, 'menu_id', 'id')
                 ->withCount('menus')
-                ->with('menus'), $this->id
+                ->with('menus')
         );
     }
 
