@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Traits\RecordActivity;
 use Database\Factories\CategoryFactory;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Attributes\Scope;
 =======
 <<<<<<< HEAD
@@ -14,6 +15,9 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 >>>>>>> 3514fa4 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 >>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+=======
+use Illuminate\Database\Eloquent\Attributes\Scope;
+>>>>>>> 4745c50 (Refactor `Menu` and `Category` models)
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,10 +43,13 @@ final class Category extends Model
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function state(): BelongsTo
 =======
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 4745c50 (Refactor `Menu` and `Category` models)
     public function state()
 >>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
     {
@@ -64,9 +71,12 @@ final class Category extends Model
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 3514fa4 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 >>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+=======
+>>>>>>> 4745c50 (Refactor `Menu` and `Category` models)
     protected function casts(): array
     {
         return ['state_id' => 'integer'];
