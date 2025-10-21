@@ -23,10 +23,10 @@ final class ReBranch extends Component
 
     public BranchForm $form;
 
-    protected $commonQuerys;
+    private $commonQuerys;
 
     #[Title(' - Sucursal')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
 
         $this->commonQuerys = app('commonquery');
@@ -41,20 +41,15 @@ final class ReBranch extends Component
         );
     }
 
-    public function queryBranch()
+    public function queryBranch(): void
     {
         $this->form->setIdPronvinceCity($this->getProvinceId(), $this->getCityId());
 
-        if (! $this->isupdate) {
-            $result = app()->call([$this->form, 'branchStore']);
-
-        } else {
-            $result = app()->call([$this->form, 'branchUpdate']);
-        }
+        $result = $this->isupdate ? app()->call($this->form->branchUpdate(...)) : app()->call($this->form->branchStore(...));
         $this->endForm($result);
     }
 
-    public function endForm($result)
+    public function endForm($result): void
     {
         $this->dispatch('show-toast', $result);
 
@@ -63,7 +58,7 @@ final class ReBranch extends Component
         $this->clearForm();
     }
 
-    public function clearForm()
+    public function clearForm(): void
     {
         $this->form->reset();
         $this->resetAllProvince();
@@ -72,16 +67,17 @@ final class ReBranch extends Component
         $this->dispatch('showOptionsForms', show: false);
     }
 
-    public function getBranchsProperty()
+    #[\Livewire\Attributes\Computed]
+    public function branchs()
     {
         return Branch::countBranch();
     }
 
     #[On('dataBranch')]
-    public function loadBranch($branchId)
+    public function loadBranch($branchId): void
     {
         $this->form->reset();
-        app()->call([$this->form, 'infoBranc'], ['branchId' => $branchId]);
+        app()->call($this->form->infoBranc(...), ['branchId' => $branchId]);
 
         $this->setLocactionNameID(
             $this->form->getProvinceId(),
@@ -95,7 +91,7 @@ final class ReBranch extends Component
         $this->dispatch('showOptionsForms', show: true);
     }
 
-    public function branchHandleMenuAction(string $nameoption)
+    public function branchHandleMenuAction(string $nameoption): void
     {
         $id = $this->form->databranch['id'] ?? 0;
         $this->handleAction(

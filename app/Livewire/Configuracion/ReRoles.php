@@ -24,7 +24,7 @@ final class ReRoles extends Component
     public $showRoleModal = false;
 
     #[Title(' - Roles')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $this->commonQuerys = app('commonquery');
 
@@ -36,19 +36,20 @@ final class ReRoles extends Component
         );
     }
 
-    public function getCountRolesProperty()
+    #[\Livewire\Attributes\Computed]
+    public function countRoles()
     {
         return Role::countRoles();
     }
 
-    public function editRoles(Role $role)
+    public function editRoles(Role $role): void
     {
         $this->showRoleModal = true;
         $this->isupdate = true;
         $this->roleForm->roleData($role);
     }
 
-    public function roleQuery()
+    public function roleQuery(): void
     {
         $result = $this->isupdate ?
             $this->roleForm->roleUpdate() :
@@ -66,11 +67,11 @@ final class ReRoles extends Component
         $this->showRoleModal = false;
     }
 
-    public function deleteRole(Role $role)
+    public function deleteRole(Role $role): void
     {
         $this->messageWindow(
             $role,
-            function ($role) {
+            function ($role): AlertModal {
                 if (! empty($this->checkRoleAssignment($role)['message'])) {
                     return new AlertModal(
                         exception: 0,
@@ -97,7 +98,7 @@ final class ReRoles extends Component
     }
 
     #[On('roleRemove')]
-    public function remove()
+    public function remove(): void
     {
         $this->endRoles(NotifyQuerys::msgDestroy(Role::destroy($this->idRemove)));
     }
@@ -105,12 +106,12 @@ final class ReRoles extends Component
     private function checkRoleAssignment($role): array
     {
         if ($role->users()->count() > 0) {
-            return ['message' => (string) 'No se puede eliminar el rol, tiene usuarios asignados'];
+            return ['message' => 'No se puede eliminar el rol, tiene usuarios asignados'];
         }
         if ($role->actions()->count() > 0) {
-            return ['message' => (string) 'No se puede eliminar el rol, tiene acciones asignadas'];
+            return ['message' => 'No se puede eliminar el rol, tiene acciones asignadas'];
         }
 
-        return ['message' => (string) ''];
+        return ['message' => ''];
     }
 }

@@ -31,7 +31,7 @@ final class ListPaciente extends Component
         'person_email' => '',
     ];
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
 
         return view(
@@ -43,21 +43,21 @@ final class ListPaciente extends Component
 
     }
 
-    public function mount($show)
+    public function mount($show): void
     {
         $this->show = $show;
 
     }
 
     #[On('showModalPatient')]
-    public function updateShow($show)
+    public function updateShow($show): void
     {
         $this->show = $show;
         $this->reset('columnFilter');
         $this->setupTableSorting('Patient');
     }
 
-    public function patientId($patientId)
+    public function patientId($patientId): void
     {
         $this->dispatch('dataPatient', $patientId);
         $this->show = false;

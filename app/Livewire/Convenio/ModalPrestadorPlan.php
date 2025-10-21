@@ -65,19 +65,19 @@ final class ModalPrestadorPlan extends Component
     }
 
     #[Computed]
-    public function states()
+    public function states(): \Illuminate\Database\Eloquent\Collection
     {
         return CommonQueries::stateQuery([1, 2]);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $this->dispatch('clear-errors');
 
         return view('livewire.convenio.modal-prestador-plan');
     }
 
-    public function updatedFormDataPrestadorPlanInsuranceName($value)
+    public function updatedFormDataPrestadorPlanInsuranceName($value): void
     {
         if (str()->length($value) >= 2) {
             $this->searchPrestador = $value;
@@ -89,7 +89,7 @@ final class ModalPrestadorPlan extends Component
         }
     }
 
-    public function insurances()
+    public function insurances(): \Illuminate\Database\Eloquent\Collection
     {
         return CommonQueries::Insurances([1], $this->searchPrestador);
     }

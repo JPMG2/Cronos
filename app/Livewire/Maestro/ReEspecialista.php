@@ -14,6 +14,7 @@ use App\Traits\FormHandling;
 use App\Traits\HandlesActionPolicy;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -36,27 +37,32 @@ final class ReEspecialista extends Component
         return view('livewire.maestro.re-especialista');
     }
 
-    public function getlistDocumentProperty(): Collection
+    #[Computed]
+    public function listDocument(): Collection
     {
         return CommonQueries::listDocuments();
     }
 
-    public function getlistStateProperty(): Collection
+    #[Computed]
+    public function listState(): Collection
     {
         return CommonQueries::stateQuery([1, 2]);
     }
 
-    public function getlistSpecialtiesProperty(): Collection
+    #[Computed]
+    public function listSpecialties(): Collection
     {
         return CommonQueries::listSpecialties();
     }
 
-    public function getlistDegreeProperty(): Collection
+    #[Computed]
+    public function listDegree(): Collection
     {
         return CommonQueries::listDegrees();
     }
 
-    public function getlistCredentialProperty(): Collection
+    #[Computed]
+    public function listCredential(): Collection
     {
         return CommonQueries::listCredentials();
     }
@@ -82,7 +88,8 @@ final class ReEspecialista extends Component
         $this->dispatch('showOptionsForms', show: false);
     }
 
-    public function getMedicalsProperty(): int
+    #[Computed]
+    public function medicals(): int
     {
         return (int) Medical::query()->count();
     }

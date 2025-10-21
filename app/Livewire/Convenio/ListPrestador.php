@@ -30,13 +30,13 @@ final class ListPrestador extends Component
         'state_name' => '',
     ];
 
-    public function mount($show)
+    public function mount($show): void
     {
         $this->show = $show;
 
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view(
             'livewire.convenio.list-prestador',
@@ -47,13 +47,13 @@ final class ListPrestador extends Component
     }
 
     #[On('showModalInsurance')]
-    public function updateShow($show)
+    public function updateShow($show): void
     {
         $this->reset('columnFilter');
         $this->show = $show;
     }
 
-    public function prestadorData($idPrestador)
+    public function prestadorData($idPrestador): void
     {
         $this->dispatch('dataPrestador', $idPrestador);
         $this->show = false;

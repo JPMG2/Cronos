@@ -56,7 +56,7 @@ final class HorarioForm extends Form
         ],
     ];
 
-    public function scheduleStoreUpdate(ScheduleValidation $scheduleValidation)
+    public function scheduleStoreUpdate(ScheduleValidation $scheduleValidation): never
     {
 
         $scheduleValidation->onScheduleCreate($this->datahorario);

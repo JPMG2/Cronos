@@ -10,7 +10,7 @@ use Livewire\Component;
 final class Dashboard extends Component
 {
     #[Title('- Inicio')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.home.dashboard');
     }

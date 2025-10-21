@@ -30,7 +30,7 @@ final class ListEspecialista extends Component
         'credential_number' => '',
     ];
 
-    public function mount($show)
+    public function mount($show): void
     {
         $this->show = $show;
     }
@@ -46,14 +46,14 @@ final class ListEspecialista extends Component
     }
 
     #[On('showModalMedical')]
-    public function updateShow($show)
+    public function updateShow($show): void
     {
         $this->show = $show;
         $this->reset('columnFilter');
         $this->setupTableSorting('Medical');
     }
 
-    public function dataMedic($medicId)
+    public function dataMedic($medicId): void
     {
         $this->dispatch('dataMedical', $medicId);
         $this->show = false;

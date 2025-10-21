@@ -32,7 +32,7 @@ final class MainPatient
             $mainClass = PacientUpdate::class;
         }
         if ($mainClass !== '') {
-            PersonType::dispatch('patient', $model, $action, $model->person->person_email, $mainClass);
+            event(new PersonType('patient', $model, $action, $model->person->person_email, $mainClass));
         }
     }
 }

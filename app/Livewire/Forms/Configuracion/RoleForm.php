@@ -72,7 +72,7 @@ final class RoleForm extends Form
         ];
     }
 
-    private function iniService()
+    private function iniService(): QueryRepository
     {
         return new QueryRepository(new Role());
     }

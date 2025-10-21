@@ -18,7 +18,7 @@ final class FormActivity extends Component
     public $color = '';
 
     #[On('show-toast')]
-    public function formToast($arrayvalues)
+    public function formToast($arrayvalues): void
     {
 
         $this->message = $arrayvalues[0];
@@ -34,15 +34,13 @@ final class FormActivity extends Component
     {
 
         if ($value === 1) {
-            $color = 'bg-green-400';
-        } else {
-            $color = 'bg-red-400';
+            return 'bg-green-400';
         }
 
-        return $color;
+        return 'bg-red-400';
     }
 
-    public function render()
+    public function render(): string
     {
         return <<<'HTML'
         <div

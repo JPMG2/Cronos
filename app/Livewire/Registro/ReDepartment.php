@@ -21,12 +21,12 @@ final class ReDepartment extends Component
     public $listdeparment;
 
     #[Title(' - Departamentos')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.registro.re-department');
     }
 
-    public function queryDeparmente()
+    public function queryDeparmente(): void
     {
 
         $result = $this->isupdate ?
@@ -39,18 +39,19 @@ final class ReDepartment extends Component
         $this->opendepartment = false;
     }
 
-    public function clearForm()
+    public function clearForm(): void
     {
         $this->form->reset();
         $this->isupdate = false;
     }
 
-    public function getDepartmentsProperty()
+    #[\Livewire\Attributes\Computed]
+    public function departments()
     {
         return Department::query()->orderBy('department_name')->get();
     }
 
-    public function editDepartment(Department $department)
+    public function editDepartment(Department $department): void
     {
         $this->form->loadDataDepartment($department);
         $this->opendepartment = true;

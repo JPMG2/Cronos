@@ -10,24 +10,21 @@ final class HistoryLog
 
     public int $id;
 
-    public array $array;
-
-    public function __construct($array)
+    public function __construct(public array $array)
     {
-        $this->array = $array;
-        $this->model = $array['model'];
-        $this->id = $array['id'];
+        $this->model = $this->array['model'];
+        $this->id = $this->array['id'];
 
     }
 
     public function loadHistoryData()
     {
         return $this->getModel()::with(
-            ['log' => function ($query) {
+            ['log' => function ($query): void {
                 $query->orderBy('created_at', 'desc');
-            }, 'log.user' => function ($query) {
+            }, 'log.user' => function ($query): void {
                 $query->select('id', 'name', 'last_name');
-            }, 'log.action' => function ($query) {
+            }, 'log.action' => function ($query): void {
                 $query->select('id', 'action_inpass');
             }]
         )->find($this->getId());

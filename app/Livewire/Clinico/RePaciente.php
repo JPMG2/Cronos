@@ -23,7 +23,7 @@ final class RePaciente extends Component
     public PacienteForm $pacienteForm;
 
     #[Title(' - Pacientes')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.clinicos.re-paciente');
     }
@@ -34,19 +34,19 @@ final class RePaciente extends Component
     }
 
     #[Computed]
-    public function documentType()
+    public function documentType(): \Illuminate\Database\Eloquent\Collection
     {
         return CommonQueries::listDocuments();
     }
 
     #[Computed]
-    public function maritalStatus()
+    public function maritalStatus(): \Illuminate\Database\Eloquent\Collection
     {
         return CommonQueries::listMaritalStatus();
     }
 
     #[Computed]
-    public function gender()
+    public function gender(): \Illuminate\Database\Eloquent\Collection
     {
         return CommonQueries::listGenders();
     }
@@ -58,13 +58,13 @@ final class RePaciente extends Component
     }
 
     #[Computed]
-    public function occupation()
+    public function occupation(): \Illuminate\Database\Eloquent\Collection
     {
         return CommonQueries::listOcupacion();
     }
 
     #[Computed]
-    public function nationality()
+    public function nationality(): \Illuminate\Database\Eloquent\Collection
     {
         return CommonQueries::listNacionalidad();
     }
@@ -124,7 +124,7 @@ final class RePaciente extends Component
     }
 
     #[On('dataPatient')]
-    public function patienteLoadData($patientId): void
+    public function patienteLoadData(int $patientId): void
     {
         $this->dispatch('showOptionsForms', show: true);
         $this->pacienteForm->reset();

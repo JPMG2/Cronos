@@ -8,6 +8,7 @@ use App\Classes\Utilities\CommonQueries;
 use App\Livewire\Forms\Maestro\CategoryForm;
 use App\Models\Category;
 use App\Traits\UtilityForm;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -29,8 +30,8 @@ final class ReCategory extends Component
     public function queryCategory(): void
     {
         $result = $this->isupdate ?
-                  $this->form->categoryUpdate() :
-                  $this->form->categoryStore();
+            $this->form->categoryUpdate() :
+            $this->form->categoryStore();
         $messageType = $this->isupdate ? 'msgUpdate' : 'msgCreate';
         $message = $this->showQueryMessage($result, $messageType);
         $this->showToastAndClear($message);
@@ -51,13 +52,14 @@ final class ReCategory extends Component
         $this->isupdate = true;
     }
 
-    public function getCategoriesProperty()
+    #[Computed]
+    public function categories(): Collection
     {
         return Category::list([1, 2], null)->get();
     }
 
     #[Computed]
-    public function states()
+    public function states(): Collection
     {
         return CommonQueries::stateQuery([1, 2]);
     }

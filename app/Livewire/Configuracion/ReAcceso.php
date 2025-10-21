@@ -23,7 +23,7 @@ final class ReAcceso extends Component
     public $idMenu;
 
     #[Title(' - Accesos')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
 
         $this->commonQuerys = app('commonquery');
@@ -32,12 +32,12 @@ final class ReAcceso extends Component
             'livewire.configuracion.re-acceso',
             [
                 'listRoles' => $this->commonQuerys::listRoles(['Owner']),
-                'listMenus' => Menu::whereNull('menu_id')->orderBy('id')->get(),
+                'listMenus' => Menu::query()->whereNull('menu_id')->orderBy('id')->get(),
             ]
         );
     }
 
-    public function cabezeraMenu($idMenu)
+    public function cabezeraMenu($idMenu): void
     {
         if (in_array($idMenu, $this->accesoForm->dataacceso['menu_id'], true)) {
             $this->accesoForm->dataacceso['menu_id'] = array_diff($this->accesoForm->dataacceso['menu_id'], [$idMenu]);
@@ -46,11 +46,11 @@ final class ReAcceso extends Component
         }
     }
 
-    public function removeItemMenu($idMenu)
+    public function removeItemMenu($idMenu): void
     {
 
         unset($this->listOptionMenu[$idMenu]);
-        $menus = Menu::find($idMenu);
+        $menus = Menu::query()->find($idMenu);
         $menus->menus;
         foreach ($menus->menus as $menu) {
             if (in_array($menu->id, $this->accesoForm->dataacceso['menu_options'], true)) {
@@ -61,37 +61,37 @@ final class ReAcceso extends Component
 
     }
 
-    public function queryActionAccion()
+    public function queryActionAccion(): void
     {
-        $result = app()->call([$this->accesoForm, 'checkAccesRoles']);
+        $result = app()->call($this->accesoForm->checkAccesRoles(...));
         $this->endAction($result);
     }
 
-    public function endAction($result)
+    public function endAction($result): void
     {
         $this->dispatch('show-toast', $result);
         $this->clearForm();
 
     }
 
-    public function clearForm()
+    public function clearForm(): void
     {
         $this->accesoForm->reset();
     }
 
-    public function loadMenus()
+    public function loadMenus(): void
     {
-        $items = app()->call([$this->accesoForm, 'dataRoleMenu']);
+        $items = app()->call($this->accesoForm->dataRoleMenu(...));
 
         if (count($items) > 0) {
             foreach ($items as $item) {
-                $this->showMenu(Menu::find($item));
+                $this->showMenu(Menu::query()->find($item));
             }
 
         }
     }
 
-    public function showMenu(Menu $menu)
+    public function showMenu(Menu $menu): void
     {
 
         $this->idMenu = $menu->id;
@@ -99,9 +99,7 @@ final class ReAcceso extends Component
         $this->listOptionMenu = $menu->menus;
         $this->idOptionMenu = Arr::mapWithKeys(
             $this->listOptionMenu->toArray(),
-            static function (array $item, int $key) {
-                return [$item['id'] => $item['id']];
-            }
+            static fn (array $item, int $key): array => [$item['id'] => $item['id']]
         );
 
     }

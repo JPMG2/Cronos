@@ -132,32 +132,6 @@ final class Service extends Model
     }
 
     /**
-     * Scope: Solo servicios raíz (sin padre)
-     */
-    public function scopeRoot(Builder $query): Builder
-    {
-        return $query->whereNull('parent_service_id')
-            ->orderBy('display_order')
-            ->orderBy('service_name');
-    }
-
-    #[Scope]
-    public function active(Builder $query): Builder
-    {
-        return $query->whereHas('state', function ($q) {
-            $q->where('id', 1);
-        });
-    }
-
-    #[Scope]
-    public function inactive(Builder $query): Builder
-    {
-        return $query->whereHas('state', function ($q) {
-            $q->where('id', 2);
-        });
-    }
-
-    /**
      * Order by category and display order
      */
     #[Scope]
@@ -185,74 +159,6 @@ final class Service extends Model
     }
 
     /**
-     * Only services of type 'final' (no children)
-     */
-    #[Scope]
-    public function final(Builder $query): Builder
-    {
-        return $query->where('type', ServiceType::FINAL);
-    }
-
-    #[Scope]
-    public function listServices(Builder $query, array $states): Builder
-    {
-        if ($states) {
-            $query->whereIn('state_id', $states);
-        }
-
-        return $query->with(['state', 'category', 'children']);
-    }
-
-    /**
-     * Scope: Buscar servicios por código o nombre
-     */
-    #[Scope]
-    public function search(Builder $query, string $search): Builder
-    {
-        return $query->where(function ($q) use ($search) {
-            $q->where('service_code', 'like', "%{$search}%")
-                ->orWhere('service_name', 'like', "%{$search}%")
-                ->orWhere('service_description', 'like', "%{$search}%");
-        });
-    }
-
-    /**
-     * Accessor: Verifica si tiene hijos
-     */
-    public function getHasChildrenAttribute(): bool
-    {
-        return $this->children()->exists();
-    }
-
-    /**
-     * Count numbers of children
-     */
-    public function getChildrenCountAttribute(): int
-    {
-        return $this->children()->count();
-    }
-
-    /**
-     * Accessor: Verifica si es servicio raíz
-     */
-    public function getIsRootAttribute(): bool
-    {
-        return is_null($this->parent_service_id);
-    }
-
-    /**
-     * Accessor: Verifica si está activo
-     */
-    public function getIsActiveAttribute(): bool
-    {
-        return $this->state && $this->state->state_name === 'Activo';
-    }
-
-    /**
-     * Accessor: Ruta completa como string
-     */
-
-    /**
      * Obtiene solo los nombres de los ancestros
      */
     public function getAncestorNames(): Collection
@@ -274,14 +180,6 @@ final class Service extends Model
         }
 
         return $ancestors;
-    }
-
-    /**
-     * Accessor: Verifica si permite hijos (basado en type)
-     */
-    public function getAllowsChildrenAttribute(): bool
-    {
-        return $this->type === ServiceType::GROUP;
     }
 
     /**
@@ -395,7 +293,7 @@ final class Service extends Model
         return $descendants->max('level') - $this->level;
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -442,6 +340,108 @@ final class Service extends Model
         } else {
             $this->level = 0;
         }
+    }
+
+    /**
+     * Scope: Solo servicios raíz (sin padre)
+     */
+    #[Scope]
+    protected function root(Builder $query): Builder
+    {
+        return $query->whereNull('parent_service_id')
+            ->orderBy('display_order')
+            ->orderBy('service_name');
+    }
+
+    #[Scope]
+    protected function active(Builder $query): Builder
+    {
+        return $query->whereHas('state', function ($q) {
+            $q->where('id', 1);
+        });
+    }
+
+    #[Scope]
+    protected function inactive(Builder $query): Builder
+    {
+        return $query->whereHas('state', function ($q) {
+            $q->where('id', 2);
+        });
+    }
+
+    /**
+     * Scope: Buscar servicios por código o nombre
+     */
+    #[Scope]
+    protected function search(Builder $query, string $search): Builder
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->where('service_code', 'like', "%{$search}%")
+                ->orWhere('service_name', 'like', "%{$search}%")
+                ->orWhere('service_description', 'like', "%{$search}%");
+        });
+    }
+
+    /**
+     * Accessor: Ruta completa como string
+     */
+    #[Scope]
+    protected function listServices(Builder $query, array $states): Builder
+    {
+        if ($states) {
+            $query->whereIn('state_id', $states);
+        }
+
+        return $query->with(['state', 'category', 'children']);
+    }
+
+    /**
+     * Only services of type 'final' (no children)
+     */
+    #[Scope]
+    protected function final(Builder $query): Builder
+    {
+        return $query->where('type', ServiceType::FINAL);
+    }
+
+    /**
+     * Accessor: Verifica si permite hijos (basado en type)
+     */
+    protected function getAllowsChildrenAttribute(): bool
+    {
+        return $this->type === ServiceType::GROUP;
+    }
+
+    /**
+     * Accessor: Verifica si está activo
+     */
+    protected function getIsActiveAttribute(): bool
+    {
+        return $this->state && $this->state->state_name === 'Activo';
+    }
+
+    /**
+     * Accessor: Verifica si es servicio raíz
+     */
+    protected function getIsRootAttribute(): bool
+    {
+        return is_null($this->parent_service_id);
+    }
+
+    /**
+     * Accessor: Verifica si tiene hijos
+     */
+    protected function getHasChildrenAttribute(): bool
+    {
+        return $this->children()->exists();
+    }
+
+    /**
+     * Count numbers of children
+     */
+    protected function getChildrenCountAttribute(): int
+    {
+        return $this->children()->count();
     }
 
     // ============================================

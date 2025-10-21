@@ -18,7 +18,7 @@ final class ReCompany extends Component
 
     public CompanyForm $form;
 
-    protected $commonQuerys;
+    private $commonQuerys;
 
     public function cleanForm(): void
     {
@@ -33,9 +33,9 @@ final class ReCompany extends Component
         }
     }
 
-    public function loadCompany()
+    public function loadCompany(): void
     {
-        app()->call([$this->form, 'showCompany']);
+        app()->call($this->form->showCompany(...));
         $this->setValuesPronvinceCity();
         $this->isupdate = true;
         $this->isdisabled = 'disabled';
@@ -49,7 +49,7 @@ final class ReCompany extends Component
         $this->setnameProvinceCity($this->form->getProvinceName(), $this->form->getCityName());
     }
 
-    public function mount(CompanyObj $companyObj)
+    public function mount(CompanyObj $companyObj): void
     {
 
         if (! is_null($companyObj->show())) {
@@ -63,14 +63,14 @@ final class ReCompany extends Component
 
         $this->form->datacompany['province_id'] = max($this->getProvinceId(), 0);
 
-        $result = app()->call([$this->form, 'companyStoreUpdate']);
+        $result = app()->call($this->form->companyStoreUpdate(...));
 
         $this->dispatch('show-toast', $result);
 
     }
 
     #[Title('- Empresa')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
 
         $this->commonQuerys = app('commonquery');

@@ -17,13 +17,13 @@ final class ListBranch extends Component
 
     public $listCompanyBranch;
 
-    public function mount($show)
+    public function mount($show): void
     {
         $this->show = $show;
 
     }
 
-    public function render(CommonQueries $commonQuerys)
+    public function render(CommonQueries $commonQuerys): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view(
             'livewire.registro.list-branch',
@@ -34,12 +34,12 @@ final class ListBranch extends Component
     }
 
     #[On('showModalBranch')]
-    public function updateShow($show)
+    public function updateShow($show): void
     {
         $this->show = $show;
     }
 
-    public function dataBranch($branchId)
+    public function dataBranch($branchId): void
     {
         $this->dispatch('dataBranch', $branchId);
         $this->show = false;

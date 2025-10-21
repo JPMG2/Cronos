@@ -19,7 +19,7 @@ final class AccesoForm extends Form
         'menu_options' => [],
     ];
 
-    public function checkAccesRoles()
+    public function checkAccesRoles(): array
     {
         Validator::make(
             [
@@ -87,7 +87,7 @@ final class AccesoForm extends Form
 
     }
 
-    private function iniService()
+    private function iniService(): ModelService
     {
         return new ModelService(new Role());
     }

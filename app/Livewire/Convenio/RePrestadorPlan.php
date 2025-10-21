@@ -29,7 +29,7 @@ final class RePrestadorPlan extends Component
     ];
 
     #[Title(' - Planes')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view(
             'livewire.convenio.re-prestador-plan',

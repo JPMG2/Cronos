@@ -29,7 +29,7 @@ final class Company extends Model
 
     public static function existCompany(): bool
     {
-        return (bool) self::first();
+        return (bool) self::query()->first();
     }
 
     public function city(): BelongsTo
@@ -57,28 +57,28 @@ final class Company extends Model
     protected function companyCuit(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_trim($value),
+            set: fn ($value): string => mb_trim($value)
         );
     }
 
     protected function companyAddress(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function companyPhone(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_trim($value),
+            set: fn ($value): string => mb_trim($value),
         );
     }
 
     protected function companyZipcode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => mb_trim($value),
+            set: fn ($value): string => mb_trim($value),
         );
     }
 
@@ -99,7 +99,7 @@ final class Company extends Model
     protected function companyPersonContact(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 

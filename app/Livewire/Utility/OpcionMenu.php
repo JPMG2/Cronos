@@ -19,18 +19,18 @@ final class OpcionMenu extends Component
 
     public $optioncolor = ['show' => false, 'new' => false, 'edit' => false, 'print' => false, 'export' => false, 'history' => false];
 
-    public function mount($namecomponent)
+    public function mount($namecomponent): void
     {
         $this->namecomponent = $namecomponent;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.utility.opcion-menu');
     }
 
     #[On('showOptionsForms')]
-    public function optionsOn($show)
+    public function optionsOn($show): void
     {
         if ($show === false) {
             $this->resetColor();
@@ -39,25 +39,17 @@ final class OpcionMenu extends Component
     }
 
     #[On('clearColorOpcionMenu')]
-    public function resetColor()
+    public function resetColor(): void
     {
         $this->optioncolor = ['show' => false, 'new' => false, 'edit' => false, 'print' => false, 'export' => false, 'history' => false];
     }
 
-    public function changeColor($option)
+    public function changeColor($option): void
     {
 
         $this->optioncolor = Arr::map(
             $this->optioncolor,
-            function (string $value, string $key) use ($option) {
-                if ($key === $option) {
-                    $value = true;
-                } else {
-                    $value = false;
-                }
-
-                return $value;
-            }
+            fn (string $value, string $key): bool => $key === $option
         );
 
     }

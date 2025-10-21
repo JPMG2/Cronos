@@ -16,7 +16,7 @@ final class ReActions extends Component
     public ActionsForm $actionForm;
 
     #[Title(' - Permisos')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $this->commonQuerys = app('commonquery');
 
@@ -29,27 +29,27 @@ final class ReActions extends Component
         );
     }
 
-    public function queryActionRole()
+    public function queryActionRole(): void
     {
-        $result = app()->call([$this->actionForm, 'actionStore']);
+        $result = app()->call($this->actionForm->actionStore(...));
         $this->endAction($result);
     }
 
-    public function endAction($result)
+    public function endAction($result): void
     {
         $this->dispatch('show-toast', $result);
         $this->clearForm();
 
     }
 
-    public function clearForm()
+    public function clearForm(): void
     {
         $this->actionForm->reset();
         $this->isupdate = false;
     }
 
-    public function roleValue()
+    public function roleValue(): void
     {
-        app()->call([$this->actionForm, 'actionData'], ['intRole' => $this->actionForm->dataaction['role_id']]);
+        app()->call($this->actionForm->actionData(...), ['intRole' => $this->actionForm->dataaction['role_id']]);
     }
 }

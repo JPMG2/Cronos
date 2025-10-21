@@ -48,7 +48,7 @@ final class BranchForm extends Form
 
     }
 
-    public function infoBranc($branchId)
+    public function infoBranc($branchId): void
     {
         $services = $this->iniService();
         $brancData = $services->showWithRelationship($branchId, 'showDataRelashion');
@@ -61,14 +61,14 @@ final class BranchForm extends Form
 
     }
 
-    public function setIdPronvinceCity($provinceId, $cityId)
+    public function setIdPronvinceCity($provinceId, $cityId): void
     {
 
         $this->databranch['province_id'] = $provinceId;
         $this->databranch['city_id'] = $cityId;
     }
 
-    protected function iniService()
+    private function iniService()
     {
         return app()->make(ModelService::class, ['model' => new Branch()]);
     }

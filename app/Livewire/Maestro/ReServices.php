@@ -75,7 +75,7 @@ final class ReServices extends Component
         $this->form->loadDataServices($service);
         $this->openservice = true;
         $this->isupdate = true;
-        $this->currentStep = 2; // Auto-show both panels when editing
+        $this->currentStep = 2;
     }
 
     #[Computed]
@@ -96,15 +96,9 @@ final class ReServices extends Component
         return Service::query()->groups()->active()->orderBy('level')->get();
     }
 
-    public function updatedFormDataserviceCategoriName($value)
+    public function updatedFormDataserviceCategoriName($value): void
     {
-        if (str()->length($value) >= 2) {
-
-            $this->listCategory = $this->categoryQuery($value);
-
-        } else {
-            $this->listCategory = [];
-        }
+        $this->listCategory = str()->length($value) >= 2 ? $this->categoryQuery($value) : [];
     }
 
     public function categoryQuery(string $value)
@@ -113,37 +107,7 @@ final class ReServices extends Component
             ->get();
     }
 
-    public function deleteRole(Role $role)
-    {
-        $this->messageWindow(
-            $role,
-            function ($role) {
-                if (! empty($this->checkRoleAssignment($role)['message'])) {
-                    return new AlertModal(
-                        exception: 0,
-                        type: 'error',
-                        title: 'Error',
-                        buttonName: '',
-                        event: '',
-                        message: $this->checkRoleAssignment($role)['message'],
-                        idModel: 0
-                    );
-                }
-
-                return new AlertModal(
-                    exception: 1,
-                    type: 'warning',
-                    title: 'Advertencia',
-                    buttonName: 'Borrar',
-                    event: 'roleRemove',
-                    message: 'Realmente desea borrar el rol ?',
-                    idModel: $role->id
-                );
-            }
-        );
-    }
-
-    public function deleteService(int $idService)
+    public function deleteService(int $idService): void
     {
         $service = Service::find($idService);
         $this->messageWindow(
@@ -180,7 +144,7 @@ final class ReServices extends Component
         NotifyQuerys::msgDestroy(Service::destroy($this->idRemove));
     }
 
-    protected function validateCurrentStep(): void
+    private function validateCurrentStep(): void
     {
         if ($this->currentStep === 1) {
             $this->validate(
@@ -192,11 +156,11 @@ final class ReServices extends Component
         }
     }
 
-    protected function checkService($service): array
+    private function checkService($service): array
     {
         if ($service->childrenCount >= 1) {
             return [
-                'message' => (string) 'El servicio tiene sub-grupos, no puede ser eliminado',
+                'message' => 'El servicio tiene sub-grupos, no puede ser eliminado',
             ];
         }
 

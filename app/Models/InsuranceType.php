@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Traits\RecordActivity;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,8 @@ final class InsuranceType extends Model
 
     protected $fillable = ['insuratype_name'];
 
-    public function scopeListType(Builder $query): Builder
+    #[Scope]
+    public function listType(Builder $query): Builder
     {
         return $query->orderBy('insuratype_name');
     }

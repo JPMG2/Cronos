@@ -122,7 +122,7 @@ final class PrestadorPlanForm extends Form
         return $this->getValuesModel($validValues, new InsurancePlan());
     }
 
-    private function iniService()
+    private function iniService(): QueryRepository
     {
         return new QueryRepository(new Insurance());
     }

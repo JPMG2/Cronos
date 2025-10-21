@@ -22,7 +22,7 @@ final class PrestadorValidation
         )->validate();
     }
 
-    private function transformServiceData($data): array
+    private function transformServiceData(array $data): array
     {
         return [
             'insurance_name' => mb_strtoupper(mb_trim($data['insurance_name'])),

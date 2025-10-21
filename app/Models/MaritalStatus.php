@@ -21,7 +21,7 @@ final class MaritalStatus extends Model
     protected function maritalstatusName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 final class ScheduleValidation
 {
-    public function onScheduleCreate(array $schedule)
+    public function onScheduleCreate(array $schedule): void
     {
         $data = $this->inicialiciteAtributes($schedule);
 
@@ -25,7 +25,7 @@ final class ScheduleValidation
 
     }
 
-    public function inicialiciteAtributes(array $schedule)
+    public function inicialiciteAtributes(array $schedule): array
     {
 
         return [

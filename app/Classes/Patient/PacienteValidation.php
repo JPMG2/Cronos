@@ -23,7 +23,7 @@ final class PacienteValidation
         )->validate();
     }
 
-    private function transformServiceData($data): array
+    private function transformServiceData(array $data): array
     {
         return [
             'document_id' => mb_trim((string) $data['document_id']),

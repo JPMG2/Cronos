@@ -17,7 +17,7 @@ final class ObraSocialTypeForm extends Form
         'insuratype_name' => '',
     ];
 
-    public function insuratypeStore()
+    public function insuratypeStore(): array
     {
         $validated = Validator::make(
             ['insuratype_name' => ucwords(mb_strtolower(mb_trim($this->insuratypedata['insuratype_name']))),
@@ -33,9 +33,9 @@ final class ObraSocialTypeForm extends Form
         return NotifyQuerys::msgCreate($services->store($validated));
     }
 
-    public function insuratypeUpdate()
+    public function insuratypeUpdate(): array
     {
-        $validated = Validator::make(
+        Validator::make(
             ['insuratype_name' => ucwords(mb_strtolower(mb_trim($this->insuratypedata['insuratype_name']))),
             ],
             ['insuratype_name' => AttributeValidator::uniqueIdNameLength(5, 'insurance_types', 'insuratype_name', $this->insuratypedata['id']),
@@ -49,7 +49,7 @@ final class ObraSocialTypeForm extends Form
         return NotifyQuerys::msgUpdate($services->update($this->insuratypedata, $this->insuratypedata['id']));
     }
 
-    public function insuranceData($idInsuraType)
+    public function insuranceData($idInsuraType): void
     {
         $services = $this->iniService();
 
@@ -58,7 +58,7 @@ final class ObraSocialTypeForm extends Form
         $this->insuratypedata = $data->toArray();
     }
 
-    protected function iniService()
+    private function iniService()
     {
         return app()->make(ModelService::class, ['model' => new InsuranceType()]);
     }

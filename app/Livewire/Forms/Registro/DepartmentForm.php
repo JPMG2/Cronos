@@ -72,7 +72,7 @@ final class DepartmentForm extends Form
         ];
     }
 
-    private function iniService()
+    private function iniService(): QueryRepository
     {
         return new QueryRepository(new Department());
     }

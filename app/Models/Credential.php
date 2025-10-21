@@ -25,7 +25,7 @@ final class Credential extends Model
     {
         if ($credentialModelId) {
 
-            return self::where('id', $idcredential)
+            return self::query()->where('id', $idcredential)
                 ->whereHas(
                     'medicals',
                     function ($query) use ($credentialNumber, $credentialModelId) {
@@ -53,7 +53,7 @@ final class Credential extends Model
     protected function credentialName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 

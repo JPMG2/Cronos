@@ -17,10 +17,10 @@ final class ActionsForm extends Form
         'action_id' => [],
     ];
 
-    public function actionStore()
+    public function actionStore(): array
     {
 
-        $validated = Validator::make(
+        Validator::make(
             [
                 'role_id' => $this->dataaction['role_id'],
                 'action_id' => $this->dataaction['action_id'],
@@ -46,19 +46,15 @@ final class ActionsForm extends Form
         );
     }
 
-    public function actionData(int $intRole)
+    public function actionData(int $intRole): void
     {
         $services = $this->iniService();
         $data = $services->showWithRelationship((int) $this->dataaction['role_id'], 'showActionRelashion');
-        if (count($data->actions) > 0) {
-            $this->dataaction['action_id'] = $data->actions->pluck('id')->toArray();
-        } else {
-            $this->dataaction['action_id'] = [];
-        }
+        $this->dataaction['action_id'] = count($data->actions) > 0 ? $data->actions->pluck('id')->toArray() : [];
 
     }
 
-    protected function iniService()
+    private function iniService(): ModelService
     {
         return new ModelService(new Role());
     }

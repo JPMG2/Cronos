@@ -24,14 +24,14 @@ final class Degree extends Model
     protected function degreeName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function degreeCode(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }
 }

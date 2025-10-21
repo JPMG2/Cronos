@@ -26,7 +26,7 @@ final class RePrestador extends Component
     private $commonQuerys;
 
     #[Title(' - Obra social')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         $this->commonQuerys = app('commonquery');
 
@@ -78,12 +78,14 @@ final class RePrestador extends Component
 
     }
 
-    public function getTypesProperty()
+    #[\Livewire\Attributes\Computed]
+    public function types()
     {
         return InsuranceType::listType()->get();
     }
 
-    public function getCountInsuranceProperty()
+    #[\Livewire\Attributes\Computed]
+    public function countInsurance(): ?int
     {
         return Insurance::countInsurance();
     }

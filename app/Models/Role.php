@@ -24,7 +24,7 @@ final class Role extends Model
 
     public static function countRoles()
     {
-        return self::whereNot('name_role', 'Owner')->count();
+        return self::query()->whereNot('name_role', 'Owner')->count();
     }
 
     public function users()
@@ -53,27 +53,27 @@ final class Role extends Model
         return self::with('actions')->findOrFail($id);
     }
 
-    public function menus(): BelongsToMany
-    {
-        return $this->belongsToMany(Menu::class);
-    }
-
     public function hasMenu($menulink): bool
     {
         return $this->menus()->where('linkto', $menulink)->exists();
     }
 
+    public function menus(): BelongsToMany
+    {
+        return $this->belongsToMany(Menu::class);
+    }
+
     protected function nameRole(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucwords(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucwords(mb_strtolower(mb_trim($value))),
         );
     }
 
     protected function description(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }
 }

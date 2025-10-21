@@ -18,29 +18,30 @@ final class ObraSocialTipo extends Component
 
     public ObraSocialTypeForm $formtype;
 
-    public function getTypesProperty()
+    #[\Livewire\Attributes\Computed]
+    public function types()
     {
         return InsuranceType::listType()->get();
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.convenio.obra-social-tipo');
     }
 
-    public function queryInsuraceType()
+    public function queryInsuraceType(): void
     {
 
         if (! $this->isupdate) {
-            $result = app()->call([$this->formtype, 'insuratypeStore']);
+            $result = app()->call($this->formtype->insuratypeStore(...));
         } else {
-            $result = app()->call([$this->formtype, 'insuratypeUpdate']);
+            $result = app()->call($this->formtype->insuratypeUpdate(...));
         }
 
         $this->endInsuraceType($result);
     }
 
-    public function endInsuraceType($result)
+    public function endInsuraceType($result): void
     {
         $this->dispatch('show-toast', $result);
         $this->dispatch('reloadInsuraceType');
@@ -49,7 +50,7 @@ final class ObraSocialTipo extends Component
         $this->isupdate = false;
     }
 
-    public function clearFormChild()
+    public function clearFormChild(): void
     {
         $this->formtype->reset();
         $this->resetErrorBag();
@@ -57,14 +58,14 @@ final class ObraSocialTipo extends Component
     }
 
     #[On('showTypesModal')]
-    public function toggleModal()
+    public function toggleModal(): void
     {
         $this->show = ! $this->show;
     }
 
-    public function insuranceInfo($idInsuraType)
+    public function insuranceInfo($idInsuraType): void
     {
         $this->isupdate = true;
-        $result = app()->call([$this->formtype, 'insuranceData'], ['idInsuraType' => $idInsuraType]);
+        app()->call($this->formtype->insuranceData(...), ['idInsuraType' => $idInsuraType]);
     }
 }

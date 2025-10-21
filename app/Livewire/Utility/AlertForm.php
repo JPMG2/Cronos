@@ -23,13 +23,13 @@ final class AlertForm extends Component
 
     public $event;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.utility.alert-form');
     }
 
     #[On('showModalAlert')]
-    public function showMessage(array $parameters)
+    public function showMessage(array $parameters): void
     {
         $this->showAlert = $parameters['show'];
         $this->title = $parameters['title'];
@@ -40,7 +40,7 @@ final class AlertForm extends Component
         $this->event = $parameters['event'];
     }
 
-    public function closeModal()
+    public function closeModal(): void
     {
         $this->showAlert = false;
         $this->dispatch($this->event);

@@ -18,24 +18,24 @@ final class HistoryModal extends Component
 
     public $modelname;
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.utility.history-modal');
     }
 
     #[On('showModalHistory')]
-    public function loadModelHistory($array)
+    public function loadModelHistory(array $array): void
     {
 
         $this->show = true;
         $historyData = new HistoryLog($array);
         $this->listHistoryData = $historyData->loadHistoryData();
         $this->modelname = $array['model'];
-        $this->historyTitle = 'Historial de '.config('nicename.'.mb_strtolower($array['model']));
+        $this->historyTitle = 'Historial de '.config('nicename.'.mb_strtolower((string) $array['model']));
 
     }
 
-    public function hydrate()
+    public function hydrate(): void
     {
         $this->reset();
 

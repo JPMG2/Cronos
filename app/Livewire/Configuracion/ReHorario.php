@@ -14,12 +14,13 @@ final class ReHorario extends Component
     public HorarioForm $horarioForm;
 
     #[Title(' - Horaio')]
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.configuracion.re-horario');
     }
 
-    public function getDaysProperty()
+    #[\Livewire\Attributes\Computed]
+    public function days(): array
     {
         return DaysOfWeek::cases();
     }
@@ -27,7 +28,7 @@ final class ReHorario extends Component
     public function querySchedule(): never
     {
 
-        app()->call([$this->horarioForm, 'scheduleStoreUpdate']);
+        app()->call($this->horarioForm->scheduleStoreUpdate(...));
 
     }
 }

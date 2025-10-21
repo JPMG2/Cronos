@@ -21,12 +21,10 @@ final class NotifyQuerys
     public static function msgUpdate($model): array
     {
         if ($model->getChanges() && count($model->getChanges())) {
-            $message = ['Actualización exitosa !!', 1];
-        } else {
-            $message = ['Sin cambios !!', 0];
+            return ['Actualización exitosa !!', 1];
         }
 
-        return $message;
+        return ['Sin cambios !!', 0];
     }
 
     /**
@@ -42,12 +40,10 @@ final class NotifyQuerys
     public static function msgCreate($model): array
     {
         if ($model->wasRecentlyCreated) {
-            $message = ['Registro exitoso !!', 1];
-        } else {
-            $message = ['Error en registro !!', 0];
+            return ['Registro exitoso !!', 1];
         }
 
-        return $message;
+        return ['Error en registro !!', 0];
     }
 
     /**
@@ -64,23 +60,19 @@ final class NotifyQuerys
     {
 
         if (! empty($relashion['attached']) || ! empty($relashion['detached'])) {
-            $message = ['Registro exitoso !!', 1];
-        } else {
-            $message = ['Error en registro !!', 0];
+            return ['Registro exitoso !!', 1];
         }
 
-        return $message;
+        return ['Error en registro !!', 0];
     }
 
     public static function msgDestroy(int $numberDelete): array
     {
         if ($numberDelete > 0) {
-            $message = ['Se ha borrado exitosamente !!', 1];
-        } else {
-            $message = ['No se ha borrado el registro !!', 0];
+            return ['Se ha borrado exitosamente !!', 1];
         }
 
-        return $message;
+        return ['No se ha borrado el registro !!', 0];
     }
 
     public static function msgUpdateCreate($model): array
