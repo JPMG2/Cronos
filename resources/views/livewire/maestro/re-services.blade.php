@@ -135,8 +135,13 @@
                                             <div>
                                                 <x-table.accionopcion
                                                     wire:key="{{ $service->id }}"
+<<<<<<< HEAD
                                                     wire:click.prevent="deleteService({{ $service->id }})"
                                                     wire:target="deleteService"
+=======
+                                                    wire:click.prevent="deleteDepartment({{ $service->id }})"
+                                                    wire:target="deleteDepartment"
+>>>>>>> 2d860d6 (Refactor `re-services` view: improve step navigation with keyboard shortcuts, update modal handling, and enhance form layout and functionality.)
                                                     iconname="delete"
                                                     isDelete="isDelete"
                                                 ></x-table.accionopcion>
@@ -182,6 +187,10 @@
                         <div class="mb-2 flex justify-end">
                             <div class="text-xs text-slate-500 bg-slate-50 rounded px-2 py-1 flex items-center gap-2">
                                 <x-keyshorcut>Ctrl+Enter</x-keyshorcut>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2d860d6 (Refactor `re-services` view: improve step navigation with keyboard shortcuts, update modal handling, and enhance form layout and functionality.)
                                 Siguiente
                                 <span class="mx-1">•</span>
                                 <x-keyshorcut>Ctrl+Shift+Enter</x-keyshorcut>
@@ -190,7 +199,62 @@
                                 <x-keyshorcut>Esc</x-keyshorcut>
                                 Cerrar
                             </div>
+<<<<<<< HEAD
+<<<<<<< HEAD
                         </div>
+=======
+<<<<<<< HEAD
+                            <div class="relative sm:col-span-1">
+                                <div class="relative">
+                                    <x-inputs.textgroup
+                                        label="Código"
+                                        for="depacodi"
+                                        required="yes"
+                                    >
+                                        <x-inputs.textinput
+                                            wire:model="form.dataservice.service_code"
+                                            id="depacodi"
+                                            autocomplete="off"
+                                            maxlength="10"
+                                            placeholder=" "
+                                            isdisabled="{{$isdisabled}}"
+                                            :error="$errors->first('service_code')"
+                                        ></x-inputs.textinput>
+                                    </x-inputs.textgroup>
+=======
+                        </div>
+
+                        <!-- Step Indicator -->
+                        <div class="mb-4 flex items-center justify-center space-x-2">
+                            <div class="flex items-center">
+                                <div @class([
+                                    'flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-all duration-300',
+                                    'bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300' => $currentStep >= 1,
+                                    'bg-gradient-to-r from-slate-50 to-white text-slate-600' => $currentStep < 1,
+                                ])>
+                                    1
+>>>>>>> 2d860d6 (Refactor `re-services` view: improve step navigation with keyboard shortcuts, update modal handling, and enhance form layout and functionality.)
+                                </div>
+                                <span class="ml-2 text-xs font-medium text-slate-600">Básica</span>
+                            </div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+                            <div class="relative w-full ">
+=======
+                            <div class="relative col-span-8 ">
+>>>>>>> 3514fa4 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+                                <x-inputs.labeltextarea
+                                    label="Descripción"
+                                    for="descriprole"
+                                    required="yes"
+                                >
+                                    <x-inputs.textarea
+                                        wire:model="form.dataservice.service_description"
+                                        id="descriprole"
+                                        rows="3"
+                                    ></x-inputs.textarea>
+                                </x-inputs.labeltextarea>
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 
                         <!-- Step Indicator -->
                         <div class="mb-4 flex items-center justify-center space-x-2">
@@ -224,6 +288,28 @@
                             </div>
                         </div>
 
+=======
+                            <div class="h-0.5 w-12 bg-slate-200">
+                                <div @class([
+                                    'h-full transition-all duration-300',
+                                    'bg-blue-400' => $currentStep >= 2,
+                                    'w-0' => $currentStep < 2,
+                                    'w-full' => $currentStep >= 2,
+                                ])></div>
+                            </div>
+                            <div class="flex items-center">
+                                <div @class([
+                                    'flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold transition-all duration-300',
+                                    'bg-gradient-to-r from-blue-100 to-blue-200 text-blue-700 ring-1 ring-blue-300' => $currentStep >= 2,
+                                    'bg-gradient-to-r from-slate-50 to-white text-slate-600' => $currentStep < 2,
+                                ])>
+                                    2
+                                </div>
+                                <span class="ml-2 text-xs font-medium text-slate-600">Configuración</span>
+                            </div>
+                        </div>
+
+>>>>>>> 2d860d6 (Refactor `re-services` view: improve step navigation with keyboard shortcuts, update modal handling, and enhance form layout and functionality.)
                         <!-- Side-by-Side Container -->
                         <div class="flex gap-3 transition-all duration-500">
                             <!-- Step 1: Basic Information (Left Panel) -->
@@ -251,7 +337,11 @@
                                                         wire:model="form.dataservice.service_code"
                                                         id="depacodi"
                                                         autocomplete="off"
+<<<<<<< HEAD
                                                         maxlength="15"
+=======
+                                                        maxlength="6"
+>>>>>>> 2d860d6 (Refactor `re-services` view: improve step navigation with keyboard shortcuts, update modal handling, and enhance form layout and functionality.)
                                                         placeholder=" "
                                                         isdisabled="{{$isdisabled}}"
                                                         :error="$errors->first('service_code')"
@@ -377,6 +467,7 @@
                                     <div class="grid grid-cols-1 lg:grid-cols-8 gap-y-3 gap-x-2">
 
                                         <div class="relative col-span-8">
+<<<<<<< HEAD
                                             <x-inputs.textgroup label="Servicio Principal" for="fatherservic">
                                                 <select
                                                     wire:model="form.dataservice.parent_service_id"
@@ -393,6 +484,18 @@
                                                     @endforeach
                                                 </select>
                                             </x-inputs.textgroup>
+=======
+                                            <x-autocomplete.inputautocomplete
+                                                label="Servicio Padre (Opcional)"
+                                                placeholder="Buscar servicio padre..."
+                                                wire-model="form.dataservice.parent_service_name"
+                                                wire-id-model="form.dataservice.parent_service_id"
+                                                :items="$this->services"
+                                                display-field="service_name"
+                                                value-field="id"
+                                                :required="false"
+                                            />
+>>>>>>> 2d860d6 (Refactor `re-services` view: improve step navigation with keyboard shortcuts, update modal handling, and enhance form layout and functionality.)
                                         </div>
 
                                         <div class="relative col-span-4">

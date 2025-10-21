@@ -4,17 +4,25 @@ declare(strict_types=1);
 
 namespace App\Livewire\Maestro;
 
+<<<<<<< HEAD
 use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQueries;
 use App\Classes\Utilities\NotifyQuerys;
+=======
+use App\Classes\Utilities\CommonQueries;
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 use App\Livewire\Forms\Maestro\ServiceForm;
 use App\Models\Category;
 use App\Models\Service;
 use App\Traits\HandleMenuAction;
 use App\Traits\UtilityForm;
+<<<<<<< HEAD
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
+=======
+use Livewire\Attributes\Computed;
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -29,10 +37,19 @@ final class ReServices extends Component
 
     public $listCategory = [];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     public int $currentStep = 1;
 
     public $parentServiceId = null;
 
+<<<<<<< HEAD
+=======
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     #[Title(' - Servicios')]
     public function render()
     {
@@ -75,7 +92,11 @@ final class ReServices extends Component
         $this->form->loadDataServices($service);
         $this->openservice = true;
         $this->isupdate = true;
+<<<<<<< HEAD
         $this->currentStep = 2;
+=======
+        $this->currentStep = 2; // Auto-show both panels when editing
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     }
 
     #[Computed]
@@ -165,5 +186,38 @@ final class ReServices extends Component
         }
 
         return [];
+    }
+
+    #[Computed]
+    public function states()
+    {
+        return CommonQueries::stateQuery([1, 2]);
+    }
+
+    public function updatedFormDataserviceCategoriName($value)
+    {
+        if (str()->length($value) >= 2) {
+
+            $this->listCategory = $this->categoryQuery($value);
+
+        } else {
+            $this->listCategory = [];
+        }
+    }
+
+    public function categoryQuery(string $value)
+    {
+        return Category::list([1], $value)
+            ->get();
+    }
+
+    protected function validateCurrentStep(): void
+    {
+        if ($this->currentStep === 1) {
+            $this->validate([
+                'form.dataservice.service_code' => 'required|min:4',
+                'form.dataservice.service_name' => 'required|min:4',
+            ]);
+        }
     }
 }

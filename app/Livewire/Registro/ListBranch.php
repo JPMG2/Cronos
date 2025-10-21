@@ -23,7 +23,11 @@ final class ListBranch extends Component
 
     }
 
+<<<<<<< HEAD
     public function render(CommonQueries $commonQuerys): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+=======
+    public function render(CommonQueries $commonQuerys)
+>>>>>>> 5e6df33 (Refactor `CommonQuerys` to `CommonQueries` across the codebase for improved naming consistency, update `CompanyWatcher`.)
     {
         return view(
             'livewire.registro.list-branch',

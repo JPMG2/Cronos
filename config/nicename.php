@@ -50,5 +50,8 @@ return [
     'prestador' => 'prestador',
     'category' => 'categoria',
     'preparacion' => 'preparación',
+<<<<<<< HEAD
     'pricipal' => 'servicio principal',
+=======
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
 ];

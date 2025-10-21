@@ -37,6 +37,15 @@ final class ReDepartment extends Component
         $this->showToastAndClear($message);
         $this->clearForm();
         $this->opendepartment = false;
+<<<<<<< HEAD
+=======
+    }
+
+    public function clearForm()
+    {
+        $this->form->reset();
+        $this->isupdate = false;
+>>>>>>> 06f8686 (Refactor `services` migration for improved clarity, replace `type` column with `ServiceType` enum, update related views with.)
     }
 
     public function clearForm(): void
