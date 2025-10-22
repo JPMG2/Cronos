@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\Clinico;
 
-use App\Classes\Services\QueryPerson\PatientListService;
+use App\Classes\Services\QueryClinico\PatientListService;
 use App\Livewire\Forms\Clinico\ListPatientForm;
 use App\Models\Patient;
 use App\Traits\TableSorting;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -31,7 +33,7 @@ final class ListPaciente extends Component
         'person_email' => '',
     ];
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
 
         return view(

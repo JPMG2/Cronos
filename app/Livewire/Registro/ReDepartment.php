@@ -7,6 +7,9 @@ namespace App\Livewire\Registro;
 use App\Livewire\Forms\Registro\DepartmentForm;
 use App\Models\Department;
 use App\Traits\UtilityForm;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -21,7 +24,7 @@ final class ReDepartment extends Component
     public $listdeparment;
 
     #[Title(' - Departamentos')]
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view('livewire.registro.re-department');
     }
@@ -45,7 +48,7 @@ final class ReDepartment extends Component
         $this->isupdate = false;
     }
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function departments()
     {
         return Department::query()->orderBy('department_name')->get();

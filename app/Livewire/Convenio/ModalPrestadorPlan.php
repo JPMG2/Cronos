@@ -7,6 +7,9 @@ namespace App\Livewire\Convenio;
 use App\Classes\Utilities\CommonQueries;
 use App\Livewire\Forms\Convenio\PrestadorPlanForm;
 use App\Traits\FormHandling;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
@@ -65,12 +68,12 @@ final class ModalPrestadorPlan extends Component
     }
 
     #[Computed]
-    public function states(): \Illuminate\Database\Eloquent\Collection
+    public function states(): Collection
     {
         return CommonQueries::stateQuery([1, 2]);
     }
 
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         $this->dispatch('clear-errors');
 
@@ -89,7 +92,7 @@ final class ModalPrestadorPlan extends Component
         }
     }
 
-    public function insurances(): \Illuminate\Database\Eloquent\Collection
+    public function insurances(): Collection
     {
         return CommonQueries::Insurances([1], $this->searchPrestador);
     }

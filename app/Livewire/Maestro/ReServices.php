@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Maestro;
 
+use App\Classes\Services\QueryMaestro\ServicioListService;
 use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQueries;
 use App\Classes\Utilities\NotifyQuerys;
@@ -11,17 +12,21 @@ use App\Livewire\Forms\Maestro\ServiceForm;
 use App\Models\Category;
 use App\Models\Service;
 use App\Traits\HandleMenuAction;
+use App\Traits\TableSorting;
 use App\Traits\UtilityForm;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 final class ReServices extends Component
 {
     use HandleMenuAction;
+    use TableSorting;
     use UtilityForm;
+    use WithPagination;
 
     public ServiceForm $form;
 
@@ -33,10 +38,26 @@ final class ReServices extends Component
 
     public $parentServiceId = null;
 
+    public array $columnFilter = [
+        'service_code' => '',
+        'service_name' => '',
+        'state_name' => '',
+        'categori_name' => '',
+    ];
+
     #[Title(' - Servicios')]
     public function render()
     {
-        return view('livewire.maestro.re-services');
+        return view('livewire.maestro.re-services',
+            [
+                'listServicios' => $this->services()->listSearch($this->columnFilter)->paginate(15),
+            ]);
+    }
+
+    #[Computed]
+    public function services(): ServicioListService
+    {
+        return new ServicioListService(new Service(), $this->sortDirection, $this->sortField);
     }
 
     public function queryService(): void
@@ -79,12 +100,6 @@ final class ReServices extends Component
     }
 
     #[Computed]
-    public function services(): Collection
-    {
-        return Service::query()->listServices([1, 2])->get();
-    }
-
-    #[Computed]
     public function states(): Collection
     {
         return CommonQueries::stateQuery([1, 2]);
@@ -99,12 +114,6 @@ final class ReServices extends Component
     public function updatedFormDataserviceCategoriName($value): void
     {
         $this->listCategory = str()->length($value) >= 2 ? $this->categoryQuery($value) : [];
-    }
-
-    public function categoryQuery(string $value)
-    {
-        return Category::list([1], $value)
-            ->get();
     }
 
     public function deleteService(int $idService): void
@@ -154,6 +163,11 @@ final class ReServices extends Component
                 ]
             );
         }
+    }
+
+    private function categoryQuery(string $value): Collection
+    {
+        return Category::list([1], $value)->get();
     }
 
     private function checkService($service): array

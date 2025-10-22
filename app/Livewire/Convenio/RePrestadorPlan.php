@@ -8,6 +8,8 @@ use App\Classes\Services\QueryConvenio\PlanesPrestadorListService;
 use App\Livewire\Forms\Convenio\ListPrestadorPlan;
 use App\Models\InsurancePlan;
 use App\Traits\TableSorting;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
@@ -29,7 +31,7 @@ final class RePrestadorPlan extends Component
     ];
 
     #[Title(' - Planes')]
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         return view(
             'livewire.convenio.re-prestador-plan',

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\ServiceType;
+use App\Interfaces\Filterable;
 use App\Traits\RecordActivity;
 use Database\Factories\ServiceFactory;
 use Exception;
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
-final class Service extends Model
+final class Service extends Model implements Filterable
 {
     /** @use HasFactory<ServiceFactory> */
     use HasFactory;
@@ -50,6 +51,11 @@ final class Service extends Model
         'full_path',
         'allows_children',
     ];
+
+    public static function getDefaultFilterField(): string
+    {
+        return 'service_code';
+    }
 
     /**
      * Verifica si puede ser hijo de otro servicio
@@ -319,6 +325,14 @@ final class Service extends Model
                 $service->updateChildrenPaths();
             }
         });
+    }
+
+    protected static function getRelationModel(): array
+    {
+        return [
+            'state:id,state_name',
+            'category:id,categori_code,categori_name',
+        ];
     }
 
     /**

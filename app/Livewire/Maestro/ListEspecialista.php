@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Maestro;
 
-use App\Classes\Services\QueryPerson\MedicListService;
+use App\Classes\Services\QueryMaestro\MedicListService;
 use App\Livewire\Forms\Maestro\ListEspecialistaForm;
 use App\Models\Medical;
 use App\Traits\TableSorting;

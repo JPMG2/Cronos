@@ -20,44 +20,92 @@
                 </x-formcomponent.titleindicator>
             </div>
             <div class="overflow-y-auto p-4">
-                @if (count($this->services) > 0)
-                    <div
-                        class="overflow-hidden rounded-xl border border-gray-200/50 shadow-lg ring-1 ring-gray-200/20 dark:border-gray-700/50 dark:ring-gray-700/20 dark:shadow-black/10"
+
+                <div
+                    class="overflow-hidden rounded-xl border border-gray-200/50 shadow-lg ring-1 ring-gray-200/20 dark:border-gray-700/50 dark:ring-gray-700/20 dark:shadow-black/10"
+                >
+                    <table
+                        class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
                     >
-                        <table
-                            class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                        >
-                            <x-table.thead>
-                                <tr>
-                                    <x-table.th>
-                                        ID
-                                    </x-table.th>
-                                    <x-table.th>
-                                        Código
-                                    </x-table.th>
-                                    <x-table.th>
-                                        Servicio
-                                    </x-table.th>
-                                    <x-table.th>
-                                        Categoría
-                                    </x-table.th>
-                                    <x-table.th>
-                                        Estatus
-                                    </x-table.th>
-                                    <x-table.th>
-                                        Niveles
-                                    </x-table.th>
-                                    <x-table.th>
-                                        Sub-servicios
-                                    </x-table.th>
-                                    <x-table.th>
-                                        Creado
-                                    </x-table.th>
-                                    <x-table.th></x-table.th>
-                                </tr>
-                            </x-table.thead>
+                        <x-table.thead>
+                            <tr>
+                                <x-table.th>
+                                    ID
+                                </x-table.th>
+                                <x-table.th
+                                    wire:click="orderColumBy('service_code')">
+                                    <x-table.sortcolumn currentColumn="service_code" :$sortField
+                                                        :$sortDirection>
+                                        <div> Código</div>
+                                    </x-table.sortcolumn>
+                                </x-table.th>
+                                <x-table.th
+                                    wire:click="orderColumBy('service_name')">
+                                    <x-table.sortcolumn currentColumn="service_name" :$sortField
+                                                        :$sortDirection>
+                                        <div> Servicio</div>
+                                    </x-table.sortcolumn>
+                                </x-table.th>
+                                <x-table.th
+                                    wire:click="orderColumBy('categori_name')">
+                                    <x-table.sortcolumn currentColumn="categori_name" :$sortField
+                                                        :$sortDirection>
+                                        <div> Categoría</div>
+                                    </x-table.sortcolumn>
+                                </x-table.th>
+                                <x-table.th
+                                    wire:click="orderColumBy('state_name')">
+                                    <x-table.sortcolumn currentColumn="state_name" :$sortField
+                                                        :$sortDirection>
+                                        <div> Estatus</div>
+                                    </x-table.sortcolumn>
+                                </x-table.th>
+                                <x-table.th>
+                                    Niveles
+                                </x-table.th>
+                                <x-table.th>
+                                    Sub-servicios
+                                </x-table.th>
+                                <x-table.th>
+                                    Creado
+                                </x-table.th>
+                                <x-table.th></x-table.th>
+                            </tr>
+                            <tr class="-mt-3 [&>td]:pt-0">
+                                <td></td>
+                                <td>
+                                    <x-table.input-table-search
+                                        withd="w-20"
+                                        maxlength="5"
+                                        x-mask=""
+                                        wire:model.live.debounce="columnFilter.service_code"/>
+                                </td>
+                                <td>
+                                    <x-table.input-table-search
+                                        withd="w-36"
+                                        maxlength="10"
+                                        x-mask=""
+                                        wire:model.live.debounce="columnFilter.service_name"/>
+                                </td>
+                                <td>
+                                    <x-table.input-table-search
+                                        withd="w-36"
+                                        maxlength="10"
+                                        x-mask=""
+                                        wire:model.live.debounce="columnFilter.categori_name"/>
+                                </td>
+                                <td>
+                                    <x-table.input-table-search
+                                        withd="w-20"
+                                        maxlength="4"
+                                        x-mask=""
+                                        wire:model.live.debounce="columnFilter.state_name"/>
+                                </td>
+                            </tr>
+                        </x-table.thead>
+                        @if (count($listServicios) > 0)
                             <x-table.tablebody>
-                                @foreach ($this->services as $service)
+                                @foreach ($listServicios as $service)
                                     <tr
                                         class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
                                         wire:key="{{ $service->id }}"
@@ -145,8 +193,9 @@
                                     </tr>
                                 @endforeach
                             </x-table.tablebody>
-                        </table>
-                    </div>
+                    </table>
+
+                </div>
                 @else
                     <x-alert windowtype="error">
                         No existen servicios registrados.

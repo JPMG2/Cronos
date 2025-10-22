@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Classes\Services\QueryPerson;
+namespace App\Classes\Services\QueryClinico;
 
+use App\Classes\Services\QueryPerson\PersonSearchService;
 use App\Models\Patient;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
