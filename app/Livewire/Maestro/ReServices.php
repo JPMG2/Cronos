@@ -70,14 +70,23 @@ final class ReServices extends Component
         $this->showToastAndClear($message);
         $this->clearForm();
         $this->openservice = false;
+
     }
 
     public function clearForm(): void
     {
-        $this->form->reset();
+
+        $this->resetForm();
         $this->isupdate = false;
         $this->currentStep = 1;
         $this->parentServiceId = null;
+
+    }
+
+    public function resetForm(): void
+    {
+        $this->form->reset();
+        $this->cleanFormValues();
     }
 
     public function nextStep(): void
@@ -91,9 +100,9 @@ final class ReServices extends Component
         $this->currentStep--;
     }
 
-    public function infoService(Service $service): void
+    public function infoService(int $idService): void
     {
-        $this->form->loadDataServices($service);
+        $this->form->loadDataServices($idService);
         $this->openservice = true;
         $this->isupdate = true;
         $this->currentStep = 2;

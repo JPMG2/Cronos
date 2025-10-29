@@ -10,7 +10,7 @@
         x-show="linkActive"
         @click.away="linkActive = false"
         x-cloak
-        class="absolute right-0 top-11 z-20 w-40 border border-gray-300"
+        class="absolute right-0 top-11 z-50 w-40 border border-gray-300"
     >
         <!-- start::Submenu content -->
         <div class="rounded bg-white">

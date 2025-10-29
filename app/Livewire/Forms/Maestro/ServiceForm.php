@@ -10,6 +10,7 @@ use App\Enums\ServiceType;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
 use Livewire\Form;
 
@@ -33,26 +34,29 @@ final class ServiceForm extends Form
         'display_order' => 0,
     ];
 
-    public function serviceStore(): Model
+    private ?QueryRepository $serviceRepo = null;
+
+    public function serviceStore(): Service
     {
 
         $validated = $this->validateServiceData();
 
-        $ser = $this->iniService()->create($validated);
+        return $this->repo()->create($validated);
 
-        dd($ser);
     }
 
     public function serviceUpdate(): Model
     {
         $validated = $this->validateServiceData($this->dataservice['id']);
 
-        return $this->iniService()->update($this->dataservice['id'], $validated);
+        return $this->repo()->update($this->dataservice['id'], $validated);
     }
 
-    public function loadDataServices($services): void
+    public function loadDataServices(int $idService): void
     {
-        $this->dataservice = $services->toArray();
+        $service = Service::with(Service::getRelationModel())->findOrFail($idService);
+        $this->dataservice = prepareData($service->toArray(), array_keys($this->dataservice));
+        $this->dataservice['categori_name'] = $service->category->categori_name;
     }
 
     protected function getValidationAttributes(): array
@@ -65,6 +69,8 @@ final class ServiceForm extends Form
             'category_id' => config('nicename.category'),
             'type' => config('nicename.type'),
             'parent_service_id' => config('nicename.pricipal'),
+            'requires_preparation' => config('nicename.preparacion'),
+            'preparation_instructions' => config('nicename.instrucciones'),
         ];
     }
 
@@ -88,6 +94,8 @@ final class ServiceForm extends Form
             'state_id' => $this->dataservice['state_id'] ?? null,
             'type' => $this->dataservice['type'] ?? 'final',
             'parent_service_id' => $this->dataservice['parent_service_id'] ?? null,
+            'requires_preparation' => $this->dataservice['requires_preparation'] ?? false,
+            'preparation_instructions' => ucfirst(mb_strtolower(mb_trim((string) ($this->dataservice['preparation_instructions'] ?? '')))),
         ];
     }
 
@@ -101,11 +109,13 @@ final class ServiceForm extends Form
             'state_id' => AttributeValidator::requireAndExists('states', 'id', 'id', true),
             'type' => ['nullable', new Enum(ServiceType::class)],
             'parent_service_id' => AttributeValidator::requireAndExists('services', 'id', 'id', null),
+            'requires_preparation' => AttributeValidator::booleanValue(false),
+            'preparation_instructions' => Rule::requiredIf(fn () => (bool) ($this->dataservice['requires_preparation'] ?? false)),
         ];
     }
 
-    private function iniService(): QueryRepository
+    private function repo(): QueryRepository
     {
-        return new QueryRepository(new Service());
+        return $this->serviceRepo ??= new QueryRepository(new Service());
     }
 }

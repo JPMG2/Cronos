@@ -47,7 +47,6 @@ final class Service extends Model implements Filterable
         'has_children',
         'children_count',
         'is_root',
-        'is_active',
         'full_path',
         'allows_children',
     ];
@@ -55,6 +54,14 @@ final class Service extends Model implements Filterable
     public static function getDefaultFilterField(): string
     {
         return 'service_code';
+    }
+
+    public static function getRelationModel(): array
+    {
+        return [
+            'state:id,state_name',
+            'category:id,categori_code,categori_name',
+        ];
     }
 
     /**
@@ -226,31 +233,7 @@ final class Service extends Model implements Filterable
     }
 
     /**
-     * Obtiene el breadcrumb completo del servicio
-     */
-    public function getBreadcrumb(): array
-    {
-        $breadcrumb = [];
-
-        foreach ($this->getAncestors() as $ancestor) {
-            $breadcrumb[] = [
-                'id' => $ancestor->id,
-                'name' => $ancestor->service_name,
-                'code' => $ancestor->service_code,
-            ];
-        }
-
-        $breadcrumb[] = [
-            'id' => $this->id,
-            'name' => $this->service_name,
-            'code' => $this->service_code,
-        ];
-
-        return $breadcrumb;
-    }
-
-    /**
-     * Cuenta total de descendientes
+     * Count descends children
      */
     public function countAllDescendants(): int
     {
@@ -313,7 +296,7 @@ final class Service extends Model implements Filterable
             if ($service->isDirty('parent_service_id')) {
                 // Validar que no se cree un ciclo
                 if (! $service->canBeChildOf($service->parent_service_id)) {
-                    throw new Exception('No se puede crear un ciclo en la jerarquía de servicios.');
+                    // throw new Exception('No se puede crear un ciclo en la jerarquía de servicios.');
                 }
                 $service->updateHierarchyData();
             }
@@ -325,14 +308,6 @@ final class Service extends Model implements Filterable
                 $service->updateChildrenPaths();
             }
         });
-    }
-
-    protected static function getRelationModel(): array
-    {
-        return [
-            'state:id,state_name',
-            'category:id,categori_code,categori_name',
-        ];
     }
 
     /**
@@ -384,21 +359,16 @@ final class Service extends Model implements Filterable
     }
 
     /**
-     * Scope: Buscar servicios por código o nombre
-     */
-    #[Scope]
-    protected function search(Builder $query, string $search): Builder
-    {
-        return $query->where(function ($q) use ($search) {
-            $q->where('service_code', 'like', "%{$search}%")
-                ->orWhere('service_name', 'like', "%{$search}%")
-                ->orWhere('service_description', 'like', "%{$search}%");
-        });
-    }
-
-    /**
      * Accessor: Ruta completa como string
      */
+    protected function getFullPathAttribute(): string
+    {
+        $ancestors = $this->getAncestors();
+        $names = $ancestors->pluck('service_name')->push($this->service_name);
+
+        return $names->implode(' > ');
+    }
+
     #[Scope]
     protected function listServices(Builder $query, array $states): Builder
     {
@@ -419,7 +389,7 @@ final class Service extends Model implements Filterable
     }
 
     /**
-     * Accessor: Verifica si permite hijos (basado en type)
+     *  Check if the services can have children
      */
     protected function getAllowsChildrenAttribute(): bool
     {
@@ -427,15 +397,7 @@ final class Service extends Model implements Filterable
     }
 
     /**
-     * Accessor: Verifica si está activo
-     */
-    protected function getIsActiveAttribute(): bool
-    {
-        return $this->state && $this->state->state_name === 'Activo';
-    }
-
-    /**
-     * Accessor: Verifica si es servicio raíz
+     *  Check if service root
      */
     protected function getIsRootAttribute(): bool
     {
@@ -443,7 +405,7 @@ final class Service extends Model implements Filterable
     }
 
     /**
-     * Accessor: Verifica si tiene hijos
+     * Check if has children
      */
     protected function getHasChildrenAttribute(): bool
     {
@@ -457,10 +419,6 @@ final class Service extends Model implements Filterable
     {
         return $this->children()->count();
     }
-
-    // ============================================
-    // CASTS Y MUTATORS
-    // ============================================
 
     protected function casts(): array
     {

@@ -51,4 +51,5 @@ return [
     'category' => 'categoria',
     'preparacion' => 'preparación',
     'pricipal' => 'servicio principal',
+    'instrucciones' => 'instrucciones',
 ];

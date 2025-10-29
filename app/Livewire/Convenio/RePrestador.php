@@ -11,6 +11,9 @@ use App\Models\InsuranceType;
 use App\Traits\FormHandling;
 use App\Traits\HandlesActionPolicy;
 use App\Traits\ProvinceCity;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -26,7 +29,7 @@ final class RePrestador extends Component
     private $commonQuerys;
 
     #[Title(' - Obra social')]
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         $this->commonQuerys = app('commonquery');
 
@@ -78,13 +81,13 @@ final class RePrestador extends Component
 
     }
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function types()
     {
-        return InsuranceType::listType()->get();
+        return InsuranceType::query()->listType()->get();
     }
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function countInsurance(): ?int
     {
         return Insurance::countInsurance();

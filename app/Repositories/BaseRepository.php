@@ -50,4 +50,9 @@ abstract class BaseRepository implements RepositoryInterface
     {
         return (bool) $this->findOrFail($id)->delete();
     }
+
+    final public function withRelation(): array
+    {
+        return $this->model->getRelationModel();
+    }
 }

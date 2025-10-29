@@ -103,8 +103,8 @@
                                 </td>
                             </tr>
                         </x-table.thead>
-                        @if (count($listServicios) > 0)
-                            <x-table.tablebody>
+                        <x-table.tablebody>
+                            @if (count($listServicios) > 0)
                                 @foreach ($listServicios as $service)
                                     <tr
                                         class="group hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30 transition-all duration-200 even:bg-gray-50/50 hover:shadow-sm dark:even:bg-gray-800/30 dark:hover:bg-gradient-to-r dark:hover:from-gray-700/30 dark:hover:to-gray-600/20"
@@ -192,18 +192,25 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            </x-table.tablebody>
+                            @else
+                                <tr>
+                                    <td colspan="9" class="py-4">
+                                        <x-alert windowtype="error">
+                                            No existen servicios registrados.
+                                        </x-alert>
+                                    </td>
+                                </tr>
+                            @endif
+                        </x-table.tablebody>
                     </table>
-
+                    <div class="mt-2 mb-2 justify-end mx-2">
+                        {{ $listServicios->links() }}
+                    </div>
                 </div>
-                @else
-                    <x-alert windowtype="error">
-                        No existen servicios registrados.
-                    </x-alert>
-                @endif
+
             </div>
             @if(!session("isdisabled"))
-                <x-butonbutton wire:click="$toggle('openservice')  "></x-butonbutton>
+                <x-butonbutton wire:click="$toggle('openservice'); clearForm()  "></x-butonbutton>
                 <!-- Modal -->
                 <div x-data="{
                     open: @entangle('openservice'),
@@ -514,6 +521,11 @@
                                                     placeholder=""
                                                 ></x-inputs.textarea>
                                             </x-inputs.labeltextarea>
+                                            @error("preparation_instructions")
+                                            <x-inputs.error-validate>
+                                                {{ $message }}
+                                            </x-inputs.error-validate>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -524,7 +536,7 @@
                             <form id="departamento" wire:submit.prevent="submit">
                                 @csrf
                                 <x-headerform.button-group>
-                                    <x-buttons.close wire:click="$set('openservice', false)">
+                                    <x-buttons.close wire:click="$set('openservice', false); $wire.clearForm()">
                                         {{ __("Cerrar") }}
                                     </x-buttons.close>
 
@@ -537,7 +549,10 @@
                                             Anterior
                                         </button>
                                     @endif
-
+                                    <x-buttons.cancel
+                                        wire:click="resetForm"
+                                        label="Cancelar"
+                                    ></x-buttons.cancel>
                                     @if($currentStep < 2)
                                         <button
                                             type="button"

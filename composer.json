@@ -71,8 +71,24 @@
         ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
-            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
-        ]
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php -d opcache.jit=off -d opcache.jit_buffer_size=0 artisan serve --no-reload\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+        ],
+        "dev:optimized": [
+            "Composer\\Config::disableProcessTimeout",
+            "@putenv PHP_CLI_SERVER_WORKERS=4",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php -d opcache.jit=off -d opcache.jit_buffer_size=0 artisan serve --no-reload\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+        ],
+        "serve": "@php -d opcache.jit=off -d opcache.jit_buffer_size=0 artisan serve --no-reload",
+        "serve:fast": [
+            "@putenv PHP_CLI_SERVER_WORKERS=4",
+            "@php -d opcache.jit=off -d opcache.jit_buffer_size=0 artisan serve --no-reload"
+        ],
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse",
+        "insights": "vendor/bin/phpinsights",
+        "refactor": "vendor/bin/rector process",
+        "test": "@php artisan test",
+        "test:coverage": "@php artisan test --coverage"
     },
     "extra": {
         "laravel": {
