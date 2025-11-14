@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Classes\Convenio;
 
-use App\Models\Insurance;
+use App\Models\InsurancePlan;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
 
-final class MaindPrestador extends BaseRepository
+final class MaindPrestadorPlan extends BaseRepository
 {
     public function __construct()
     {
-        parent::__construct(new Insurance());
+        parent::__construct(new InsurancePlan());
     }
 
-    public function showProvedorInfo(int $id): Model
+    public function showProvedorPlanInfo(int $id): Model
     {
         return $this->model->with($this->model->getRelationModel())->findOrFail($id);
     }

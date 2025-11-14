@@ -34,21 +34,21 @@ final class PrestadorDto implements Wireable
     public static function fromArray(array $data): self
     {
         return new self(
-            id: ! empty($data['id']) ? (int) $data['id'] : null,
-            insurance_type_id: ! empty($data['insurance_type_id']) ? (int) $data['insurance_type_id'] : null,
-            state_id: (int) ($data['state_id'] ?? ''),
-            province_id: ! empty($data['province_id']) ? (int) $data['province_id'] : null,
-            city_id: ! empty($data['city_id']) ? (int) $data['city_id'] : null,
-            insurance_name: (string) ($data['insurance_name'] ?? ''),
-            insurance_acronym: (string) ($data['insurance_acronym'] ?? ''),
-            insurance_code: (string) ($data['insurance_code'] ?? ''),
-            insurance_cuit: (string) ($data['insurance_cuit'] ?? ''),
-            insurance_address: (string) ($data['insurance_address'] ?? ''),
-            insurance_phone: (string) ($data['insurance_phone'] ?? ''),
-            insurance_zipcode: (string) ($data['insurance_zipcode'] ?? ''),
-            insurance_email: (string) ($data['insurance_email'] ?? ''),
-            insurance_web: (string) ($data['insurance_web'] ?? ''),
-            insurance_type_name: (string) ($data['insurance_type_name'] ?? ''),
+            id: isset($data['id']) ? (int) $data['id'] : null,
+            insurance_type_id: isset($data['insurance_type_id']) ? (int) $data['insurance_type_id'] : null,
+            state_id: isset($data['state_id']) ? (int) $data['state_id'] : null,
+            province_id: isset($data['province_id']) ? (int) $data['province_id'] : null,
+            city_id: isset($data['city_id']) ? (int) $data['city_id'] : null,
+            insurance_name: $data['insurance_name'] ?? '',
+            insurance_acronym: $data['insurance_acronym'] ?? '',
+            insurance_code: $data['insurance_code'] ?? '',
+            insurance_cuit: $data['insurance_cuit'] ?? '',
+            insurance_address: $data['insurance_address'] ?? '',
+            insurance_phone: $data['insurance_phone'] ?? '',
+            insurance_zipcode: $data['insurance_zipcode'] ?? '',
+            insurance_email: $data['insurance_email'] ?? '',
+            insurance_web: $data['insurance_web'] ?? '',
+            insurance_type_name: $data['insurance_type_name'] ?? '',
         );
     }
 

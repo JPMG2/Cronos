@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\Convenio;
 
+use App\Classes\Convenio\MaindPrestador;
+use App\Classes\Convenio\MaindPrestadorPlan;
 use App\Classes\Utilities\AttributeValidator;
-use App\Classes\Utilities\QueryRepository;
-use App\Models\Insurance;
 use App\Models\InsurancePlan;
 use App\Traits\UtilityForm;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Form;
 
@@ -30,11 +31,15 @@ final class PrestadorPlanForm extends Form
         'insurance_name' => '',
     ];
 
-    public function prestadorPlanUpdate(): InsurancePlan
+    private ?MaindPrestador $prestador = null;
+
+    private ?MaindPrestadorPlan $insuranceMainPlan = null;
+
+    public function prestadorPlanUpdate(): Model
     {
         $data = $this->validateServiceData();
 
-        $insurancePlan = InsurancePlan::query()->findOrFail((int) $this->dataPrestadorPlan['id']);
+        $insurancePlan = $this->idPrestadorPlan((int) $this->dataPrestadorPlan['id']);
 
         $insurancePlan->update($this->getValues($data));
 
@@ -46,22 +51,18 @@ final class PrestadorPlanForm extends Form
 
         $data = $this->validateServiceData();
 
-        $insurance = $this->iniService()->find((int) $this->dataPrestadorPlan['insurance_id']);
+        $insurance = $this->prestador()->find((int) $this->dataPrestadorPlan['insurance_id']);
 
         return $insurance->insurancePlans()->create($this->getValues($data));
 
     }
 
-    public function prestadorPlanData($dataPrestadorPlan): void
+    public function prestadorPlanData(int $idPrestadorPlan): void
     {
+        $data = $this->insuranceMainPlan()->showProvedorPlanInfo($idPrestadorPlan);
+        $this->dataPrestadorPlan = prepareData($data->toArray(), array_keys($this->dataPrestadorPlan));
+        $this->dataPrestadorPlan['insurance_name'] = $data->insurance->insurance_name;
 
-        $insurancePlan = InsurancePlan::query()->findOrfail($dataPrestadorPlan);
-
-        if ($insurancePlan) {
-            $data = $insurancePlan->load($insurancePlan->getRelationModel());
-            $this->dataPrestadorPlan = prepareData($data->toArray(), array_keys($this->dataPrestadorPlan));
-            $this->dataPrestadorPlan['insurance_name'] = $data->insurance->insurance_name;
-        }
     }
 
     protected function getValidationAttributes(): array
@@ -117,13 +118,23 @@ final class PrestadorPlanForm extends Form
         ];
     }
 
+    private function idPrestadorPlan($idPrestadorPlan): Model
+    {
+        return $this->insuranceMainPlan()->findOrfail($idPrestadorPlan);
+    }
+
+    private function insuranceMainPlan(): MaindPrestadorPlan
+    {
+        return $this->insuranceMainPlan ??= resolve(MaindPrestadorPlan::class);
+    }
+
     private function getValues(array $validValues): array
     {
         return $this->getValuesModel($validValues, new InsurancePlan());
     }
 
-    private function iniService(): QueryRepository
+    private function prestador(): MaindPrestador
     {
-        return new QueryRepository(new Insurance());
+        return $this->prestador ??= resolve(MaindPrestador::class);
     }
 }

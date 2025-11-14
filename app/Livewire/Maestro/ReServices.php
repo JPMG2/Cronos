@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire\Maestro;
 
 use App\Classes\Services\QueryMaestro\ServicioListService;
-use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\CommonQueries;
 use App\Classes\Utilities\NotifyQuerys;
 use App\Livewire\Forms\Maestro\ServiceForm;
@@ -30,13 +29,13 @@ final class ReServices extends Component
 
     public ServiceForm $form;
 
-    public $openservice = false;
+    public bool $openservice = false;
 
     public $listCategory = [];
 
     public int $currentStep = 1;
 
-    public $parentServiceId = null;
+    public ?int $parentServiceId = null;
 
     public array $columnFilter = [
         'service_code' => '',
@@ -48,10 +47,12 @@ final class ReServices extends Component
     #[Title(' - Servicios')]
     public function render()
     {
-        return view('livewire.maestro.re-services',
+        return view(
+            'livewire.maestro.re-services',
             [
                 'listServicios' => $this->services()->listSearch($this->columnFilter)->paginate(15),
-            ]);
+            ]
+        );
     }
 
     #[Computed]
@@ -127,31 +128,15 @@ final class ReServices extends Component
 
     public function deleteService(int $idService): void
     {
-        $service = Service::find($idService);
+        $service = Service::query()->find($idService);
         $this->messageWindow(
             $service,
             function ($service) {
                 if (! empty($this->checkService($service)['message'])) {
-                    return new AlertModal(
-                        exception: 0,
-                        type: 'error',
-                        title: 'Error',
-                        buttonName: '',
-                        event: '',
-                        message: $this->checkService($service)['message'],
-                        idModel: 0
-                    );
+                    return $this->dataAlert('error', 'Error', '', '', $this->checkService($service)['message'], 0);
                 }
 
-                return new AlertModal(
-                    exception: 1,
-                    type: 'warning',
-                    title: 'Advertencia',
-                    buttonName: 'Borrar',
-                    event: 'serviceRemove',
-                    message: 'Realmente desea borrar el servicio ?',
-                    idModel: $service->id
-                );
+                return $this->dataAlert('warning', 'Advertencia', 'serviceRemove', 'Borrar', 'Realmente desea borrar el servicio ?', $service->id);
             }
         );
     }
@@ -165,12 +150,7 @@ final class ReServices extends Component
     private function validateCurrentStep(): void
     {
         if ($this->currentStep === 1) {
-            $this->validate(
-                [
-                    'form.dataservice.service_code' => 'required|min:4',
-                    'form.dataservice.service_name' => 'required|min:4',
-                ]
-            );
+            $this->form->validateBasicInfo();
         }
     }
 

@@ -27,6 +27,13 @@ export default {
         'w-40',
         'w-56',
         'w-64',
+        // Modal alert colors
+        'bg-red-100',
+        'text-red-600',
+        'bg-orange-200',
+        'text-orange-700',
+        'bg-green-300',
+        'text-green-800',
         {
             pattern: /w-(4|8|12|16|20|24|28|32|36|40|44|48|52|56|60|64)/,
         },

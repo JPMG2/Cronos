@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
+use App\Classes\Utilities\AlertModal;
 use App\Classes\Utilities\NotifyQuerys;
 use Livewire\Component;
 
@@ -49,5 +50,18 @@ trait UtilityForm
     public function showQueryMessage($model, $accion)
     {
         return NotifyQuerys::{$accion}($model);
+    }
+
+    public function dataAlert(?string $type, ?string $title, ?string $event, ?string $buttonName, ?string $message, int $idModel): AlertModal
+    {
+        return new AlertModal(
+            exception: 0,
+            type: $type,
+            title: $title,
+            buttonName: $buttonName,
+            event: $event,
+            message: $message,
+            idModel: $idModel
+        );
     }
 }

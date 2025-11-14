@@ -41,6 +41,7 @@ final class Service extends Model implements Filterable
         'estimated_duration',
         'requires_preparation',
         'preparation_instructions',
+        'base_price',
     ];
 
     protected $appends = [
@@ -193,27 +194,6 @@ final class Service extends Model implements Filterable
         }
 
         return $ancestors;
-    }
-
-    /**
-     * Obtiene el árbol completo de sub-servicios
-     */
-    public function getServiceTree(bool $activeOnly = false): Collection
-    {
-        $children = $activeOnly ? $this->activeChildren : $this->children;
-
-        return $children->map(function ($child) use ($activeOnly) {
-            return [
-                'id' => $child->id,
-                'code' => $child->service_code,
-                'name' => $child->service_name,
-                'description' => $child->service_description,
-                'level' => $child->level,
-                'type' => $child->type->value,
-                'is_active' => $child->is_active,
-                'children' => $child->getServiceTree($activeOnly),
-            ];
-        });
     }
 
     /**

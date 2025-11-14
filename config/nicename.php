@@ -52,4 +52,5 @@ return [
     'preparacion' => 'preparación',
     'pricipal' => 'servicio principal',
     'instrucciones' => 'instrucciones',
+    'price' => 'precio',
 ];

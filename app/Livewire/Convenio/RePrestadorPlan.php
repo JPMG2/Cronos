@@ -52,6 +52,11 @@ final class RePrestadorPlan extends Component
         $this->resetPage();
     }
 
+    public function reCoberturas(int $id)
+    {
+        $this->dispatch('configCoberturas', $id);
+    }
+
     #[Computed]
     private function getPlanesPrestador(): PlanesPrestadorListService
     {

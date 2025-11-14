@@ -34,14 +34,14 @@ final class SpecialistDto implements Wireable
 
         return new self(
             person_id: $data['person_id'] ?? null,
-            person_name: (string) ($data['person_name'] ?? ''),
-            person_lastname: (string) ($data['person_lastname'] ?? ''),
-            person_address: (string) ($data['person_address'] ?? ''),
-            person_phone: (string) ($data['person_phone'] ?? ''),
-            person_email: (string) ($data['person_email'] ?? ''),
-            document_id: (int) ($data['document_id'] ?? 1),
-            num_document: (string) ($data['num_document'] ?? ''),
-            city_id: (int) ($data['city_id'] ?? null),
+            person_name: $data['person_name'] ?? '',
+            person_lastname: $data['person_lastname'] ?? '',
+            person_address: $data['person_address'] ?? '',
+            person_phone: $data['person_phone'] ?? '',
+            person_email: $data['person_email'] ?? '',
+            document_id: isset($data['document_id']) ? (int) $data['document_id'] : 1,
+            num_document: $data['num_document'] ?? '',
+            city_id: isset($data['city_id']) ? (int) $data['city_id'] : null,
         );
     }
 

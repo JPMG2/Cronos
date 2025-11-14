@@ -57,6 +57,8 @@ return new class extends Migration
             $table->text('preparation_instructions')
                 ->nullable()
                 ->comment('Instrucciones de preparación para el paciente');
+
+            $table->decimal('base_price', 10, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

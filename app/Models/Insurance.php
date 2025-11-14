@@ -51,6 +51,7 @@ final class Insurance extends Model implements Filterable
         return [
             'state:id,state_name',
             'insuranceType:id,insuratype_name',
+            'city.province',
         ];
     }
 

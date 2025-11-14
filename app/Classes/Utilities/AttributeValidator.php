@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Classes\Utilities;
 
+use App\Enums\ServiceType;
 use App\Rules\ArraySchedule;
 use App\Rules\IdRelation;
 use App\Rules\MedicalCredential;
+use App\Rules\TypeGroupServices;
+use Illuminate\Validation\Rules\Enum;
 
 /**
  * Utility class for building reusable Laravel validation rules.
@@ -159,5 +162,10 @@ final class AttributeValidator
     {
         return $required ? ['required', 'date_format:d-m-Y', 'after:'.$date] :
             ['sometimes', 'date_format:d-m-Y', 'after:'.$date];
+    }
+
+    public static function servicesType(?int $id)
+    {
+        return ['required', new Enum(ServiceType::class), new TypeGroupServices($id)];
     }
 }

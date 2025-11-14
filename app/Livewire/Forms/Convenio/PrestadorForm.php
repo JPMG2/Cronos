@@ -7,13 +7,14 @@ namespace App\Livewire\Forms\Convenio;
 use App\Classes\Convenio\MaindPrestador;
 use App\Classes\Convenio\PrestadorValidation;
 use App\Dto\PrestadorDto;
-use App\Models\Insurance;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Form;
 
 final class PrestadorForm extends Form
 {
     public ?PrestadorDto $dataobrasocial = null;
+
+    private ?MaindPrestador $prestador = null;
 
     private ?PrestadorValidation $validation = null;
 
@@ -27,14 +28,14 @@ final class PrestadorForm extends Form
 
         $data = $this->validation()->validateServiceData(null, ($this->dataobrasocial->toArray()));
 
-        return $this->iniService()->create($data);
+        return $this->prestador()->create($data);
     }
 
     public function insuranceUpdate(): Model
     {
         $data = $this->validation()->validateServiceData($this->dataobrasocial->id, ($this->dataobrasocial->toArray()));
 
-        return $this->iniService()->update($this->dataobrasocial->id, $data);
+        return $this->prestador()->update($this->dataobrasocial->id, $data);
     }
 
     public function infoPrestador($idInsurance): Model
@@ -51,14 +52,14 @@ final class PrestadorForm extends Form
         return $this->validation ??= new PrestadorValidation();
     }
 
-    private function iniService(): MaindPrestador
+    private function prestador(): MaindPrestador
     {
-        return new MaindPrestador(new Insurance());
+        return $this->prestador ??= resolve(MaindPrestador::class);
     }
 
     private function fetchProviderData($idInsurance): Model
     {
-        return $this->iniService()->showProvedorInfo($idInsurance);
+        return $this->prestador()->showProvedorInfo($idInsurance);
     }
 
     private function loadDataIntoForm(Model $data): void

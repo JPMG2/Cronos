@@ -10,6 +10,9 @@ use App\Livewire\Forms\Configuracion\RoleForm;
 use App\Models\Role;
 use App\Traits\HandleMenuAction;
 use App\Traits\UtilityForm;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -24,7 +27,7 @@ final class ReRoles extends Component
     public $showRoleModal = false;
 
     #[Title(' - Roles')]
-    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function render(): Factory|View
     {
         $this->commonQuerys = app('commonquery');
 
@@ -36,7 +39,7 @@ final class ReRoles extends Component
         );
     }
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function countRoles()
     {
         return Role::countRoles();
@@ -73,26 +76,11 @@ final class ReRoles extends Component
             $role,
             function ($role): AlertModal {
                 if (! empty($this->checkRoleAssignment($role)['message'])) {
-                    return new AlertModal(
-                        exception: 0,
-                        type: 'error',
-                        title: 'Error',
-                        buttonName: '',
-                        event: '',
-                        message: $this->checkRoleAssignment($role)['message'],
-                        idModel: 0
-                    );
+                    return $this->dataAlert('error', 'Error', '', '', $this->checkRoleAssignment($role)['message'], 0);
                 }
 
-                return new AlertModal(
-                    exception: 1,
-                    type: 'warning',
-                    title: 'Advertencia',
-                    buttonName: 'Borrar',
-                    event: 'roleRemove',
-                    message: 'Realmente desea borrar el rol ?',
-                    idModel: $role->id
-                );
+                return $this->dataAlert('warning', 'Advertencia', 'roleRemove', 'Borrar', 'Realmente desea borrar el rol ?', $role->id);
+
             }
         );
     }

@@ -101,6 +101,7 @@
                                         x-mask=""
                                         wire:model.live.debounce="columnFilter.state_name"/>
                                 </td>
+                                <td colspan="4"></td>
                             </tr>
                         </x-table.thead>
                         <x-table.tablebody>
@@ -143,7 +144,23 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                <span class="ml-1 py-2">{{ $service->service_name }}</span>
+                                                <span class="ml-1 py-2 flex items-center gap-2">
+                                                    @if($service->type->value === 'group')
+                                                        <span class="inline-flex items-center"
+                                                              title="Permite sub-servicios">
+                                                            <svg class="w-4 h-4 text-yellow-500" fill="currentColor"
+                                                                 viewBox="0 0 20 20">
+                                                                <path
+                                                                    d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/>
+                                                            </svg>
+                                                        </span>
+                                                    @endif
+                                                    <span
+                                                        class="{{ $service->type->value === 'group' ? 'font-semibold text-green-900' : '' }}">
+                                                        {{ $service->service_name }}
+                                                    </span>
+
+                                                </span>
                                             </div>
                                         </x-table.tdtable>
                                         <x-table.tdtable typetext="txtnormal" whitespace-nowrap>
@@ -170,7 +187,7 @@
                                             {{ Carbon::parse($service->created_at)->format("d/m/Y") }}
                                         </x-table.tdtable>
                                         <td
-                                            class="flex items-center break-words px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
+                                            class="flex items-center break-words mt-1.5 px-3 py-1.5 text-sm text-gray-500 dark:text-gray-300"
                                         >
                                             <div>
                                                 <x-table.accionopcion
@@ -464,6 +481,11 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                @error("type")
+                                                <x-inputs.error-validate>
+                                                    {{ $message }}
+                                                </x-inputs.error-validate>
+                                                @enderror
                                             </x-inputs.textgroup>
                                         </div>
 

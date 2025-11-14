@@ -6,12 +6,10 @@ namespace App\Livewire\Forms\Maestro;
 
 use App\Classes\Utilities\AttributeValidator;
 use App\Classes\Utilities\QueryRepository;
-use App\Enums\ServiceType;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 use Livewire\Form;
 
 final class ServiceForm extends Form
@@ -30,6 +28,7 @@ final class ServiceForm extends Form
         'estimated_duration' => null,
         'requires_preparation' => false,
         'preparation_instructions' => '',
+        'base_price' => 0,
         'allows_subservices' => false,
         'display_order' => 0,
     ];
@@ -59,6 +58,29 @@ final class ServiceForm extends Form
         $this->dataservice['categori_name'] = $service->category->categori_name;
     }
 
+    public function validateBasicInfo(): void
+    {
+        $data = [
+            'service_name' => ucwords(mb_strtolower(mb_trim((string) ($this->dataservice['service_name'] ?? '')))),
+            'service_code' => mb_strtoupper(mb_trim((string) ($this->dataservice['service_code'] ?? ''))),
+            'category_id' => $this->dataservice['category_id'] ?? null,
+        ];
+
+        $rules = [
+            'service_name' => 'required|min:4',
+            'service_code' => 'required|min:4',
+            'category_id' => 'required|exists:categories,id',
+        ];
+
+        $attributes = [
+            'service_name' => config('nicename.service'),
+            'service_code' => config('nicename.codigo'),
+            'category_id' => config('nicename.category'),
+        ];
+
+        Validator::make($data, $rules, [], $attributes)->validate();
+    }
+
     protected function getValidationAttributes(): array
     {
         return [
@@ -71,6 +93,7 @@ final class ServiceForm extends Form
             'parent_service_id' => config('nicename.pricipal'),
             'requires_preparation' => config('nicename.preparacion'),
             'preparation_instructions' => config('nicename.instrucciones'),
+            'base_price' => config('nicename.price'),
         ];
     }
 
@@ -96,6 +119,7 @@ final class ServiceForm extends Form
             'parent_service_id' => $this->dataservice['parent_service_id'] ?? null,
             'requires_preparation' => $this->dataservice['requires_preparation'] ?? false,
             'preparation_instructions' => ucfirst(mb_strtolower(mb_trim((string) ($this->dataservice['preparation_instructions'] ?? '')))),
+            'base_price' => $this->dataservice['base_price'] ?? 0,
         ];
     }
 
@@ -107,7 +131,7 @@ final class ServiceForm extends Form
             'service_description' => AttributeValidator::stringValid(false, 4),
             'category_id' => AttributeValidator::requireAndExists('categories', 'id', 'id', true),
             'state_id' => AttributeValidator::requireAndExists('states', 'id', 'id', true),
-            'type' => ['nullable', new Enum(ServiceType::class)],
+            'type' => AttributeValidator::servicesType($excludeId),
             'parent_service_id' => AttributeValidator::requireAndExists('services', 'id', 'id', null),
             'requires_preparation' => AttributeValidator::booleanValue(false),
             'preparation_instructions' => Rule::requiredIf(fn () => (bool) ($this->dataservice['requires_preparation'] ?? false)),

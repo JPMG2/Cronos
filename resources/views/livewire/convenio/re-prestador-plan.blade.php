@@ -22,7 +22,7 @@
                         </x-slot:subtitle>
                         <x-formcomponent.titleindicator
                             wire:loading
-                            wire:target="submitPrestadorPlan, openModalPrestadorPlan, planHandleMenuAction">
+                            wire:target="submitPrestadorPlan, openModalPrestadorPlan, planHandleMenuAction, reCoberturas">
                         </x-formcomponent.titleindicator>
                     </x-formcomponent.headerformtitla>
                 </div>
@@ -103,9 +103,7 @@
                                     <x-table.th>
                                         Coberturas
                                     </x-table.th>
-                                    <x-table.th>
-
-                                    </x-table.th>
+                                   
                                     <x-table.th>
                                         <x-buttons.smallaccept
                                             label="Nuevo Plan"
@@ -126,14 +124,14 @@
                                     </td>
                                     <td>
                                         <x-table.input-table-search
-                                            withd="w-32"
+                                            withd="w-48"
                                             maxlength="10"
                                             x-mask=""
                                             wire:model.live.debounce="columnFilter.insurance_plan_name"/>
                                     </td>
                                     <td>
                                         <x-table.input-table-search
-                                            withd="w-36"
+                                            withd="w-64"
                                             maxlength="10"
                                             x-mask=""
                                             wire:model.live.debounce="columnFilter.insurance_name"/>
@@ -145,6 +143,8 @@
                                             x-mask=""
                                             wire:model.live.debounce="columnFilter.state_name"/>
                                     </td>
+                                    <td></td>
+                                    <td colspan="2"></td>
                                 </tr>
                             </x-table.thead>
                             <x-table.tablebody>
@@ -163,18 +163,17 @@
                                             <x-table.tdtable whitespace-nowrap>
                                                 {{ $listPrestador->insurance_plan_name }}
                                             </x-table.tdtable>
-                                            <x-table.tdtable whitespace-nowrap>
-                                                {{ $listPrestador->insurance->insurance_name }}
+                                            <x-table.tdtable class="w-64 max-w-64">
+                                                <div class="whitespace-normal break-words">
+                                                    {{ $listPrestador->insurance->insurance_name }}
+                                                </div>
                                             </x-table.tdtable>
                                             <x-table.tdtable whitespace-nowrap>
-                                                <x-statescolor
-                                                    idstatecolor="{{ $listPrestador->state->id }}"
-                                                >
+                                                <x-statescolor idstatecolor="{{ $listPrestador->state->id }}">
                                                     {{ $listPrestador->state->state_name }}
                                                 </x-statescolor>
                                             </x-table.tdtable>
-                                            <x-table.tdtable whitespace-nowrap
-                                                             class="text-center">
+                                            <x-table.tdtable whitespace-nowrap class="text-center">
                                                 {{'0'}}
                                             </x-table.tdtable>
                                             <td colspan="2"
@@ -194,6 +193,7 @@
                                                 >
                                                     <x-headerform.minioptionicon
                                                         @click="switchTab('coberturas')"
+                                                        wire:click="reCoberturas({{ $listPrestador->id }})"
                                                         icon="cobertura"
                                                     ></x-headerform.minioptionicon>
                                                 </div>
@@ -230,134 +230,8 @@
                     <!-- Coberturas Tab Content -->
                     <div x-show="activeTab === 'coberturas'" x-transition:enter="transition ease-out duration-300"
                          x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
-                        <x-formcomponent.formdivcontent
-                            dstyle="from-blue-50 ring-blue-200 hover:from-blue-100 hover:to-blue-50 focus-within:from-blue-100 focus-within:to-blue-50">
-                            <x-formcomponent.h3divtitle iconname="prestador">
-                                Configuración de Coberturas
-                            </x-formcomponent.h3divtitle>
-                            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                                <!-- Medical Services Coverage -->
-                                <div class="space-y-4">
-                                    <h4 class="text-lg font-medium text-gray-900">Servicios Médicos</h4>
-                                    <div class="space-y-3">
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.consultation"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Consultas Médicas</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.emergency"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Emergencias</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.hospitalization"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Hospitalización</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.surgery"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Cirugías</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Diagnostic Coverage -->
-                                <div class="space-y-4">
-                                    <h4 class="text-lg font-medium text-gray-900">Diagnósticos</h4>
-                                    <div class="space-y-3">
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.laboratory"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Laboratorio</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.radiology"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Radiología</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.imaging"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Imagenología</span>
-                                        </label>
-                                        <label class="flex items-center">
-                                            <input type="checkbox" wire:model="form.coverage.pharmacy"
-                                                   class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <span class="ml-2 text-sm text-gray-700">Farmacia</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Coverage Percentages -->
-                            <div class="mt-6">
-                                <h4 class="text-lg font-medium text-gray-900 mb-4">Porcentajes de Cobertura</h4>
-                                <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
-                                    <div class="relative">
-                                        <x-inputs.textgroup
-                                            label="Consulta General (%)"
-                                            for="general_consultation_percent"
-                                        >
-                                            <x-inputs.textinput
-                                                wire:model="form.coverage.general_consultation_percent"
-                                                id="general_consultation_percent"
-                                                type="number"
-                                                min="0"
-                                                max="100"
-                                                placeholder="80"
-                                            ></x-inputs.textinput>
-                                        </x-inputs.textgroup>
-                                    </div>
-                                    <div class="relative">
-                                        <x-inputs.textgroup
-                                            label="Especialista (%)"
-                                            for="specialist_percent"
-                                        >
-                                            <x-inputs.textinput
-                                                wire:model="form.coverage.specialist_percent"
-                                                id="specialist_percent"
-                                                type="number"
-                                                min="0"
-                                                max="100"
-                                                placeholder="70"
-                                            ></x-inputs.textinput>
-                                        </x-inputs.textgroup>
-                                    </div>
-                                    <div class="relative">
-                                        <x-inputs.textgroup
-                                            label="Hospitalización (%)"
-                                            for="hospitalization_percent"
-                                        >
-                                            <x-inputs.textinput
-                                                wire:model="form.coverage.hospitalization_percent"
-                                                id="hospitalization_percent"
-                                                type="number"
-                                                min="0"
-                                                max="100"
-                                                placeholder="90"
-                                            ></x-inputs.textinput>
-                                        </x-inputs.textgroup>
-                                    </div>
-                                    <div class="relative">
-                                        <x-inputs.textgroup
-                                            label="Farmacia (%)"
-                                            for="pharmacy_percent"
-                                        >
-                                            <x-inputs.textinput
-                                                wire:model="form.coverage.pharmacy_percent"
-                                                id="pharmacy_percent"
-                                                type="number"
-                                                min="0"
-                                                max="100"
-                                                placeholder="60"
-                                            ></x-inputs.textinput>
-                                        </x-inputs.textgroup>
-                                    </div>
-                                </div>
-                            </div>
-                        </x-formcomponent.formdivcontent>
+                        <!-- Call coberturas component -->
+                        @livewire('convenio.re-cobertura')
                     </div>
 
                     <!-- Asignaciones Tab Content -->
