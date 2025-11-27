@@ -26,7 +26,7 @@ final class PrestadorDto implements Wireable
         public string $insurance_type_name = '',
     ) {}
 
-    public static function fromLivewire($value)
+    public static function fromLivewire($value): self
     {
         return self::fromArray(is_array($value) ? $value : []);
     }
@@ -36,7 +36,7 @@ final class PrestadorDto implements Wireable
         return new self(
             id: isset($data['id']) ? (int) $data['id'] : null,
             insurance_type_id: isset($data['insurance_type_id']) ? (int) $data['insurance_type_id'] : null,
-            state_id: isset($data['state_id']) ? (int) $data['state_id'] : null,
+            state_id: isset($data['state_id']) ? (int) $data['state_id'] : 1,
             province_id: isset($data['province_id']) ? (int) $data['province_id'] : null,
             city_id: isset($data['city_id']) ? (int) $data['city_id'] : null,
             insurance_name: $data['insurance_name'] ?? '',
@@ -52,7 +52,7 @@ final class PrestadorDto implements Wireable
         );
     }
 
-    public function toLivewire()
+    public function toLivewire(): array
     {
         return $this->toArray();
     }

@@ -53,4 +53,6 @@ return [
     'pricipal' => 'servicio principal',
     'instrucciones' => 'instrucciones',
     'price' => 'precio',
+    'duration' => 'duración',
+    'orden' => 'ordenes',
 ];

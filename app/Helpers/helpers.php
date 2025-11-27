@@ -80,3 +80,107 @@ function arrayMerge(array $array1, array $array2): array
 {
     return array_merge($array1, $array2);
 }
+
+function castToFloat(mixed $value): ?float
+{
+    if ($value === null || $value === '') {
+        return null;
+    }
+
+    if (is_float($value)) {
+        return $value;
+    }
+
+    if (is_numeric($value)) {
+        return (float) $value;
+    }
+
+    $cleaned = str_replace(',', '', (string) $value);
+
+    return is_numeric($cleaned) ? (float) $cleaned : null;
+}
+
+function castToInt(mixed $value): ?int
+{
+    if ($value === null || $value === '') {
+        return null;
+    }
+
+    if (is_int($value)) {
+        return $value;
+    }
+
+    if (is_numeric($value)) {
+        return (int) $value;
+    }
+
+    $cleaned = str_replace(',', '', (string) $value);
+
+    return is_numeric($cleaned) ? (int) $cleaned : null;
+}
+
+function moneyToCents(mixed $value): ?int
+{
+    if ($value === null || $value === '') {
+        return null;
+    }
+
+    if ($value instanceof Money\Money) {
+        return (int) $value->getAmount();
+    }
+
+    $cleaned = str_replace(',', '', (string) $value);
+
+    if (is_numeric($cleaned)) {
+        $amount = (float) $cleaned * 100;
+
+        return (int) round($amount);
+    }
+
+    return null;
+}
+
+function centsToMoney(?int $cents): ?Money\Money
+{
+    if ($cents === null) {
+        return null;
+    }
+
+    $currency = config('app.currency', 'ARS');
+
+    return new Money\Money((string) $cents, new Money\Currency($currency));
+}
+
+function formatMoney(?Money\Money $money): string
+{
+    if ($money === null) {
+        return '';
+    }
+
+    $formatter = new Money\Formatter\IntlMoneyFormatter(
+        new NumberFormatter('es_AR', NumberFormatter::CURRENCY),
+        new Money\Currencies\ISOCurrencies()
+    );
+
+    return $formatter->format($money);
+}
+
+function moneyToFloat(?Money\Money $money): ?float
+{
+    if ($money === null) {
+        return null;
+    }
+
+    return (float) $money->getAmount() / 100;
+}
+
+function moneyToInput(?Money\Money $money): ?string
+{
+    if ($money === null) {
+        return null;
+    }
+
+    $float = (float) $money->getAmount() / 100;
+
+    return number_format($float, 2, '.', ',');
+}

@@ -168,4 +168,24 @@ final class AttributeValidator
     {
         return ['required', new Enum(ServiceType::class), new TypeGroupServices($id)];
     }
+
+    public static function numericDecimal($required): array
+    {
+        $pattern = '/^[0-9]{1,3}(,[0-9]{3})*(\.[0-9]+)?$|^[0-9]+(\.[0-9]+)?$/';
+
+        return $required ? ['required', 'regex:'.$pattern, 'max:'.self::MAX_STRING_LENGTH] :
+            ['sometimes', 'nullable', 'regex:'.$pattern, 'max:'.self::MAX_STRING_LENGTH];
+    }
+
+    public static function numericInteger($required): array
+    {
+        return $required ? ['required', 'integer:strict', 'max:'.self::MAX_STRING_LENGTH, 'regex:'.self::XSS_PREVENTION_PATTERN] :
+            ['sometimes', 'nullable', 'integer:strict', 'max:'.self::MAX_STRING_LENGTH, 'regex:'.self::XSS_PREVENTION_PATTERN];
+    }
+
+    public static function moneyInteger($required)
+    {
+        return $required ? ['required', 'integer:strict', 'regex:'.self::XSS_PREVENTION_PATTERN] :
+            ['sometimes', 'nullable', 'integer:strict', 'regex:'.self::XSS_PREVENTION_PATTERN];
+    }
 }

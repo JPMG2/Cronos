@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Casts\MoneyCast;
 use App\Enums\ServiceType;
 use App\Interfaces\Filterable;
 use App\Traits\RecordActivity;
 use Database\Factories\ServiceFactory;
-use Exception;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -161,6 +161,12 @@ final class Service extends Model implements Filterable
     public function byLevel(Builder $query, int $level): Builder
     {
         return $query->where('level', $level);
+    }
+
+    #[Scope]
+    public function byState(Builder $query, ?array $arrayState): Builder
+    {
+        return $query->when($arrayState, fn ($q) => $q->whereIn('state_id', $arrayState));
     }
 
     /**
@@ -322,22 +328,6 @@ final class Service extends Model implements Filterable
             ->orderBy('service_name');
     }
 
-    #[Scope]
-    protected function active(Builder $query): Builder
-    {
-        return $query->whereHas('state', function ($q) {
-            $q->where('id', 1);
-        });
-    }
-
-    #[Scope]
-    protected function inactive(Builder $query): Builder
-    {
-        return $query->whereHas('state', function ($q) {
-            $q->where('id', 2);
-        });
-    }
-
     /**
      * Accessor: Ruta completa como string
      */
@@ -365,7 +355,8 @@ final class Service extends Model implements Filterable
     #[Scope]
     protected function final(Builder $query): Builder
     {
-        return $query->where('type', ServiceType::FINAL);
+        return $query->where('type', ServiceType::FINAL)
+            ->whereNull('parent_service_id');
     }
 
     /**
@@ -407,6 +398,7 @@ final class Service extends Model implements Filterable
             'level' => 'integer',
             'estimated_duration' => 'integer',
             'requires_preparation' => 'boolean',
+            'base_price' => MoneyCast::class,
             'display_order' => 'integer',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
@@ -439,6 +431,13 @@ final class Service extends Model implements Filterable
     {
         return Attribute::make(
             set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
+        );
+    }
+
+    protected function basePriceFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): string => formatMoney($this->base_price),
         );
     }
 }

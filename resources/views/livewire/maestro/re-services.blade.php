@@ -468,6 +468,7 @@
                                             </x-inputs.textgroup>
                                         </div>
 
+
                                         <div class="relative col-span-4">
                                             <x-inputs.textgroup label="Tipo" for="servtype">
                                                 <select
@@ -490,15 +491,36 @@
                                         </div>
 
                                         <div class="relative col-span-4">
+                                            <x-inputs.textgroup label="Monto de servicio $." for="montoservice">
+                                                <x-inputs.textinput
+                                                    wire:model="form.dataservice.base_price"
+                                                    id="montoservice"
+                                                    x-mask:dynamic="$money($input.replace(/[^0-9.,]/g, ''))"
+                                                    placeholder=""
+                                                ></x-inputs.textinput>
+                                            </x-inputs.textgroup>
+                                            @error("base_price")
+                                            <x-inputs.error-validate>
+                                                {{ $message }}
+                                            </x-inputs.error-validate>
+                                            @enderror
+                                        </div>
+
+                                        <div class="relative col-span-4">
                                             <x-inputs.textgroup label="Duración Est. (minutos)" for="duration">
                                                 <x-inputs.textinput
                                                     wire:model="form.dataservice.estimated_duration"
                                                     id="duration"
-                                                    type="number"
-                                                    min="0"
+                                                    maxlength="5"
+                                                    x-mask="99999"
                                                     placeholder=""
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
+                                            @error("estimated_duration")
+                                            <x-inputs.error-validate>
+                                                {{ $message }}
+                                            </x-inputs.error-validate>
+                                            @enderror
                                         </div>
 
                                         <div class="relative col-span-4">
@@ -506,11 +528,16 @@
                                                 <x-inputs.textinput
                                                     wire:model="form.dataservice.display_order"
                                                     id="displayorder"
-                                                    type="number"
-                                                    min="0"
+                                                    maxlength="5"
+                                                    x-mask="99999"
                                                     placeholder=""
                                                 ></x-inputs.textinput>
                                             </x-inputs.textgroup>
+                                            @error("estimated_duration")
+                                            <x-inputs.error-validate>
+                                                {{ $message }}
+                                            </x-inputs.error-validate>
+                                            @enderror
                                         </div>
 
                                         <div class="col-span-8 space-y-2">

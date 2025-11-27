@@ -72,7 +72,6 @@ final class PrestadorForm extends Form
         $this->dataobrasocial->province_id = $data->city?->province->id;
         $this->dataobrasocial->city_id = $data->city_id;
 
-        // Set the insurance type name from the relationship
         $this->dataobrasocial->insurance_type_name = $data->insuranceType?->insuratype_name ?? '';
 
     }

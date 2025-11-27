@@ -8,6 +8,8 @@ use App\Interfaces\Filterable;
 use App\Traits\RecordActivity;
 use Carbon\CarbonImmutable;
 use Database\Factories\InsurancePlanFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -47,6 +49,20 @@ final class InsurancePlan extends Model implements Filterable
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
+    }
+
+    #[Scope]
+    protected function planAndStatus(Builder $query, ?array $filters = null)
+    {
+        return $query->when($filters['status'] ?? null, function ($query, $statusIds) {
+            $query->whereIn('state_id', $statusIds);
+        })->with(self::getRelationModel());
+    }
+
+    #[Scope]
+    protected function planId(Builder $query, ?int $planId = null)
+    {
+        return $query->when($planId, fn ($q) => $q->where('id', $planId))->with(self::getRelationModel());
     }
 
     protected function casts(): array

@@ -71,6 +71,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Currency
+    |--------------------------------------------------------------------------
+    |
+    | Here you may specify the default currency for your application, which
+    | will be used by the Money package for financial calculations.
+    | ARS = Argentine Peso
+    |
+    */
+
+    'currency' => env('APP_CURRENCY', 'ARS'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
     |

@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace App\Livewire\Convenio;
 
-use App\Models\InsurancePlan;
+use App\Classes\Maestro\MainServices;
+use App\Livewire\Forms\Convenio\CoberturaForm;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 final class ReCobertura extends Component
 {
-    public ?InsurancePlan $idPlan;
+    public ?int $planId = null;
+
+    public array $selectedServices = [];
+
+    public CoberturaForm $form;
+
+    private ?MainServices $mainServices = null;
 
     public function render()
     {
@@ -18,9 +26,25 @@ final class ReCobertura extends Component
     }
 
     #[On('configCoberturas')]
-    public function configCobertura($idPlan)
+    public function configCobertura($idPlan): void
     {
-        $this->idPlan = InsurancePlan::find($idPlan);
+        $this->planId = $idPlan;
+    }
+
+    #[Computed]
+    public function allServices(): array
+    {
+        return $this->form->serviceArray();
+    }
+
+    #[Computed]
+    public function selectedServicesData()
+    {
+        if (empty($this->selectedServices)) {
+            return collect();
+        }
+
+        return $this->form->servicesSelected($this->selectedServices);
 
     }
 }

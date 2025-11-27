@@ -44,6 +44,11 @@ final class ReServices extends Component
         'categori_name' => '',
     ];
 
+    public function mount(): void
+    {
+        $this->form->setUp();
+    }
+
     #[Title(' - Servicios')]
     public function render()
     {
@@ -88,6 +93,7 @@ final class ReServices extends Component
     {
         $this->form->reset();
         $this->cleanFormValues();
+        $this->form->setUp();
     }
 
     public function nextStep(): void
@@ -107,6 +113,7 @@ final class ReServices extends Component
         $this->openservice = true;
         $this->isupdate = true;
         $this->currentStep = 2;
+
     }
 
     #[Computed]
@@ -118,7 +125,7 @@ final class ReServices extends Component
     #[Computed]
     public function serviceGroup(): Collection
     {
-        return Service::query()->groups()->active()->orderBy('level')->get();
+        return Service::query()->groups()->byState([1])->orderBy('level')->get();
     }
 
     public function updatedFormDataserviceCategoriName($value): void

@@ -62,6 +62,7 @@ final class SpecialistDto implements Wireable
             'person_email' => $this->person_email,
             'document_id' => $this->document_id,
             'num_document' => $this->num_document,
+            'city_id' => $this->city_id,
         ];
     }
 }
