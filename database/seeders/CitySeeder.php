@@ -14,7 +14,7 @@ final class CitySeeder extends Seeder
      */
     public function run($namecity, $provinceid): void
     {
-        $cityarray = config('cities.'.$namecity);
+        $cityarray = config('cities.' . $namecity);
 
         if (is_array($cityarray)) {
             foreach ($cityarray as $dataciy) {

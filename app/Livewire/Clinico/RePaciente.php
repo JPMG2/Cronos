@@ -119,7 +119,7 @@ final class RePaciente extends Component
                 'pdfClass' => 'PatientPdf',
                 'route' => 're_paciente',
                 'model' => 'Patient',
-            ]
+            ],
         );
     }
 
@@ -147,7 +147,7 @@ final class RePaciente extends Component
             $this->setProvinceCity($this->pacienteForm->personData->province_id, 0);
             $this->setnameProvinceCity(
                 $this->dataProvince($this->pacienteForm->personData->province_id)->province_name->toString(),
-                null
+                null,
             );
 
         }
@@ -157,7 +157,7 @@ final class RePaciente extends Component
     {
         $this->pacienteForm->infoPatient($patientId);
         $this->showMenuAction();
-        $person = $this->pacienteForm->personData->person_name.' '.$this->pacienteForm->personData->person_lastname;
+        $person = $this->pacienteForm->personData->person_name . ' ' . $this->pacienteForm->personData->person_lastname;
         $this->messageWindow(
             $person,
             fn (string $person): AlertModal => new AlertModal(
@@ -166,9 +166,9 @@ final class RePaciente extends Component
                 title: 'Aviso',
                 buttonName: 'Aceptar',
                 event: '',
-                message: 'Paciente <b>'.$person.'</b> ya registrado !',
-                idModel: 0
-            )
+                message: 'Paciente <b>' . $person . '</b> ya registrado !',
+                idModel: 0,
+            ),
         );
 
     }

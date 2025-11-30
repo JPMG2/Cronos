@@ -19,7 +19,7 @@ final class MedicHandler
             $sendEmail->handle(
                 $event,
                 $event->action === 'create' ? $sendEmail::ACTION_CREATE : $sendEmail::ACTION_UPDATE,
-                PersonEmail::class
+                PersonEmail::class,
             );
         }
 

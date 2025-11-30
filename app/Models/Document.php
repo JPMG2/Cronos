@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * /@property-read string $document_name
+ * @property string $document_name
  */
 final class Document extends Model
 {

@@ -53,7 +53,7 @@ final class CategoryForm extends Form
             $this->transformCategoryData(),
             $this->getValidationRules($excludeId),
             [],
-            $this->getValidationAttributes()
+            $this->getValidationAttributes(),
         )->validate();
     }
 

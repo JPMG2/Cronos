@@ -61,7 +61,7 @@ trait UtilityForm
             buttonName: $buttonName,
             event: $event,
             message: $message,
-            idModel: $idModel
+            idModel: $idModel,
         );
     }
 }

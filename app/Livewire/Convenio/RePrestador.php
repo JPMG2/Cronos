@@ -37,7 +37,7 @@ final class RePrestador extends Component
             'livewire.convenio.re-prestador',
             [
                 'listState' => $this->commonQuerys::stateQuery([1, 2]),
-            ]
+            ],
         );
     }
 
@@ -102,7 +102,7 @@ final class RePrestador extends Component
             $this->setProvinceCity($data->city->province->id, $data->city->id);
             $this->setnameProvinceCity(
                 $data->city->province->province_name->value,
-                $data->city->city_name
+                $data->city->city_name,
             );
         } else {
             $this->resetAllProvince();
@@ -123,7 +123,7 @@ final class RePrestador extends Component
                 'pdfClass' => 'InsurancePdf',
                 'route' => 're_prestador',
                 'model' => 'Insurance',
-            ]
+            ],
         );
     }
 

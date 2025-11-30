@@ -11,7 +11,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
+/**
+ * @property string $insuratype_name
+ * @property-read Collection<int, Insurance> $insurance
+ */
 final class InsuranceType extends Model
 {
     use HasFactory;
@@ -19,15 +24,15 @@ final class InsuranceType extends Model
 
     protected $fillable = ['insuratype_name'];
 
-    #[Scope]
-    public function listType(Builder $query): Builder
-    {
-        return $query->orderBy('insuratype_name');
-    }
-
     public function insurance(): HasMany
     {
         return $this->hasMany(Insurance::class);
+    }
+
+    #[Scope]
+    protected function listType(Builder $query): Builder
+    {
+        return $query->orderBy('insuratype_name');
     }
 
     protected function insuratypeName(): Attribute

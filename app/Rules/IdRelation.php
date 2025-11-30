@@ -17,7 +17,7 @@ final readonly class IdRelation implements ValidationRule
         private ?int $id = null,
         private ?string $validColumn = null,
         private ?string $relation = null,
-        private ?string $errorName = null
+        private ?string $errorName = null,
     ) {}
 
     /**
@@ -29,7 +29,7 @@ final readonly class IdRelation implements ValidationRule
     {
 
         if (is_null($this->relationId)) {
-            $fail('El campo '.$this->relation.' es requerido');
+            $fail('El campo ' . $this->relation . ' es requerido');
 
             return;
         }
@@ -48,7 +48,7 @@ final readonly class IdRelation implements ValidationRule
         }
 
         if ($query->exists()) {
-            $fail('El campo '.$this->errorName.' ya existe');
+            $fail('El campo ' . $this->errorName . ' ya existe');
         }
     }
 }

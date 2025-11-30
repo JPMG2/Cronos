@@ -52,7 +52,7 @@ final class RoleForm extends Form
             $this->transformServiceData(),
             $this->getValidationRules($excludeId),
             [],
-            $this->getValidationAttributes()
+            $this->getValidationAttributes(),
         )->validate();
     }
 

@@ -11,7 +11,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
+/**
+ * @property int $state_id
+ * @property int $city_id
+ * @property string $company_name
+ * @property string $company_cuit
+ * @property string $company_address
+ * @property string $company_phone
+ * @property ?string $company_zipcode
+ * @property string $company_email
+ * @property ?string $company_web
+ * @property string $company_person_contact
+ * @property string $company_person_phone
+ * @property string $company_person_email
+ * @property-read City $city
+ * @property-read State $state
+ * @property-read Collection<int, Branch> $branches
+ */
 final class Company extends Model
 {
     use HasFactory;
@@ -25,7 +43,8 @@ final class Company extends Model
         'company_phone', 'company_zipcode',
         'company_email', 'company_web',
         'company_person_contact', 'company_person_phone',
-        'company_person_email'];
+        'company_person_email',
+    ];
 
     public static function existCompany(): bool
     {
@@ -57,7 +76,7 @@ final class Company extends Model
     protected function companyCuit(): Attribute
     {
         return Attribute::make(
-            set: fn ($value): string => mb_trim($value)
+            set: fn ($value): string => mb_trim($value),
         );
     }
 

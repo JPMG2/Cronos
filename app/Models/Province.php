@@ -9,8 +9,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @property string $province_name
+ * @property-read Collection<int, City> $cities
+ */
 final class Province extends Model
 {
     use HasFactory;
@@ -22,23 +27,22 @@ final class Province extends Model
         return $this->hasMany(City::class);
     }
 
-    public function scopeProviceSearch(Builder $query, $value): Builder
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function proviceSearch(Builder $query, $value): Builder
     {
         if ($value === '') {
             return $query->whereRaw('1 = 0');
         }
 
-        $cacheKey = 'province_search_'.md5($value);
+        $cacheKey = 'province_search_' . md5((string) $value);
 
         $cachedIds = Cache::remember(
             $cacheKey,
             now()->addHours(24),
-            function () use ($value) {
-                return static::where('province_name', 'like', '%'.$value.'%')
-                    ->orderBy('province_name')
-                    ->pluck('id')
-                    ->toArray();
-            }
+            fn () => self::query()->where('province_name', 'like', '%' . $value . '%')
+                ->orderBy('province_name')
+                ->pluck('id')
+                ->toArray(),
         );
 
         return $query->whereIn('id', $cachedIds)->orderBy('province_name');

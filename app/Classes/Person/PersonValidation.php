@@ -29,7 +29,7 @@ final class PersonValidation
             [
 
             ],
-            $this->niceNames()
+            $this->niceNames(),
         )->validate();
     }
 
@@ -86,7 +86,7 @@ final class PersonValidation
             [
 
             ],
-            $this->niceNames()
+            $this->niceNames(),
         )->validate();
     }
 }

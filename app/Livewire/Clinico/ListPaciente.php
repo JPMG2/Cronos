@@ -40,7 +40,7 @@ final class ListPaciente extends Component
             'livewire.clinicos.list-paciente',
             [
                 'listPatients' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
-            ]
+            ],
         );
 
     }

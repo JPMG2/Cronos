@@ -32,7 +32,7 @@ final class ActionsForm extends Form
             [],
             [
                 'role_id' => config('nicename.role'),
-                'action_id' => config('nicename.action'), ]
+                'action_id' => config('nicename.action'), ],
         )->validate();
         $services = $this->iniService();
 
@@ -41,8 +41,8 @@ final class ActionsForm extends Form
                 ->addWithRelationship(
                     (int) $this->dataaction['role_id'],
                     $this->dataaction['action_id'],
-                    'actions'
-                )
+                    'actions',
+                ),
         );
     }
 

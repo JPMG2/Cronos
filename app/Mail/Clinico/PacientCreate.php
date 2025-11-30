@@ -31,7 +31,7 @@ final class PacientCreate extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bienvenido/a '.$this->patiente->person->fullName,
+            subject: 'Bienvenido/a ' . $this->patiente->person->fullName,
         );
     }
 
@@ -42,7 +42,7 @@ final class PacientCreate extends Mailable
             ->with(
                 [
                     'patient' => $this->patiente,
-                ]
+                ],
             );
     }
 }

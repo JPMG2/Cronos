@@ -16,7 +16,7 @@ enum ServiceType: string
                 'value' => $type->value,
                 'label' => $type->label(),
             ],
-            self::cases()
+            self::cases(),
         );
     }
 

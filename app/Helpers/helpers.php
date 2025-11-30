@@ -26,7 +26,7 @@ function arrayString(array $arraKeys): string
             $delimiter = '';
         }
 
-        $keysString .= "'".$keys[$i]."'".$delimiter;
+        $keysString .= "'" . $keys[$i] . "'" . $delimiter;
     }
 
     return $keysString;
@@ -159,7 +159,7 @@ function formatMoney(?Money\Money $money): string
 
     $formatter = new Money\Formatter\IntlMoneyFormatter(
         new NumberFormatter('es_AR', NumberFormatter::CURRENCY),
-        new Money\Currencies\ISOCurrencies()
+        new Money\Currencies\ISOCurrencies(),
     );
 
     return $formatter->format($money);

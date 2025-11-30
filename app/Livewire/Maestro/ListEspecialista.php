@@ -41,7 +41,7 @@ final class ListEspecialista extends Component
             'livewire.maestro.list-especialista',
             [
                 'listMedical' => $this->getMedicService()->listSearch($this->columnFilter)->paginate(15),
-            ]
+            ],
         );
     }
 

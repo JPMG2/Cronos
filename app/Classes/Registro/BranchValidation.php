@@ -35,7 +35,7 @@ final class BranchValidation
                 'city_id.gt' => config('nicename.campo_obligado'),
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
-            $this->niceNames()
+            $this->niceNames(),
         )->validate();
     }
 
@@ -109,7 +109,7 @@ final class BranchValidation
                 'city_id.gt' => config('nicename.campo_obligado'),
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
-            $this->niceNames()
+            $this->niceNames(),
         )->validate();
     }
 }

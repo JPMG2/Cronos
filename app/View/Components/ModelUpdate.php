@@ -14,7 +14,7 @@ final class ModelUpdate extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public int $queryaccion, public $modelObj, public $modelId, public $logId)
+    public function __construct(public int $queryaccion, public string $modelObj, public int $modelId, public int $logId)
     {
         //
     }
@@ -51,7 +51,7 @@ final class ModelUpdate extends Component
 
         $getmodelname = mb_substr($this->modelObj, $getmodelname + 1);
 
-        return config('nicename.'.mb_strtolower($getmodelname));
+        return config('nicename.' . mb_strtolower($getmodelname));
     }
 
     public function seeChanges()

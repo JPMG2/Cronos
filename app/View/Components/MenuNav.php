@@ -28,7 +28,7 @@ final class MenuNav extends Component
     {
         /** @var User $user */
         $user = Auth::user();
-        $cacheKeyMenu = 'menu-'.Auth::id();
+        $cacheKeyMenu = 'menu-' . Auth::id();
         $menuItems = Cache::remember(
             $cacheKeyMenu,
             1440,
@@ -40,12 +40,12 @@ final class MenuNav extends Component
                 $opcionmenus = $user->roles->flatMap(
                     function ($rol) {
                         return $rol->menus->pluck('id');
-                    }
+                    },
                 )->filter()->values()->toArray();
 
                 return $this->getMenuItemsWithChildren($opcionmenus)
                     ->get();
-            }
+            },
         );
 
         return view('components.mmenu.menu-nav', compact('menuItems'));
@@ -69,10 +69,10 @@ final class MenuNav extends Component
                                 'menus' => function ($q) use ($opcionmenus) {
                                     $q->whereIn('id', $opcionmenus);
                                 },
-                            ]
+                            ],
                         );
                 },
-            ]
+            ],
         )
             ->whereNull('menu_id')
             ->withCount(['optionmenus'])

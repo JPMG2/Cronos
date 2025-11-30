@@ -194,6 +194,7 @@
                                                 <div class="flex-shrink-0">
                                                     <div class="w-10 flex-shrink-0 flex justify-center">
                                                         <x-buttons.small-config
+                                                            wire:click="configCoverageService({{ $child->id }})"
                                                             @click.stop="selectedService = {{ $child->id }}"/>
                                                     </div>
                                                 </div>
@@ -241,6 +242,7 @@
                                     {{-- Config Button --}}
                                     <div class="w-10 flex-shrink-0 flex justify-center">
                                         <x-buttons.small-config
+                                            wire:click="configCoverageService({{ $service->id }})"
                                             @click.stop="selectedService = {{ $service->id }}"/>
                                     </div>
                                 </div>

@@ -34,7 +34,7 @@ final class AccesoForm extends Form
             [
                 'role_id' => config('nicename.role'),
                 'menu_options' => config('nicename.acceso'),
-            ]
+            ],
         )->validate();
 
         Role::query()->find($this->dataacceso['role_id']);
@@ -54,8 +54,8 @@ final class AccesoForm extends Form
                 ->addWithRelationship(
                     (int) $this->dataacceso['role_id'],
                     $allMenuIds,
-                    'menus'
-                )
+                    'menus',
+                ),
         );
 
     }

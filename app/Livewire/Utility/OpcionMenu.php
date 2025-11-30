@@ -49,7 +49,7 @@ final class OpcionMenu extends Component
 
         $this->optioncolor = Arr::map(
             $this->optioncolor,
-            fn (string $value, string $key): bool => $key === $option
+            fn (string $value, string $key): bool => $key === $option,
         );
 
     }

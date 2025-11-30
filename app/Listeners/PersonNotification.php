@@ -24,7 +24,7 @@ final class PersonNotification
                 [
                     MedicHandler::class,
                     PacienteHandler::class,
-                ]
+                ],
             )->then(fn ($result) => $result);
 
     }

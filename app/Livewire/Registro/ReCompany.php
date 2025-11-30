@@ -79,7 +79,7 @@ final class ReCompany extends Component
             'livewire.registro.re-company',
             [
                 'listState' => $this->commonQuerys::stateQuery([1, 2]),
-            ]
+            ],
         );
     }
 }

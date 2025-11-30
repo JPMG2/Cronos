@@ -66,23 +66,23 @@ return new class extends Migration
         Schema::table('services', function (Blueprint $table) {
             $table->index(
                 ['parent_service_id', 'state_id', 'display_order'],
-                'idx_services_hierarchy'
+                'idx_services_hierarchy',
             );
 
             $table->index(
                 ['category_id', 'state_id'],
-                'idx_services_category_state'
+                'idx_services_category_state',
             );
 
             $table->index(
                 ['level', 'state_id'],
-                'idx_services_level_state'
+                'idx_services_level_state',
             );
 
             // Índice para búsquedas por tipo
             $table->index(
                 ['type', 'state_id'],
-                'idx_services_type_state'
+                'idx_services_type_state',
             );
         });
     }

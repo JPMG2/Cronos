@@ -15,7 +15,7 @@ final class ServicesValidation
             $this->transformServiceData($data),
             $this->getValidationRules($excludeId),
             [],
-            $this->getValidationAttributes()
+            $this->getValidationAttributes(),
         )->validate();
     }
 

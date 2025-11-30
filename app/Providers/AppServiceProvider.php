@@ -40,7 +40,7 @@ final class AppServiceProvider extends ServiceProvider
                 }
 
                 return new ModelService($params['model']);
-            }
+            },
         );
 
     }
@@ -67,7 +67,7 @@ final class AppServiceProvider extends ServiceProvider
     private function configureCommands(): void
     {
         DB::prohibitDestructiveCommands(
-            $this->app->isProduction()
+            $this->app->isProduction(),
         );
     }
 

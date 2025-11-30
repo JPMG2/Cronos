@@ -8,6 +8,7 @@ use App\Interfaces\Filterable;
 use App\Traits\RecordActivity;
 use Carbon\CarbonImmutable;
 use Database\Factories\InsurancePlanFactory;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,6 +16,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $insurance_id
+ * @property int $state_id
+ * @property string $insurance_plan_name
+ * @property string $insurance_plan_code
+ * @property CarbonImmutable $insurance_start_date
+ * @property ?CarbonImmutable $insurance_end_date
+ * @property ?string $insurance_plan_description
+ * @property bool $authorisation
+ * @property ?string $insurance_plan_condition
+ * @property-read Insurance $insurance
+ * @property-read State $state
+ */
 final class InsurancePlan extends Model implements Filterable
 {
     /**
@@ -26,7 +40,8 @@ final class InsurancePlan extends Model implements Filterable
 
     protected $fillable = ['insurance_id', 'state_id', 'insurance_plan_name',
         'insurance_plan_code', 'insurance_start_date', 'insurance_end_date', 'insurance_plan_description',
-        'authorisation', 'insurance_plan_condition'];
+        'authorisation', 'insurance_plan_condition',
+    ];
 
     public static function getDefaultFilterField(): string
     {
@@ -54,9 +69,11 @@ final class InsurancePlan extends Model implements Filterable
     #[Scope]
     protected function planAndStatus(Builder $query, ?array $filters = null)
     {
-        return $query->when($filters['status'] ?? null, function ($query, $statusIds) {
-            $query->whereIn('state_id', $statusIds);
-        })->with(self::getRelationModel());
+        return $query->when(
+            $filters['status'] ?? null, function ($query, $statusIds): void {
+                $query->whereIn('state_id', $statusIds);
+            },
+        )->with(self::getRelationModel());
     }
 
     #[Scope]
@@ -93,7 +110,7 @@ final class InsurancePlan extends Model implements Filterable
     protected function insuranceEndDate(): Attribute
     {
         return Attribute::make(
-            get: fn ($value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
+            get: fn (DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
             set: fn ($value): ?string => is_null($value) ? null : CarbonImmutable::parse($value)->format('Y-m-d'),
         );
     }
@@ -101,8 +118,8 @@ final class InsurancePlan extends Model implements Filterable
     protected function insuranceStartDate(): Attribute
     {
         return Attribute::make(
-            get: fn ($value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
-            set: fn ($value): string => CarbonImmutable::parse($value)->format('Y-m-d'),
+            get: fn (DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
+            set: fn (DateTimeInterface|\Carbon\WeekDay|\Carbon\Month|string|int|float|null $value): string => CarbonImmutable::parse($value)->format('Y-m-d'),
         );
     }
 

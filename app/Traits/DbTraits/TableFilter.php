@@ -39,15 +39,15 @@ trait TableFilter
     private function applyFilter(Builder $query, string $relationName, string $columnName, string $searchValue, array $withRelations, string $table): Builder
     {
         return $searchValue === '' || $searchValue === '0' ? $query->whereHas($relationName)
-            ->join($table, 'medicals.person_id', '=', $table.'.id')
-            ->orderBy($table.'.'.$columnName, 'asc')->with($withRelations)
+            ->join($table, 'medicals.person_id', '=', $table . '.id')
+            ->orderBy($table . '.' . $columnName, 'asc')->with($withRelations)
             :
         $query->whereHas(
             $relationName,
             function ($query) use ($columnName, $searchValue): void {
-                $query->whereRaw('LOWER('.$columnName.') like ?', ['%'.$searchValue.'%'])
+                $query->whereRaw('LOWER(' . $columnName . ') like ?', ['%' . $searchValue . '%'])
                     ->orderBy($columnName, 'desc');
-            }
+            },
         )->with($withRelations);
     }
 

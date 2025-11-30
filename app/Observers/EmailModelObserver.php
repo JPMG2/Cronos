@@ -19,7 +19,7 @@ use InvalidArgumentException;
 final readonly class EmailModelObserver
 {
     public function __construct(
-        private SendEmail $sendEmail
+        private SendEmail $sendEmail,
     ) {}
 
     public function created(Model $model): void
@@ -31,7 +31,7 @@ final readonly class EmailModelObserver
             SendEmail::ACTION_CREATE,
             $emailClasses['baseClass'],
             $emailClasses['createMailClass'],
-            $emailClasses['receptor']
+            $emailClasses['receptor'],
         );
     }
 
@@ -45,7 +45,7 @@ final readonly class EmailModelObserver
                 SendEmail::ACTION_UPDATE,
                 $emailClasses['baseClass'],
                 $emailClasses['updateMailClass'],
-                $emailClasses['receptor']
+                $emailClasses['receptor'],
             );
         }
     }

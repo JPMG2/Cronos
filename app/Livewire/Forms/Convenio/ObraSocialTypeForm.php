@@ -25,7 +25,7 @@ final class ObraSocialTypeForm extends Form
             ['insuratype_name' => AttributeValidator::uniqueIdNameLength(5, 'insurance_types', 'insuratype_name', null),
             ],
             [],
-            ['insuratype_name' => config('nicename.name')]
+            ['insuratype_name' => config('nicename.name')],
         )->validate();
 
         $services = $this->iniService();
@@ -41,7 +41,7 @@ final class ObraSocialTypeForm extends Form
             ['insuratype_name' => AttributeValidator::uniqueIdNameLength(5, 'insurance_types', 'insuratype_name', $this->insuratypedata['id']),
             ],
             [],
-            ['insuratype_name' => config('nicename.name')]
+            ['insuratype_name' => config('nicename.name')],
         )->validate();
 
         $services = $this->iniService();

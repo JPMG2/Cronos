@@ -19,7 +19,7 @@ final class EspecialistValidation
             [
                 'num_document.prohibited' => 'se requiere tipo de documento.',
             ],
-            $this->getValidationAttributes()
+            $this->getValidationAttributes(),
         )->validate();
     }
 
@@ -54,7 +54,7 @@ final class EspecialistValidation
                 Rule::prohibitedIf(
                     function () use ($especialsit) {
                         return empty($especialsit['document_id']) && ! empty($especialsit['num_document']);
-                    }
+                    },
                 ),
                 function ($attribute, $value, $fail) use ($especialsit, $excludeId) {
                     if (! empty($especialsit['document_id']) && ! empty($value)) {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Classes\Services\QueryConvenio;
 
-use App\Interfaces\AbstractQueryService;
+use App\Interfaces\BaseQueryService;
 use App\Models\InsurancePlan;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
-final class PlanesPrestadorListService extends AbstractQueryService
+final class PlanesPrestadorListService extends BaseQueryService
 {
     public function __construct(InsurancePlan $model, bool $order, ?string $clickColumn)
     {

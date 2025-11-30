@@ -27,7 +27,7 @@ final class MedicUpadte extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Actualización de datos para '.$this->medic->person->fullname,
+            subject: 'Actualización de datos para ' . $this->medic->person->fullname,
         );
     }
 
@@ -37,7 +37,7 @@ final class MedicUpadte extends Mailable
             ->with(
                 [
                     'medic' => $this->medic,
-                ]
+                ],
             );
     }
 }

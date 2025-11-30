@@ -10,7 +10,15 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
+/**
+ * @property string $name_role
+ * @property ?string $description
+ * @property-read Collection<int, User> $users
+ * @property-read Collection<int, Action> $actions
+ * @property-read Collection<int, Menu> $menus
+ */
 final class Role extends Model
 {
     /**

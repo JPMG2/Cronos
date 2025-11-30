@@ -19,7 +19,7 @@ final class PacienteValidation
             [
                 'num_document.prohibited' => 'se requiere tipo de documento.',
             ],
-            $this->getValidationAttributes()
+            $this->getValidationAttributes(),
         )->validate();
     }
 
@@ -51,7 +51,7 @@ final class PacienteValidation
                 Rule::prohibitedIf(
                     static function () use ($arrayPatient) {
                         return empty($arrayPatient['document_id']) && ! empty($arrayPatient['num_document']);
-                    }
+                    },
                 ),
                 function ($attribute, $value, $fail) use ($arrayPatient, $excludeId) {
                     if (! empty($arrayPatient['document_id']) && ! empty($value)) {

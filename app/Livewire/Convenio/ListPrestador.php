@@ -44,7 +44,7 @@ final class ListPrestador extends Component
             'livewire.convenio.list-prestador',
             [
                 'listPestador' => $this->getPatientService()->listSearch($this->columnFilter)->paginate(15),
-            ]
+            ],
         );
     }
 

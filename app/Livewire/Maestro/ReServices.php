@@ -56,7 +56,7 @@ final class ReServices extends Component
             'livewire.maestro.re-services',
             [
                 'listServicios' => $this->services()->listSearch($this->columnFilter)->paginate(15),
-            ]
+            ],
         );
     }
 
@@ -144,7 +144,7 @@ final class ReServices extends Component
                 }
 
                 return $this->dataAlert('warning', 'Advertencia', 'serviceRemove', 'Borrar', 'Realmente desea borrar el servicio ?', $service->id);
-            }
+            },
         );
     }
 

@@ -24,8 +24,6 @@ trait TableSorting
 
     public bool $sortDirection = true;
 
-    public $nameRelashion;
-
     public $modelName;
 
     /**

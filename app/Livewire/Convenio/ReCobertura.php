@@ -47,4 +47,9 @@ final class ReCobertura extends Component
         return $this->form->servicesSelected($this->selectedServices);
 
     }
+
+    public function configCoverageService(?int $idService)
+    {
+        dd($idService);
+    }
 }

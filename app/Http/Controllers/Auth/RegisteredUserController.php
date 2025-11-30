@@ -36,16 +36,16 @@ final class RegisteredUserController extends Controller
             [
                 'name' => ['required', 'string', 'max:255'],
                 'lstname' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            ]
+            ],
         );
         $person = Person::create(
             [
                 'person_name' => $request->name,
                 'person_lastname' => $request->lstname,
 
-            ]
+            ],
         );
 
         $user = User::create(
@@ -53,7 +53,7 @@ final class RegisteredUserController extends Controller
                 'person_id' => $person->id,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-            ]
+            ],
         );
 
         event(new Registered($user));

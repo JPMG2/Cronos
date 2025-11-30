@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Classes\Services\QueryMaestro;
 
-use App\Interfaces\AbstractQueryService;
+use App\Interfaces\BaseQueryService;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
-final class ServicioListService extends AbstractQueryService
+final class ServicioListService extends BaseQueryService
 {
     protected function getRelationSearchField(string $relation): string
     {
@@ -41,7 +41,7 @@ final class ServicioListService extends AbstractQueryService
                  FROM services p2
                  WHERE p2.id = services.parent_service_id),
                 LPAD(services.id::text, 10, '0')
-            )"
+            )",
         )->orderBy('service_name', 'asc');
     }
 }

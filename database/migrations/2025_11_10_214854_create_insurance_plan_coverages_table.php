@@ -32,7 +32,7 @@ return new class extends Migration
             $table->index('insurance_plan_id');
             $table->unique(
                 ['insurance_plan_id', 'coverable_type', 'coverable_id', 'deleted_at'],
-                'unique_plan_coverage'
+                'unique_plan_coverage',
             );
         });
     }

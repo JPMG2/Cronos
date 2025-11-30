@@ -18,7 +18,7 @@ final class PrestadorValidation
                 'insurance_type_id.gt' => config('nicename.campo_obligado'),
                 'state_id.gt' => config('nicename.campo_obligado'),
             ],
-            $this->getValidationAttributes()
+            $this->getValidationAttributes(),
         )->validate();
     }
 

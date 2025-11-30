@@ -30,7 +30,7 @@ final class MedicCreate extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bienvenido/a '.$this->medic->person->fullname,
+            subject: 'Bienvenido/a ' . $this->medic->person->fullname,
         );
     }
 
@@ -40,7 +40,7 @@ final class MedicCreate extends Mailable
             ->with(
                 [
                     'medic' => $this->medic,
-                ]
+                ],
             );
     }
 }

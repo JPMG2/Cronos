@@ -84,7 +84,7 @@ final class PrestadorPlanForm extends Form
             $this->transformServiceData(),
             $this->getValidationRules($this->dataPrestadorPlan),
             [],
-            $this->getValidationAttributes()
+            $this->getValidationAttributes(),
         )->validate();
     }
 

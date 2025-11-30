@@ -37,7 +37,7 @@ final class RePrestadorPlan extends Component
             'livewire.convenio.re-prestador-plan',
             [
                 'listPlanesPrestador' => $this->getPlanesPrestador()->listSearch($this->columnFilter)->paginate(15),
-            ]
+            ],
         );
     }
 

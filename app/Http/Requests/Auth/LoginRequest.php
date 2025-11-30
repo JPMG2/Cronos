@@ -49,7 +49,7 @@ final class LoginRequest extends FormRequest
             throw ValidationException::withMessages(
                 [
                     'email' => trans('auth.failed'),
-                ]
+                ],
             );
         }
 
@@ -78,9 +78,9 @@ final class LoginRequest extends FormRequest
                     [
                         'seconds' => $seconds,
                         'minutes' => ceil($seconds / 60),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
     }
 
@@ -89,6 +89,6 @@ final class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

@@ -27,15 +27,15 @@ trait ProvinceCity
 
     public function searchProvince()
     {
-        if (empty($this->stringProvince)) {
-            $this->showProvince = ! empty($this->listProvince);
+        if ($this->stringProvince === '') {
+            $this->showProvince = count($this->listProvince) > 0;
 
             return null;
         }
 
         $this->stringProvince = stringToTitle($this->stringProvince);
         $this->listProvince = Province::proviceSearch($this->stringProvince)->get();
-        $this->showProvince = ! empty($this->listProvince);
+        $this->showProvince = count($this->listProvince) > 0;
 
         return $this->listProvince;
     }
@@ -50,7 +50,7 @@ trait ProvinceCity
 
     public function searchCity()
     {
-        if ($this->getProvinceId() <= 0 || empty($this->stringCity)) {
+        if ($this->getProvinceId() <= 0 || $this->stringCity === '') {
             $this->showCity = count($this->listCities) > 0;
 
             return null;

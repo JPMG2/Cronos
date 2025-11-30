@@ -11,19 +11,11 @@ use Illuminate\View\Component;
 
 final class Breadcrum extends Component
 {
-    public $breadcrumbs;
+    public string $breadcrumbs;
 
-    public function __construct($breadcrumbs)
+    public function __construct(string $breadcrumbs)
     {
         $this->breadcrumbs = $breadcrumbs;
-    }
-
-    public function getBreadcrumbs($viewname): string
-    {
-
-        return Menu::where('grup_menu', $viewname)
-            ->select('header_menu')
-            ->first()->header_menu;
     }
 
     public function render(): View|Closure|string
@@ -31,5 +23,13 @@ final class Breadcrum extends Component
         $menu = exploBreadcrum($this->getBreadcrumbs($this->breadcrumbs));
 
         return view('components.breadcrum', compact('menu'));
+    }
+
+    public function getBreadcrumbs(string $viewname): string
+    {
+
+        return Menu::where('grup_menu', $viewname)
+            ->select('header_menu')
+            ->first()->header_menu;
     }
 }

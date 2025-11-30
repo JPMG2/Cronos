@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $occupation_name
+ */
 final class Occupation extends Model
 {
     /**
@@ -21,7 +24,7 @@ final class Occupation extends Model
     protected function occupationName(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst(mb_strtolower(mb_trim($value))),
+            set: fn ($value): string => ucfirst(mb_strtolower(mb_trim($value))),
         );
     }
 }

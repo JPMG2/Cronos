@@ -9,13 +9,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
+/**
+ * @property ?int $menu_id
+ * @property ?string $name_menu
+ * @property ?string $grup_menu
+ * @property ?bool $title_menu
+ * @property ?string $header_menu
+ * @property ?string $icon_menu
+ * @property ?string $descripcion
+ * @property ?string $linkto
+ * @property-read Collection<int, Menu> $menus
+ * @property-read Collection<int, Menu> $optionmenus
+ * @property-read Collection<int, Role> $roles
+ */
 final class Menu extends Model
 {
     use HasFactory;
 
     protected $fillable = ['menu_id', 'name_menu', 'grup_menu', 'title_menu',
-        'icon_menu', 'linkto', 'header_menu', 'descripcion'];
+        'icon_menu', 'linkto', 'header_menu', 'descripcion',
+    ];
 
     public function menus(): HasMany
     {
@@ -27,7 +42,7 @@ final class Menu extends Model
         return once(
             fn () => $this->hasMany(self::class, 'menu_id', 'id')
                 ->withCount('menus')
-                ->with('menus')
+                ->with('menus'),
         );
     }
 

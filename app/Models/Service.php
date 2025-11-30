@@ -19,9 +19,32 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
 
+/**
+ * @property int $state_id
+ * @property int $category_id
+ * @property string $service_code
+ * @property string $service_name
+ * @property ?string $service_description
+ * @property ?int $parent_service_id
+ * @property int $level
+ * @property ?string $path
+ * @property ServiceType $type
+ * @property int $display_order
+ * @property ?int $estimated_duration
+ * @property bool $requires_preparation
+ * @property ?string $preparation_instructions
+ * @property ?int $base_price
+ * @property-read State $state
+ * @property-read Category $category
+ * @property-read Service $parent
+ * @property-read Collection<int, Service> $children
+ * @property-read Collection<int, Service> $activeChildren
+ */
 final class Service extends Model implements Filterable
 {
-    /** @use HasFactory<ServiceFactory> */
+    /**
+     * @use HasFactory<ServiceFactory>
+     */
     use HasFactory;
 
     use RecordActivity;
@@ -75,7 +98,7 @@ final class Service extends Model implements Filterable
             return true;
         }
 
-        $parent = self::find($parentId);
+        $parent = self::query()->find($parentId);
 
         if (! $parent) {
             return false;
@@ -92,11 +115,7 @@ final class Service extends Model implements Filterable
         }
 
         // No puede ser hijo de uno de sus descendientes
-        if ($this->exists && $this->isAncestorOf($parent)) {
-            return false;
-        }
-
-        return true;
+        return ! ($this->exists && $this->isAncestorOf($parent));
     }
 
     /**
@@ -131,9 +150,11 @@ final class Service extends Model implements Filterable
      */
     public function activeChildren(): HasMany
     {
-        return $this->children()->whereHas('state', function ($query) {
-            $query->where('state_name', 'Activo');
-        });
+        return $this->children()->whereHas(
+            'state', function ($query): void {
+                $query->where('state_name', 'Activo');
+            },
+        );
     }
 
     /**
@@ -143,39 +164,6 @@ final class Service extends Model implements Filterable
     {
         return $this->hasMany(self::class, 'parent_service_id')
             ->orderBy('service_name');
-    }
-
-    /**
-     * Order by category and display order
-     */
-    #[Scope]
-    public function byCategory(Builder $query, int $categoryId): Builder
-    {
-        return $query->where('category_id', $categoryId);
-    }
-
-    /**
-     * Filter by level
-     */
-    #[Scope]
-    public function byLevel(Builder $query, int $level): Builder
-    {
-        return $query->where('level', $level);
-    }
-
-    #[Scope]
-    public function byState(Builder $query, ?array $arrayState): Builder
-    {
-        return $query->when($arrayState, fn ($q) => $q->whereIn('state_id', $arrayState));
-    }
-
-    /**
-     * Only services of type 'group' (can have children)
-     */
-    #[Scope]
-    public function groups(Builder $query): Builder
-    {
-        return $query->where('type', ServiceType::GROUP);
     }
 
     /**
@@ -273,48 +261,66 @@ final class Service extends Model implements Filterable
         parent::boot();
 
         // Al crear un servicio, actualizar automáticamente nivel y ruta
-        self::creating(function ($service) {
-            $service->updateHierarchyData();
-        });
+        self::creating(
+            function ($service): void {
+                $service->updateHierarchyData();
+            },
+        );
 
         // Al actualizar, verificar si cambió el padre
-        self::updating(function ($service) {
-            if ($service->isDirty('parent_service_id')) {
-                // Validar que no se cree un ciclo
-                if (! $service->canBeChildOf($service->parent_service_id)) {
-                    // throw new Exception('No se puede crear un ciclo en la jerarquía de servicios.');
+        self::updating(
+            function ($service): void {
+                if ($service->isDirty('parent_service_id')) {
+                    // Validar que no se cree un ciclo
+                    if (! $service->canBeChildOf($service->parent_service_id)) {
+                        // throw new Exception('No se puede crear un ciclo en la jerarquía de servicios.');
+                    }
+                    $service->updateHierarchyData();
                 }
-                $service->updateHierarchyData();
-            }
-        });
+            },
+        );
 
         // Después de actualizar, actualizar rutas de hijos
-        self::updated(function ($service) {
-            if ($service->wasChanged('parent_service_id')) {
-                $service->updateChildrenPaths();
-            }
-        });
+        self::updated(
+            function ($service): void {
+                if ($service->wasChanged('parent_service_id')) {
+                    $service->updateChildrenPaths();
+                }
+            },
+        );
     }
 
     /**
-     * Actualiza nivel y ruta según el padre
+     * Order by category and display order
      */
-    protected function updateHierarchyData(): void
+    #[Scope]
+    protected function byCategory(Builder $query, int $categoryId): Builder
     {
-        if ($this->parent_service_id) {
-            $parent = self::find($this->parent_service_id);
+        return $query->where('category_id', $categoryId);
+    }
 
-            if ($parent) {
-                $this->level = $parent->level + 1;
+    /**
+     * Filter by level
+     */
+    #[Scope]
+    protected function byLevel(Builder $query, int $level): Builder
+    {
+        return $query->where('level', $level);
+    }
 
-                // Heredar categoría del padre si no tiene
-                if (! $this->category_id && $parent->category_id) {
-                    $this->category_id = $parent->category_id;
-                }
-            }
-        } else {
-            $this->level = 0;
-        }
+    #[Scope]
+    protected function byState(Builder $query, ?array $arrayState): Builder
+    {
+        return $query->when($arrayState, fn ($q) => $q->whereIn('state_id', $arrayState));
+    }
+
+    /**
+     * Only services of type 'group' (can have children)
+     */
+    #[Scope]
+    protected function groups(Builder $query): Builder
+    {
+        return $query->where('type', ServiceType::GROUP);
     }
 
     /**
@@ -342,7 +348,7 @@ final class Service extends Model implements Filterable
     #[Scope]
     protected function listServices(Builder $query, array $states): Builder
     {
-        if ($states) {
+        if ($states !== []) {
             $query->whereIn('state_id', $states);
         }
 
@@ -439,5 +445,26 @@ final class Service extends Model implements Filterable
         return Attribute::make(
             get: fn (): string => formatMoney($this->base_price),
         );
+    }
+
+    /**
+     * Actualiza nivel y ruta según el padre
+     */
+    private function updateHierarchyData(): void
+    {
+        if ($this->parent_service_id) {
+            $parent = self::query()->find($this->parent_service_id);
+
+            if ($parent) {
+                $this->level = $parent->level + 1;
+
+                // Heredar categoría del padre si no tiene
+                if (! $this->category_id && $parent->category_id) {
+                    $this->category_id = $parent->category_id;
+                }
+            }
+        } else {
+            $this->level = 0;
+        }
     }
 }

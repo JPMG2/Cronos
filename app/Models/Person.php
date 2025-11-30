@@ -7,7 +7,10 @@ namespace App\Models;
 use App\Interfaces\Filterable;
 use App\Traits\DbTraits\TableFilter;
 use Carbon\CarbonImmutable;
+use Carbon\Month;
+use Carbon\WeekDay;
 use Database\Factories\PersonFactory;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -137,7 +140,8 @@ final class Person extends Model implements Filterable
             'gender_id' => 'gender',
             'marital_status_id' => 'maritalStatus',
             'occupation_id' => 'occupation',
-            'nationality_id' => 'nationality', ];
+            'nationality_id' => 'nationality',
+        ];
 
         return $relashionarray[$relashionvalue];
 
@@ -211,14 +215,14 @@ final class Person extends Model implements Filterable
     protected function documentInfo(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => $this->document->document_name.'. '.$this->num_document,
+            get: fn (): string => $this->document->document_name . '. ' . $this->num_document,
         );
     }
 
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => $this->person_name.' '.$this->person_lastname,
+            get: fn (): string => $this->person_name . ' ' . $this->person_lastname,
         );
     }
 
@@ -274,8 +278,8 @@ final class Person extends Model implements Filterable
     protected function personDatebirth(): Attribute
     {
         return Attribute::make(
-            get: fn ($value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
-            set: fn ($value): string => CarbonImmutable::parse($value)->format('Y-m-d'),
+            get: fn (DateTimeInterface|WeekDay|Month|string|int|float|null $value): string => CarbonImmutable::parse($value)->format('d-m-Y'),
+            set: fn (DateTimeInterface|WeekDay|Month|string|int|float|null $value): string => CarbonImmutable::parse($value)->format('Y-m-d'),
         );
     }
 }

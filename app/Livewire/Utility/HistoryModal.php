@@ -31,7 +31,7 @@ final class HistoryModal extends Component
         $historyData = new HistoryLog($array);
         $this->listHistoryData = $historyData->loadHistoryData();
         $this->modelname = $array['model'];
-        $this->historyTitle = 'Historial de '.config('nicename.'.mb_strtolower((string) $array['model']));
+        $this->historyTitle = 'Historial de ' . config('nicename.' . mb_strtolower((string) $array['model']));
 
     }
 

@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * @property int $province_id
+ * @property string $city_name
+ * @property-read Province $province
+ */
 final class City extends Model
 {
     use HasFactory;
@@ -21,21 +26,20 @@ final class City extends Model
         return $this->belongsTo(Province::class);
     }
 
-    public function scopeCitySearch(Builder $query, $idprovince = null, $citysearc = null): Builder
+    #[\Illuminate\Database\Eloquent\Attributes\Scope]
+    protected function citySearch(Builder $query, $idprovince = null, $citysearc = null): Builder
     {
         if ($idprovince > 0) {
-            $cacheKey = 'city_search_'.md5($idprovince.'_'.$citysearc);
+            $cacheKey = 'city_search_' . md5($idprovince . '_' . $citysearc);
 
             $cachedIds = Cache::remember(
                 $cacheKey,
                 now()->addHours(24),
-                function () use ($idprovince, $citysearc) {
-                    return static::where('province_id', $idprovince)
-                        ->where('city_name', 'like', '%'.$citysearc.'%')
-                        ->orderBy('city_name', 'asc')
-                        ->pluck('id')
-                        ->toArray();
-                }
+                fn () => self::query()->where('province_id', $idprovince)
+                    ->where('city_name', 'like', '%' . $citysearc . '%')
+                    ->orderBy('city_name', 'asc')
+                    ->pluck('id')
+                    ->toArray(),
             );
 
             return $query->whereIn('id', $cachedIds)->orderBy('city_name', 'asc');

@@ -22,7 +22,7 @@ final class ProfileController extends Controller
             'profile.edit',
             [
                 'user' => $request->user(),
-            ]
+            ],
         );
     }
 
@@ -51,7 +51,7 @@ final class ProfileController extends Controller
             'userDeletion',
             [
                 'password' => ['required', 'current_password'],
-            ]
+            ],
         );
 
         $user = $request->user();

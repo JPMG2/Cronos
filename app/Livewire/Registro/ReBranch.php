@@ -37,7 +37,7 @@ final class ReBranch extends Component
                 'listCompanies' => $this->commonQuerys::companyQuery([1]),
                 'listState' => $this->commonQuerys::stateQuery([1, 2]),
 
-            ]
+            ],
         );
     }
 
@@ -83,7 +83,7 @@ final class ReBranch extends Component
             $this->form->getProvinceId(),
             $this->form->getCityId(),
             $this->form->getProvinceName(),
-            $this->form->getCityName()
+            $this->form->getCityName(),
         );
 
         $this->isdisabled = 'disabled';
@@ -101,7 +101,7 @@ final class ReBranch extends Component
                 'pdfClass' => 'BranchPdf',
                 'route' => 're_sucursal',
                 'model' => 'Branch',
-            ]
+            ],
         );
     }
 }

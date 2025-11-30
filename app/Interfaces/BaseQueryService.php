@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-abstract class AbstractQueryService implements QueryListService
+abstract class BaseQueryService implements QueryListService
 {
     public function __construct(protected Model $model, protected bool $order, protected ?string $clickColumn) {}
 
@@ -58,7 +58,7 @@ abstract class AbstractQueryService implements QueryListService
 
     protected function getForeignKeyColumn(string $tableName): string
     {
-        return str()->endsWith($tableName, 's') ? str()->substr($tableName, 0, -1).'_id' : $tableName.'_id';
+        return str()->endsWith($tableName, 's') ? str()->substr($tableName, 0, -1) . '_id' : $tableName . '_id';
     }
 
     private function orderColumnBy(EloquentBuilder $query): void
@@ -96,26 +96,26 @@ abstract class AbstractQueryService implements QueryListService
         EloquentBuilder $query,
         string $relation,
         mixed $stringSearch,
-        mixed $filterColumn
+        mixed $filterColumn,
     ): void {
         $stringSearch = mb_strtolower((string) $stringSearch);
 
         $query->whereHas(
             $relation,
             function (EloquentBuilder $query) use ($stringSearch, $filterColumn): void {
-                $query->whereRaw('LOWER('.$filterColumn.') LIKE ?', ["%{$stringSearch}%"]);
-            }
+                $query->whereRaw('LOWER(' . $filterColumn . ') LIKE ?', ["%{$stringSearch}%"]);
+            },
         );
     }
 
     private function createQuery(
         EloquentBuilder $query,
         int|string $column,
-        mixed $stringSearch
+        mixed $stringSearch,
     ): void {
         $stringSearch = mb_strtolower((string) $stringSearch);
 
-        $query->where(DB::raw('LOWER('.$column.')'), 'like', "%{$stringSearch}%");
+        $query->where(DB::raw('LOWER(' . $column . ')'), 'like', "%{$stringSearch}%");
 
     }
 }

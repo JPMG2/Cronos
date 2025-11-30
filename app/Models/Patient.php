@@ -10,6 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $person_id
+ * @property ?int $blood_type_id
+ * @property ?string $patient_photo
+ * @property ?string $patient_weight
+ * @property ?string $patient_height
+ * @property-read Person $person
+ */
 final class Patient extends Model implements Filterable
 {
     /**
@@ -18,7 +26,8 @@ final class Patient extends Model implements Filterable
     use HasFactory;
 
     protected $fillable = [
-        'person_id', 'blood_type_id', 'patient_photo', 'patient_weight', 'patient_height'];
+        'person_id', 'blood_type_id', 'patient_photo', 'patient_weight', 'patient_height',
+    ];
 
     public static function getDefaultFilterField(): string
     {

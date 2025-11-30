@@ -40,7 +40,7 @@ final class CompanyUpdateMail extends Mailable
             ->with(
                 [
                     'company' => $this->company,
-                ]
+                ],
             );
     }
 }

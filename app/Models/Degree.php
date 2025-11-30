@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $degree_name
+ * @property string $degree_code
+ */
 final class Degree extends Model
 {
     /**

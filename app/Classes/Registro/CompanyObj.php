@@ -13,8 +13,6 @@ final class CompanyObj
 
     public array $companyvalues;
 
-    protected $modelName = 'Company';
-
     /**
      * Get the company values.
      *
@@ -42,7 +40,7 @@ final class CompanyObj
     public function store(array $arrayCompany): Company
     {
 
-        return Company::create($this->getValuesModel($arrayCompany, $this->modelName));
+        return Company::create($this->getValuesModel($arrayCompany, new Company()));
     }
 
     /**
@@ -53,7 +51,7 @@ final class CompanyObj
      */
     public function update(array $arrayCompany): Company
     {
-        return tap($this->show())->update($this->getValuesModel($arrayCompany, $this->modelName));
+        return tap($this->show())->update($this->getValuesModel($arrayCompany, new Company()));
 
     }
 

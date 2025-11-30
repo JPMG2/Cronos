@@ -14,7 +14,7 @@ final class SendEmail
     public const ACTION_UPDATE = 'update';
 
     public function __construct(
-        private readonly EmailsModel $emailsModel = new EmailsModel()
+        private readonly EmailsModel $emailsModel = new EmailsModel(),
     ) {}
 
     public function handle($model, string $action, string $baseClass, $mailClass, $receptor): void
@@ -23,12 +23,12 @@ final class SendEmail
             self::ACTION_CREATE => $this->emailsModel->sendEmailCreate(
                 new $baseClass($mailClass),
                 $model,
-                $receptor
+                $receptor,
             ),
             self::ACTION_UPDATE => $this->emailsModel->sendEmailUpdate(
                 new $baseClass($mailClass),
                 $model,
-                $receptor
+                $receptor,
             ),
             default => throw new InvalidArgumentException("Invalid action: {$action}")
         };

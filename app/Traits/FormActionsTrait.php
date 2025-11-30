@@ -59,7 +59,7 @@ trait FormActionsTrait
     {
         $nameForm = $parameter['model'];
 
-        $this->dispatch('showModal'.$nameForm, show: true);
+        $this->dispatch('showModal' . $nameForm, show: true);
     }
 
     protected function history(array $parameter)

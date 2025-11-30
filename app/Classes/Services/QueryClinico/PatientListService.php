@@ -34,7 +34,7 @@ final readonly class PatientListService
             order: $order,
             clickColumn: $clickColumn,
             searchableFields: $this->getSearchableFields(),
-            pivotRelations: $this->getPivotRelations()
+            pivotRelations: $this->getPivotRelations(),
         );
     }
 

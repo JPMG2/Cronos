@@ -40,7 +40,7 @@ final class BranchUpdateMail extends Mailable
             ->with(
                 [
                     'branch' => $this->branch,
-                ]
+                ],
             );
     }
 }

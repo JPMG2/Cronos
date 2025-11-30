@@ -12,7 +12,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
+/**
+ * @property int $person_id
+ * @property int $credential_id
+ * @property ?int $specialty_id
+ * @property ?int $degree_id
+ * @property-read Person $person
+ * @property-read Degree $degree
+ * @property-read Specialty $specialty
+ * @property-read Collection<int, Credential> $credentials
+ */
 final class Medical extends Model implements Filterable
 {
     /**
@@ -65,19 +76,19 @@ final class Medical extends Model implements Filterable
         return $this->belongsTo(Specialty::class);
     }
 
-    public function getFirstCredentialNumberAttribute(): ?string
+    public function credentials(): BelongsToMany
+    {
+        return $this->belongsToMany(Credential::class)
+            ->withPivot('credential_number');
+    }
+
+    protected function getFirstCredentialNumberAttribute(): ?string
     {
         if (! $this->relationLoaded('credentials')) {
             $this->loadMissing('credentials');
         }
 
         return $this->credentials->first()?->pivot->credential_number;
-    }
-
-    public function credentials(): BelongsToMany
-    {
-        return $this->belongsToMany(Credential::class)
-            ->withPivot('credential_number');
     }
 
     protected function casts(): array

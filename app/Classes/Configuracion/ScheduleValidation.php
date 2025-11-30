@@ -20,7 +20,7 @@ final class ScheduleValidation
                 'morning_start' => AttributeValidator::scheduleArray($schedule),
             ],
             [],
-            $this->niceNames()
+            $this->niceNames(),
         )->validate();
 
     }

@@ -114,7 +114,7 @@ final class ReEspecialista extends Component
                 'pdfClass' => 'MedicPdf',
                 'route' => 're_especialist',
                 'model' => 'Medical',
-            ]
+            ],
         );
     }
 
@@ -141,7 +141,7 @@ final class ReEspecialista extends Component
     {
         $this->formHandler->infoMedic($medicId);
         $this->showMenuAction();
-        $person = $this->formHandler->personData->person_name.' '.$this->formHandler->personData->person_lastname;
+        $person = $this->formHandler->personData->person_name . ' ' . $this->formHandler->personData->person_lastname;
         $this->messageWindow(
             $person,
             fn (string $person): AlertModal => new AlertModal(
@@ -150,9 +150,9 @@ final class ReEspecialista extends Component
                 title: 'Aviso',
                 buttonName: 'Aceptar',
                 event: '',
-                message: 'Especialista <b>'.$person.'</b> ya registrada !',
-                idModel: 0
-            )
+                message: 'Especialista <b>' . $person . '</b> ya registrada !',
+                idModel: 0,
+            ),
         );
 
     }

@@ -25,7 +25,7 @@ final class ServicesDto implements Wireable
         public ?string $estimated_price = null,
         public bool $requires_preparation = false,
         public ?string $preparation_instructions = '',
-        public int|float|string|null $base_price = null
+        public int|float|string|null $base_price = null,
     ) {}
 
     public static function fromLivewire($value): self

@@ -13,7 +13,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
+/**
+ * @property int $state_id
+ * @property string $categori_code
+ * @property string $categori_name
+ * @property-read Collection<int, Service> $services
+ * @property-read State $state
+ */
 final class Category extends Model
 {
     /**

@@ -26,14 +26,14 @@ final class HistoryLog
                 $query->select('id', 'name', 'last_name');
             }, 'log.action' => function ($query): void {
                 $query->select('id', 'action_inpass');
-            }]
+            }],
         )->find($this->getId());
 
     }
 
     public function getModel()
     {
-        return mb_trim('App\Models\ ').$this->model;
+        return mb_trim('App\Models\ ') . $this->model;
     }
 
     public function getId(): int

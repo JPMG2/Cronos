@@ -33,7 +33,7 @@ final class ReAcceso extends Component
             [
                 'listRoles' => $this->commonQuerys::listRoles(['Owner']),
                 'listMenus' => Menu::query()->whereNull('menu_id')->orderBy('id')->get(),
-            ]
+            ],
         );
     }
 
@@ -99,7 +99,7 @@ final class ReAcceso extends Component
         $this->listOptionMenu = $menu->menus;
         $this->idOptionMenu = Arr::mapWithKeys(
             $this->listOptionMenu->toArray(),
-            static fn (array $item, int $key): array => [$item['id'] => $item['id']]
+            static fn (array $item, int $key): array => [$item['id'] => $item['id']],
         );
 
     }

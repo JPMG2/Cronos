@@ -19,7 +19,7 @@ final class InsurancePlanCoverageDto implements Wireable
         public ?float $max_amount_per_event = null,
         public ?int $annual_max_uses = null,
         public ?bool $requires_referral = null,
-        public ?string $coverage_notes = null
+        public ?string $coverage_notes = null,
     ) {}
 
     public static function fromLivewire($value): self

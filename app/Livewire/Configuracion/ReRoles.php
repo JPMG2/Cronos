@@ -35,7 +35,7 @@ final class ReRoles extends Component
             'livewire.configuracion.re-roles',
             [
                 'listRoles' => $this->commonQuerys::listRoles(['Owner']),
-            ]
+            ],
         );
     }
 
@@ -81,7 +81,7 @@ final class ReRoles extends Component
 
                 return $this->dataAlert('warning', 'Advertencia', 'roleRemove', 'Borrar', 'Realmente desea borrar el rol ?', $role->id);
 
-            }
+            },
         );
     }
 

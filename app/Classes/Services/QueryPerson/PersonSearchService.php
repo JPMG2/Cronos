@@ -27,7 +27,7 @@ final readonly class PersonSearchService
         private bool $order,
         private ?string $clickColumn,
         array $searchableFields = [],
-        private array $pivotRelations = []
+        private array $pivotRelations = [],
     ) {
         $this->searchableFields = $this->mergeWithDefaults($searchableFields);
         $this->iniOrder();
@@ -118,7 +118,7 @@ final readonly class PersonSearchService
     {
         $tableName = $this->getRelationalName($this->clickColumn);
         $query->withAggregate($tableName, $this->clickColumn)
-            ->orderBy($tableName.'_'.$this->clickColumn, $this->orderDirection)
+            ->orderBy($tableName . '_' . $this->clickColumn, $this->orderDirection)
             ->with($this->model::getRelationModel());
     }
 
@@ -162,10 +162,10 @@ final readonly class PersonSearchService
                         $finalRelation,
                         function ($subQuery) use ($stringsearch, $finalRelation) {
                             $searchField = $this->getPivotSearchField($finalRelation);
-                            $subQuery->where(DB::raw('LOWER('.$searchField.')'), 'like', "%{$stringsearch}%");
-                        }
+                            $subQuery->where(DB::raw('LOWER(' . $searchField . ')'), 'like', "%{$stringsearch}%");
+                        },
                     );
-                }
+                },
             );
         }
 
@@ -173,8 +173,8 @@ final readonly class PersonSearchService
             $relation,
             function ($query) use ($stringsearch, $relation) {
                 $searchField = $this->getPivotSearchField($relation);
-                $query->where(DB::raw('LOWER('.$searchField.')'), 'like', "%{$stringsearch}%");
-            }
+                $query->where(DB::raw('LOWER(' . $searchField . ')'), 'like', "%{$stringsearch}%");
+            },
         );
     }
 
@@ -237,7 +237,7 @@ final readonly class PersonSearchService
         $indexMap = [];
         foreach ($this->searchableFields as $relation => $fields) {
             $tableName = $this->getTableNameFromRelation($relation);
-            $indexName = $relation === 'person' ? 'person_id' : $relation.'_id';
+            $indexName = $relation === 'person' ? 'person_id' : $relation . '_id';
             $indexMap[$indexName] = $tableName;
         }
 
@@ -258,7 +258,7 @@ final readonly class PersonSearchService
         ?string $tableName,
         ?string $indexName,
         int|string $column,
-        mixed $stringsearch
+        mixed $stringsearch,
     ): EloquentBuilder {
         $stringsearch = mb_strtolower((string) $stringsearch);
 
@@ -267,8 +267,8 @@ final readonly class PersonSearchService
             function (QueryBuilder $subquery) use ($stringsearch, $column, $tableName): QueryBuilder {
                 return $subquery->select('id')
                     ->from($tableName)
-                    ->where(DB::raw('LOWER('.$column.')'), 'like', "%{$stringsearch}%");
-            }
+                    ->where(DB::raw('LOWER(' . $column . ')'), 'like', "%{$stringsearch}%");
+            },
         );
     }
 }

@@ -106,7 +106,7 @@ final class CommonQueries extends Model
     public static function listOcupacion(?string $occupation = null): Collection
     {
         return $occupation
-            ? Occupation::query()->whereRaw('LOWER(occupation_name) like ?', ['%'.mb_strtolower($occupation).'%'])
+            ? Occupation::query()->whereRaw('LOWER(occupation_name) like ?', ['%' . mb_strtolower($occupation) . '%'])
                 ->orderBy('occupation_name')->get()
             : Occupation::query()->orderBy('occupation_name')->get();
     }
@@ -128,7 +128,7 @@ final class CommonQueries extends Model
             ->orderBy('insurance_name');
 
         if ($search !== null && $search !== '') {
-            $query->whereRaw('LOWER(insurance_name) LIKE ?', ['%'.mb_strtolower($search).'%']);
+            $query->whereRaw('LOWER(insurance_name) LIKE ?', ['%' . mb_strtolower($search) . '%']);
         }
 
         return $query->get();

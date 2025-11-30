@@ -12,7 +12,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
+/**
+ * @property ?int $insurance_type_id
+ * @property int $state_id
+ * @property ?int $city_id
+ * @property string $insurance_name
+ * @property ?string $insurance_acronym
+ * @property ?string $insurance_code
+ * @property ?string $insurance_cuit
+ * @property string $insurance_address
+ * @property string $insurance_phone
+ * @property ?string $insurance_zipcode
+ * @property ?string $insurance_email
+ * @property ?string $insurance_web
+ * @property-read InsuranceType $insuranceType
+ * @property-read State $state
+ * @property-read City $city
+ * @property-read Collection<int, InsurancePlan> $insurancePlans
+ */
 final class Insurance extends Model implements Filterable
 {
     use HasFactory;

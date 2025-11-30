@@ -11,8 +11,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property ?int $state_id
+ * @property int $person_id
+ * @property string $email
+ * @property ?string $email_verified_at
+ * @property string $password
+ * @property ?string $remember_token
+ * @property-read Person $person
+ * @property-read Collection<int, Role> $roles
+ */
 final class User extends Authenticatable
 {
     use HasApiTokens;

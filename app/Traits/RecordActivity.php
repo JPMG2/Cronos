@@ -37,7 +37,7 @@ trait RecordActivity
             static::$event(
                 function ($model) use ($event): void {
                     $model->recordActivity($event);
-                }
+                },
             );
         }
 
@@ -60,7 +60,7 @@ trait RecordActivity
                 'action_id' => $this->getActivityId($event),
                 'log_message' => 'ju',
                 'log_change' => empty($this->getChanges) ? null : json_encode($this->getChanges),
-            ]
+            ],
         );
     }
 

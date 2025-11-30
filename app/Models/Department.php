@@ -11,7 +11,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
 
+/**
+ * @property string $department_name
+ * @property string $department_code
+ * @property-read Collection<int, Branch> $branches
+ */
 final class Department extends Model
 {
     use HasFactory;

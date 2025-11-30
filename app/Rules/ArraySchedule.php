@@ -155,7 +155,7 @@ final readonly class ArraySchedule implements ValidationRule
      */
     private function showMessage(string $inputName, string $message, ?int $index = null): never
     {
-        $key = $index === null ? $inputName : $inputName.'.'.$index;
+        $key = $index === null ? $inputName : $inputName . '.' . $index;
         throw ValidationException::withMessages([$key => $message]);
     }
 }

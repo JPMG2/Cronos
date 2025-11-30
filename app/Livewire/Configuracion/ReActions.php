@@ -25,7 +25,7 @@ final class ReActions extends Component
             [
                 'listRoles' => $this->commonQuerys::listRoles(['Owner']),
                 'listActions' => $this->commonQuerys::listActions(['login', 'logout']),
-            ]
+            ],
         );
     }
 

@@ -29,7 +29,7 @@ trait HandleMenuAction
         string $message,
         string $title,
         string $buttonName,
-        string $event
+        string $event,
     ): void {
         $this->dispatch(
             'showModalAlert',
@@ -41,7 +41,7 @@ trait HandleMenuAction
                 'button' => $exception,
                 'buttonName' => $buttonName,
                 'event' => $event,
-            ]
+            ],
         );
     }
 }
