@@ -42,18 +42,44 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: '#1f4b8e',
-                'primary-dark': '#102a52',
-                secondary: '#182430',
-                'secondary-dark': '#060C11',
-                btn_danger: '#DC3545',
-                shw_danger: '#E68C95',
-                btn_succes: '#28A745',
-                shw_succes: '#A6F7b8',
-                shw_cerrar: '#ffa661',
-                ok_color: '#53db85',
-                bad_color: '#e0707a',
-                warning_color: '#ffc15e',
+                // Paleta principal médica profesional
+                primary: {
+                    50: '#f0f9ff',
+                    100: '#e0f2fe',
+                    200: '#bae6fd',
+                    300: '#7dd3fc',
+                    400: '#38bdf8',
+                    500: '#0ea5e9',
+                    600: '#0284c7',
+                    700: '#0369a1',
+                    800: '#075985',
+                    900: '#0c4a6e',
+                    DEFAULT: '#0ea5e9',
+                },
+                // Colores legacy mantenidos para compatibilidad
+                'primary-dark': '#0369a1',
+                secondary: '#64748b',
+                'secondary-dark': '#475569',
+                // Colores médicos suaves
+                medical: {
+                    success: '#86efac',
+                    'success-light': '#f0fdf4',
+                    warning: '#fde047',
+                    'warning-light': '#fef3c7',
+                    error: '#fca5a5',
+                    'error-light': '#fee2e2',
+                    info: '#93c5fd',
+                    'info-light': '#dbeafe',
+                },
+                // Botones actualizados con colores suaves
+                btn_danger: '#f87171',
+                shw_danger: '#fecaca',
+                btn_succes: '#4ade80',
+                shw_succes: '#bbf7d0',
+                shw_cerrar: '#fbbf24',
+                ok_color: '#86efac',
+                bad_color: '#fca5a5',
+                warning_color: '#fde047',
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],

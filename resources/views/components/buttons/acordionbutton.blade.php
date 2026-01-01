@@ -9,7 +9,7 @@
     {{ $attributes }}
     type="button"
     class="flex items-center justify-center rounded p-3 shadow-md"
-    :class="isSelected($el.id) ? 'bg-indigo-500 text-white' : 'bg-white text-indigo-500'"
+    :class="isSelected($el.id) ? 'bg-primary-500 text-white shadow-md' : 'bg-white text-primary-600 hover:bg-primary-50'"
     :aria-selected="isSelected($el.id)"
 >
     <svg

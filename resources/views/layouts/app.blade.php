@@ -23,23 +23,44 @@
 
     <!-- Scripts -->
     @vite(["resources/css/app.css", "resources/js/app.js"])
+
 </head>
 <body class="h-full font-sans antialiased">
 <div
-    x-data="{ menuOpen: false }"
+    x-data="{
+        menuOpen: window.innerWidth >= 1024,
+        handleResize() {
+            if (window.innerWidth < 1024) {
+                this.menuOpen = false;
+            } else {
+                this.menuOpen = true;
+            }
+        }
+    }"
+    x-init="
+        menuOpen = window.innerWidth >= 1024;
+        window.addEventListener('resize', () => handleResize());
+    "
     class="flex min-h-screen custom-scrollbar"
 >
     <!-- start::Black overlay -->
     <div
-        :class="menuOpen ? 'block' : 'hidden'"
+        x-show="menuOpen && window.innerWidth < 1024"
         @click="menuOpen = false"
         class="fixed inset-0 z-20 bg-black opacity-50 transition-opacity lg:hidden"
+        x-transition:enter="transition-opacity ease-linear duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-50"
+        x-transition:leave="transition-opacity ease-linear duration-300"
+        x-transition:leave-start="opacity-50"
+        x-transition:leave-end="opacity-0"
     ></div>
     <!-- end::Black overlay -->
 
     <aside
         :class="menuOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-        class="fixed inset-y-0 left-0 z-30 w-52 overflow-y-auto bg-secondary transition duration-300 custom-scrollbar lg:inset-0 lg:translate-x-0"
+        class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto bg-gradient-to-b from-slate-50 to-white transition duration-300 custom-scrollbar lg:inset-0 border-r border-slate-200 shadow-lg"
+        :class="{ 'lg:translate-x-0': menuOpen, 'lg:-translate-x-full': !menuOpen }"
     >
         <!-- start::Logo -->
         <x-mmenu.menu-logo></x-mmenu.menu-logo>
@@ -50,38 +71,44 @@
         <!-- end::Navigation -->
     </aside>
 
-    <div class="flex w-full flex-col lg:pl-52">
+    <!-- Menu toggle button - positioned at end of sidebar -->
+    <button
+        @click="menuOpen = !menuOpen"
+        class="fixed top-4 z-40 flex items-center justify-center text-slate-600 hover:text-primary-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 bg-white hover:bg-primary-50 border border-slate-200 hover:border-primary-300 rounded-lg p-2 shadow-sm hover:shadow-md"
+        :class="menuOpen ? 'left-60' : 'left-4'"
+        :title="menuOpen ? 'Colapsar menú' : 'Expandir menú'"
+    >
+        <svg
+            class="h-4 w-4 transition-transform duration-300"
+            :class="menuOpen ? '' : 'rotate-180'"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+            ></path>
+        </svg>
+    </button>
+
+    <div class="flex w-full flex-col transition-all duration-300" :class="menuOpen ? 'lg:pl-64' : 'lg:pl-0'">
         <!-- start::Topbar -->
         <div class="flex flex-col">
             <header
-                class="flex h-16 items-center justify-between bg-white px-6 py-2"
+                class="flex h-14 items-center justify-between bg-white px-6 py-2 border-b border-slate-200 shadow-sm"
             >
-                <!-- start::Mobile menu button -->
+                <!-- start::Left side spacer -->
                 <div class="flex items-center">
-                    <button
-                        @click="menuOpen = true"
-                        class="text-gray-500 transition duration-200 hover:text-primary focus:outline-none lg:hidden"
-                    >
-                        <svg
-                            class="h-6 w-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h7"
-                            ></path>
-                        </svg>
-                    </button>
+                    <!-- Spacer to maintain layout -->
+                    <div class="w-6"></div>
                 </div>
-                <!-- end::Mobile menu button -->
+                <!-- end::Left side spacer -->
 
                 <!-- start::Right side top menu -->
-                <div class="flex items-center">
+                <div class="flex items-center gap-4">
                     <!-- start::Search input -->
                     <x-mmenu.menu-search-input></x-mmenu.menu-search-input>
                     <!-- end::Search input -->
@@ -89,6 +116,7 @@
                     <!-- start::Notifications -->
                     <x-mmenu.menu-notification></x-mmenu.menu-notification>
                     <!-- end::Notifications -->
+
 
                     <!-- start::Profile -->
                     <x-mmenu.menu-profile></x-mmenu.menu-profile>
@@ -100,11 +128,18 @@
         <!-- end::Topbar -->
 
         <!-- start:Page content -->
-        <div class="h-full bg-gray-200">
+        <div class="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50/30">
             <!-- start::Stats -->
             {{ $slot }}
             @livewire("utility.form-activity")
             @livewire("utility.history-modal")
+            @livewire("utility.alert-form")
+            <div x-data="{personInfoData: false}"
+                 @open-modal-data.window="personInfoData = true"
+                 @close-modal-data.window="personInfoData = false">
+                <div id="modal-personData" x-show="personInfoData" x-cloak>
+                </div>
+            </div>
             <!-- end::Stats -->
 
         </div>

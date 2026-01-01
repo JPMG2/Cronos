@@ -7,7 +7,7 @@
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <div class="relative transform overflow-hidden rounded-2xl bg-white border border-slate-200
-                        px-4 pb-4 pt-5 text-left shadow-2xl ring-1 ring-slate-900/5
+                        px-4 pb-4 pt-5 text-left shadow-2xl ring-1 ring-slate-900/5/50
                         transition-all duration-300 ease-out
                         sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <x-modalalert.modalclose></x-modalalert.modalclose>
@@ -31,8 +31,8 @@
                     @if($button>0)
                         <button type="button"
                                 wire:click="closeModal"
-                                class="inline-flex w-full justify-center rounded-lg bg-red-600 px-3 py-2 text-sm font-semibold text-white
-                                       shadow-lg hover:bg-red-500 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2
+                                class="inline-flex w-full justify-center rounded-lg bg-rose-600 px-3 py-2 text-sm font-semibold text-white
+                                       shadow-lg hover:bg-rose-500 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2
                                        transition-all duration-200 transform hover:scale-105 active:scale-95
                                        sm:ml-3 sm:w-auto">
                             {{$buttonName}}

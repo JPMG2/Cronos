@@ -422,11 +422,6 @@ it('has emails', function (string $email) {
         </div>
     </code-snippet>
 
-### Dark Mode
-
-- If existing pages and components support dark mode, new pages and components must support dark mode in a similar way,
-  typically using `dark:`.
-
 === tailwindcss/v3 rules ===
 
 ## Tailwind 3

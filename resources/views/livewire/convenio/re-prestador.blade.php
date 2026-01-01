@@ -2,7 +2,7 @@
     <x-breadcrum breadcrumbs="Registro"></x-breadcrum>
     <x-company-watcher></x-company-watcher>
 
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 relative">
+    <div class="relative mx-1.5 mt-4 py-6">
 
         @if(!session("isdisabled"))
             @if($this->countInsurance > 0)
@@ -523,5 +523,10 @@
         </div>
     </div>
     
-    @livewire("convenio.list-prestador", ["show" => false])
+    <!-- Enhanced List Component -->
+    <div class="relative mx-1.5 mt-4">
+        <div class="rounded-lg bg-white p-4 shadow-xl">
+            @livewire("convenio.list-prestador", ["show" => false])
+        </div>
+    </div>
 </div>

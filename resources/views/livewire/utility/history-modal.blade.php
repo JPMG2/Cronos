@@ -6,53 +6,53 @@
 
         @if (! is_null($listHistoryData) && ! empty($listHistoryData) && count($listHistoryData->log) > 0)
             <div
-                class="overflow-hidden border border-gray-200 md:rounded-lg dark:border-gray-700"
+                class="overflow-hidden border border-gray-200 md:rounded-lg"
             >
                 <table
-                    class="table-xs min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+                    class="table-xs min-w-full divide-y divide-gray-200"
                 >
-                    <thead class="bg-gray-50 dark:bg-gray-800">
+                    <thead class="bg-gray-50">
                         <tr>
                             <th
                                 scope="col"
-                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right"
                             >
                                 ID
                             </th>
                             <th
                                 scope="col"
-                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right"
                             >
                                 Usuario
                             </th>
                             <th
                                 scope="col"
-                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right"
                             >
                                 Acción
                             </th>
                             <th
                                 scope="col"
-                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right"
                             >
                                 Registro
                             </th>
                             <th
                                 scope="col"
-                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right dark:text-gray-400"
+                                class="px-3 py-2 text-left text-sm font-normal text-gray-500 rtl:text-right"
                             >
                                 Fecha
                             </th>
                         </tr>
                     </thead>
                     <tbody
-                        class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900"
+                        class="divide-y divide-gray-200 bg-white"
                     >
 
                         @foreach ($listHistoryData->log as $data)
-                            <tr class="even:bg-gray-100">
+                            <tr class="even:bg-gray-100:bg-gray-800">
                                 <td
-                                    class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200"
+                                    class="whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-700"
                                 >
                                     <div
                                         class="inline-flex items-center gap-x-3"
@@ -68,14 +68,14 @@
                                     {{ $data->user->full_name }}
                                 </td>
                                 <td
-                                    class="break-words px-3 py-2 text-sm text-gray-500 dark:text-gray-300"
+                                    class="break-words px-3 py-2 text-sm text-gray-500"
                                 >
                                     {{ $data->action->action_inpass }}
                                 </td>
 
                                 <td
                                     wire:key="{{ $data->id }}"
-                                    class="break-words px-3 py-2 text-sm text-gray-500 dark:text-gray-300"
+                                    class="break-words px-3 py-2 text-sm text-gray-500"
                                 >
                                     <x-model-update
                                         queryaccion="{{$data->action->id}}"
@@ -85,7 +85,7 @@
                                     />
                                 </td>
                                 <td
-                                    class="break-words px-3 py-2 text-sm text-gray-500 dark:text-gray-300"
+                                    class="break-words px-3 py-2 text-sm text-gray-500"
                                 >
                                     {{ $data->created_at->format("d/m/Y H:i:s") }}
                                 </td>

@@ -24,7 +24,7 @@
     aria-expanded="true"
     aria-labelledby="listbox-label"
 />
-<span class="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600">
+<span class="absolute inset-y-0 right-0 flex items-center pr-4 text-primary-600">
     <svg
         class="h-5 w-5 text-gray-400"
         viewBox="0 0 20 20"

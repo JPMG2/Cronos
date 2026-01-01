@@ -1,15 +1,15 @@
-<div>
+<div class="mb-6">
     <nav
-        class="mt-0.5 flex h-10 border-b border-gray-200 bg-gray-50"
+        class="flex h-12 w-full border-b border-slate-200 bg-white shadow-sm"
         aria-label="Breadcrumb"
     >
         <ol
             role="list"
-            class="mx-auto flex w-full max-w-screen-xl space-x-4 px-4 sm:px-6 lg:px-8"
+            class="flex w-full max-w-full items-center space-x-2 px-6 overflow-x-auto"
         >
             <li class="flex">
                 <div class="flex items-center">
-                    <a href="#" class="text-gray-400 hover:text-gray-500">
+                    <a href="#" class="text-slate-500 hover:text-primary-600 transition-colors" title="Inicio">
                         <svg
                             class="h-5 w-5 flex-shrink-0"
                             viewBox="0 0 20 20"

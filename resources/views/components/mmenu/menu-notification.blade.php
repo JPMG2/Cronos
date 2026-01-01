@@ -1,8 +1,8 @@
-<div x-data="{ linkActive: false }" class="relative mx-6">
+<div x-data="{ linkActive: false }" class="relative">
     <!-- start::Main link -->
     <div @click="linkActive = !linkActive" class="flex cursor-pointer">
         <svg
-            class="h-6 w-6 cursor-pointer hover:text-primary"
+            class="h-6 w-6 cursor-pointer text-slate-600 hover:text-primary-700 transition-colors"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -39,26 +39,26 @@
         >
             <!-- start::Submenu header -->
             <div class="flex items-center justify-between px-4 py-2">
-                <span class="font-bold">Notifications</span>
+                <span class="font-bold text-gray-900">Notifications</span>
                 <span
                     class="rounded bg-red-600 px-1.5 py-0.5 text-xs text-gray-100"
                 >
                     4 new
                 </span>
             </div>
-            <hr />
+            <hr class="" />
             <!-- end::Submenu header -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
                 <div class="flex items-center">
                     <svg
-                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20 px-1.5 py-0.5 text-primary"
+                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20/30 px-1.5 py-0.5 text-primary"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -78,17 +78,17 @@
                         >
                             Order Completed
                         </p>
-                        <p class="text-xs">Your order is completed</p>
+                        <p class="text-xs text-gray-500">Your order is completed</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">5 min ago</span>
+                <span class="text-xs font-bold text-gray-500">5 min ago</span>
             </a>
             <!-- end::Submenu link -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
@@ -104,23 +104,23 @@
                         >
                             Maria sent you a message
                         </p>
-                        <p class="text-xs">Hey there, how are you do...</p>
+                        <p class="text-xs text-gray-500">Hey there, how are you do...</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">30 min ago</span>
+                <span class="text-xs font-bold text-gray-500">30 min ago</span>
             </a>
             <!-- end::Submenu link -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
                 <div class="flex items-center">
                     <svg
-                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20 px-1.5 py-0.5 text-primary"
+                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20/30 px-1.5 py-0.5 text-primary"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -140,17 +140,17 @@
                         >
                             Order Completed
                         </p>
-                        <p class="text-xs">Your order is completed</p>
+                        <p class="text-xs text-gray-500">Your order is completed</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">54 min ago</span>
+                <span class="text-xs font-bold text-gray-500">54 min ago</span>
             </a>
             <!-- end::Submenu link -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
@@ -166,23 +166,23 @@
                         >
                             Maria sent you a message
                         </p>
-                        <p class="text-xs">Hey there, how are you do...</p>
+                        <p class="text-xs text-gray-500">Hey there, how are you do...</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">1 hour ago</span>
+                <span class="text-xs font-bold text-gray-500">1 hour ago</span>
             </a>
             <!-- end::Submenu link -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
                 <div class="flex items-center">
                     <svg
-                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20 px-1.5 py-0.5 text-primary"
+                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20/30 px-1.5 py-0.5 text-primary"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -202,17 +202,17 @@
                         >
                             Order Completed
                         </p>
-                        <p class="text-xs">Your order is completed</p>
+                        <p class="text-xs text-gray-500">Your order is completed</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">15 hours ago</span>
+                <span class="text-xs font-bold text-gray-500">15 hours ago</span>
             </a>
             <!-- end::Submenu link -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
@@ -228,23 +228,23 @@
                         >
                             Maria sent you a message
                         </p>
-                        <p class="text-xs">Hey there, how are you do...</p>
+                        <p class="text-xs text-gray-500">Hey there, how are you do...</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">12 day ago</span>
+                <span class="text-xs font-bold text-gray-500">12 day ago</span>
             </a>
             <!-- end::Submenu link -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
                 <div class="flex items-center">
                     <svg
-                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20 px-1.5 py-0.5 text-primary"
+                        class="h-8 w-8 rounded-full bg-primary bg-opacity-20/30 px-1.5 py-0.5 text-primary"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -264,17 +264,17 @@
                         >
                             Order Completed
                         </p>
-                        <p class="text-xs">Your order is completed</p>
+                        <p class="text-xs text-gray-500">Your order is completed</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">3 months ago</span>
+                <span class="text-xs font-bold text-gray-500">3 months ago</span>
             </a>
             <!-- end::Submenu link -->
             <!-- start::Submenu link -->
             <a
                 x-data="{ linkHover: false }"
                 href="#"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-4 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
@@ -290,10 +290,10 @@
                         >
                             Maria sent you a message
                         </p>
-                        <p class="text-xs">Hey there, how are you do...</p>
+                        <p class="text-xs text-gray-500">Hey there, how are you do...</p>
                     </div>
                 </div>
-                <span class="text-xs font-bold">10 months ago</span>
+                <span class="text-xs font-bold text-gray-500">10 months ago</span>
             </a>
             <!-- end::Submenu link -->
         </div>

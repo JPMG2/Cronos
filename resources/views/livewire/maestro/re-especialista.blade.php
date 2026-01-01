@@ -2,7 +2,8 @@
     <x-breadcrum breadcrumbs="Especialistas"></x-breadcrum>
     <x-company-watcher></x-company-watcher>
 
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 relative">
+    <div class="relative mx-1.5 mt-4 py-6">
+
         @if(!session("isdisabled"))
             @if ($this->medicals > 0)
                 <x-formcomponent.optionheaderform>
@@ -10,33 +11,35 @@
                 </x-formcomponent.optionheaderform>
             @endif
         @endif
-
         <div class="relative overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-200 backdrop-blur-sm">
             <!-- Decorative header accent -->
             <x-headerform.borderheader></x-headerform.borderheader>
-
-            @teleport('#modal-personData')
+            <div class="px-6 py-6 ">
+        @teleport('#modal-personData')
             <x-Person.data-person :$name_person :$lastname_person :$documentType_person
                                   :$document_person :$email_person
                                   :$phone_person></x-Person.data-person>
             @endteleport
 
-            <div class="px-6 py-6">
-                <!-- Enhanced Title Section -->
-                <div class="mb-4">
+            <!-- Enhanced Title Section -->
+            <div class="mb-4">
                     <x-formcomponent.headerformtitla iconname="person">
-                        <x-slot:title>Datos Especialista</x-slot:title>
+                        <x-slot:title>
+                            <div class="flex items-center gap-2">
+                                <span>Datos Especialista</span>
+                                <x-formcomponent.titleindicator
+                                    wire:loading
+                                    wire:target="submitSpecialist,especialistHandleMenuAction,validatePersonExis">
+                                </x-formcomponent.titleindicator>
+                            </div>
+                        </x-slot:title>
                         <x-slot:subtitle>Complete información del especialista.</x-slot:subtitle>
-                        <x-formcomponent.titleindicator
-                            wire:loading
-                            wire:target="submitSpecialist,especialistHandleMenuAction,validatePersonExis">
-                        </x-formcomponent.titleindicator>
                     </x-formcomponent.headerformtitla>
                 </div>
                 <div class="space-y-3 ">
                     <!-- Personal Information Section -->
                     <x-formcomponent.formdivcontent
-                        dstyle="from-slate-50  ring-slate-200  hover:from-slate-100 hover:to-slate-50 focus-within:from-slate-100 focus-within:to-slate-50">
+                        dstyle="from-slate-50 ring-slate-200 hover:from-slate-100:from-slate-750 hover:to-slate-50:to-slate-700 focus-within:from-slate-100:from-slate-750 focus-within:to-slate-50:to-slate-700">
                         <x-formcomponent.h3divtitle iconname="personinfo">
                             Información Personal
                         </x-formcomponent.h3divtitle>
@@ -196,7 +199,7 @@
                     </x-formcomponent.formdivcontent>
                     <!-- Professional Information Section -->
                     <x-formcomponent.formdivcontent
-                        dstyle="from-blue-50 ring-blue-200 hover:from-blue-75 hover:to-blue-25 focus-within:from-blue-75 focus-within:to-blue-25">
+                        dstyle="from-blue-50 ring-blue-200 hover:from-blue-75:from-slate-750 hover:to-blue-25:to-slate-700 focus-within:from-blue-75:from-slate-750 focus-within:to-blue-25:to-slate-700">
                         <x-formcomponent.h3divtitle iconname="professioninfo">
                             Información Profesional
                         </x-formcomponent.h3divtitle>
@@ -296,7 +299,7 @@
                     </x-formcomponent.formdivcontent>
                     <!-- Contact Information Section -->
                     <x-formcomponent.formdivcontent
-                        dstyle="from-teal-50 ring-teal-200 hover:from-teal-75 hover:to-teal-25 focus-within:from-teal-75 focus-within:to-teal-25">
+                        dstyle="from-teal-50 ring-teal-200 hover:from-teal-75:from-slate-750 hover:to-teal-25:to-slate-700 focus-within:from-teal-75:from-slate-750 focus-within:to-teal-25:to-slate-700">
                         <x-formcomponent.h3divtitle iconname="email">
                             Información de Contacto
                         </x-formcomponent.h3divtitle>
@@ -423,7 +426,9 @@
     </div>
 
     <!-- Enhanced List Component -->
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        @livewire("maestro.list-especialista", ["show" => false])
+    <div class="relative mx-1.5 mt-4">
+        <div class="rounded-lg bg-white p-4 shadow-xl">
+            @livewire("maestro.list-especialista", ["show" => false])
+        </div>
     </div>
 </div>

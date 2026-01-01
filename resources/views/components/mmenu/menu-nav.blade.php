@@ -6,11 +6,11 @@
             @mouseover="mainlinkHover = true"
             @mouseleave="mainlinkHover = false"
             href="./index.html"
-            class="-mb-4 flex cursor-pointer items-center px-6 py-2 text-gray-400 transition duration-200 hover:bg-black hover:bg-opacity-30"
+            class="-mb-4 flex cursor-pointer items-center px-4 py-2.5 mx-2 rounded-lg text-slate-700 transition-all duration-200 border-l-0 hover:bg-primary-50 hover:text-primary-700"
         >
             <svg
-                class="h-5 w-5 transition duration-200"
-                :class="mainlinkHover ? 'text-gray-100' : ''"
+                class="h-5 w-5 transition duration-200 text-slate-500"
+                :class="mainlinkHover ? 'text-primary-600' : ''"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -23,15 +23,15 @@
                 />
             </svg>
             <span
-                class="ml-3 transition duration-200"
-                :class="mainlinkHover ? 'text-gray-100' : ''"
+                class="ml-3 font-medium transition duration-200"
+                :class="mainlinkHover ? 'text-primary-700' : ''"
             >
                 Inicio
             </span>
         </a>
         <!-- end::Menu link -->
         @foreach ($menuItems as $mItems)
-            <p class="mb-1 mt-5 px-6 text-xs uppercase text-gray-600">
+            <p class="mb-2 mt-6 px-4 text-xs uppercase text-slate-500 font-semibold tracking-wider transition-all duration-300 hover:text-primary-600 hover:tracking-wide">
                 {{ $mItems->name_menu }}
             </p>
             <!-- start::Menu link -->
@@ -49,7 +49,7 @@
                                 x-show="linkActive"
                                 x-cloak
                                 x-collapse.duration.300ms
-                                class="text-gray-400"
+                                class="ml-6 text-slate-600"
                             >
                                 @foreach ($moption->menus as $submenu)
                                     <!-- start::Submenu link -->

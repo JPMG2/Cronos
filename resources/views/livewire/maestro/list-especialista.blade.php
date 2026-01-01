@@ -17,7 +17,7 @@
                 class="pointer-events-auto flex flex-col rounded-xl border bg-white shadow-2xl dark:border-gray-600 dark:bg-gray-800 dark:shadow-2xl "
             >
                 <div
-                    class="flex items-center justify-between border-b border-gray-200 px-6 py-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-t-xl dark:border-gray-600 dark:from-gray-700 dark:to-gray-600"
+                    class="flex items-center justify-between border-b border-slate-200 px-6 py-3 bg-gradient-to-r from-primary-50 to-white rounded-t-xl dark:border-gray-600 dark:from-gray-700 dark:to-gray-600"
                 >
                     <x-formcomponent.modaltitle>
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -46,7 +46,7 @@
                         >
                             <x-table.thead>
 
-                                <tr class="sticky top-0 z-10 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:bg-gray-800/90 dark:supports-[backdrop-filter]:bg-gray-800/70">
+                                <tr class="sticky top-0 z-10 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80 dark:bg-gray-800/90 dark:supports-[backdrop-filter]:bg-gray-800/70 border-b border-slate-200">
                                     @foreach($listForm->tableHeaders as $header)
                                         @if( (bool) $header['isClickable'] !== false)
                                             <x-table.th

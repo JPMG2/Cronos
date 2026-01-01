@@ -1,5 +1,5 @@
-<div class="flex h-16 items-center justify-center bg-black bg-opacity-30">
-    <h1 class="text-lg font-bold uppercase tracking-widest text-gray-100">
+<div class="flex h-14 items-center justify-center border-b border-slate-200 bg-white">
+    <h1 class="text-2xl font-bold tracking-tight text-primary-700">
         Cronos
     </h1>
 </div>

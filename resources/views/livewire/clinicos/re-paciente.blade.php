@@ -2,7 +2,8 @@
     <x-breadcrum breadcrumbs="Pacientes"></x-breadcrum>
     <x-company-watcher></x-company-watcher>
 
-    <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 relative">
+    <div class="relative mx-1.5 mt-4 py-6">
+
         @if(!session("isdisabled"))
             @if ($this->numpatients > 0)
                 <x-formcomponent.optionheaderform>
@@ -12,20 +13,24 @@
         @endif
         <div class="relative overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-200 backdrop-blur-sm">
             <x-headerform.borderheader></x-headerform.borderheader>
-            @teleport('#modal-personData')
+            <div class="px-6 py-6 ">
+        @teleport('#modal-personData')
             <x-Person.data-person :$name_person :$lastname_person :$documentType_person
                                   :$document_person :$email_person
                                   :$phone_person></x-Person.data-person>
             @endteleport
-            <div class="px-6 py-6 ">
                 <div class="mb-4">
                     <x-formcomponent.headerformtitla iconname="person">
-                        <x-slot:title>Datos de paciente</x-slot:title>
+                        <x-slot:title>
+                            <div class="flex items-center gap-2">
+                                <span>Datos de paciente</span>
+                                <x-formcomponent.titleindicator
+                                    wire:loading
+                                    wire:target="submitPatient,patientHandleMenuAction">
+                                </x-formcomponent.titleindicator>
+                            </div>
+                        </x-slot:title>
                         <x-slot:subtitle>Complete información del paciente.</x-slot:subtitle>
-                        <x-formcomponent.titleindicator
-                            wire:loading
-                            wire:target="submitPatient,patientHandleMenuAction">
-                        </x-formcomponent.titleindicator>
                     </x-formcomponent.headerformtitla>
                 </div>
                 <div class="space-y-3">
@@ -530,5 +535,11 @@
             </div>
         </div>
     </div>
-    @livewire("clinico.list-paciente", ["show" => false])
+
+    <!-- Enhanced List Component -->
+    <div class="relative mx-1.5 mt-4">
+        <div class="rounded-lg bg-white p-4 shadow-xl">
+            @livewire("clinico.list-paciente", ["show" => false])
+        </div>
+    </div>
 </div>

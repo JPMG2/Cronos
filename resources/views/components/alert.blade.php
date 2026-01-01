@@ -3,7 +3,7 @@
 ])
 @php
     if ($windowtype == "error") {
-        $background = "bg-red-100";
+        $background = "bg-red-100/30";
         $textcolor = "text-red-500";
     }
 @endphp

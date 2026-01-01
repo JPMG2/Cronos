@@ -1,21 +1,21 @@
-<div>
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
     <x-breadcrum breadcrumbs="Sucursales"></x-breadcrum>
 
     <x-company-watcher></x-company-watcher>
 
-    <div
-        class="relative mx-1.5 mt-4 grid grid-cols-1 gap-1 rounded-lg bg-white p-4 shadow-xl"
-    >
+    <div class="relative mx-1.5 mt-4 py-6">
+
         @if(!session("isdisabled"))
             @if ($this->branchs > 0)
-                @livewire("utility.opcion-menu", ["namecomponent" => "branch"])
+                <x-formcomponent.optionheaderform>
+                    @livewire("utility.opcion-menu", ["namecomponent" => "branch"])
+                </x-formcomponent.optionheaderform>
             @endif
         @endif
 
-        <x-headerform.borderheader></x-headerform.borderheader>
-
-        <!-- start:: Multiple Columns -->
-        <div>
+        <div class="relative overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-slate-200 backdrop-blur-sm">
+            <x-headerform.borderheader></x-headerform.borderheader>
+            <div class="px-6 py-6 ">
             <div class="flex items-center">
                 <x-formcomponent.titleform>Datos de sucursal</x-formcomponent.titleform>
                 <x-formcomponent.titleindicator
@@ -431,7 +431,14 @@
                     </x-headerform.button-group>
                 </form>
             @endif
+            </div>
         </div>
     </div>
-    @livewire("registro.list-branch", ["show" => false])
+
+    <!-- Enhanced List Component -->
+    <div class="relative mx-1.5 mt-4">
+        <div class="rounded-lg bg-white p-4 shadow-xl">
+            @livewire("registro.list-branch", ["show" => false])
+        </div>
+    </div>
 </div>

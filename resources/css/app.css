@@ -8,6 +8,27 @@
 
 @layer base {
 
+    /* Typography improvements for medical dashboard */
+    h1 {
+        @apply text-3xl font-bold text-slate-800 dark:text-slate-200 tracking-tight;
+    }
+
+    h2 {
+        @apply text-2xl font-semibold text-slate-700 dark:text-slate-300 tracking-tight;
+    }
+
+    h3 {
+        @apply text-xl font-semibold text-slate-700 dark:text-slate-300;
+    }
+
+    h4 {
+        @apply text-lg font-medium text-slate-600 dark:text-slate-400;
+    }
+
+    p {
+        @apply text-slate-600 dark:text-slate-400 leading-relaxed;
+    }
+
     label {
         @apply h-6 relative inline-block;
     }
@@ -39,5 +60,44 @@
 
         @apply disabled:after:bg-opacity-75 disabled:cursor-not-allowed;
         @apply disabled:checked:before:bg-opacity-40;
+    }
+}
+
+@layer components {
+
+    /* Modern card component for dashboard widgets */
+    .dashboard-card {
+        @apply bg-white dark:bg-slate-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-6;
+    }
+
+    /* Section container with proper spacing */
+    .dashboard-section {
+        @apply mb-6 space-y-4;
+    }
+
+    /* Medical status badges */
+    .badge-success {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400;
+    }
+
+    .badge-warning {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400;
+    }
+
+    .badge-danger {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400;
+    }
+
+    .badge-info {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-teal-100 dark:bg-teal-900/30 text-teal-800 dark:text-teal-400;
+    }
+
+    /* Button styles for medical actions */
+    .btn-primary {
+        @apply px-4 py-2 bg-teal-600 hover:bg-teal-700 dark:bg-teal-700 dark:hover:bg-teal-600 text-white font-medium rounded-lg shadow-sm hover:shadow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900;
+    }
+
+    .btn-secondary {
+        @apply px-4 py-2 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium rounded-lg shadow-sm border border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900;
     }
 }

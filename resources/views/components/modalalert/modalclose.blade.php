@@ -1,7 +1,7 @@
 <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
     <button type="button"
             wire:click="$toggle('showAlert')"
-            class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            class="rounded-md bg-white text-gray-400 hover:text-gray-500:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500:ring-teal-500 focus:ring-offset-2:ring-offset-slate-800">
         <span class="sr-only">Close</span>
         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
              aria-hidden="true" data-slot="icon">

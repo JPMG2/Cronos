@@ -7,7 +7,7 @@
 @php
     $color = '';
       $underline = $required
-          ? "peer-focus:text-blue-900"
+          ? "peer-focus:text-primary-700"
           : "peer-focus:text-blue-600";
       $textcolor = $required ? "text-gray-700" : "text-gray-500";
       $disableatributs = $isdisabled ? "bg-transparent" : "bg-transparent";

@@ -18,7 +18,7 @@
             <a
                 x-data="{ linkHover: false }"
                 href="./pages/profile.html"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
@@ -52,7 +52,7 @@
             <a
                 x-data="{ linkHover: false }"
                 href="./pages/email/inbox.html"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
@@ -91,7 +91,7 @@
             <a
                 x-data="{ linkHover: false }"
                 href="./pages/settings.html"
-                class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100"
+                class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100:bg-slate-700"
                 @mouseover="linkHover = true"
                 @mouseleave="linkHover = false"
             >
@@ -128,7 +128,7 @@
             </a>
             <!-- end::Submenu link -->
 
-            <hr />
+            <hr class="" />
 
             <!-- start::Submenu link -->
             <form
@@ -140,7 +140,7 @@
                 <a
                     x-data="{ linkHover: false }"
                     href="#"
-                    class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100"
+                    class="flex items-center justify-between bg-opacity-20 px-3 py-2 hover:bg-gray-100:bg-slate-700"
                     @mouseover="linkHover = true"
                     @mouseleave="linkHover = false"
                     @click.prevent="document.getElementById('logout-form').submit();"
